@@ -1,0 +1,42 @@
+@import '../styles/global';
+
+.#{$prefix}statusTagTest {
+  display: flex;
+  gap: 1em;
+}
+
+.#{$prefix}statusTag {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 1.6rem;
+  height: 1.6rem;
+  font-size: 1rem;
+  border-width: 1px;
+  border: 1px dashed #B7B7B7;
+  background-color: #EFEFEF;
+
+  img {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .#{$prefix}required {
+    position: absolute;
+    width: 0.8rem;
+    height: 0.8rem;
+
+  }
+
+  .#{$prefix}circleRequired {
+    top: -3px;
+    right: -3px;
+  }
+
+  .#{$prefix}rectRequired {
+    top: -5px;
+    right: -5px;
+  }
+}

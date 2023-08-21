@@ -1,2 +1,7 @@
-export { default as Tag } from './Tag';
-export type { TagProps } from './Tag';
+export { default as StatusTag } from './StatusTag';
+export type {
+  StatusTagProps,
+  StatusTagShape,
+  StatusTagStyle,
+  StatusTagType,
+} from './StatusTag/define';

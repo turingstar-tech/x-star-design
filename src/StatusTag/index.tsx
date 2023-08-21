@@ -1,11 +1,11 @@
-import correctSVG from '@/assets/status-tag/correct.svg';
-import diamondSVG from '@/assets/status-tag/diamond.svg';
-import filledSVG from '@/assets/status-tag/filled.svg';
-import halfCorrectSVG from '@/assets/status-tag/half-correct.svg';
-import pendingSVG from '@/assets/status-tag/pending.svg';
-import wrongSVG from '@/assets/status-tag/wrong.svg';
 import classNames from 'classnames';
 import React, { useRef, useState } from 'react';
+import correctSVG from '../assets/status-tag/correct.svg';
+import diamondSVG from '../assets/status-tag/diamond.svg';
+import filledSVG from '../assets/status-tag/filled.svg';
+import halfCorrectSVG from '../assets/status-tag/half-correct.svg';
+import pendingSVG from '../assets/status-tag/pending.svg';
+import wrongSVG from '../assets/status-tag/wrong.svg';
 import { prefix } from '../utils/global';
 import { StatusTagProps, StatusTagStyle, StatusTagType } from './define';
 const StatusTag = ({

@@ -1,6 +1,6 @@
 # StatusTag
 
-This is an example component.
+这是题目状态组件
 
 ```jsx
 import { StatusTag } from 'x-star-design';

@@ -1,7 +1,7 @@
-export { default as StatusTag } from './StatusTag';
+export { default as StatusTag } from './status-tag';
 export type {
   StatusTagProps,
   StatusTagShape,
   StatusTagStyle,
   StatusTagType,
-} from './StatusTag/define';
+} from './status-tag/define';

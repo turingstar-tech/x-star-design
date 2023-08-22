@@ -1,10 +1,5 @@
 @import '../styles/global';
 
-.#{$prefix}statusTagTest {
-  display: flex;
-  gap: 1em;
-}
-
 .#{$prefix}statusTag {
   position: relative;
   display: flex;
@@ -15,8 +10,8 @@
   height: 1.6rem;
   font-size: 1rem;
   border-width: 1px;
-  border: 1px dashed #B7B7B7;
-  background-color: #EFEFEF;
+  border: 1px dashed #b7b7b7;
+  background-color: #efefef;
 
   img {
     width: 1rem;
@@ -27,7 +22,6 @@
     position: absolute;
     width: 0.8rem;
     height: 0.8rem;
-
   }
 
   .#{$prefix}circleRequired {

@@ -21,7 +21,7 @@ export type StatusTagStyle = {
 export interface StatusTagProps {
   shape: StatusTagShape;
   status: StatusTagType;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   required?: boolean;
   hover?: boolean;
   className?: string;

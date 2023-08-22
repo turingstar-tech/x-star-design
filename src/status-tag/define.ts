@@ -19,9 +19,16 @@ export type StatusTagStyle = {
   textDecoration?: string;
 };
 export interface StatusTagProps {
+  /**
+   * @description 标签形状
+   */
   shape: StatusTagShape;
   status: StatusTagType;
   children?: React.ReactNode;
+  /**
+   * @description 是否为必做题
+   * @default false
+   */
   required?: boolean;
   hover?: boolean;
   className?: string;

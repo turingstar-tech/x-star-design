@@ -6,7 +6,7 @@ This is an example component.
 import { StatusTag } from 'x-star-design';
 
 export default () => (
-  <div className="x-star-design-statusTagTest">
+  <div style={{ display: 'flex', gap: '1rem' }}>
     <StatusTag shape={'rect'} status={'unfilled'} />
     <StatusTag shape={'circle'} hover status={'wrong'} required>
       <span>{'1'}</span>
@@ -14,3 +14,7 @@ export default () => (
   </div>
 );
 ```
+
+## API
+
+<API id="StatusTag"></API>

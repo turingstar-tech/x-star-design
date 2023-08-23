@@ -19,14 +19,14 @@
   z-index: 91;
 }
 
-.#{$prefix}layout {
+.#{$prefix}draggableLayout {
   position: relative;
   height: 100%;
   width: 100%;
   overflow: hidden;
 }
 
-.#{$prefix}divider {
+.#{$prefix}draggableDivider {
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -34,20 +34,20 @@
   z-index: 91;
 }
 
-.#{$prefix}divider:hover,
-.#{$prefix}divider:active,
-.#{$prefix}dividerActive {
+.#{$prefix}draggableDivider:hover,
+.#{$prefix}draggableDivider:active,
+.#{$prefix}draggableDividerActive {
   border-left: 4px #1890ff solid;
   cursor: col-resize;
 }
 
-.#{$prefix}mask {
+.#{$prefix}draggableMask {
   position: absolute;
   inset: 0px;
   z-index: 90;
 }
 
-.#{$prefix}children {
+.#{$prefix}draggableChildren {
   position: absolute;
   top: 0px;
   bottom: 0px;

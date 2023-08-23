@@ -1,0 +1,58 @@
+@import '../styles/global';
+
+.#{$prefix}divider-test {
+  cursor: col-resize;
+  position: relative;
+  background-color: #fafafa;
+  width: 16px;
+  height: 50px;
+  background-size: cover;
+  background-position: center;
+  font-size: 32px;
+  color: #9f9f9f;
+  user-select: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 91;
+}
+
+.#{$prefix}layout {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.#{$prefix}divider {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  border-left: 4px transparent solid;
+  z-index: 91;
+}
+
+.#{$prefix}divider:hover,
+.#{$prefix}divider:active,
+.#{$prefix}dividerActive {
+  border-left: 4px #1890ff solid;
+  cursor: col-resize;
+}
+
+.#{$prefix}mask {
+  position: absolute;
+  inset: 0px;
+  z-index: 90;
+}
+
+.#{$prefix}children {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+
+  >* {
+    height: 100%;
+  }
+}

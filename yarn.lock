@@ -425,7 +425,7 @@
     "@codemirror/language" "^6.8.0"
     "@lezer/python" "^1.1.4"
 
-"@codemirror/language@^6.0.0", "@codemirror/language@^6.8.0":
+"@codemirror/language@^6.0.0", "@codemirror/language@^6.8.0", "@codemirror/language@^6.9.0":
   version "6.9.0"
   resolved "https://registry.npmjs.org/@codemirror/language/-/language-6.9.0.tgz#c471ce1fdb9b1577f312bb68ef54fb4b76f7a420"
   integrity sha512-nFu311/0ne/qGuGCL3oKuktBgzVOaxCHZPZv1tLSZkNjPYxxvkjSbzno3MlErG2tgw1Yw1yF8BxMCegeMXqpiw==

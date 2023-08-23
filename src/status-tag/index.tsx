@@ -4,7 +4,6 @@ import correctSVG from '../assets/status-tag/correct.svg';
 import diamondSVG from '../assets/status-tag/diamond.svg';
 import filledSVG from '../assets/status-tag/filled.svg';
 import halfCorrectSVG from '../assets/status-tag/half-correct.svg';
-import pendingSVG from '../assets/status-tag/pending.svg';
 import wrongSVG from '../assets/status-tag/wrong.svg';
 import { prefix } from '../utils/global';
 import { StatusTagProps, StatusTagStyle, StatusTagType } from './define';
@@ -38,7 +37,6 @@ const StatusTag = ({
         color: '#1677ff',
         borderColor: '#91CAFF',
         backgroundColor: '#E6F4FF',
-        icon: <img src={filledSVG} alt="" />,
       },
     ],
     [
@@ -74,7 +72,7 @@ const StatusTag = ({
         color: '#FC7D33',
         borderColor: '#FFC09B',
         backgroundColor: '#FFF2EA',
-        icon: <img src={pendingSVG} alt="" />,
+        icon: <img src={filledSVG} alt="" />,
       },
     ],
     [

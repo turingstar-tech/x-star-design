@@ -98,11 +98,6 @@ const StatusTag = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* {hover
-        ? statusCSSMap.get(status)?.icon && !showContent
-          ? statusCSSMap.get(status)?.icon
-          : children
-        : statusCSSMap.get(status)?.icon} */}
       {statusCSSMap?.get(status)?.icon
         ? hover
           ? showContent

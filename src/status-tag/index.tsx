@@ -13,6 +13,7 @@ const StatusTag = ({
   hover,
   required,
   children,
+  onClick,
   ...props
 }: StatusTagProps) => {
   const timeoutRef = useRef(0);
@@ -93,6 +94,7 @@ const StatusTag = ({
         borderRadius: shape === 'circle' ? '50%' : '4px',
         ...props.style,
       }}
+      onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

@@ -42,7 +42,14 @@ export default () => {
     <div style={{ display: 'flex', gap: 12 }}>
       {list?.map((v, index) => (
         <div key={index} span={8}>
-          <StatusTag shape={v?.shape} status={v?.status} hover>
+          <StatusTag
+            shape={v?.shape}
+            status={v?.status}
+            hover
+            onClick={() => {
+              console.log('click');
+            }}
+          >
             1
           </StatusTag>
           <span>{v?.label}</span>

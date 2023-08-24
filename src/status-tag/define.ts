@@ -33,4 +33,5 @@ export interface StatusTagProps {
   hover?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  onClick?: () => void;
 }

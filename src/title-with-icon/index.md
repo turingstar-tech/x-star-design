@@ -10,4 +10,4 @@ export default () => <TitleWithIcon title={'修改资料'} />;
 
 ## API
 
-<API id="StatusTag"></API>
+<API id="TitleWithIcon"></API>

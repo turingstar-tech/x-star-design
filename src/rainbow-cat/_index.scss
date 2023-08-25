@@ -1,5 +1,3 @@
-@import '../styles/global';
-
 .#{$prefix}rainbowContent {
   height: 100vh;
   display: flex;
@@ -12,7 +10,8 @@
   }
 
   .#{$prefix}rainbowDot {
-    font-family: simsun;
+    font-family: simsun, monospace;
+
     /* 固定字体避免设置的宽度无效 */
     display: inline-block;
     overflow: hidden;
@@ -21,7 +20,6 @@
   }
 
   @keyframes dot {
-
     /* 动态改变显示宽度，但始终让总占据空间不变，避免抖动 */
     0% {
       width: 0;

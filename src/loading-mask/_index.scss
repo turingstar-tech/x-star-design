@@ -1,8 +1,6 @@
-@import '../styles/global';
-
 .#{$prefix}loadingMask {
   position: absolute;
-  inset: 0px;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,13 +22,13 @@
 
 .#{$prefix}loadingSquare {
   position: absolute;
-  top: 0px;
+  top: 0;
   width: 20px;
   height: 20px;
 }
 
 .#{$prefix}loadingSquare:nth-child(1) {
-  left: 0px;
+  left: 0;
   animation: square1 1.5s linear forwards infinite;
 }
 
@@ -52,12 +50,12 @@
 @keyframes square1 {
   0% {
     background-color: #096dd9;
-    transform: translate(0px, 0px);
+    transform: translate(0, 0);
   }
 
   9.09091% {
     background-color: #096dd9;
-    transform: translate(0px, -22px);
+    transform: translate(0, -22px);
   }
 
   18.18182% {
@@ -66,28 +64,28 @@
   }
 
   27.27273% {
-    transform: translate(22px, 0px);
+    transform: translate(22px, 0);
   }
 
   100% {
     background-color: #022679;
-    transform: translate(22px, 0px);
+    transform: translate(22px, 0);
   }
 }
 
 @keyframes square2 {
   0% {
     background-color: #022679;
-    transform: translate(0px, 0px);
+    transform: translate(0, 0);
   }
 
   18.18182% {
-    transform: translate(0px, 0px);
+    transform: translate(0, 0);
   }
 
   27.27273% {
     background-color: #022679;
-    transform: translate(0px, 22px);
+    transform: translate(0, 22px);
   }
 
   36.36364% {
@@ -96,28 +94,28 @@
   }
 
   45.45455% {
-    transform: translate(22px, 0px);
+    transform: translate(22px, 0);
   }
 
   100% {
     background-color: #f57712;
-    transform: translate(22px, 0px);
+    transform: translate(22px, 0);
   }
 }
 
 @keyframes square3 {
   0% {
     background-color: #f57712;
-    transform: translate(0px, 0px);
+    transform: translate(0, 0);
   }
 
   36.36364% {
-    transform: translate(0px, 0px);
+    transform: translate(0, 0);
   }
 
   45.45455% {
     background-color: #f57712;
-    transform: translate(0px, -22px);
+    transform: translate(0, -22px);
   }
 
   54.54545% {
@@ -126,28 +124,28 @@
   }
 
   63.63636% {
-    transform: translate(22px, 0px);
+    transform: translate(22px, 0);
   }
 
   100% {
     background-color: #ffd600;
-    transform: translate(22px, 0px);
+    transform: translate(22px, 0);
   }
 }
 
 @keyframes square4 {
   0% {
     background-color: #ffd600;
-    transform: translate(0px, 0px);
+    transform: translate(0, 0);
   }
 
   54.54545% {
-    transform: translate(0px, 0px);
+    transform: translate(0, 0);
   }
 
   63.63636% {
     background-color: #ffd600;
-    transform: translate(0px, 22px);
+    transform: translate(0, 22px);
   }
 
   72.72727% {
@@ -165,6 +163,6 @@
 
   100% {
     background-color: #096dd9;
-    transform: translate(-66px, 0px);
+    transform: translate(-66px, 0);
   }
 }

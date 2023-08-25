@@ -15,7 +15,7 @@
     "docs:build": "dumi build",
     "doctor": "father doctor",
     "lint": "npm run lint:es && npm run lint:css",
-    "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
+    "lint:css": "stylelint \"{src,test}/**/*.{css,scss}\"",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
     "prepare": "husky install && dumi setup",
     "prepublishOnly": "father doctor && npm run build",
@@ -30,7 +30,7 @@
     "*.{md,json}": [
       "prettier --write --no-error-on-unmatched-pattern"
     ],
-    "*.{css,less}": [
+    "*.{css,scss}": [
       "stylelint --fix",
       "prettier --write"
     ],
@@ -75,7 +75,8 @@
     "prettier-plugin-packagejson": "^2.2.18",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "stylelint": "^14.9.1"
+    "stylelint": "^14.9.1",
+    "stylelint-config-standard-scss": "^6.1.0"
   },
   "peerDependencies": {
     "react": ">=16.9.0",

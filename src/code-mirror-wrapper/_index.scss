@@ -1,12 +1,10 @@
-@import '../styles/global';
-
 .#{$prefix}codeMirror {
   width: 100%;
   height: 100%;
 
   .cm-editor {
-    font-family: "JBMono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-      "Liberation Mono", "Courier New";
+    font-family: JBMono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      'Liberation Mono', 'Courier New';
     height: 100%;
     font-size: 16px;
     line-height: 150%;

@@ -25,16 +25,16 @@ interface Props {
   theme?: Theme;
   /**
    * @description   
-  CPP = 1,
-  CPP11,
-  CPP14,
-  GCC,
-  FPC,
-  PY2,
-  PY3,
-  JAVA,
-  PLAIN,
-  CPP17
+  CPP = 'g++',
+  CPP11 = 'g++11',
+  CPP14 = 'g++14',
+  CPP17 = 'g++17',
+  GCC = 'gcc',
+  FPC = 'fpc',
+  PY2 = 'python2.7',
+  PY3 = 'python3.8',
+  JAVA = 'java8',
+  PLAIN = 'plain',
   @default LangId.CPP
    */
   lang?: LangId;

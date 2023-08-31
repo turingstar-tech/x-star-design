@@ -46,6 +46,7 @@ export default () => {
             shape={v?.shape}
             status={v?.status}
             hover
+            required
             onClick={() => {
               console.log('click');
             }}

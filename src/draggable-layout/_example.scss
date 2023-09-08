@@ -1,0 +1,21 @@
+.#{$prefix}divider-example {
+  position: relative;
+  width: 16px;
+  height: 100%;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8f8f8f;
+  background-color: #f8f8f8;
+  user-select: none;
+  z-index: 90;
+  transition: color 0.3s, background 0.3s, border 0.3s;
+  cursor: col-resize;
+
+  &:hover,
+  &:active {
+    color: #4f4f4f;
+    background-color: #f4f4f4;
+  }
+}

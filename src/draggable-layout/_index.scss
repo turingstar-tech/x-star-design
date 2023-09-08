@@ -1,50 +1,34 @@
-.#{$prefix}divider-test {
-  cursor: col-resize;
+.#{$prefix}draggable-layout {
   position: relative;
-  background-color: #fafafa;
-  width: 16px;
-  background-size: cover;
-  background-position: center;
-  font-size: 32px;
-  color: #9f9f9f;
-  user-select: none;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-  z-index: 91;
-}
-
-.#{$prefix}draggableLayout {
-  position: relative;
-  height: 100%;
   width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
-.#{$prefix}draggableDivider {
+.#{$prefix}draggable-divider {
   position: absolute;
   top: 0;
   bottom: 0;
   border-left: 4px transparent solid;
-  z-index: 91;
-}
-
-.#{$prefix}draggableDivider:hover,
-.#{$prefix}draggableDivider:active,
-.#{$prefix}draggableDividerActive {
-  border-left: 4px #1890ff solid;
+  transform: translate(-2px);
+  z-index: 90;
+  transition: color 0.3s, background 0.3s, border 0.3s;
   cursor: col-resize;
 }
 
-.#{$prefix}draggableMask {
-  position: absolute;
-  inset: 0;
-  z-index: 90;
+.#{$prefix}draggable-divider:hover,
+.#{$prefix}draggable-divider:active,
+.#{$prefix}draggable-divider.#{$prefix}draggable-divider-active {
+  border-left: 4px #1890ff solid;
 }
 
-.#{$prefix}draggableChildren {
+.#{$prefix}draggable-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 91;
+}
+
+.#{$prefix}draggable-children {
   position: absolute;
   top: 0;
   bottom: 0;

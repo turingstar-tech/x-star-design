@@ -8,10 +8,12 @@ import { DraggableLayout } from 'x-star-design';
 export default () => (
   <DraggableLayout
     style={{ border: '1px solid #000', height: 500 }}
-    dividerClassName={'x-star-design-divider-test'}
-    minWidth={[40, 40]}
-    defaultWidth={50}
-    barWidth={16}
+    dividerClassName={'x-star-design-divider-example'}
+    dividerWidth="16px"
+    dividerChildren="⋮"
+    defaultWidth="50%"
+    minWidth={['40%', '40%']}
+    collapsible={[true, true]}
     left={<div>{'Left Pane'}</div>}
     right={<div>{'Right Pane'}</div>}
   />

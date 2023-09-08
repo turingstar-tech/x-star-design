@@ -1,139 +1,190 @@
-import { useMemoizedFn, useMouse, useSize } from 'ahooks';
+import { useMemoizedFn } from 'ahooks';
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
-import { useDelayedMount } from 'x-star-utils';
+import React, { useRef, useState } from 'react';
 import { prefix } from '../utils/global';
+
 interface DraggableLayoutProps {
   className?: string;
   style?: React.CSSProperties;
   dividerClassName?: string;
-  minWidth: [number, number];
-  defaultWidth: number;
+  dividerWidth?: string;
+  dividerChildren?: React.ReactNode;
+  defaultWidth?: string;
+  minWidth?: [string, string];
+  collapsible?: [boolean, boolean];
   left: React.ReactNode;
   right: React.ReactNode;
-  barWidth: number;
 }
 
 /**
  * 可拖拽布局
  */
 const DraggableLayout: React.FC<DraggableLayoutProps> = ({
-  className = '',
+  className,
   style,
   dividerClassName,
-  minWidth,
-  defaultWidth,
+  dividerWidth = '0%',
+  dividerChildren,
+  defaultWidth = '50%',
+  minWidth = ['25%', '25%'],
+  collapsible = [true, true],
   left,
   right,
-  barWidth,
 }) => {
-  const [width, setWidth] = useState(300);
   const [dragging, setDragging] = useState(false);
-  const wrapper = useRef<HTMLDivElement>(null);
-  const { elementX } = useMouse(wrapper);
-  const size = useSize(wrapper);
 
-  useEffect(() => {
-    if (size) {
-      setWidth((defaultWidth / 100) * size.width);
+  const transition = useRef(false);
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
+
+  const enableTransition = useMemoizedFn(() => {
+    if (dividerRef.current && leftRef.current && rightRef.current) {
+      dividerRef.current.style.transition =
+        'color 0.3s, background 0.3s, border 0.3s, left 0.3s';
+      leftRef.current.style.transition = 'left 0.3s, right 0.3s';
+      rightRef.current.style.transition = 'left 0.3s, right 0.3s';
     }
-  }, [defaultWidth, size]);
+  });
 
-  useEffect(() => {
-    if (dragging && size) {
-      if (elementX < ((minWidth[0] / 100) * size.width) / 2) {
-        setWidth(0);
-      } else if (elementX < (minWidth[0] / 100) * size.width) {
-        setWidth((minWidth[0] / 100) * size.width);
-      } else if (elementX < size.width - (minWidth[1] / 100) * size.width) {
-        setWidth(elementX);
+  const disableTransition = useMemoizedFn(() => {
+    if (dividerRef.current && leftRef.current && rightRef.current) {
+      dividerRef.current.style.transition =
+        'color 0.3s, background 0.3s, border 0.3s';
+      leftRef.current.style.transition = '';
+      rightRef.current.style.transition = '';
+    }
+  });
+
+  const dragHandler = useMemoizedFn((e: MouseEvent) => {
+    if (
+      !transition.current &&
+      wrapperRef.current &&
+      dividerRef.current &&
+      leftRef.current &&
+      rightRef.current
+    ) {
+      if (collapsible[0] && e.offsetX < leftRef.current.offsetWidth / 2) {
+        if (leftRef.current.style.right !== '100%') {
+          // 左侧收起
+          enableTransition();
+          transition.current = true;
+          setTimeout(() => (transition.current = false), 300);
+          dividerRef.current.classList.add(`${prefix}draggable-divider-active`);
+          dividerRef.current.style.left = '0';
+          leftRef.current.style.left = `-${minWidth[0]}`;
+          leftRef.current.style.right = '100%';
+          rightRef.current.style.left = dividerWidth;
+          rightRef.current.style.right = '0';
+        }
       } else if (
-        elementX <
-        size.width - ((minWidth[1] / 100) * size.width) / 2
+        collapsible[1] &&
+        e.offsetX >
+          wrapperRef.current.offsetWidth - rightRef.current.offsetWidth / 2
       ) {
-        setWidth(size.width - (minWidth[1] / 100) * size.width);
+        if (rightRef.current.style.left !== '100%') {
+          // 右侧收起
+          enableTransition();
+          transition.current = true;
+          setTimeout(() => (transition.current = false), 300);
+          dividerRef.current.classList.add(`${prefix}draggable-divider-active`);
+          dividerRef.current.style.left = `calc(100% - ${dividerWidth})`;
+          leftRef.current.style.left = '0';
+          leftRef.current.style.right = dividerWidth;
+          rightRef.current.style.left = '100%';
+          rightRef.current.style.right = `-${minWidth[1]}`;
+        }
       } else {
-        setWidth(size.width);
+        // 同时展示
+        if (
+          leftRef.current.style.right === '100%' ||
+          rightRef.current.style.left === '100%'
+        ) {
+          transition.current = true;
+          setTimeout(() => {
+            transition.current = false;
+            disableTransition();
+          }, 300);
+        }
+        const width = `min(max(${e.offsetX}px, calc(${minWidth[0]} + ${dividerWidth} / 2)), calc(100% - ${minWidth[1]} - ${dividerWidth} / 2))`;
+        dividerRef.current.classList.remove(
+          `${prefix}draggable-divider-active`,
+        );
+        dividerRef.current.style.left = `calc(${width} - ${dividerWidth} / 2)`;
+        leftRef.current.style.left = '0';
+        leftRef.current.style.right = `calc(100% - ${width} + ${dividerWidth} / 2)`;
+        rightRef.current.style.left = `calc(${width} + ${dividerWidth} / 2)`;
+        rightRef.current.style.right = '0';
       }
     }
-  }, [dragging, size, elementX, minWidth]);
-  const dragEnd = useMemoizedFn(() => {
-    setDragging(false);
-    if (wrapper.current) {
-      wrapper.current.style.cursor = 'unset';
-      wrapper.current.removeEventListener('mouseup', dragEnd);
-    }
-  });
-  const dragStart = useMemoizedFn(() => {
-    setDragging(true);
-    if (wrapper.current) {
-      wrapper.current.style.cursor = 'col-resize';
-      wrapper.current.addEventListener('mouseup', dragEnd);
-    }
   });
 
-  const leftHide = width === 0;
-  const rightHide = width === size?.width;
-  const [transition] = useDelayedMount(leftHide || rightHide, 300);
+  const dragStart = useMemoizedFn(() => {
+    setDragging(true);
+    if (wrapperRef.current) {
+      wrapperRef.current.style.cursor = 'col-resize';
+      wrapperRef.current.addEventListener('mousemove', dragHandler, {
+        capture: true,
+        passive: true,
+      });
+      document.addEventListener(
+        'mouseup',
+        () => {
+          setDragging(false);
+          if (wrapperRef.current) {
+            wrapperRef.current.style.cursor = 'unset';
+            wrapperRef.current.removeEventListener('mousemove', dragHandler, {
+              capture: true,
+            });
+          }
+        },
+        {
+          capture: true,
+          passive: true,
+          once: true,
+        },
+      );
+    }
+  });
 
   return (
     <div
-      ref={wrapper}
-      className={classNames(`${prefix}draggableLayout`, className)}
+      ref={wrapperRef}
+      className={classNames(`${prefix}draggable-layout`, className)}
       style={style}
     >
-      {size && (
-        <>
-          <div
-            className={
-              dividerClassName ||
-              classNames(
-                `${prefix}draggableDivider`,
-                `${
-                  leftHide || rightHide ? `${prefix}draggableDividerActive` : ''
-                }`,
-              )
-            }
-            style={{
-              left: leftHide
-                ? width
-                : rightHide
-                ? width - barWidth
-                : width - barWidth / 2,
-              transition: transition
-                ? 'all 0.3s'
-                : 'color 0.3s, background-color 0.3s',
-            }}
-            onDragStart={(e) => e.preventDefault()}
-            onMouseDown={dragStart}
-          >
-            ⋮
-          </div>
-          {dragging && <div className={`${prefix}draggableMask`} />}
-          <div
-            className={`${prefix}draggableChildren`}
-            style={{
-              right: rightHide
-                ? barWidth
-                : `calc(100% - ${width - barWidth / 2}px)`,
-              left: leftHide ? `calc(-${minWidth[0]} / 100 * 100%)` : 0,
-              transition: transition ? 'all 0.3s' : '',
-            }}
-          >
-            {left}
-          </div>
-          <div
-            className={`${prefix}draggableChildren`}
-            style={{
-              left: leftHide ? barWidth : width + barWidth / 2,
-              right: rightHide ? `calc(-${minWidth[1]} / 100 * 100%)` : 0,
-              transition: transition ? 'all 0.3s' : '',
-            }}
-          >
-            {right}
-          </div>
-        </>
-      )}
+      <div
+        ref={dividerRef}
+        className={dividerClassName ?? classNames(`${prefix}draggable-divider`)}
+        style={{ left: `calc(${defaultWidth} - ${dividerWidth} / 2)` }}
+        onDragStart={(e) => e.preventDefault()}
+        onMouseDown={dragStart}
+      >
+        {dividerChildren}
+      </div>
+      {dragging && <div className={`${prefix}draggable-mask`} />}
+      <div
+        ref={leftRef}
+        className={`${prefix}draggable-children`}
+        style={{
+          left: 0,
+          right: `calc(100% - ${defaultWidth} + ${dividerWidth} / 2)`,
+        }}
+      >
+        {left}
+      </div>
+      <div
+        ref={rightRef}
+        className={`${prefix}draggable-children`}
+        style={{
+          left: `calc(${defaultWidth} + ${dividerWidth} / 2)`,
+          right: 0,
+        }}
+      >
+        {right}
+      </div>
     </div>
   );
 };

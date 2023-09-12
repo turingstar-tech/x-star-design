@@ -1,3 +1,4 @@
+export { default as AcAnimation } from './ac-animation';
 export { default as CodeMirrorWrapper } from './code-mirror-wrapper';
 export { LangId, Language, Theme } from './code-mirror-wrapper/define';
 export { default as DraggableLayout } from './draggable-layout';

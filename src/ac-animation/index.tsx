@@ -6,6 +6,7 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
   imgUrl,
   imgSizeAndPosition = { scale: 1, offsetX: 0, offsetY: 0 },
   titleStyle,
+  onFinish,
 }) => {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -114,6 +115,12 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
     }
   };
 
+  const shutDownCanvas = () => {
+    canvas.remove();
+    window.cancelAnimationFrame(AnimationID);
+    onFinish?.();
+  };
+
   //---------Render-----------
   const render = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -164,8 +171,7 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
     });
 
     if (confetti.length <= 10) {
-      canvas.remove();
-      window.cancelAnimationFrame(AnimationID);
+      shutDownCanvas();
       return;
     }
 
@@ -188,8 +194,7 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
       <div
         id="ac-canvas"
         onClick={() => {
-          canvas.remove();
-          window.cancelAnimationFrame(AnimationID);
+          shutDownCanvas();
         }}
       ></div>
     </>

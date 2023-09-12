@@ -12,7 +12,7 @@ export default () => {
     <>
       <button
         onClick={() => {
-          setFlag(!flag);
+          setFlag(true);
         }}
       >
         Click Me
@@ -24,6 +24,9 @@ export default () => {
           imgUrl={XydLogoUrl}
           imgSizeAndPosition={{ scale: 2, offsetY: 200 }}
           titleStyle={{ fontSize: 45, color: '#FFAD10', offsetY: -200 }}
+          onFinish={() => {
+            setFlag(false);
+          }}
         />
       )}
     </>

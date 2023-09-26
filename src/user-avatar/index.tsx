@@ -1,5 +1,5 @@
 import { Avatar, Tooltip } from 'antd';
-import { AvatarProps } from 'antd/lib/avatar';
+import { AvatarProps } from 'antd/es/avatar';
 import randomColor from 'randomcolor';
 import React, { useMemo } from 'react';
 

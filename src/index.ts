@@ -15,3 +15,4 @@ export type {
 } from './status-tag/define';
 export { default as TitleWithIcon } from './title-with-icon';
 export { default as UserAvatar } from './user-avatar';
+export { default as VirtualTable } from './virtual-table';

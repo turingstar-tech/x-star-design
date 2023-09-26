@@ -14,3 +14,4 @@ export type {
   StatusTagType,
 } from './status-tag/define';
 export { default as TitleWithIcon } from './title-with-icon';
+export { default as UserAvatar } from './user-avatar';

@@ -1,0 +1,11 @@
+.#{$prefix}title {
+  background-color: #fff;
+  min-height: 50px;
+  margin: 0;
+  padding: 10px 20px;
+
+  .#{$prefix}description {
+    font-size: 12px;
+    color: #b6b6b6;
+  }
+}

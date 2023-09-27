@@ -5,6 +5,7 @@ export { default as DraggableLayout } from './draggable-layout';
 export { default as ErrorBoundary } from './error-boundary';
 export type { FallbackProps } from './error-boundary';
 export { default as LoadingMask } from './loading-mask';
+export { default as PaneTitle } from './pane-title';
 export { default as RainbowCat } from './rainbow-cat';
 export { default as SortTable } from './sort-table';
 export { default as StatusTag } from './status-tag';
@@ -17,3 +18,4 @@ export type {
 export { default as TitleWithIcon } from './title-with-icon';
 export { default as UserAvatar } from './user-avatar';
 export { default as VirtualTable } from './virtual-table';
+export { default as XTabs } from './xtabs';

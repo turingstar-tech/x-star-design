@@ -67,18 +67,9 @@ const SubTaskConfig = () => {
                       <Input />
                     </Form.Item>
                   </Col>
-                  {/* <Col>
-                  <Form.Item
-                    {...field}
-                    label={'积分规则'}
-                    name={[field.name, 'rule']}
-                  >
-                    <Select options={[]} style={{ width: 200 }} />
-                  </Form.Item>
-                </Col> */}
                   <MinusCircleOutlined
                     className="dynamic-delete-button"
-                    style={{ lineHeight: '32px' }}
+                    style={{ lineHeight: 32, height: 32 }}
                     onClick={() => remove(field.name)}
                   />
                 </Row>

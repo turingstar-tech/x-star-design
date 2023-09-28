@@ -59,7 +59,7 @@ const SingleDataConfig = () => {
                 </Col>
                 <MinusCircleOutlined
                   className="dynamic-delete-button"
-                  style={{ lineHeight: '32px' }}
+                  style={{ lineHeight: 32, height: 32 }}
                   onClick={() => remove(field.name)}
                 />
               </Row>

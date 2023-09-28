@@ -9,6 +9,7 @@ import {
   SortableElement,
   SortableHandle,
 } from 'react-sortable-hoc';
+import ConfigProviderWrapper from '../config-provider-wrapper';
 type customProps = {
   onSortEnd?: (newDataSource: Array<any>) => Promise<void>;
 };
@@ -72,18 +73,20 @@ const SortTable = (props: TableProps<any> & customProps) => {
   };
 
   return (
-    <Table
-      {...props}
-      columns={newColumns}
-      rowKey={rowKey}
-      dataSource={dataSource}
-      components={{
-        body: {
-          wrapper: DraggableContainer,
-          row: DraggableBodyRow,
-        },
-      }}
-    ></Table>
+    <ConfigProviderWrapper>
+      <Table
+        {...props}
+        columns={newColumns}
+        rowKey={rowKey}
+        dataSource={dataSource}
+        components={{
+          body: {
+            wrapper: DraggableContainer,
+            row: DraggableBodyRow,
+          },
+        }}
+      />
+    </ConfigProviderWrapper>
   );
 };
 export default SortTable;

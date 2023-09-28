@@ -5,6 +5,7 @@ import ResizeObserver from 'rc-resize-observer';
 import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import type { GridChildComponentProps } from 'react-window';
 import { VariableSizeGrid as Grid } from 'react-window';
+import ConfigProviderWrapper from '../config-provider-wrapper';
 import { prefix } from '../utils/global';
 
 const VirtualTable = <RecordType extends Record<string, unknown>>(
@@ -282,36 +283,38 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
   };
 
   return (
-    <ResizeObserver onResize={({ width }) => setTableWidth(width)}>
-      <Table
-        {...props}
-        className={classNames(`${prefix}virtual-table`, props.className)}
-        pagination={false}
-        components={{
-          header: {
-            /**
-             * 渲染自定义表头，修复固定列问题
-             */
-            row: ({ children, ...rest }: any) => {
-              const newChildren = [...children];
-              for (let i = 0, left = 0; i < newChildren.length; i++) {
-                const props = newChildren[i].props;
-                if (!props.column.fixed) {
-                  break;
+    <ConfigProviderWrapper>
+      <ResizeObserver onResize={({ width }) => setTableWidth(width)}>
+        <Table
+          {...props}
+          className={classNames(`${prefix}virtual-table`, props.className)}
+          pagination={false}
+          components={{
+            header: {
+              /**
+               * 渲染自定义表头，修复固定列问题
+               */
+              row: ({ children, ...rest }: any) => {
+                const newChildren = [...children];
+                for (let i = 0, left = 0; i < newChildren.length; i++) {
+                  const props = newChildren[i].props;
+                  if (!props.column.fixed) {
+                    break;
+                  }
+                  newChildren[i] = {
+                    ...newChildren[i],
+                    props: { ...props, fixLeft: left },
+                  };
+                  left += props.column.width;
                 }
-                newChildren[i] = {
-                  ...newChildren[i],
-                  props: { ...props, fixLeft: left },
-                };
-                left += props.column.width;
-              }
-              return <tr {...rest}>{children}</tr>;
+                return <tr {...rest}>{children}</tr>;
+              },
             },
-          },
-          body: renderVirtualList,
-        }}
-      />
-    </ResizeObserver>
+            body: renderVirtualList,
+          }}
+        />
+      </ResizeObserver>
+    </ConfigProviderWrapper>
   );
 };
 

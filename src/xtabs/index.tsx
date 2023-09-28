@@ -1,5 +1,7 @@
 import { Tabs, TabsProps } from 'antd';
 import React, { useMemo } from 'react';
+import ConfigProviderWrapper from '../config-provider-wrapper';
+import { prefix } from '../utils/global';
 type XTabsItem = Exclude<TabsProps['items'], undefined> extends (infer Item)[]
   ? Item & { icon?: React.ReactNode }
   : undefined;
@@ -12,24 +14,26 @@ const XTabs = ({ items, ...props }: XTabsProps) => {
       items?.map((item) => ({
         ...item,
         label: (
-          <div className="icon-pane">
-            <div className="icon-img">{item.icon}</div>
-            <em className="icon-title">{item?.label}</em>
+          <div className={`${prefix}icon-pane`}>
+            <div className={`${prefix}icon-img`}>{item.icon}</div>
+            <em className={`${prefix}icon-title`}>{item?.label}</em>
           </div>
         ),
       })),
     [items],
   );
   return (
-    <Tabs
-      tabPosition={'left'}
-      size="large"
-      type="card"
-      tabBarGutter={24}
-      destroyInactiveTabPane
-      items={newItems}
-      {...props}
-    />
+    <ConfigProviderWrapper>
+      <Tabs
+        className={`${prefix}XTabs`}
+        tabPosition={'left'}
+        size="large"
+        type="card"
+        destroyInactiveTabPane
+        items={newItems}
+        {...props}
+      />
+    </ConfigProviderWrapper>
   );
 };
 

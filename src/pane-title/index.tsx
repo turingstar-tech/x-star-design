@@ -1,5 +1,6 @@
 import { Space } from 'antd';
 import React from 'react';
+import ConfigProviderWrapper from '../config-provider-wrapper';
 import TitleWithIcon from '../title-with-icon';
 import { prefix } from '../utils/global';
 type PaneTitleProps = {
@@ -16,15 +17,17 @@ const PaneTitle: React.FC<PaneTitleProps> = ({
   style,
 }) => {
   return (
-    <div style={style}>
-      <div className={`${prefix}title`}>
-        <Space align="center">
-          <TitleWithIcon title={title} />
-          <div className={`${prefix}description`}>{description}</div>
-          <div style={{ marginLeft: 40 }}>{children}</div>
-        </Space>
+    <ConfigProviderWrapper>
+      <div style={style}>
+        <div className={`${prefix}title`}>
+          <Space align="center">
+            <TitleWithIcon title={title} />
+            <div className={`${prefix}description`}>{description}</div>
+            <div style={{ marginLeft: 40 }}>{children}</div>
+          </Space>
+        </div>
       </div>
-    </div>
+    </ConfigProviderWrapper>
   );
 };
 

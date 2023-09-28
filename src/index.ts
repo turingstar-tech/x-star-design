@@ -5,6 +5,7 @@ export { default as DraggableLayout } from './draggable-layout';
 export { default as ErrorBoundary } from './error-boundary';
 export type { FallbackProps } from './error-boundary';
 export { default as LoadingMask } from './loading-mask';
+export { LocaleProvider } from './locales';
 export { default as PaneTitle } from './pane-title';
 export { default as RainbowCat } from './rainbow-cat';
 export { default as SortTable } from './sort-table';

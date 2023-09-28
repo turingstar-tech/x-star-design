@@ -5,7 +5,16 @@
     width: 100%;
 
     .#{$prefix}explainItem {
-      margin: -10px 0 16px;
+      margin: -20px 0 16px;
+    }
+
+    .#{$prefix}form-item-extra {
+      clear: both;
+      color: #00000073;
+      font-size: 14px;
+      line-height: 1.5715;
+      transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+      min-height: 24px;
     }
   }
 

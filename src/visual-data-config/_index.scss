@@ -1,0 +1,15 @@
+.#{$prefix}form {
+  width: 90%;
+
+  .#{$prefix}row {
+    width: 100%;
+
+    .#{$prefix}explainItem {
+      margin: -10px 0 16px;
+    }
+  }
+
+  .#{$prefix}formList {
+    width: 100%;
+  }
+}

@@ -16,3 +16,4 @@ export type {
 export { default as SubmissionStatus } from './submission-status';
 export { default as TitleWithIcon } from './title-with-icon';
 export { default as UserAvatar } from './user-avatar';
+export { default as VisualDataConfig } from './visual-data-config';

@@ -1,6 +1,6 @@
 # SubmissionStatus
 
-这是小标题组件
+这是代码提交结果状态组件
 
 ```jsx
 import { SubmissionStatus } from 'x-star-design';

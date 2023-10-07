@@ -1,6 +1,7 @@
 export { default as AcAnimation } from './ac-animation';
 export { default as Aliplayer } from './ali-player';
 export type { AliplayerConfig, AliplayerInstance } from './ali-player';
+export { default as CodeDetailModal } from './code-detail-modal';
 export { default as CodeMirrorWrapper } from './code-mirror-wrapper';
 export { LangId, Language, Theme } from './code-mirror-wrapper/define';
 export { default as DraggableLayout } from './draggable-layout';

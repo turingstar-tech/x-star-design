@@ -37,4 +37,17 @@ export default {
     SCORE: 'Score',
     BATCH_ADD: 'Batch Add',
   },
+  CodeDetailModal: {
+    Problem: 'Problem',
+    Language: 'Language',
+    Status: 'Status',
+    Score: 'Score',
+    Memory: 'Memory',
+    Code: 'Code',
+    Show: 'Show',
+    Hide: 'Hide',
+    Submission_Time: 'Submission Time',
+    Code_Detail: 'Code Detail',
+    Download_File: 'Download File',
+  },
 } as const;

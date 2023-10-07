@@ -34,4 +34,17 @@ export default {
     SCORE: '得分',
     BATCH_ADD: '批量添加',
   },
+  CodeDetailModal: {
+    Problem: '题目',
+    Language: '语言',
+    Status: '状态',
+    Score: '得分',
+    Memory: '大小',
+    Code: '代码',
+    Show: '显示',
+    Hide: '隐藏',
+    Submission_Time: '提交时间',
+    Code_Detail: '代码详情',
+    Download_File: '下载文件',
+  },
 } as const;

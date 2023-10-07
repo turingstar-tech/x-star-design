@@ -17,4 +17,4 @@ export default () => {
 
 ## API
 
-<API id="AcAnimation"></API>
+<API id="Aliplayer"></API>

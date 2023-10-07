@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { getTransResult } from 'x-star-utils';
 import CodeMirrorWrapper from '../code-mirror-wrapper';
 import { Theme } from '../code-mirror-wrapper/define';
+import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
 import SubmissionStatus from '../submission-status';
 import { prefix } from '../utils/global';
@@ -105,39 +106,45 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
     },
   ];
   return (
-    <Modal
-      title={t('Code_Detail')}
-      afterClose={() => setShowCode(false)}
-      open={open}
-      onCancel={onCancel}
-      width={'60%'}
-      footer={null}
-      {...props}
-    >
-      <Table
-        pagination={false}
-        columns={columns}
-        dataSource={[codeData]}
-        rowKey={'problemNameZh'}
-      />
-      {showCode ? (
-        codeData?.language === 'plain' ? (
-          <Button type="link" icon={<DownloadOutlined />} href={codeData?.link}>
-            {t('Download_File')}
-          </Button>
+    <ConfigProviderWrapper>
+      <Modal
+        title={t('Code_Detail')}
+        afterClose={() => setShowCode(false)}
+        open={open}
+        onCancel={onCancel}
+        width={'60%'}
+        footer={null}
+        {...props}
+      >
+        <Table
+          pagination={false}
+          columns={columns}
+          dataSource={[codeData]}
+          rowKey={'problemNameZh'}
+        />
+        {showCode ? (
+          codeData?.language === 'plain' ? (
+            <Button
+              type="link"
+              icon={<DownloadOutlined />}
+              href={codeData?.link}
+            >
+              {t('Download_File')}
+            </Button>
+          ) : (
+            <CodeMirrorWrapper
+              lang={codeData?.language}
+              theme={Theme.LIGHT}
+              value={codeData?.source}
+            />
+          )
         ) : (
-          <CodeMirrorWrapper
-            lang={codeData?.language}
-            theme={Theme.LIGHT}
-            value={codeData?.source}
-          />
-        )
-      ) : (
-        <pre className={`${prefix}codeCompileResult`}>
-          <code>{codeData.detail}</code>
-        </pre>
-      )}
-    </Modal>
+          <pre className={`${prefix}codeCompileResult`}>
+            <code>{codeData.detail}</code>
+          </pre>
+        )}
+      </Modal>
+    </ConfigProviderWrapper>
   );
 };
 export default CodeDetailModal;

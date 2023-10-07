@@ -1,9 +1,9 @@
-import wechatCode from '@/assets/contact-button/wechatCode.jpg';
-import xcQrCode from '@/assets/contact-button/xcQrCode.png';
 import { QrcodeOutlined } from '@ant-design/icons';
 import { Card, Popover, Space } from 'antd';
 import React from 'react';
 import { getTransResult } from 'x-star-utils';
+import wechatCode from '../assets/contact-button/wechatCode.jpg';
+import xcQrCode from '../assets/contact-button/xcQrCode.png';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
 import { prefix } from '../utils/global';

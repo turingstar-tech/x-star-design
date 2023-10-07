@@ -12,4 +12,4 @@ export default () => {
 
 ## API
 
-<API id="InputNumbers"></API>
+<API id="ContactButton"></API>

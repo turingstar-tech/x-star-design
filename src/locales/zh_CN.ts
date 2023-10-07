@@ -48,4 +48,9 @@ export default {
     Download_File: '下载文件',
     File: '文件',
   },
+  ContactButton: {
+    CONTACT_TELEPHONE: '电话：17367064678',
+    CONTACT_TIP: '微信扫码，直接咨询',
+    CONTACT_US: '联系我们',
+  },
 } as const;

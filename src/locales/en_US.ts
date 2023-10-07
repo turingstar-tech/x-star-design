@@ -51,4 +51,9 @@ export default {
     Download_File: 'Download File',
     File: 'File',
   },
+  ContactButton: {
+    CONTACT_TELEPHONE: 'Telephone: +1-510-760-1098',
+    CONTACT_TIP: 'Please Scan The QR Code',
+    CONTACT_US: 'Contact Us',
+  },
 } as const;

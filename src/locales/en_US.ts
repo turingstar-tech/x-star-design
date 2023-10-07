@@ -49,5 +49,6 @@ export default {
     Submission_Time: 'Submission Time',
     Code_Detail: 'Code Detail',
     Download_File: 'Download File',
+    File: 'File',
   },
 } as const;

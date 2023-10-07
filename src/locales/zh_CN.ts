@@ -46,5 +46,6 @@ export default {
     Submission_Time: '提交时间',
     Code_Detail: '代码详情',
     Download_File: '下载文件',
+    File: '文件',
   },
 } as const;

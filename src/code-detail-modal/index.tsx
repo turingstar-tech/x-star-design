@@ -8,6 +8,7 @@ import CodeMirrorWrapper from '../code-mirror-wrapper';
 import { Theme } from '../code-mirror-wrapper/define';
 import { useLocale } from '../locales';
 import SubmissionStatus from '../submission-status';
+import { prefix } from '../utils/global';
 import { CodeDetail } from './define';
 interface CodeDetailModalProps extends ModalProps {
   codeData: CodeDetail;
@@ -63,18 +64,32 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
         return `${memory}KB`;
       },
     },
-    {
-      key: 'code',
-      align: 'center',
-      title: t('Code'),
-      render: () => {
-        return (
-          <a rel="noreferrer" onClick={() => setShowCode(!showCode)}>
-            {showCode ? t('Show') : t('Hide')}
-          </a>
-        );
-      },
-    },
+    codeData?.language === 'plain' // 'plain' language
+      ? {
+          key: 'download',
+          align: 'center',
+          title: t('File'),
+          dataIndex: 'link',
+          render(v) {
+            return (
+              <a href={v}>
+                <DownloadOutlined />
+              </a>
+            );
+          },
+        }
+      : {
+          key: 'code',
+          align: 'center',
+          title: t('Code'),
+          render: () => {
+            return (
+              <a rel="noreferrer" onClick={() => setShowCode(!showCode)}>
+                {showCode ? t('Show') : t('Hide')}
+              </a>
+            );
+          },
+        },
     {
       key: 'submissionTime',
       align: 'center',
@@ -99,7 +114,12 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
       footer={null}
       {...props}
     >
-      <Table pagination={false} columns={columns} dataSource={[codeData]} />
+      <Table
+        pagination={false}
+        columns={columns}
+        dataSource={[codeData]}
+        rowKey={'problemNameZh'}
+      />
       {showCode ? (
         codeData?.language === 'plain' ? (
           <Button type="link" icon={<DownloadOutlined />} href={codeData?.link}>
@@ -113,18 +133,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
           />
         )
       ) : (
-        <pre
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#fafafa',
-            border: '1px solid #e3e3e3',
-            borderRadius: 3,
-            boxShadow: 'inset 0 1px 1px rgba(0, 0, 0, .05)',
-            minHeight: '100%',
-            overflow: 'auto',
-            marginTop: '1%',
-          }}
-        >
+        <pre className={`${prefix}codeCompileResult`}>
           <code>{codeData.detail}</code>
         </pre>
       )}

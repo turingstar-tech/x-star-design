@@ -53,6 +53,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
       align: 'center',
       title: t('Score'),
       dataIndex: 'score',
+      width: 60,
       render(score) {
         return score ? <span>{score}</span> : '-';
       },
@@ -72,18 +73,16 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
           align: 'center',
           title: t('File'),
           dataIndex: 'link',
+          width: 60,
           render(v) {
-            return (
-              <a href={v}>
-                <DownloadOutlined />
-              </a>
-            );
+            return <Button href={v} type="link" icon={<DownloadOutlined />} />;
           },
         }
       : {
           key: 'code',
           align: 'center',
           title: t('Code'),
+          width: 60,
           render: () => {
             return (
               <a rel="noreferrer" onClick={() => setShowCode(!showCode)}>

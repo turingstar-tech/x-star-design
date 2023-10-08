@@ -9,42 +9,19 @@ import { useState } from 'react';
 export default () => {
   const [open, setOpen] = useState(false);
   const codeData = {
-    problemNameZh: '这是一个题目名称',
-    problemNameEn: 'This is a problem name',
-    source: `#include<bits/stdc++.h>
-using namespace std;
-int main(){
-	int m;
-	double ans;
-	cin>>m;
-	if(m<=30){
-		ans=m*0.2;
-	}else if(m<=60){
-		ans=6+(m-30)*0.6;
-	}else{
-		cout<<"NO";
-		return 0;
-	}printf("%.2lf",ans);
-	return 0;
-}`,
-    language: 'g++11',
+    problemNameZh: '打印直角三角形',
+    problemNameEn: '打印直角三角形',
+    detail:
+      'compiled successfully\ntime: 72ms, memory: 8536kb, score: 100, status: Accepted\n> test 1: time: 8ms, memory: 8432kb, points: 10, status: Accepted\n> test 2: time: 8ms, memory: 8536kb, points: 10, status: Accepted\n> test 3: time: 8ms, memory: 8488kb, points: 10, status: Accepted\n> test 4: time: 9ms, memory: 8460kb, points: 10, status: Accepted\n> test 5: time: 6ms, memory: 8436kb, points: 10, status: Accepted\n> test 6: time: 8ms, memory: 8428kb, points: 10, status: Accepted\n> test 7: time: 6ms, memory: 8392kb, points: 10, status: Accepted\n> test 8: time: 7ms, memory: 8392kb, points: 10, status: Accepted\n> test 9: time: 5ms, memory: 8464kb, points: 10, status: Accepted\n> test 10: time: 7ms, memory: 8376kb, points: 10, status: Accepted\n',
+    language: 'python3.8',
     status: 'Accepted',
+    source:
+      'z = int(input())\nfor x in range(1, z+1):\n  for y in range(1, x+1):\n    print("*", end = \'\')\n  print("\\n")',
     score: 100,
-    memory: 102,
-    submissionTime: 1696641138,
-    detail: `compiled successfully
-time: 5ms, memory: 3708kb, score: 100, status: Accepted
-> test 1: time: 1ms, memory: 3548kb, points: 10, status: Accepted
-> test 2: time: 0ms, memory: 3484kb, points: 10, status: Accepted
-> test 3: time: 1ms, memory: 3680kb, points: 10, status: Accepted
-> test 4: time: 0ms, memory: 3680kb, points: 10, status: Accepted
-> test 5: time: 1ms, memory: 3540kb, points: 10, status: Accepted
-> test 6: time: 0ms, memory: 3556kb, points: 10, status: Accepted
-> test 7: time: 1ms, memory: 3680kb, points: 10, status: Accepted
-> test 8: time: 1ms, memory: 3708kb, points: 10, status: Accepted
-> test 9: time: 0ms, memory: 3648kb, points: 10, status: Accepted
-> test 10: time: 0ms, memory: 3624kb, points: 10, status: Accepted`,
+    memory: 8536,
+    submissionTime: 1696733459,
   };
+
   return (
     <>
       <Button onClick={() => setOpen(true)}>{'Click Me!'}</Button>

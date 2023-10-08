@@ -10,7 +10,7 @@ import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
 import SubmissionStatus from '../submission-status';
 import { prefix } from '../utils/global';
-import { CodeDetail } from './define';
+import { CodeDetail, langVL } from './define';
 interface CodeDetailModalProps extends ModalProps {
   codeData: CodeDetail;
   open: boolean;
@@ -39,6 +39,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
       align: 'center',
       title: t('Language'),
       dataIndex: 'language',
+      render: (language) => langVL.get(language),
     },
     {
       key: 'status',
@@ -112,7 +113,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
         afterClose={() => setShowCode(false)}
         open={open}
         onCancel={onCancel}
-        width={'60%'}
+        width={800}
         footer={null}
         {...props}
       >

@@ -40,4 +40,23 @@ export default {
   TranslateButton: {
     CURRENT_LANG: 'Current Language:',
   },
+  CodeDetailModal: {
+    Problem: 'Problem',
+    Language: 'Language',
+    Status: 'Status',
+    Score: 'Score',
+    Memory: 'Memory',
+    Code: 'Code',
+    Show: 'Show',
+    Hide: 'Hide',
+    Submission_Time: 'Submission Time',
+    Code_Detail: 'Code Detail',
+    Download_File: 'Download File',
+    File: 'File',
+  },
+  ContactButton: {
+    CONTACT_TELEPHONE: 'Telephone: +1-510-760-1098',
+    CONTACT_TIP: 'Please Scan The QR Code',
+    CONTACT_US: 'Contact Us',
+  },
 } as const;

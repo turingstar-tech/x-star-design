@@ -19,7 +19,6 @@ const InputNumbers = ({
 }: InputNumbersValueProps) => {
   const [start, setStart] = useState<number | undefined>(value?.start);
   const [end, setEnd] = useState<number | undefined>(value?.end);
-
   return (
     <ConfigProviderWrapper>
       <Space split={'-'} align="center">

@@ -1,6 +1,6 @@
 # VisualDataConfig
 
-这是小标题组件
+这是可视化配置 Config 组件
 
 ```jsx
 import { VisualDataConfig } from 'x-star-design';

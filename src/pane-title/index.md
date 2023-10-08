@@ -12,4 +12,4 @@ export default () => (
 
 ## API
 
-<API id="RainbowCat"></API>
+<API id="PaneTitle"></API>

@@ -5,7 +5,9 @@
 ```jsx
 import { TitleWithIcon } from 'x-star-design';
 
-export default () => <TitleWithIcon title={'修改资料'} />;
+export default () => (
+  <TitleWithIcon title={'修改资料'} description={'在这里修改资料'} />
+);
 ```
 
 ## API

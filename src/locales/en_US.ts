@@ -37,4 +37,7 @@ export default {
     SCORE: 'Score',
     BATCH_ADD: 'Batch Add',
   },
+  TranslateButton: {
+    CURRENT_LANG: 'Current Language:',
+  },
 } as const;

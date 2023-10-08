@@ -1,3 +1,4 @@
+import { useCookieState } from 'ahooks';
 import React, { useContext, useRef } from 'react';
 import en_US from './en_US';
 import zh_CN from './zh_CN';
@@ -19,7 +20,9 @@ export const LocaleProvider = ({
 type MessageMap = typeof zh_CN | typeof en_US;
 
 export const useLocale = <T extends keyof MessageMap>(slice: T) => {
-  const locale = useContext(LocaleContext);
+  const [cookieLang] = useCookieState('lang');
+  const locale =
+    useContext(LocaleContext) || cookieLang === 'zh' ? 'zh_CN' : 'en_US';
 
   const message = ({ zh_CN, en_US }[locale] ?? zh_CN)[slice];
 

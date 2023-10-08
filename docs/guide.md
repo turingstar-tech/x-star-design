@@ -1,1 +1,3 @@
-This is a guide example.
+---
+title: 指引
+---

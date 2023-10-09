@@ -17,12 +17,24 @@ const scopeColor = new Map([
 type SubmissionStatusProps = {
   status: string;
   className?: string;
+  onClick?: () => void;
+  style?: React.CSSProperties;
 };
 
-const SubmissionStatus = ({ className, status }: SubmissionStatusProps) => (
+const SubmissionStatus = ({
+  className,
+  status,
+  onClick,
+  style,
+}: SubmissionStatusProps) => (
   <div
     className={classNames(className)}
-    style={{ fontWeight: 'bold', color: scopeColor.get(status) }}
+    style={{
+      fontWeight: 'bold',
+      color: scopeColor.get(status),
+      ...style,
+    }}
+    onClick={onClick}
   >
     {status}
   </div>

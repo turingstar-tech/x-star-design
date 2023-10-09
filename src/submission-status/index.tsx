@@ -17,15 +17,28 @@ const scopeColor = new Map([
 type SubmissionStatusProps = {
   status: string;
   className?: string;
+  onClick?: () => void;
+  style?: React.CSSProperties;
 };
 
-const SubmissionStatus = ({ className, status }: SubmissionStatusProps) => (
-  <div
+const SubmissionStatus = ({
+  className,
+  status,
+  onClick,
+  style,
+}: SubmissionStatusProps) => (
+  <span
     className={classNames(className)}
-    style={{ fontWeight: 'bold', color: scopeColor.get(status) }}
+    style={{
+      cursor: onClick ? 'pointer' : 'initial',
+      fontWeight: 'bold',
+      color: scopeColor.get(status),
+      ...style,
+    }}
+    onClick={onClick}
   >
     {status}
-  </div>
+  </span>
 );
 
 export default SubmissionStatus;

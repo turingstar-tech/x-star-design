@@ -34,6 +34,9 @@ export default {
     SCORE: '得分',
     BATCH_ADD: '批量添加',
   },
+  TranslateButton: {
+    CURRENT_LANG: '当前语言：',
+  },
   CodeDetailModal: {
     Problem: '题目',
     Language: '语言',

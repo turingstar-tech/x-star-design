@@ -37,6 +37,9 @@ export default {
     SCORE: 'Score',
     BATCH_ADD: 'Batch Add',
   },
+  TranslateButton: {
+    CURRENT_LANG: 'Current Language:',
+  },
   CodeDetailModal: {
     Problem: 'Problem',
     Language: 'Language',

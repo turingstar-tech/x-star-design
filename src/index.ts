@@ -11,7 +11,6 @@ export type { FallbackProps } from './error-boundary';
 export { default as InputNumbers } from './input-numbers';
 export { default as LoadingMask } from './loading-mask';
 export { LocaleProvider } from './locales';
-export { default as PaneTitle } from './pane-title';
 export { default as RainbowCat } from './rainbow-cat';
 export { default as SortTable } from './sort-table';
 export { default as StatusTag } from './status-tag';

@@ -5,12 +5,20 @@ import { prefix } from '../utils/global';
 type TitleWithIconProps = {
   title: string;
   className?: string;
+  description?: string;
+  id?: string;
 };
 
-const TitleWithIcon = ({ className, title }: TitleWithIconProps) => (
-  <div className={classNames(className, `${prefix}titleSection`)}>
+const TitleWithIcon = ({
+  className,
+  title,
+  description,
+  id,
+}: TitleWithIconProps) => (
+  <div className={classNames(className, `${prefix}titleSection`)} id={id}>
     <img src={rightSvg} alt="" />
-    <div className={`${prefix}title`}>{title}</div>
+    <span className={`${prefix}title`}>{title}</span>
+    <span className={`${prefix}description`}>{description}</span>
   </div>
 );
 

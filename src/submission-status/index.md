@@ -8,7 +8,7 @@ import { Space } from 'antd';
 
 export default () => (
   <Space>
-    <SubmissionStatus status={'Accepted'} />
+    <SubmissionStatus status={'Accepted'} onClick={() => alert('点击了AC')} />
     <SubmissionStatus status={'Wrong Answer'} />
     <SubmissionStatus status={'Time Limit Exceeded'} />
     <SubmissionStatus status={'Compile Error'} />

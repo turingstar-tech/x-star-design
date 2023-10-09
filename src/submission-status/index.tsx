@@ -27,9 +27,10 @@ const SubmissionStatus = ({
   onClick,
   style,
 }: SubmissionStatusProps) => (
-  <div
+  <span
     className={classNames(className)}
     style={{
+      cursor: onClick ? 'pointer' : 'initial',
       fontWeight: 'bold',
       color: scopeColor.get(status),
       ...style,
@@ -37,7 +38,7 @@ const SubmissionStatus = ({
     onClick={onClick}
   >
     {status}
-  </div>
+  </span>
 );
 
 export default SubmissionStatus;

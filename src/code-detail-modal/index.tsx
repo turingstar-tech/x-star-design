@@ -72,7 +72,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
           key: 'download',
           align: 'center',
           title: t('File'),
-          dataIndex: 'link',
+          dataIndex: 'source',
           width: 60,
           render(v) {
             return <Button href={v} type="link" icon={<DownloadOutlined />} />;
@@ -133,6 +133,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
             </Button>
           ) : (
             <CodeMirrorWrapper
+              style={{ height: '50vh', minHeight: 200 }}
               lang={codeData?.language}
               theme={Theme.LIGHT}
               value={codeData?.source}

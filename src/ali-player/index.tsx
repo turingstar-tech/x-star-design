@@ -16,6 +16,7 @@ export interface AliplayerConfig {
  * Aliplayer 实例
  */
 export interface AliplayerInstance {
+  pause: () => void;
   seek: (time: number) => void;
   getCurrentTime: () => number;
   setPlayerSize: (width: string, height: string) => void;

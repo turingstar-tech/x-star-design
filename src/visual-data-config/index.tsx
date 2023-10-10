@@ -79,7 +79,7 @@ const VisualDataConfig = ({
           const res = compactObj(config); // 删除空对象
           onConfirm(JSON.stringify(res));
         }}
-        className={`${prefix}form`}
+        className={`${prefix}visualForm`}
       >
         <Row justify="start" gutter={[16, 0]} className={`${prefix}row`}>
           <Col span={6}>

@@ -69,7 +69,7 @@ const SubTaskConfig = () => {
                   </Col>
                   <MinusCircleOutlined
                     className="dynamic-delete-button"
-                    style={{ lineHeight: 32, height: 32 }}
+                    style={{ lineHeight: '32px', height: 32 }}
                     onClick={() => remove(field.name)}
                   />
                 </Row>

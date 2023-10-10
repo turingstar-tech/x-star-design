@@ -137,6 +137,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
               lang={codeData?.language}
               theme={Theme.LIGHT}
               value={codeData?.source}
+              readOnly
             />
           )
         ) : (

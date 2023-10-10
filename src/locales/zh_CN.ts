@@ -56,4 +56,12 @@ export default {
     CONTACT_TIP: '微信扫码，直接咨询',
     CONTACT_US: '联系我们',
   },
+  ErrorPage: {
+    ERROR: '☹ 出错啦',
+    ERROR_BOUNDARY_TIP_1: '不好意思，代码意外卷入了黑洞，页面发生了崩溃。',
+    ERROR_BOUNDARY_TIP_2: '您可以重试访问该页面，或可以先访问其他页面。',
+    RETURN_TO_HOME: '回到首页',
+    RETRY: '重试',
+    TECHNICAL_DEPARTMENT_CONTACT_EMAIL: '技术部联系邮箱：',
+  },
 } as const;

@@ -1,5 +1,7 @@
 // 本组件代码参考自 https://juejin.cn/post/6937474904375689224
+import { message } from 'antd';
 import React from 'react';
+import ErrorPage from './error-page';
 
 // 出错后显示的元素类型
 type FallbackElement = React.ReactElement<
@@ -61,6 +63,8 @@ class ErrorBoundary extends React.Component<
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     if (this.props.onError) {
       this.props.onError(error, errorInfo.componentStack);
+    } else {
+      console.error('Page Crash! Have been captured by error boundary.');
     }
     this.setState({ error });
   }
@@ -95,14 +99,26 @@ class ErrorBoundary extends React.Component<
 
   // 执行自定义重置逻辑，并重置组件状态
   resetErrorBoundary = () => {
-    if (this.props.onReset) {
-      this.props.onReset();
-    }
+    const {
+      onReset = () => {
+        message.info(
+          '开发人员正在解救陷入黑洞的代码，请耐心等待和尝试。Developers are rescuing code trapped in a black hole. Please be patient and try again',
+        );
+      },
+    } = this.props;
+    onReset();
     this.reset();
   };
 
   render() {
-    const { fallback, FallbackComponent, fallbackRender } = this.props;
+    const {
+      fallback,
+      FallbackComponent,
+      fallbackRender = (props: FallbackProps) => {
+        // fallback 组件的渲染函数 ErrorPage需要自己定义该组件
+        return <ErrorPage onReset={props.resetErrorBoundary} />;
+      },
+    } = this.props;
     const { error } = this.state;
 
     if (error !== null) {

@@ -1,0 +1,81 @@
+.#{$prefix}errorPage {
+  position: relative;
+  width: 100vw;
+  height: calc(87vh - 64px);
+
+  .hello {
+    position: absolute;
+    bottom: 240px;
+    left: 100px;
+    width: 204px;
+    height: 96px;
+    background: url('https://media.strapi.turingstar.com.cn/production/2023/3/hello_0dd8b00bbf.png')
+      100% no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .ip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 240px;
+    height: 280px;
+    background: url('https://media.strapi.turingstar.com.cn/production/2023/3/_31e3aca7f2.png')
+      100% no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .planets {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 240px;
+    height: 280px;
+    background: url('https://media.strapi.turingstar.com.cn/production/2023/3/background_right_6ff67955bc.png')
+      100% no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: rgb(0 0 0 / 88%);
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+
+    .alert {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      margin: 0;
+      padding: 8px 12px;
+      border: 1px solid #ffccc7;
+      border-radius: 8px;
+      font-size: 16px;
+      color: rgb(0 0 0 / 88%);
+      background-color: #fff2f0;
+      padding-inline: 24px;
+      padding-block: 20px;
+      box-sizing: border-box;
+
+      .description {
+        display: flex;
+        flex-direction: column;
+
+        div {
+          line-height: 2.5rem;
+        }
+
+        .actions {
+          display: flex;
+          justify-content: space-between;
+          width: 50%;
+        }
+      }
+    }
+  }
+}

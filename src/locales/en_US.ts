@@ -59,4 +59,14 @@ export default {
     CONTACT_TIP: 'Please Scan The QR Code',
     CONTACT_US: 'Contact Us',
   },
+  ErrorPage: {
+    ERROR: '☹ Error',
+    ERROR_BOUNDARY_TIP_1:
+      'Sorry, the code accidentally got caught in a black hole and the page crashed.',
+    ERROR_BOUNDARY_TIP_2:
+      'You can try accessing the page again, or you can visit another page first.',
+    RETURN_TO_HOME: 'Return to home',
+    RETRY: 'Retry',
+    TECHNICAL_DEPARTMENT_CONTACT_EMAIL: 'Technical department contact email: ',
+  },
 } as const;

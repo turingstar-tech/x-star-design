@@ -127,7 +127,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
             <Button
               type="link"
               icon={<DownloadOutlined />}
-              href={codeData?.link}
+              href={codeData?.source}
             >
               {t('Download_File')}
             </Button>

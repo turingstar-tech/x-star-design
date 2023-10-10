@@ -23,5 +23,4 @@ export interface CodeDetail {
   score: number;
   memory: number;
   submissionTime: number;
-  link?: string;
 }

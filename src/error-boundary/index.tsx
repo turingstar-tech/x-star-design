@@ -39,6 +39,7 @@ interface ErrorBoundaryProps {
     prevResetKey: Array<unknown> | undefined,
     resetKeys: Array<unknown> | undefined,
   ) => void;
+  homeLink?: string;
 }
 
 // 检查 resetKeys 是否有变化
@@ -116,7 +117,12 @@ class ErrorBoundary extends React.Component<
       FallbackComponent,
       fallbackRender = (props: FallbackProps) => {
         // fallback 组件的渲染函数 ErrorPage需要自己定义该组件
-        return <ErrorPage onReset={props.resetErrorBoundary} />;
+        return (
+          <ErrorPage
+            onReset={props.resetErrorBoundary}
+            homeLink={this.props.homeLink}
+          />
+        );
       },
     } = this.props;
     const { error } = this.state;

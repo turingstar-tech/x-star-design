@@ -2,6 +2,9 @@
   position: relative;
   width: 100vw;
   height: calc(87vh - 64px);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   .hello {
     position: absolute;
@@ -75,6 +78,22 @@
           justify-content: space-between;
           width: 50%;
         }
+      }
+    }
+
+    a {
+      color: #1890ff;
+      text-decoration: none;
+      background-color: transparent;
+      outline: none;
+      cursor: pointer;
+      transition: color 0.3s;
+      touch-action: manipulation;
+
+      &:hover {
+        text-decoration: none;
+        outline: 0;
+        color: #40a9ff;
       }
     }
   }

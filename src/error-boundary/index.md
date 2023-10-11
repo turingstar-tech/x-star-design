@@ -6,8 +6,8 @@
 import { ErrorBoundary } from 'x-star-design';
 import ErrorPage from './error-page';
 
-export default ({ children }) => {
-  return <ErrorBoundary>{children}</ErrorBoundary>;
+export default () => {
+  return <ErrorBoundary></ErrorBoundary>;
 };
 ```
 

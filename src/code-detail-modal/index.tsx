@@ -115,6 +115,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
         width={800}
         footer={null}
         {...props}
+        className={`${prefix}codeDetailModal`}
       >
         <Table
           pagination={false}
@@ -133,7 +134,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
             </Button>
           ) : (
             <CodeMirrorWrapper
-              style={{ height: '50vh', minHeight: 200 }}
+              className={`${prefix}codeMirror`}
               lang={codeData?.language}
               theme={Theme.LIGHT}
               value={codeData?.source}

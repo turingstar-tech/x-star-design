@@ -25,7 +25,7 @@ export enum Status {
   WrongAnswer = 'Wrong Answer',
 }
 
-const scopeColor = new Map([
+const scopeColor = new Map<string, string>([
   [Status.Accepted, '#00ad07'],
   [Status.WrongAnswer, '#f44336'],
   [Status.TimeLimitExceeded, '#56A2F5'],
@@ -37,7 +37,7 @@ const scopeColor = new Map([
   [Status.Pending, '#ffa500'],
 ]);
 
-const statusZh = new Map([
+const statusZh = new Map<string, string>([
   [Status.Abnormal, ''],
   [Status.Accepted, '答案正确'],
   [Status.CheckerJudgementFailed, '代码检查失败'],
@@ -59,7 +59,7 @@ const statusZh = new Map([
 ]);
 
 type SubmissionStatusProps = {
-  status: Status;
+  status: string;
   className?: string;
   onClick?: () => void;
   style?: React.CSSProperties;

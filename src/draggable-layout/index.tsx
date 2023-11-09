@@ -66,7 +66,9 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
       leftRef.current &&
       rightRef.current
     ) {
-      if (collapsible[0] && e.offsetX < leftRef.current.offsetWidth / 2) {
+      const offsetX =
+        e.clientX - wrapperRef.current.getBoundingClientRect().left;
+      if (collapsible[0] && offsetX < leftRef.current.offsetWidth / 2) {
         if (leftRef.current.style.right !== '100%') {
           // 左侧收起
           enableTransition();
@@ -81,7 +83,7 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
         }
       } else if (
         collapsible[1] &&
-        e.offsetX >
+        offsetX >
           wrapperRef.current.offsetWidth - rightRef.current.offsetWidth / 2
       ) {
         if (rightRef.current.style.left !== '100%') {
@@ -108,7 +110,7 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
             disableTransition();
           }, 300);
         }
-        const width = `min(max(${e.offsetX}px, calc(${minWidth[0]} + ${dividerWidth} / 2)), calc(100% - ${minWidth[1]} - ${dividerWidth} / 2))`;
+        const width = `min(max(${offsetX}px, calc(${minWidth[0]} + ${dividerWidth} / 2)), calc(100% - ${minWidth[1]} - ${dividerWidth} / 2))`;
         dividerRef.current.classList.remove(
           `${prefix}draggable-divider-active`,
         );
@@ -127,7 +129,6 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
       wrapperRef.current.style.cursor = 'col-resize';
       wrapperRef.current.addEventListener('mousemove', dragHandler, {
         capture: true,
-        passive: true,
       });
       document.addEventListener(
         'mouseup',
@@ -140,11 +141,7 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
             });
           }
         },
-        {
-          capture: true,
-          passive: true,
-          once: true,
-        },
+        { capture: true, once: true },
       );
     }
   });
@@ -159,7 +156,6 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
         ref={dividerRef}
         className={dividerClassName ?? classNames(`${prefix}draggable-divider`)}
         style={{ left: `calc(${defaultWidth} - ${dividerWidth} / 2)` }}
-        onDragStart={(e) => e.preventDefault()}
         onMouseDown={dragStart}
       >
         {dividerChildren}

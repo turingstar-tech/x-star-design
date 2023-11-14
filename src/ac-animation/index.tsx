@@ -9,7 +9,7 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
   onFinish,
 }) => {
   const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+  const ctx = canvas.getContext('2d');
   let AnimationID = -1;
   const confetti: any[] = [];
   const confettiCount = 300;
@@ -50,6 +50,7 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
   };
 
   const renderImg = (imgSizeAndPosition: ImgShowProps) => {
+    if (!ctx) return;
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.drawImage(
@@ -65,6 +66,7 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
   };
 
   const renderText = (titleStyle?: titleShowProps) => {
+    if (!ctx) return;
     ctx.save();
     ctx.shadowOffsetX = 4;
     ctx.shadowOffsetY = 2;
@@ -123,6 +125,7 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
 
   //---------Render-----------
   const render = () => {
+    if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (title) {
       renderText(titleStyle);
@@ -169,7 +172,6 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
       // Reset transform matrix
       ctx.setTransform(1, 0, 0, 1, 0, 0);
     });
-
     if (confetti.length <= 10) {
       shutDownCanvas();
       return;
@@ -192,6 +194,7 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
   return (
     <>
       <div
+        data-testid="ac-canvas"
         id="ac-canvas"
         onClick={() => {
           shutDownCanvas();

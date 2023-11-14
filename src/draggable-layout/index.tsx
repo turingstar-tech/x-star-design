@@ -148,11 +148,13 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
 
   return (
     <div
+      data-testid="wrapper"
       ref={wrapperRef}
       className={classNames(`${prefix}draggable-layout`, className)}
       style={style}
     >
       <div
+        data-testid="divider"
         ref={dividerRef}
         className={dividerClassName ?? classNames(`${prefix}draggable-divider`)}
         style={{ left: `calc(${defaultWidth} - ${dividerWidth} / 2)` }}
@@ -160,8 +162,11 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
       >
         {dividerChildren}
       </div>
-      {dragging && <div className={`${prefix}draggable-mask`} />}
+      {dragging && (
+        <div data-testid="mask" className={`${prefix}draggable-mask`} />
+      )}
       <div
+        data-testid="left"
         ref={leftRef}
         className={`${prefix}draggable-children`}
         style={{
@@ -172,6 +177,7 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
         {left}
       </div>
       <div
+        data-testid="right"
         ref={rightRef}
         className={`${prefix}draggable-children`}
         style={{

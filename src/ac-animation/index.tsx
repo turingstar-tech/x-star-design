@@ -9,7 +9,7 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
   onFinish,
 }) => {
   const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d')!;
   let AnimationID = -1;
   const confetti: any[] = [];
   const confettiCount = 300;
@@ -31,17 +31,15 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
   img.src = imgUrl || '';
 
   useEffect(() => {
-    if (canvas) {
-      canvas.style.zIndex = '9999';
-      canvas.style.width = '60vw';
-      canvas.style.height = '60vh';
-      canvas.style.position = 'absolute';
-      canvas.style.top = '50%';
-      canvas.style.left = '50%';
-      canvas.style.transform = 'translate(-50%, -50%)';
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+    canvas.style.zIndex = '9999';
+    canvas.style.width = '60vw';
+    canvas.style.height = '60vh';
+    canvas.style.position = 'absolute';
+    canvas.style.top = '50%';
+    canvas.style.left = '50%';
+    canvas.style.transform = 'translate(-50%, -50%)';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
   }, [canvas]);
 
   const resizeCanvas = () => {
@@ -50,36 +48,34 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
   };
 
   const renderImg = (imgSizeAndPosition: ImgShowProps) => {
-    if (!ctx) return;
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.drawImage(
       img,
-      imgSizeAndPosition.offsetX! ||
-        0 - (img.width * (imgSizeAndPosition.scale! || 1)) / 2,
-      imgSizeAndPosition.offsetY! ||
-        0 - (img.height * (imgSizeAndPosition.scale! || 1)) / 2,
-      img.width * (imgSizeAndPosition.scale! || 1),
-      img.height * (imgSizeAndPosition.scale! || 1),
+      imgSizeAndPosition.offsetX ||
+        0 - (img.width * (imgSizeAndPosition.scale || 1)) / 2,
+      imgSizeAndPosition.offsetY ||
+        0 - (img.height * (imgSizeAndPosition.scale || 1)) / 2,
+      img.width * (imgSizeAndPosition.scale || 1),
+      img.height * (imgSizeAndPosition.scale || 1),
     );
     ctx.restore();
   };
 
   const renderText = (titleStyle?: titleShowProps) => {
-    if (!ctx) return;
     ctx.save();
     ctx.shadowOffsetX = 4;
     ctx.shadowOffsetY = 2;
     ctx.shadowBlur = 4;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = `bold 
-		${titleStyle?.fontSize || 36}px 
-		${titleStyle?.fontFamily || 'Arial'}`;
+    ctx.font = `bold ${titleStyle?.fontSize || 36}px ${
+      titleStyle?.fontFamily || 'Arial'
+    }`;
     ctx.fillStyle = titleStyle?.color || '#022679';
     ctx.shadowColor = titleStyle?.fontFamily || 'rgba(2,38,121,0.2)';
     ctx.fillText(
-      title || '',
+      title!,
       canvas.width / 2 + (titleStyle?.offsetX || 0),
       canvas.height / 2 + (titleStyle?.offsetY || 0),
     );
@@ -125,7 +121,6 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
 
   //---------Render-----------
   const render = () => {
-    if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (title) {
       renderText(titleStyle);

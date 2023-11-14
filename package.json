@@ -84,7 +84,6 @@
     "@umijs/lint": "^4.0.0",
     "antd": "5.2.2",
     "babel-plugin-inline-import-data-uri": "^1.0.1",
-    "canvas": "^2.11.2",
     "dumi": "^2.2.0",
     "eslint": "^8.23.0",
     "father": "^4.1.0",

@@ -4,11 +4,14 @@ import { fireEvent, render } from '@testing-library/react';
 import 'jest-canvas-mock'; // 导入jest-canvas-mock库
 import React from 'react';
 import { AcAnimation } from '../src';
+
+jest.useFakeTimers();
+
 describe('ac animation', () => {
   test('renders the title and image', () => {
-    jest.useFakeTimers();
     const testTitle = 'Test Title';
     const testImage = 'test-image.png';
+    const onFinish = jest.fn();
     const { container } = render(
       <AcAnimation
         title={testTitle}
@@ -20,45 +23,59 @@ describe('ac animation', () => {
         }}
         imgUrl={testImage}
         imgSizeAndPosition={{ scale: 2, offsetY: 200, offsetX: 200 }}
+        onFinish={onFinish}
       />,
     );
 
     // 获取canvas元素和上下文
-    const canvas = container.querySelector('canvas') as HTMLCanvasElement;
-    const ctx = canvas?.getContext('2d') as CanvasRenderingContext2D;
-    jest.runAllTimers();
-    //绘制title
-    expect(ctx?.fillText).toBeCalledWith(
+    const canvas = container.querySelector('canvas')!;
+    const ctx = canvas.getContext('2d')!;
+
+    // 绘制title
+    expect(ctx.fillText).toHaveBeenCalledWith(
       testTitle,
       canvas.width / 2 + 100,
       canvas.height / 2 - 200,
     );
-    // const mockFontSet = jest.spyOn(ctx, 'font', 'set').mockImplementation((arg) => arg);
-    // expect(mockFontSet).toBeCalledWith(`bold 45px Arial`);
-    // expect(ctx?.fillStyle).toBe('#FFAD10');
 
-    expect(ctx?.fillText).toHaveBeenCalled();
-
-    //绘制image
+    // 绘制image
     const image = new Image();
     image.src = testImage;
-    expect(ctx?.drawImage).toBeCalledWith(image, 200, 200, 0, 0);
-    expect(ctx?.drawImage).toHaveBeenCalled();
+    expect(ctx.drawImage).toHaveBeenCalledWith(image, 200, 200, 0, 0);
+
+    const setFont = jest.spyOn(ctx, 'font', 'set');
+    const setFillStyle = jest.spyOn(ctx, 'fillStyle', 'set');
+
+    // 渲染下一帧
+    jest.runOnlyPendingTimers();
+    expect(setFont).toHaveBeenCalledWith('bold 45px Arial');
+    expect(setFillStyle).toHaveBeenCalledWith('#FFAD10');
+
+    // 渲染至结束
+    jest.runAllTimers();
+    expect(onFinish).toHaveBeenCalled();
   });
 
   test('calls onFinish when the canvas is clicked', () => {
     const onFinish = jest.fn();
     const { getByTestId } = render(
-      <AcAnimation title="Test Title" onFinish={onFinish} />,
+      <AcAnimation
+        title="Test Title"
+        imgUrl="test-image.png"
+        imgSizeAndPosition={{}}
+        onFinish={onFinish}
+      />,
     );
-    //模拟动画关闭事件
+    // 模拟动画关闭事件
     fireEvent.click(getByTestId('ac-canvas'));
     expect(onFinish).toHaveBeenCalled();
   });
 
   test('calls resizeCanvas on resize event', () => {
     const { container } = render(<AcAnimation />);
-    const canvas = container.querySelector('canvas') as HTMLCanvasElement;
+    const canvas = container.querySelector('canvas')!;
+    window.innerWidth = 4096;
+    window.innerHeight = 4096;
     // 触发resize事件
     window.dispatchEvent(new Event('resize'));
     expect(canvas.width).toBe(window.innerWidth);

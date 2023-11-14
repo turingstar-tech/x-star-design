@@ -8,12 +8,15 @@ describe('title with icon', () => {
   test('render title and description', () => {
     render(<TitleWithIcon title="Test Title" description="Test Description" />);
 
-    expect(screen.getByText('Test Title')).toBeInTheDocument();
-    expect(screen.getByText('Test Description')).toBeInTheDocument();
+    // 标题和描述被渲染
+    expect(screen.getByTestId('title')).toHaveTextContent('Test Title');
+    expect(screen.getByTestId('description')).toHaveTextContent(
+      'Test Description',
+    );
   });
 
   test('render class name', () => {
-    const { container } = render(
+    render(
       <TitleWithIcon
         className="testClassName"
         title="Test Title"
@@ -21,6 +24,7 @@ describe('title with icon', () => {
       />,
     );
 
-    expect(container.querySelector('.testClassName')).toBeInTheDocument();
+    // CSS 类名被渲染
+    expect(screen.getByTestId('wrapper')).toHaveClass('testClassName');
   });
 });

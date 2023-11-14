@@ -12,12 +12,13 @@ describe('draggable layout', () => {
   test('render left and right children', () => {
     render(<DraggableLayout left="Test Left" right="Test Right" />);
 
-    expect(screen.getByText('Test Left')).toBeInTheDocument();
-    expect(screen.getByText('Test Right')).toBeInTheDocument();
+    // 左右孩子被渲染
+    expect(screen.getByTestId('left')).toHaveTextContent('Test Left');
+    expect(screen.getByTestId('right')).toHaveTextContent('Test Right');
   });
 
   test('render class name', () => {
-    const { container } = render(
+    render(
       <DraggableLayout
         className="testClassName"
         dividerClassName="testDividerClassName"
@@ -26,14 +27,13 @@ describe('draggable layout', () => {
       />,
     );
 
-    expect(container.querySelector('.testClassName')).toBeInTheDocument();
-    expect(
-      container.querySelector('.testDividerClassName'),
-    ).toBeInTheDocument();
+    // CSS 类名被渲染
+    expect(screen.getByTestId('wrapper')).toHaveClass('testClassName');
+    expect(screen.getByTestId('divider')).toHaveClass('testDividerClassName');
   });
 
   test('render divider and default width', () => {
-    const { container } = render(
+    render(
       <DraggableLayout
         dividerWidth="16px"
         dividerChildren="⋮"
@@ -43,23 +43,18 @@ describe('draggable layout', () => {
       />,
     );
 
-    const divider = container.querySelector<HTMLElement>(
-      ':scope > div > div:first-child',
-    )!;
-    const leftChild = container.querySelector<HTMLElement>(
-      ':scope > div > div:nth-last-child(2)',
-    )!;
-    const rightChild = container.querySelector<HTMLElement>(
-      ':scope > div > div:last-child',
-    )!;
+    // 分割线孩子被渲染
+    expect(screen.getByTestId('divider')).toHaveTextContent('⋮');
 
-    expect(divider).toHaveStyle({ left: 'calc(40% - 16px / 2)' });
-    expect(divider).toHaveTextContent('⋮');
-    expect(leftChild).toHaveStyle({
+    // 初始宽度正确
+    expect(screen.getByTestId('divider')).toHaveStyle({
+      left: 'calc(40% - 16px / 2)',
+    });
+    expect(screen.getByTestId('left')).toHaveStyle({
       left: '0',
       right: 'calc(100% - 40% + 16px / 2)',
     });
-    expect(rightChild).toHaveStyle({
+    expect(screen.getByTestId('right')).toHaveStyle({
       left: 'calc(40% + 16px / 2)',
       right: '0',
     });
@@ -72,67 +67,72 @@ describe('draggable layout', () => {
       <DraggableLayout left="Test Left" right="Test Right" />,
     );
 
-    const wrapper = container.querySelector<HTMLElement>(':scope > div')!;
-    const divider = container.querySelector<HTMLElement>(
-      ':scope > div > div:first-child',
-    )!;
-    const leftChild = container.querySelector<HTMLElement>(
-      ':scope > div > div:nth-last-child(2)',
-    )!;
-    const rightChild = container.querySelector<HTMLElement>(
-      ':scope > div > div:last-child',
-    )!;
+    // 获取 HTML 元素
+    const wrapper = screen.getByTestId('wrapper');
+    const divider = screen.getByTestId('divider');
+    const leftChild = screen.getByTestId('left');
+    const rightChild = screen.getByTestId('right');
 
+    // 模拟元素宽度
     jest.spyOn(wrapper, 'offsetWidth', 'get').mockReturnValue(500);
     jest.spyOn(leftChild, 'offsetWidth', 'get').mockReturnValue(250);
     jest.spyOn(rightChild, 'offsetWidth', 'get').mockReturnValue(250);
 
+    // 在分割线上按下鼠标左键
     await user.pointer({ target: divider, keys: '[MouseLeft>]' });
 
-    expect(
-      container.querySelector(`.${prefix}draggable-mask`),
-    ).toBeInTheDocument();
+    // 遮罩被渲染
+    expect(screen.queryByTestId('mask')).toBeInTheDocument();
 
+    // 鼠标移动
     await user.pointer({ target: wrapper, coords: { x: 200 } });
 
+    // 左右侧均未隐藏
     expect(divider).not.toHaveClass(`${prefix}draggable-divider-active`);
 
     await user.pointer({ target: wrapper, coords: { x: 100 } });
 
+    // 左侧隐藏
     expect(divider).toHaveClass(`${prefix}draggable-divider-active`);
 
     jest.runOnlyPendingTimers();
     await user.pointer({ target: wrapper, coords: { x: 0 } });
 
+    // 左侧隐藏
     expect(divider).toHaveClass(`${prefix}draggable-divider-active`);
 
     await user.pointer({ target: wrapper, coords: { x: 300 } });
 
+    // 左右侧均未隐藏
     expect(divider).not.toHaveClass(`${prefix}draggable-divider-active`);
 
     jest.runOnlyPendingTimers();
     await user.pointer({ target: wrapper, coords: { x: 400 } });
 
+    // 右侧隐藏
     expect(divider).toHaveClass(`${prefix}draggable-divider-active`);
 
     jest.runOnlyPendingTimers();
     await user.pointer({ target: wrapper, coords: { x: 500 } });
 
+    // 右侧隐藏
     expect(divider).toHaveClass(`${prefix}draggable-divider-active`);
 
     await user.pointer({ target: wrapper, coords: { x: 200 } });
 
+    // 左右侧均未隐藏
     expect(divider).not.toHaveClass(`${prefix}draggable-divider-active`);
 
+    // 松开鼠标左键
     await user.pointer({ target: container, keys: '[/MouseLeft]' });
 
-    expect(
-      container.querySelector(`.${prefix}draggable-mask`),
-    ).not.toBeInTheDocument();
+    // 遮罩未渲染
+    expect(screen.queryByTestId('mask')).not.toBeInTheDocument();
 
     jest.runOnlyPendingTimers();
     await user.pointer({ target: wrapper, coords: { x: 100 } });
 
+    // 左右侧均未隐藏
     expect(divider).not.toHaveClass(`${prefix}draggable-divider-active`);
   });
 });

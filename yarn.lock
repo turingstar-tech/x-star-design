@@ -14491,10 +14491,10 @@ x-path@^0.0.2:
   dependencies:
     path-extra "^1.0.2"
 
-x-star-utils@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/x-star-utils/-/x-star-utils-0.0.8.tgz#ebada94def5a6619c968bdc5a2825a42d0731344"
-  integrity sha512-Oob9zCXqIjKcLUF4CxZWK8ptzvuLaGAhqW5JnkpvIFlY7GTZXLFczPH1e5/hT6vMpZxbxGOPZMwyCSdCz3IyiA==
+x-star-utils@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/x-star-utils/-/x-star-utils-0.0.9.tgz#a36f21d0fe4694d138d0417c6cd04731809dab64"
+  integrity sha512-TTIjHOffpou41Fk1lsRRXLzv638PN8wU99l3+aHQrd9Sx4c2C01CqPrXwDGD8EYRAemZmdDMEKJO3ioEgSdnIQ==
   dependencies:
     dayjs "^1.11.7"
     lodash "^4.17.21"

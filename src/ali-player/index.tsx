@@ -63,12 +63,8 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
         `${(size.width / 16) * 9}px`,
       ),
   );
-
   useEffect(resize, [size, resize]);
   useEffect(() => {
-    if (!(config?.playauth && config?.vid)) {
-      return;
-    }
     if (player.current) player.current.dispose();
     const create = () => {
       const run = (retry: number) => {
@@ -97,7 +93,7 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
 
   return (
     <div ref={wrapper}>
-      <div id={id} />
+      <div id={id} data-testid="aliplayer-wrapper" />
     </div>
   );
 };

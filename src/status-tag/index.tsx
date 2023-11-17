@@ -46,7 +46,7 @@ const StatusTag = ({
         color: '#52c41a',
         borderColor: '#b7eb8f',
         backgroundColor: '#f6ffed',
-        icon: <img src={correctSVG} alt="" />,
+        icon: <img src={correctSVG} alt="" data-testid={'status-icon'} />,
       },
     ],
     [
@@ -88,6 +88,7 @@ const StatusTag = ({
   ]);
   return (
     <div
+      data-testid={'status-tag'}
       className={classNames(`${prefix}statusTag`, props.className)}
       style={{
         ...statusCSSMap.get(status),
@@ -107,6 +108,7 @@ const StatusTag = ({
         : children}
       {required && (
         <img
+          data-testid={'required-icon'}
           src={diamondSVG}
           className={classNames(`${prefix}required`, {
             [`${prefix}circleRequired`]: shape === 'circle',

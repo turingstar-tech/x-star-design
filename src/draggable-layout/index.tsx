@@ -41,109 +41,96 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
   const rightRef = useRef<HTMLDivElement>(null);
 
   const enableTransition = useMemoizedFn(() => {
-    if (dividerRef.current && leftRef.current && rightRef.current) {
-      dividerRef.current.style.transition =
-        'color 0.3s, background 0.3s, border 0.3s, left 0.3s';
-      leftRef.current.style.transition = 'left 0.3s, right 0.3s';
-      rightRef.current.style.transition = 'left 0.3s, right 0.3s';
-    }
+    dividerRef.current!.style.transition =
+      'color 0.3s, background 0.3s, border 0.3s, left 0.3s';
+    leftRef.current!.style.transition = 'left 0.3s, right 0.3s';
+    rightRef.current!.style.transition = 'left 0.3s, right 0.3s';
   });
 
   const disableTransition = useMemoizedFn(() => {
-    if (dividerRef.current && leftRef.current && rightRef.current) {
-      dividerRef.current.style.transition =
-        'color 0.3s, background 0.3s, border 0.3s';
-      leftRef.current.style.transition = '';
-      rightRef.current.style.transition = '';
-    }
+    dividerRef.current!.style.transition =
+      'color 0.3s, background 0.3s, border 0.3s';
+    leftRef.current!.style.transition = '';
+    rightRef.current!.style.transition = '';
   });
 
   const dragHandler = useMemoizedFn((e: MouseEvent) => {
-    if (
-      !transition.current &&
-      wrapperRef.current &&
-      dividerRef.current &&
-      leftRef.current &&
-      rightRef.current
-    ) {
-      const offsetX =
-        e.clientX - wrapperRef.current.getBoundingClientRect().left;
-      if (collapsible[0] && offsetX < leftRef.current.offsetWidth / 2) {
-        if (leftRef.current.style.right !== '100%') {
-          // 左侧收起
-          enableTransition();
-          transition.current = true;
-          setTimeout(() => (transition.current = false), 300);
-          dividerRef.current.classList.add(`${prefix}draggable-divider-active`);
-          dividerRef.current.style.left = '0';
-          leftRef.current.style.left = `-${minWidth[0]}`;
-          leftRef.current.style.right = '100%';
-          rightRef.current.style.left = dividerWidth;
-          rightRef.current.style.right = '0';
-        }
-      } else if (
-        collapsible[1] &&
-        offsetX >
-          wrapperRef.current.offsetWidth - rightRef.current.offsetWidth / 2
-      ) {
-        if (rightRef.current.style.left !== '100%') {
-          // 右侧收起
-          enableTransition();
-          transition.current = true;
-          setTimeout(() => (transition.current = false), 300);
-          dividerRef.current.classList.add(`${prefix}draggable-divider-active`);
-          dividerRef.current.style.left = `calc(100% - ${dividerWidth})`;
-          leftRef.current.style.left = '0';
-          leftRef.current.style.right = dividerWidth;
-          rightRef.current.style.left = '100%';
-          rightRef.current.style.right = `-${minWidth[1]}`;
-        }
-      } else {
-        // 同时展示
-        if (
-          leftRef.current.style.right === '100%' ||
-          rightRef.current.style.left === '100%'
-        ) {
-          transition.current = true;
-          setTimeout(() => {
-            transition.current = false;
-            disableTransition();
-          }, 300);
-        }
-        const width = `min(max(${offsetX}px, calc(${minWidth[0]} + ${dividerWidth} / 2)), calc(100% - ${minWidth[1]} - ${dividerWidth} / 2))`;
-        dividerRef.current.classList.remove(
-          `${prefix}draggable-divider-active`,
-        );
-        dividerRef.current.style.left = `calc(${width} - ${dividerWidth} / 2)`;
-        leftRef.current.style.left = '0';
-        leftRef.current.style.right = `calc(100% - ${width} + ${dividerWidth} / 2)`;
-        rightRef.current.style.left = `calc(${width} + ${dividerWidth} / 2)`;
-        rightRef.current.style.right = '0';
+    if (transition.current) {
+      return;
+    }
+
+    const wrapper = wrapperRef.current!;
+    const divider = dividerRef.current!;
+    const left = leftRef.current!;
+    const right = rightRef.current!;
+
+    const offsetX = e.clientX - wrapper.getBoundingClientRect().left;
+
+    if (collapsible[0] && offsetX < left.offsetWidth / 2) {
+      if (left.style.right !== '100%') {
+        // 左侧收起
+        enableTransition();
+        transition.current = true;
+        setTimeout(() => (transition.current = false), 300);
+        divider.classList.add(`${prefix}draggable-divider-active`);
+        divider.style.left = '0';
+        left.style.left = `-${minWidth[0]}`;
+        left.style.right = '100%';
+        right.style.left = dividerWidth;
+        right.style.right = '0';
       }
+    } else if (
+      collapsible[1] &&
+      offsetX > wrapper.offsetWidth - right.offsetWidth / 2
+    ) {
+      if (right.style.left !== '100%') {
+        // 右侧收起
+        enableTransition();
+        transition.current = true;
+        setTimeout(() => (transition.current = false), 300);
+        divider.classList.add(`${prefix}draggable-divider-active`);
+        divider.style.left = `calc(100% - ${dividerWidth})`;
+        left.style.left = '0';
+        left.style.right = dividerWidth;
+        right.style.left = '100%';
+        right.style.right = `-${minWidth[1]}`;
+      }
+    } else {
+      // 同时展示
+      if (left.style.right === '100%' || right.style.left === '100%') {
+        transition.current = true;
+        setTimeout(() => {
+          transition.current = false;
+          disableTransition();
+        }, 300);
+      }
+      const width = `min(max(${offsetX}px, calc(${minWidth[0]} + ${dividerWidth} / 2)), calc(100% - ${minWidth[1]} - ${dividerWidth} / 2))`;
+      divider.classList.remove(`${prefix}draggable-divider-active`);
+      divider.style.left = `calc(${width} - ${dividerWidth} / 2)`;
+      left.style.left = '0';
+      left.style.right = `calc(100% - ${width} + ${dividerWidth} / 2)`;
+      right.style.left = `calc(${width} + ${dividerWidth} / 2)`;
+      right.style.right = '0';
     }
   });
 
   const dragStart = useMemoizedFn(() => {
+    const wrapper = wrapperRef.current!;
+
     setDragging(true);
-    if (wrapperRef.current) {
-      wrapperRef.current.style.cursor = 'col-resize';
-      wrapperRef.current.addEventListener('mousemove', dragHandler, {
-        capture: true,
-      });
-      document.addEventListener(
-        'mouseup',
-        () => {
-          setDragging(false);
-          if (wrapperRef.current) {
-            wrapperRef.current.style.cursor = 'unset';
-            wrapperRef.current.removeEventListener('mousemove', dragHandler, {
-              capture: true,
-            });
-          }
-        },
-        { capture: true, once: true },
-      );
-    }
+    wrapper.style.cursor = 'col-resize';
+    wrapper.addEventListener('mousemove', dragHandler, { capture: true });
+    document.addEventListener(
+      'mouseup',
+      () => {
+        setDragging(false);
+        wrapper.style.cursor = 'unset';
+        wrapper.removeEventListener('mousemove', dragHandler, {
+          capture: true,
+        });
+      },
+      { capture: true, once: true },
+    );
   });
 
   return (

@@ -77,6 +77,7 @@ const SubmissionStatus = ({
     <ConfigProviderWrapper>
       <Tooltip title={locale === 'zh_CN' && statusZh?.get(status)}>
         <div
+          data-testid={'submissionStatus'}
           className={classNames(className)}
           style={{
             cursor: onClick ? 'pointer' : 'initial',

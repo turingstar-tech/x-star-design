@@ -16,6 +16,7 @@ const LoadingMask = ({ loading }: LoadingMaskProps) => {
     <>
       {mount && (
         <div
+          data-testid={'loadingMask'}
           className={classNames(
             `${prefix}loadingMask`,
             `${visible ? '' : `${prefix}loadingHide`}`,

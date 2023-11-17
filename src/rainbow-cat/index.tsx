@@ -6,7 +6,7 @@ const RainbowCat = ({ text }: { text: string }) => (
       src="https://static.production.xjoi.net/images/emoticon-1.gif"
       alt=""
     />
-    <div>
+    <div data-testid="text">
       {text}
       <span className={`${prefix}rainbowDot`}>...</span>
     </div>

@@ -24,7 +24,11 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ user, style, ...props }) => {
   return (
     <ConfigProviderWrapper>
       <Tooltip title={name}>
-        <Avatar style={{ background, ...style }} {...props}>
+        <Avatar
+          style={{ background, ...style }}
+          {...props}
+          data-testid={'userAvatar'}
+        >
           {name[0].toUpperCase()}
         </Avatar>
       </Tooltip>

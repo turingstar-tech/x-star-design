@@ -30,8 +30,8 @@ describe('aliplayer', () => {
   });
 
   test('renders create aliplayer', () => {
-    const onCreate = jest.fn();
     const dispose = jest.fn();
+    const onCreate = jest.fn();
     //mock Aliplayer实例监听构造函数和相关方法
     const mockAliplayerInstance = jest
       .fn()
@@ -55,14 +55,14 @@ describe('aliplayer', () => {
       autoplay: false,
       language: 'zh-cn',
     };
-    const { rerender } = render(
+    const { rerender, unmount } = render(
       <Aliplayer config={mockConfig} onCreate={onCreate} />,
     );
     jest.runAllTimers();
-    const playerElement = screen.getByTestId('aliplayer-wrapper');
-    expect(playerElement).toBeInTheDocument();
-    expect(mockAliplayerInstance).toHaveBeenCalled();
+    expect(screen.getByTestId('aliplayer-wrapper')).toBeInTheDocument();
+    expect(dispose).toHaveBeenCalledTimes(0);
     expect(onCreate).toHaveBeenCalledTimes(1);
+    expect(mockAliplayerInstance).toHaveBeenCalledTimes(1);
     //重新渲染组件，以更新配置重建player
     const newMockConfig = {
       vid: 'new-test',
@@ -70,7 +70,12 @@ describe('aliplayer', () => {
       autoplay: true,
       language: 'en-us',
     };
-    rerender(<Aliplayer config={newMockConfig} />);
-    expect(dispose).toHaveBeenCalled();
+    rerender(<Aliplayer config={newMockConfig} onCreate={onCreate} />);
+    jest.runAllTimers();
+    expect(dispose).toHaveBeenCalledTimes(1);
+    expect(onCreate).toHaveBeenCalledTimes(2);
+    expect(mockAliplayerInstance).toHaveBeenCalledTimes(2);
+    unmount();
+    expect(dispose).toHaveBeenCalledTimes(2);
   });
 });

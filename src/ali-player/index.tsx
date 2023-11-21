@@ -65,7 +65,10 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
   );
   useEffect(resize, [size, resize]);
   useEffect(() => {
-    if (player.current) player.current.dispose();
+    if (player.current) {
+      player.current.dispose();
+      player.current = undefined;
+    }
     const create = () => {
       const run = (retry: number) => {
         const Aliplayer = (window as any).Aliplayer;
@@ -89,7 +92,12 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
   /**
    * 组件卸载时销毁 Aliplayer
    */
-  useUnmount(() => player.current && player.current.dispose());
+  useUnmount(() => {
+    if (player.current) {
+      player.current.dispose();
+      player.current = undefined;
+    }
+  });
 
   return (
     <div ref={wrapper}>

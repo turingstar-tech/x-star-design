@@ -1,4 +1,4 @@
-import { useMemoizedFn, useSize, useUnmount } from 'ahooks';
+import { useMemoizedFn, useSize } from 'ahooks';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { randomString } from 'x-star-utils';
 
@@ -19,9 +19,9 @@ export interface AliplayerInstance {
   pause: () => void;
   seek: (time: number) => void;
   getCurrentTime: () => number;
-  setPlayerSize: (width: string, height: string) => void;
+  setPlayerSize: (w: string, h: string) => void;
   dispose: () => void;
-  on: (event: string, handler: () => void) => void;
+  on: (name: string, handler: () => void) => void;
 }
 
 interface AliplayerProps {
@@ -31,8 +31,8 @@ interface AliplayerProps {
 
 const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
   const id = useMemo(() => `aliplayer-${randomString(8)}`, []);
-  const wrapper = useRef<HTMLDivElement>(null);
   const player = useRef<AliplayerInstance>();
+  const wrapper = useRef<HTMLDivElement>(null);
   const size = useSize(wrapper);
 
   const importAliPlayer = () => {
@@ -48,9 +48,11 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
     head?.append(link);
     head?.append(scirpt);
   };
+
   if (!(window as any).Aliplayer) {
     importAliPlayer();
   }
+
   /**
    * 根据宽度调整高度，比例为 16:9
    */
@@ -63,12 +65,10 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
         `${(size.width / 16) * 9}px`,
       ),
   );
-  useEffect(resize, [size, resize]);
+
+  useEffect(resize, [size]);
+
   useEffect(() => {
-    if (player.current) {
-      player.current.dispose();
-      player.current = undefined;
-    }
     const create = () => {
       const run = (retry: number) => {
         const Aliplayer = (window as any).Aliplayer;
@@ -87,17 +87,14 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
       window.setTimeout(() => run(100));
     };
     create();
-  }, [config?.vid, config?.playauth, id, resize, onCreate]);
 
-  /**
-   * 组件卸载时销毁 Aliplayer
-   */
-  useUnmount(() => {
-    if (player.current) {
-      player.current.dispose();
-      player.current = undefined;
-    }
-  });
+    return () => {
+      if (player.current) {
+        player.current.dispose();
+        player.current = undefined;
+      }
+    };
+  }, [config.vid, config.playauth]);
 
   return (
     <div ref={wrapper}>

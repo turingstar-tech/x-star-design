@@ -9,9 +9,7 @@ jest.mock('ahooks', () => {
   return {
     __esModule: true,
     ...originalModule,
-    useSize: () => ({
-      width: '1024px',
-    }),
+    useSize: () => ({ width: 1024 }),
   };
 });
 jest.useFakeTimers();

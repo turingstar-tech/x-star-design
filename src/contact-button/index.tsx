@@ -17,6 +17,7 @@ const ContactButton: React.FC = () => {
         content={
           <Space direction="vertical" align="center">
             <img
+              data-testid="qrCode"
               alt=""
               style={{ height: 100 }}
               src={getTransResult(lang, wechatCode, xcQrCode)}
@@ -26,7 +27,10 @@ const ContactButton: React.FC = () => {
           </Space>
         }
       >
-        <Card className={`${prefix}contactButtonCard`}>
+        <Card
+          className={`${prefix}contactButtonCard`}
+          data-testid={'contactButtonText'}
+        >
           <Space direction="vertical" align="center">
             <QrcodeOutlined style={{ fontSize: 30, color: '#1677ff' }} />
             {t('CONTACT_US')}

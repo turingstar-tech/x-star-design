@@ -3,13 +3,13 @@ import '@testing-library/jest-dom/jest-globals';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { DraggableLayout } from '../src';
+import DraggableLayout from '../src/draggable-layout';
 import { prefix } from '../src/utils/global';
 
 jest.useFakeTimers();
 
 describe('draggable layout', () => {
-  test('render left and right children', () => {
+  test('renders left and right children', () => {
     render(<DraggableLayout left="Test Left" right="Test Right" />);
 
     // 左右孩子被渲染
@@ -17,7 +17,7 @@ describe('draggable layout', () => {
     expect(screen.getByTestId('right')).toHaveTextContent('Test Right');
   });
 
-  test('render class name', () => {
+  test('renders class name', () => {
     render(
       <DraggableLayout
         className="testClassName"
@@ -32,7 +32,7 @@ describe('draggable layout', () => {
     expect(screen.getByTestId('divider')).toHaveClass('testDividerClassName');
   });
 
-  test('render divider and default width', () => {
+  test('renders divider and default width', () => {
     render(
       <DraggableLayout
         dividerWidth="16px"
@@ -60,7 +60,7 @@ describe('draggable layout', () => {
     });
   });
 
-  test('drag divider', async () => {
+  test('drags divider', async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
 
     const { container } = render(

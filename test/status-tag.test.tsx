@@ -3,11 +3,13 @@ import '@testing-library/jest-dom/jest-globals';
 import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { StatusTag } from '../src';
 import correctSVG from '../src/assets/status-tag/correct.svg';
+import StatusTag from '../src/status-tag';
+
 jest.useFakeTimers();
+
 describe('status tag', () => {
-  test('render with no error', () => {
+  test('renders with no error', () => {
     const { getByTestId } = render(
       <StatusTag status="correct" shape={'rect'} required />,
     );
@@ -17,7 +19,7 @@ describe('status tag', () => {
     expect(requiredIcon).toBeInTheDocument();
   });
 
-  test('render with correct CSS class and style', () => {
+  test('renders with correct CSS class and style', () => {
     const { getByTestId } = render(
       <StatusTag
         status="filled"
@@ -41,19 +43,19 @@ describe('status tag', () => {
       </StatusTag>,
     );
     const statusTag = getByTestId('status-tag');
-    //鼠标移入
+    // 鼠标移入
     await user.hover(statusTag);
     act(() => {
       jest.runOnlyPendingTimers();
     });
     expect(statusTag).toHaveTextContent('Content');
-    //鼠标移走
+    // 鼠标移走
     await user.unhover(statusTag);
     act(() => {
       jest.runOnlyPendingTimers();
     });
     expect(statusTag).not.toHaveTextContent('Content');
-    //鼠标点击
+    // 鼠标点击
     await user.click(statusTag);
     expect(onClick).toHaveBeenCalled();
   });

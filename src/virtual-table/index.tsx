@@ -15,7 +15,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
   /**
    * 表格实际宽度
    */
-  const [tableWidth, setTableWidth] = useState(0);
+  const [tableWidth, setTableWidth] = useState(100);
 
   /**
    * 自动设置列宽
@@ -91,17 +91,8 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
   const [connectObject] = useState<any>(() => {
     const obj = {};
     Object.defineProperty(obj, 'scrollLeft', {
-      get: () => {
-        if (gridRef.current) {
-          return gridRef.current?.state?.scrollLeft;
-        }
-        return null;
-      },
-      set: (scrollLeft: number) => {
-        if (gridRef.current) {
-          gridRef.current.scrollTo({ scrollLeft });
-        }
-      },
+      get: () => gridRef.current?.state?.scrollLeft,
+      set: (scrollLeft: number) => gridRef.current?.scrollTo({ scrollLeft }),
     });
     return obj;
   });
@@ -203,7 +194,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
                   .reduce(
                     (value, column) => value + (column.width as number),
                     0,
-                  ) + gridRef.current?.state?.scrollLeft;
+                  ) + (gridRef.current?.state?.scrollLeft ?? 0);
 
               /**
                * 水平滚动距离大于 0 时最右侧的固定列加上阴影

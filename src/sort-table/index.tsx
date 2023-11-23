@@ -17,7 +17,10 @@ const SortTable = (props: TableProps<any> & customProps) => {
   const dataSource = props?.dataSource || [];
   const { rowKey, onSortEnd: onEnd } = props;
   const DragHandle = SortableHandle(() => (
-    <MenuOutlined style={{ cursor: 'grab', color: '#999' }} />
+    <MenuOutlined
+      style={{ cursor: 'grab', color: '#999' }}
+      data-testid="dragHandle"
+    />
   ));
   const newColumns: ColumnsType<any> = [
     {

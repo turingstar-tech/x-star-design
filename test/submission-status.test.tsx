@@ -3,15 +3,18 @@ import '@testing-library/jest-dom/jest-globals';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { SubmissionStatus } from '../src';
+import SubmissionStatus from '../src/submission-status';
+
 jest.useFakeTimers();
+
 jest.mock('../src/locales', () => ({
   useLocale: () => ({
     locale: 'zh_CN',
   }),
 }));
+
 describe('submission status', () => {
-  test('render with correct CSS class and style', () => {
+  test('renders with correct CSS class and style', () => {
     render(
       <SubmissionStatus
         status="Accepted"
@@ -26,13 +29,13 @@ describe('submission status', () => {
     expect(submissionStatus).toHaveStyle({ color: 'red' });
   });
 
-  test('render with click event', async () => {
+  test('renders with click event', async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
     const onClick = jest.fn();
     render(<SubmissionStatus status="Accepted" onClick={onClick} />);
 
     const submissionStatus = screen.getByTestId('submissionStatus');
-    //鼠标点击
+    // 鼠标点击
     await user.click(submissionStatus);
     expect(onClick).toHaveBeenCalled();
   });

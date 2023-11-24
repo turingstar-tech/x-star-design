@@ -7,8 +7,8 @@ import { VirtualTable } from 'x-star-design';
 import React from 'react';
 export default () => {
   const columns = [
-    { title: 'A', dataIndex: 'key', width: 150 },
-    { title: 'B', dataIndex: 'key', width: 150 },
+    { title: 'A', dataIndex: 'key', fixed: 'left', width: 150 },
+    { title: 'B', dataIndex: 'key', fixed: 'left', width: 150 },
     { title: 'C', dataIndex: 'key', width: 150 },
     { title: 'D', dataIndex: 'key', width: 150 },
     { title: 'E', dataIndex: 'key', width: 200 },

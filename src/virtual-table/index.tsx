@@ -91,7 +91,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
   const [connectObject] = useState<any>(() => {
     const obj = {};
     Object.defineProperty(obj, 'scrollLeft', {
-      get: () => gridRef.current?.state?.scrollLeft,
+      get: () => gridRef.current?.state.scrollLeft,
       set: (scrollLeft: number) => gridRef.current?.scrollTo({ scrollLeft }),
     });
     return obj;
@@ -124,7 +124,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
     const totalHeight = rawData.length * 54;
 
     /**
-     * 渲染单元格
+     * 单元格
      */
     const Cell = ({
       columnIndex,
@@ -184,56 +184,56 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
             /**
              * 渲染固定列
              */
-            fixedColumns.map((column, columnIndex) => {
-              /**
-               * 左边距设置为左侧列宽度之和加水平滚动距离，模拟固定效果
-               */
-              const left =
-                fixedColumns
-                  .slice(0, columnIndex)
-                  .reduce(
-                    (value, column) => value + (column.width as number),
-                    0,
-                  ) + (gridRef.current?.state?.scrollLeft ?? 0);
-
-              /**
-               * 水平滚动距离大于 0 时最右侧的固定列加上阴影
-               */
-              const boxShadow =
-                gridRef.current?.state?.scrollLeft > 0 &&
-                columnIndex === fixedColumns.length - 1
-                  ? '4px 0px 4px #e8e8e8'
-                  : undefined;
-
-              return rawData
-                .slice(
-                  startRowIndex.current,
-                  startRowIndex.current +
-                    Math.ceil((scroll!.y as number) / 54) +
-                    2,
-                )
-                .map((_, rowIndex) => (
-                  <Cell
-                    key={`${columnIndex},${rowIndex}`}
-                    columnIndex={columnIndex}
-                    rowIndex={rowIndex + startRowIndex.current}
-                    style={{
-                      position: 'absolute',
-                      top: (rowIndex + startRowIndex.current) * 54,
-                      left,
-                      width: column.width,
-                      height: 54,
-                      boxShadow,
-                      transition: 'box-shadow 0.3s',
-                      zIndex: 1,
-                    }}
-                    /**
-                     * 传递任意数据以渲染固定列的单元格
-                     */
-                    data
-                  />
-                ));
-            })
+            fixedColumns.map((column, columnIndex) => (
+              <div
+                key={columnIndex}
+                style={{
+                  position: 'sticky',
+                  left: fixedColumns
+                    .slice(0, columnIndex)
+                    .reduce(
+                      (value, column) => value + (column.width as number),
+                      0,
+                    ),
+                  width: column.width,
+                  zIndex: 1,
+                }}
+              >
+                {rawData
+                  .slice(
+                    startRowIndex.current,
+                    startRowIndex.current +
+                      Math.ceil((scroll!.y as number) / 54) +
+                      2,
+                  )
+                  .map((_, rowIndex) => (
+                    <Cell
+                      key={rowIndex}
+                      columnIndex={columnIndex}
+                      rowIndex={rowIndex + startRowIndex.current}
+                      style={{
+                        position: 'absolute',
+                        top: (rowIndex + startRowIndex.current) * 54,
+                        width: '100%',
+                        height: 54,
+                        /**
+                         * 水平滚动距离大于 0 时最右侧的固定列加上阴影
+                         */
+                        boxShadow:
+                          gridRef.current?.state.scrollLeft > 0 &&
+                          columnIndex === fixedColumns.length - 1
+                            ? '4px 0px 4px #f0f0f0'
+                            : undefined,
+                        transition: 'box-shadow 0.3s',
+                      }}
+                      /**
+                       * 传递任意数据以渲染固定列的单元格
+                       */
+                      data
+                    />
+                  ))}
+              </div>
+            ))
           }
           {
             /**
@@ -298,7 +298,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
                   };
                   left += props.column.width;
                 }
-                return <tr {...rest}>{children}</tr>;
+                return <tr {...rest}>{newChildren}</tr>;
               },
             },
             body: renderVirtualList,

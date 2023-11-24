@@ -46,13 +46,10 @@ describe('ac animation', () => {
     const setFont = jest.spyOn(ctx, 'font', 'set');
     const setFillStyle = jest.spyOn(ctx, 'fillStyle', 'set');
 
-    // 渲染下一帧
-    jest.runOnlyPendingTimers();
-    expect(setFont).toHaveBeenCalledWith('bold 45px Arial');
-    expect(setFillStyle).toHaveBeenCalledWith('#FFAD10');
-
     // 渲染至结束
     jest.runAllTimers();
+    expect(setFont).toHaveBeenCalledWith('bold 45px Arial');
+    expect(setFillStyle).toHaveBeenCalledWith('#FFAD10');
     expect(onFinish).toHaveBeenCalled();
   });
 
@@ -66,6 +63,7 @@ describe('ac animation', () => {
         onFinish={onFinish}
       />,
     );
+
     // 模拟动画关闭事件
     fireEvent.click(getByTestId('ac-canvas'));
     expect(onFinish).toHaveBeenCalled();

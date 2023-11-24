@@ -1,6 +1,6 @@
-# CodeMirror
+# CodeMirrorWrapper
 
-这是代码编辑器 CodeMirror
+这是代码编辑器 CodeMirror 的封装
 
 ```jsx
 import { CodeMirrorWrapper, LangId, Theme } from 'x-star-design';

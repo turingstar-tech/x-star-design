@@ -2,7 +2,7 @@ import { MenuOutlined } from '@ant-design/icons';
 import type { TableProps } from 'antd';
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import React, { Component, useRef } from 'react';
+import React, { useRef } from 'react';
 import type { SortEnd } from 'react-sortable-hoc';
 import {
   SortableContainer,
@@ -12,7 +12,7 @@ import {
 import ConfigProviderWrapper from '../config-provider-wrapper';
 
 interface SortTableProps<RecordType> extends TableProps<RecordType> {
-  onSortEnd?: (newDataSource: Array<any>) => Promise<void>;
+  onSortEnd?: (newDataSource: RecordType[]) => void;
 }
 
 const SortTable = <RecordType extends Record<string, unknown>>(
@@ -27,7 +27,7 @@ const SortTable = <RecordType extends Record<string, unknown>>(
     />
   ));
 
-  const newColumns: ColumnsType<any> = [
+  const newColumns: ColumnsType<RecordType> = [
     {
       title: 'Sort',
       dataIndex: 'sort',
@@ -37,12 +37,12 @@ const SortTable = <RecordType extends Record<string, unknown>>(
       className: 'drag-visible',
       render: () => <DragHandle />,
     },
-    ...(props?.columns ? props?.columns : []),
+    ...(props.columns ?? []),
   ];
 
   const SortableItem = SortableElement(
     (props: React.HTMLAttributes<HTMLTableRowElement>) => (
-      <tr data-testid="tableRow" {...props} />
+      <tr {...props} data-testid="tableRow" />
     ),
   );
 
@@ -50,7 +50,7 @@ const SortTable = <RecordType extends Record<string, unknown>>(
 
   const SortableBody = SortableContainer(
     (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
-      <tbody ref={bodyRef} {...props} />
+      <tbody {...props} ref={bodyRef} />
     ),
   );
 
@@ -66,25 +66,23 @@ const SortTable = <RecordType extends Record<string, unknown>>(
     }
   };
 
-  const DraggableContainer = (props: Component) => {
-    return (
-      <SortableBody
-        {...props}
-        useDragHandle
-        disableAutoscroll
-        helperClass="row-dragging"
-        helperContainer={() => bodyRef.current!}
-        onSortEnd={onSortEnd}
-      />
-    );
-  };
+  const DraggableContainer = (props: any) => (
+    <SortableBody
+      {...props}
+      useDragHandle
+      disableAutoscroll
+      helperClass="row-dragging"
+      helperContainer={() => bodyRef.current!}
+      onSortEnd={onSortEnd}
+    />
+  );
 
-  const DraggableBodyRow: React.FC<any> = (props) => {
+  const DraggableBodyRow = (props: any) => {
     // function findIndex base on Table rowKey props and should always be a right array index
     const index = dataSource.findIndex(
       (x) => typeof rowKey === 'string' && x[rowKey] === props['data-row-key'],
     );
-    return <SortableItem {...props} index={index} key={index} />;
+    return <SortableItem {...props} key={index} index={index} />;
   };
 
   return (
@@ -92,8 +90,8 @@ const SortTable = <RecordType extends Record<string, unknown>>(
       <Table
         {...props}
         columns={newColumns}
-        rowKey={rowKey}
         dataSource={dataSource}
+        rowKey={rowKey}
         components={{
           body: {
             wrapper: DraggableContainer,

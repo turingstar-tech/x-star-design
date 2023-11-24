@@ -48,7 +48,7 @@ describe('sort table', () => {
   });
 
   test('triggers onSortEnd callback when rows are sorted', async () => {
-    const onSortEndMock = jest.fn<(newDataSource: any[]) => Promise<void>>();
+    const onSortEndMock = jest.fn();
     const { container } = render(
       <SortTable
         columns={columns}

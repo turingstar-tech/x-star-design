@@ -68,10 +68,9 @@ describe('sort table', () => {
     expect(tableRows).toHaveLength(data.length);
 
     // 模拟行高度
-    tableRows.forEach((row, index) => {
-      jest.spyOn(row, 'offsetHeight', 'get').mockReturnValue(54);
-      jest.spyOn(row, 'offsetTop', 'get').mockReturnValue(index * 54);
-    });
+    tableRows.forEach((row, index) =>
+      jest.spyOn(row, 'offsetTop', 'get').mockReturnValue(index * 54),
+    );
 
     // 模拟将第一行拖到第二行
     const dragHandles = screen.getAllByTestId('dragHandle');

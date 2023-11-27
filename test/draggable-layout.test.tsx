@@ -100,7 +100,7 @@ describe('draggable layout', () => {
     // 左侧收起
     expect(divider).toHaveClass(`${prefix}draggable-divider-active`);
 
-    jest.runOnlyPendingTimers();
+    jest.runAllTimers();
     await user.pointer({ target: wrapper, coords: { x: 100 } });
 
     // 左侧收起
@@ -111,13 +111,13 @@ describe('draggable layout', () => {
     // 左右侧均未收起
     expect(divider).not.toHaveClass(`${prefix}draggable-divider-active`);
 
-    jest.runOnlyPendingTimers();
+    jest.runAllTimers();
     await user.pointer({ target: wrapper, coords: { x: 400 } });
 
     // 右侧收起
     expect(divider).toHaveClass(`${prefix}draggable-divider-active`);
 
-    jest.runOnlyPendingTimers();
+    jest.runAllTimers();
     await user.pointer({ target: wrapper, coords: { x: 500 } });
 
     // 右侧收起
@@ -134,7 +134,7 @@ describe('draggable layout', () => {
     // 遮罩未渲染
     expect(screen.queryByTestId('mask')).not.toBeInTheDocument();
 
-    jest.runOnlyPendingTimers();
+    jest.runAllTimers();
     await user.pointer({ target: wrapper, coords: { x: 100 } });
 
     // 左右侧均未收起

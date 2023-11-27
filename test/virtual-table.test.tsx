@@ -6,7 +6,7 @@ import React from 'react';
 import { prefix } from '../src/utils/global';
 import VirtualTable from '../src/virtual-table';
 
-// 使 resize-observer-polyfill 生效
+// 绕过 resize-observer-polyfill 的检测
 Object.setPrototypeOf(Element, Object);
 
 window.matchMedia = jest.fn().mockImplementation((query) => {

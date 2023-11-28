@@ -4,7 +4,6 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { LangId } from '../src';
 import CodeDetailModal from '../src/code-detail-modal';
-jest.useFakeTimers();
 window.matchMedia = jest.fn().mockImplementation((query) => {
   return {
     matches: false,

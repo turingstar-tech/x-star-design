@@ -5,7 +5,7 @@ import { prefix } from '../utils/global';
 type TitleWithIconProps = {
   title: React.ReactNode;
   className?: string;
-  description?: string;
+  description?: React.ReactNode;
   id?: string;
 };
 

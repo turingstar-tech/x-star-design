@@ -3,9 +3,9 @@ import React from 'react';
 import rightSvg from '../assets/title-with-icon/right.svg';
 import { prefix } from '../utils/global';
 type TitleWithIconProps = {
-  title: string;
+  title: React.ReactNode;
   className?: string;
-  description?: string;
+  description?: React.ReactNode;
   id?: string;
 };
 

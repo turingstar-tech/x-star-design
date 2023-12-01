@@ -59,6 +59,7 @@ const SingleDataConfig = () => {
                 </Col>
                 <MinusCircleOutlined
                   className="dynamic-delete-button"
+                  data-testid={'deleteSingleBtn'}
                   style={{ lineHeight: '32px', height: 32 }}
                   onClick={() => remove(field.name)}
                 />
@@ -90,6 +91,7 @@ const SingleDataConfig = () => {
                   value={addTestNumber}
                   min={1}
                   max={50}
+                  data-testid={'batchAddInput'}
                   onChange={(value) => setAddTestNumber(value || 0)}
                 />
                 {t('Test_Point')}

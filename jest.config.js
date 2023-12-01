@@ -148,9 +148,7 @@ const config = {
   testEnvironment: 'jsdom',
 
   // Options that will be passed to the testEnvironment
-  testEnvironmentOptions: {
-    timezone: '+8',
-  },
+  // testEnvironmentOptions: {},
 
   // Adds a location field to test results
   // testLocationInResults: false,

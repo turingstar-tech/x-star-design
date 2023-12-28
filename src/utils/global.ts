@@ -1,1 +1,1 @@
-export const prefix = 'x-star-design-';
+export const prefix = 'x-star-design';

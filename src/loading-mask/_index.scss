@@ -1,4 +1,4 @@
-.#{$prefix}loadingMask {
+.#{$prefix}-loadingMask {
   position: absolute;
   inset: 0;
   display: flex;
@@ -9,40 +9,40 @@
   transition: all 0.3s;
 }
 
-.#{$prefix}loadingHide {
+.#{$prefix}-loadingHide {
   opacity: 0;
 }
 
-.#{$prefix}loadingLoader {
+.#{$prefix}-loadingLoader {
   position: relative;
   width: 86px;
   height: 20px;
   margin: auto;
 }
 
-.#{$prefix}loadingSquare {
+.#{$prefix}-loadingSquare {
   position: absolute;
   top: 0;
   width: 20px;
   height: 20px;
 }
 
-.#{$prefix}loadingSquare:nth-child(1) {
+.#{$prefix}-loadingSquare:nth-child(1) {
   left: 0;
   animation: square1 1.5s linear forwards infinite;
 }
 
-.#{$prefix}loadingSquare:nth-child(2) {
+.#{$prefix}-loadingSquare:nth-child(2) {
   left: 22px;
   animation: square2 1.5s linear forwards infinite;
 }
 
-.#{$prefix}loadingSquare:nth-child(3) {
+.#{$prefix}-loadingSquare:nth-child(3) {
   left: 44px;
   animation: square3 1.5s linear forwards infinite;
 }
 
-.#{$prefix}loadingSquare:nth-child(4) {
+.#{$prefix}-loadingSquare:nth-child(4) {
   left: 66px;
   animation: square4 1.5s linear forwards infinite;
 }

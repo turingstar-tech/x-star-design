@@ -72,7 +72,7 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
         enableTransition();
         transition.current = true;
         setTimeout(() => (transition.current = false), 300);
-        divider.classList.add(`${prefix}draggable-divider-active`);
+        divider.classList.add(`${prefix}-draggable-divider-active`);
         divider.style.left = '0';
         left.style.left = `-${minWidth[0]}`;
         left.style.right = '100%';
@@ -88,7 +88,7 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
         enableTransition();
         transition.current = true;
         setTimeout(() => (transition.current = false), 300);
-        divider.classList.add(`${prefix}draggable-divider-active`);
+        divider.classList.add(`${prefix}-draggable-divider-active`);
         divider.style.left = `calc(100% - ${dividerWidth})`;
         left.style.left = '0';
         left.style.right = dividerWidth;
@@ -105,7 +105,7 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
         }, 300);
       }
       const width = `min(max(${offsetX}px, calc(${minWidth[0]} + ${dividerWidth} / 2)), calc(100% - ${minWidth[1]} - ${dividerWidth} / 2))`;
-      divider.classList.remove(`${prefix}draggable-divider-active`);
+      divider.classList.remove(`${prefix}-draggable-divider-active`);
       divider.style.left = `calc(${width} - ${dividerWidth} / 2)`;
       left.style.left = '0';
       left.style.right = `calc(100% - ${width} + ${dividerWidth} / 2)`;
@@ -137,25 +137,27 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
     <div
       data-testid="wrapper"
       ref={wrapperRef}
-      className={classNames(`${prefix}draggable-layout`, className)}
+      className={classNames(`${prefix}-draggable-layout`, className)}
       style={style}
     >
       <div
         data-testid="divider"
         ref={dividerRef}
-        className={dividerClassName ?? classNames(`${prefix}draggable-divider`)}
+        className={
+          dividerClassName ?? classNames(`${prefix}-draggable-divider`)
+        }
         style={{ left: `calc(${defaultWidth} - ${dividerWidth} / 2)` }}
         onMouseDown={dragStart}
       >
         {dividerChildren}
       </div>
       {dragging && (
-        <div data-testid="mask" className={`${prefix}draggable-mask`} />
+        <div data-testid="mask" className={`${prefix}-draggable-mask`} />
       )}
       <div
         data-testid="left"
         ref={leftRef}
-        className={`${prefix}draggable-children`}
+        className={`${prefix}-draggable-children`}
         style={{
           left: 0,
           right: `calc(100% - ${defaultWidth} + ${dividerWidth} / 2)`,
@@ -166,7 +168,7 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
       <div
         data-testid="right"
         ref={rightRef}
-        className={`${prefix}draggable-children`}
+        className={`${prefix}-draggable-children`}
         style={{
           left: `calc(${defaultWidth} + ${dividerWidth} / 2)`,
           right: 0,

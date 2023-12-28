@@ -1,11 +1,11 @@
-.#{$prefix}draggable-layout {
+.#{$prefix}-draggable-layout {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-.#{$prefix}draggable-divider {
+.#{$prefix}-draggable-divider {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -16,19 +16,19 @@
   cursor: col-resize;
 }
 
-.#{$prefix}draggable-divider:hover,
-.#{$prefix}draggable-divider:active,
-.#{$prefix}draggable-divider.#{$prefix}draggable-divider-active {
+.#{$prefix}-draggable-divider:hover,
+.#{$prefix}-draggable-divider:active,
+.#{$prefix}-draggable-divider.#{$prefix}-draggable-divider-active {
   border-left: 4px #1890ff solid;
 }
 
-.#{$prefix}draggable-mask {
+.#{$prefix}-draggable-mask {
   position: fixed;
   inset: 0;
   z-index: 99;
 }
 
-.#{$prefix}draggable-children {
+.#{$prefix}-draggable-children {
   position: absolute;
   top: 0;
   bottom: 0;

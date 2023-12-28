@@ -17,14 +17,14 @@ const TitleWithIcon = ({
 }: TitleWithIconProps) => (
   <div
     data-testid="wrapper"
-    className={classNames(className, `${prefix}titleSection`)}
+    className={classNames(className, `${prefix}-titleSection`)}
     id={id}
   >
     <img src={rightSvg} alt="" />
-    <span data-testid="title" className={`${prefix}title`}>
+    <span data-testid="title" className={`${prefix}-title`}>
       {title}
     </span>
-    <span data-testid="description" className={`${prefix}description`}>
+    <span data-testid="description" className={`${prefix}-description`}>
       {description}
     </span>
   </div>

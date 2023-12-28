@@ -19,7 +19,7 @@ const SubTaskConfig = () => {
                 key={field.key}
                 labelCol={{ span: 24 }}
               >
-                <Row className={`${prefix}formList`} gutter={[10, 10]}>
+                <Row className={`${prefix}-formList`} gutter={[10, 10]}>
                   <Col>
                     <Form.Item
                       {...field}

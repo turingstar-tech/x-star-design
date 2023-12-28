@@ -1,14 +1,14 @@
-.#{$prefix}visualForm {
+.#{$prefix}-visualForm {
   width: 90%;
 
-  .#{$prefix}row {
+  .#{$prefix}-row {
     width: 100%;
 
-    .#{$prefix}explainItem {
+    .#{$prefix}-explainItem {
       margin: -20px 0 16px;
     }
 
-    .#{$prefix}form-item-extra {
+    .#{$prefix}-form-item-extra {
       clear: both;
       color: #00000073;
       font-size: 14px;
@@ -18,7 +18,7 @@
     }
   }
 
-  .#{$prefix}formList {
+  .#{$prefix}-formList {
     width: 100%;
   }
 }

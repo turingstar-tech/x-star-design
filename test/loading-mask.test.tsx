@@ -10,11 +10,11 @@ describe('loading mask', () => {
     const { rerender } = render(<LoadingMask loading={true} />);
     // 标题和描述被渲染
     expect(screen.getByTestId('loadingMask')).not.toHaveClass(
-      `${prefix}loadingHide`,
+      `${prefix}-loadingHide`,
     );
     rerender(<LoadingMask loading={false} />);
     expect(screen.getByTestId('loadingMask')).toHaveClass(
-      `${prefix}loadingHide`,
+      `${prefix}-loadingHide`,
     );
   });
 });

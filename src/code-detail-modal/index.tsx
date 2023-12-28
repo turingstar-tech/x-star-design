@@ -124,7 +124,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
         width={800}
         footer={null}
         {...props}
-        className={`${prefix}codeDetailModal`}
+        className={`${prefix}-codeDetailModal`}
       >
         <Table
           pagination={false}
@@ -134,14 +134,14 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
         />
         {showCode ? (
           <CodeMirrorWrapper
-            className={`${prefix}codeMirror`}
+            className={`${prefix}-codeMirror`}
             lang={codeData?.language}
             theme={Theme.LIGHT}
             value={codeData?.source}
             readOnly
           />
         ) : (
-          <pre className={`${prefix}codeCompileResult`}>
+          <pre className={`${prefix}-codeCompileResult`}>
             <code>{codeData.detail}</code>
           </pre>
         )}

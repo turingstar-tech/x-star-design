@@ -110,7 +110,7 @@ describe('virtual table', () => {
     expect(screen.queryByText('9')).not.toBeInTheDocument();
 
     // 纵向滚动
-    const tableBody = container.querySelector(`.${prefix}virtual-grid`)!;
+    const tableBody = container.querySelector(`.${prefix}-virtual-grid`)!;
     jest
       .spyOn(tableBody, 'scrollHeight', 'get')
       .mockReturnValue(data.length * 54);
@@ -151,11 +151,11 @@ describe('virtual table', () => {
     expect(screen.queryByText('John')).toBeInTheDocument();
 
     // 没有阴影
-    const tabelCell = container.querySelector(`.${prefix}virtual-table-cell`);
+    const tabelCell = container.querySelector(`.${prefix}-virtual-table-cell`);
     expect(tabelCell).not.toHaveStyle({ boxShadow: '4px 0px 4px #f0f0f0' });
 
     // 横向滚动
-    const tableBody = container.querySelector(`.${prefix}virtual-grid`)!;
+    const tableBody = container.querySelector(`.${prefix}-virtual-grid`)!;
     jest.spyOn(tableBody, 'scrollWidth', 'get').mockReturnValue(1000);
     jest.spyOn(tableBody, 'scrollLeft', 'get').mockReturnValue(500);
     fireEvent.scroll(tableBody);
@@ -177,7 +177,7 @@ describe('virtual table', () => {
 
     // 模拟宽度
     const table = container.querySelector(
-      `.${prefix}virtual-table`,
+      `.${prefix}-virtual-table`,
     ) as HTMLElement;
     jest.spyOn(table, 'clientWidth', 'get').mockReturnValue(500);
     jest
@@ -192,10 +192,10 @@ describe('virtual table', () => {
         }),
     );
 
-    const tableBody = container.querySelector(`.${prefix}virtual-grid`)!;
+    const tableBody = container.querySelector(`.${prefix}-virtual-grid`)!;
     expect(tableBody).toHaveStyle({ width: '500px' });
 
-    const tabelCell = container.querySelector(`.${prefix}virtual-table-cell`);
+    const tabelCell = container.querySelector(`.${prefix}-virtual-table-cell`);
     expect(tabelCell).toHaveStyle({ width: '200px' });
   });
 });

@@ -19,7 +19,7 @@ const SingleDataConfig = () => {
               key={field.key}
               labelCol={{ span: 24 }}
             >
-              <Row className={`${prefix}formList`} gutter={[10, 0]}>
+              <Row className={`${prefix}-formList`} gutter={[10, 0]}>
                 <Col>
                   <Form.Item
                     {...field}

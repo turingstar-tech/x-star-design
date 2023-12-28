@@ -79,9 +79,9 @@ const VisualDataConfig = ({
           const res = compactObj(config); // 删除空对象
           onConfirm(JSON.stringify(res));
         }}
-        className={`${prefix}visualForm`}
+        className={`${prefix}-visualForm`}
       >
-        <Row justify="start" gutter={[16, 0]} className={`${prefix}row`}>
+        <Row justify="start" gutter={[16, 0]} className={`${prefix}-row`}>
           <Col span={6}>
             <Form.Item
               name="timeLimit"
@@ -138,7 +138,7 @@ const VisualDataConfig = ({
           </Col>
           <Col span={24}>
             <div
-              className={`${prefix}form-item-extra ${`${prefix}explainItem`}`}
+              className={`${prefix}-form-item-extra ${`${prefix}-explainItem`}`}
             >
               {t('Input_Output_Format_Tip')}
             </div>
@@ -155,7 +155,7 @@ const VisualDataConfig = ({
             </Form.Item>
           </Col>
           <Col span={24}>
-            <div className={`${prefix}form-item-extra ${prefix}explainItem`}>
+            <div className={`${prefix}-form-item-extra ${prefix}-explainItem`}>
               {t('File_Input_Output_Format_Tip')}
             </div>
           </Col>

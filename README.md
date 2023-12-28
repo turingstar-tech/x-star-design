@@ -34,24 +34,24 @@ index.tsx, //组件
 import { prefix } from '../utils/global';
 <img
   src={diamondSVG}
-  className={classNames(`${prefix}required`, {
-    [`${prefix}circleRequired`]: shape === 'circle',
-    [`${prefix}rectRequired`]: shape !== 'circle',
+  className={classNames(`${prefix}-required`, {
+    [`${prefix}-circleRequired`]: shape === 'circle',
+    [`${prefix}-rectRequired`]: shape !== 'circle',
   })}
 />
 // _index.scss
-.#{$prefix}required {
+.#{$prefix}-required {
     position: absolute;
     width: 0.8rem;
     height: 0.8rem;
  }
 
-.#{$prefix}circleRequired {
+.#{$prefix}-circleRequired {
     top: -3px;
     right: -3px;
  }
 
-.#{$prefix}rectRequired {
+.#{$prefix}-rectRequired {
     top: -5px;
     right: -5px;
 }

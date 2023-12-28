@@ -12,7 +12,10 @@ const ErrorPage = ({ onReset, homeLink }: Props) => {
   const { format: t } = useLocale('ErrorPage');
 
   return (
-    <div className={classNames(`${prefix}errorPage`)} data-testid={'errorPage'}>
+    <div
+      className={classNames(`${prefix}-errorPage`)}
+      data-testid={'errorPage'}
+    >
       <div className={classNames(`hello`)} />
       <div className={classNames(`ip`)} />
       <div className={classNames(`planets`)} />

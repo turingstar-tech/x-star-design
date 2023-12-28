@@ -1,4 +1,4 @@
-.#{$prefix}rainbowContent {
+.#{$prefix}-rainbowContent {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -9,7 +9,7 @@
     margin-bottom: 20px;
   }
 
-  .#{$prefix}rainbowDot {
+  .#{$prefix}-rainbowDot {
     font-family: simsun, monospace;
 
     /* 固定字体避免设置的宽度无效 */

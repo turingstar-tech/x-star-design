@@ -14,9 +14,9 @@ const XTabs = ({ items, ...props }: XTabsProps) => {
       items?.map((item) => ({
         ...item,
         label: (
-          <div className={`${prefix}icon-pane`}>
-            <div className={`${prefix}icon-img`}>{item.icon}</div>
-            <em className={`${prefix}icon-title`}>{item?.label}</em>
+          <div className={`${prefix}-icon-pane`}>
+            <div className={`${prefix}-icon-img`}>{item.icon}</div>
+            <em className={`${prefix}-icon-title`}>{item?.label}</em>
           </div>
         ),
       })),
@@ -25,7 +25,7 @@ const XTabs = ({ items, ...props }: XTabsProps) => {
   return (
     <ConfigProviderWrapper>
       <Tabs
-        className={`${prefix}XTabs`}
+        className={`${prefix}-XTabs`}
         tabPosition={'left'}
         size="large"
         type="card"

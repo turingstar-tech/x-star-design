@@ -1,6 +1,6 @@
-# CodeMirror
+# CodeMirrorWrapper
 
-这是代码编辑器 CodeMirror
+这是代码编辑器 CodeMirror 的封装
 
 ```jsx
 import React, { useState } from 'react';

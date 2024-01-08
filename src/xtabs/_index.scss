@@ -1,5 +1,5 @@
-.#{$prefix}XTabs {
-  &.#{$prefix}tabs,
+.#{$prefix}-XTabs {
+  &.#{$prefix}-tabs,
   &.ant-tabs {
     width: 100%;
     min-height: 80vh;
@@ -8,12 +8,12 @@
     color: #9e9e9e;
   }
 
-  .#{$prefix}tabs-nav-wrap,
+  .#{$prefix}-tabs-nav-wrap,
   .ant-tabs-nav-wrap {
     background-color: #e3ecff;
   }
 
-  &.#{$prefix}tabs-card > .#{$prefix}tabs-nav .#{$prefix}tabs-tab,
+  &.#{$prefix}-tabs-card > .#{$prefix}-tabs-nav .#{$prefix}-tabs-tab,
   &.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab {
     width: 130px;
     height: 130px;
@@ -25,7 +25,7 @@
     border: 0;
   }
 
-  &.#{$prefix}tabs-card > .#{$prefix}tabs-nav .#{$prefix}tabs-tab-active,
+  &.#{$prefix}-tabs-card > .#{$prefix}-tabs-nav .#{$prefix}-tabs-tab-active,
   &.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active {
     border-left: 6px solid #1890ff;
     background-color: #fff;
@@ -33,13 +33,13 @@
     border-radius: 0;
   }
 
-  .#{$prefix}tabs-tab-btn,
+  .#{$prefix}-tabs-tab-btn,
   .ant-tabs-tab-btn {
     text-align: center;
     white-space: normal;
   }
 
-  .#{$prefix}tabs-content,
+  .#{$prefix}-tabs-content,
   .ant-tabs-content {
     display: flex;
     width: 100%;
@@ -48,18 +48,18 @@
     padding: 0 20px;
   }
 
-  .#{$prefix}tabs-tabpane,
+  .#{$prefix}-tabs-tabpane,
   .ant-tabs-tabpane {
     padding: 0 24px 24px;
   }
 
-  .#{$prefix}icon-img {
+  .#{$prefix}-icon-img {
     text-align: center;
     font-size: 44px;
     padding-left: 10px;
   }
 
-  .#{$prefix}icon-title {
+  .#{$prefix}-icon-title {
     font-size: 16px;
     display: block;
     padding-top: 10px;

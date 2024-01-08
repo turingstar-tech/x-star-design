@@ -18,15 +18,15 @@ const LoadingMask = ({ loading }: LoadingMaskProps) => {
         <div
           data-testid={'loadingMask'}
           className={classNames(
-            `${prefix}loadingMask`,
-            `${visible ? '' : `${prefix}loadingHide`}`,
+            `${prefix}-loadingMask`,
+            `${visible ? '' : `${prefix}-loadingHide`}`,
           )}
         >
-          <div className={`${prefix}loadingLoader`}>
-            <div className={`${prefix}loadingSquare`} />
-            <div className={`${prefix}loadingSquare`} />
-            <div className={`${prefix}loadingSquare`} />
-            <div className={`${prefix}loadingSquare`} />
+          <div className={`${prefix}-loadingLoader`}>
+            <div className={`${prefix}-loadingSquare`} />
+            <div className={`${prefix}-loadingSquare`} />
+            <div className={`${prefix}-loadingSquare`} />
+            <div className={`${prefix}-loadingSquare`} />
           </div>
         </div>
       )}

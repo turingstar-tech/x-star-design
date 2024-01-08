@@ -2,7 +2,7 @@ import { MenuOutlined } from '@ant-design/icons';
 import type { TableProps } from 'antd';
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import React, { Component } from 'react';
+import React, { useRef } from 'react';
 import type { SortEnd } from 'react-sortable-hoc';
 import {
   SortableContainer,
@@ -10,19 +10,24 @@ import {
   SortableHandle,
 } from 'react-sortable-hoc';
 import ConfigProviderWrapper from '../config-provider-wrapper';
-type customProps = {
-  onSortEnd?: (newDataSource: Array<any>) => Promise<void>;
-};
-const SortTable = (props: TableProps<any> & customProps) => {
-  const dataSource = props?.dataSource || [];
-  const { rowKey, onSortEnd: onEnd } = props;
+
+interface SortTableProps<RecordType> extends TableProps<RecordType> {
+  onSortEnd?: (newDataSource: RecordType[]) => void;
+}
+
+const SortTable = <RecordType extends Record<string, unknown>>(
+  props: SortTableProps<RecordType>,
+) => {
+  const { dataSource = [], rowKey, onSortEnd: onEnd } = props;
+
   const DragHandle = SortableHandle(() => (
     <MenuOutlined
       style={{ cursor: 'grab', color: '#999' }}
       data-testid="dragHandle"
     />
   ));
-  const newColumns: ColumnsType<any> = [
+
+  const newColumns: ColumnsType<RecordType> = [
     {
       title: 'Sort',
       dataIndex: 'sort',
@@ -32,16 +37,23 @@ const SortTable = (props: TableProps<any> & customProps) => {
       className: 'drag-visible',
       render: () => <DragHandle />,
     },
-    ...(props?.columns ? props?.columns : []),
+    ...(props.columns ?? []),
   ];
+
   const SortableItem = SortableElement(
-    (props: React.HTMLAttributes<HTMLTableRowElement>) => <tr {...props} />,
-  );
-  const SortableBody = SortableContainer(
-    (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
-      <tbody {...props} />
+    (props: React.HTMLAttributes<HTMLTableRowElement>) => (
+      <tr {...props} data-testid="tableRow" />
     ),
   );
+
+  const bodyRef = useRef<HTMLTableSectionElement>(null);
+
+  const SortableBody = SortableContainer(
+    (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
+      <tbody {...props} ref={bodyRef} />
+    ),
+  );
+
   const onSortEnd = (sortEnd: SortEnd) => {
     const { oldIndex, newIndex } = sortEnd;
     if (oldIndex !== newIndex) {
@@ -50,29 +62,27 @@ const SortTable = (props: TableProps<any> & customProps) => {
       const [removedItem] = newData.splice(oldIndex, 1);
       newData.splice(newIndex, 0, removedItem);
       const filteredData = newData.filter((el) => !!el); // 过滤掉空元素
-      if (typeof onEnd === 'function') {
-        onEnd(filteredData);
-      }
+      onEnd?.(filteredData);
     }
   };
-  const DraggableContainer = (props: Component) => {
-    return (
-      <SortableBody
-        {...props}
-        useDragHandle
-        disableAutoscroll
-        helperClass="row-dragging"
-        onSortEnd={onSortEnd}
-      />
-    );
-  };
 
-  const DraggableBodyRow: React.FC<any> = (props) => {
+  const DraggableContainer = (props: any) => (
+    <SortableBody
+      {...props}
+      useDragHandle
+      disableAutoscroll
+      helperClass="row-dragging"
+      helperContainer={() => bodyRef.current!}
+      onSortEnd={onSortEnd}
+    />
+  );
+
+  const DraggableBodyRow = (props: any) => {
     // function findIndex base on Table rowKey props and should always be a right array index
     const index = dataSource.findIndex(
-      (x) => x[String(rowKey)] === props['data-row-key'],
+      (x) => typeof rowKey === 'string' && x[rowKey] === props['data-row-key'],
     );
-    return <SortableItem {...props} index={index} key={index} />;
+    return <SortableItem {...props} key={index} index={index} />;
   };
 
   return (
@@ -80,8 +90,8 @@ const SortTable = (props: TableProps<any> & customProps) => {
       <Table
         {...props}
         columns={newColumns}
-        rowKey={rowKey}
         dataSource={dataSource}
+        rowKey={rowKey}
         components={{
           body: {
             wrapper: DraggableContainer,
@@ -92,4 +102,5 @@ const SortTable = (props: TableProps<any> & customProps) => {
     </ConfigProviderWrapper>
   );
 };
+
 export default SortTable;

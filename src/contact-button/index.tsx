@@ -28,7 +28,7 @@ const ContactButton: React.FC = () => {
         }
       >
         <Card
-          className={`${prefix}contactButtonCard`}
+          className={`${prefix}-contactButtonCard`}
           data-testid={'contactButtonText'}
         >
           <Space direction="vertical" align="center">

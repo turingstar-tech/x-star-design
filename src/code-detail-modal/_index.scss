@@ -1,5 +1,5 @@
-.#{$prefix}codeDetailModal {
-  .#{$prefix}codeCompileResult {
+.#{$prefix}-codeDetailModal {
+  .#{$prefix}-codeCompileResult {
     padding: 10px 20px;
     background-color: #fafafa;
     border: 1px solid #e3e3e3;
@@ -10,7 +10,7 @@
     min-height: 200px;
     height: 50vh;
   }
-  .#{$prefix}codeMirror {
+  .#{$prefix}-codeMirror {
     min-height: 200px;
     height: 50vh;
   }

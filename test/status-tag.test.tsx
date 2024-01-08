@@ -29,7 +29,6 @@ describe('status tag', () => {
       />,
     );
     const statusTag = getByTestId('status-tag');
-
     expect(statusTag).toHaveClass('testClassName');
     expect(statusTag).toHaveStyle({ color: 'red' });
   });
@@ -46,13 +45,13 @@ describe('status tag', () => {
     // 鼠标移入
     await user.hover(statusTag);
     act(() => {
-      jest.runOnlyPendingTimers();
+      jest.runAllTimers();
     });
     expect(statusTag).toHaveTextContent('Content');
     // 鼠标移走
     await user.unhover(statusTag);
     act(() => {
-      jest.runOnlyPendingTimers();
+      jest.runAllTimers();
     });
     expect(statusTag).not.toHaveTextContent('Content');
     // 鼠标点击

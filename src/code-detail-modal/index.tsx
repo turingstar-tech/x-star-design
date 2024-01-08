@@ -75,7 +75,14 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
           dataIndex: 'source',
           width: 60,
           render(v) {
-            return <Button href={v} type="link" icon={<DownloadOutlined />} />;
+            return (
+              <Button
+                href={v}
+                type="link"
+                icon={<DownloadOutlined />}
+                data-testid={'downloadBtn'}
+              />
+            );
           },
         }
       : {
@@ -109,13 +116,15 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
     <ConfigProviderWrapper>
       <Modal
         title={t('Code_Detail')}
-        afterClose={() => setShowCode(false)}
+        afterClose={() => {
+          setShowCode(false);
+        }}
         open={open}
         onCancel={onCancel}
         width={800}
         footer={null}
         {...props}
-        className={`${prefix}codeDetailModal`}
+        className={`${prefix}-codeDetailModal`}
       >
         <Table
           pagination={false}
@@ -124,25 +133,15 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
           rowKey={'problemNameZh'}
         />
         {showCode ? (
-          codeData?.language === 'plain' ? (
-            <Button
-              type="link"
-              icon={<DownloadOutlined />}
-              href={codeData?.source}
-            >
-              {t('Download_File')}
-            </Button>
-          ) : (
-            <CodeMirrorWrapper
-              className={`${prefix}codeMirror`}
-              lang={codeData?.language}
-              theme={Theme.LIGHT}
-              value={codeData?.source}
-              readOnly
-            />
-          )
+          <CodeMirrorWrapper
+            className={`${prefix}-codeMirror`}
+            lang={codeData?.language}
+            theme={Theme.LIGHT}
+            value={codeData?.source}
+            readOnly
+          />
         ) : (
-          <pre className={`${prefix}codeCompileResult`}>
+          <pre className={`${prefix}-codeCompileResult`}>
             <code>{codeData.detail}</code>
           </pre>
         )}

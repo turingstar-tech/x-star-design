@@ -146,7 +146,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
         <div
           {...props}
           className={classNames(
-            `${prefix}virtual-table-cell`,
+            `${prefix}-virtual-table-cell`,
             {
               'virtual-table-cell-last':
                 columnIndex === mergedColumns.length - 1,
@@ -248,7 +248,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
     return (
       <Grid
         ref={gridRef}
-        className={`${prefix}virtual-grid`}
+        className={`${prefix}-virtual-grid`}
         columnCount={mergedColumns.length}
         columnWidth={(index) => {
           const { width } = mergedColumns[index];
@@ -278,7 +278,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
       <ResizeObserver onResize={({ width }) => setTableWidth(width)}>
         <Table
           {...props}
-          className={classNames(`${prefix}virtual-table`, props.className)}
+          className={classNames(`${prefix}-virtual-table`, props.className)}
           pagination={false}
           components={{
             header: {

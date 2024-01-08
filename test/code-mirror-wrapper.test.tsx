@@ -16,7 +16,6 @@ Range.prototype.getClientRects = () => ({
 describe('code mirror wrapper', () => {
   test('renders editor and changes value', () => {
     const onChange = jest.fn();
-
     render(<CodeMirrorWrapper onChange={onChange} />);
     const editor = screen.getByRole('textbox');
 

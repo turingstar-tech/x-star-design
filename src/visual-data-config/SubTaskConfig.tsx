@@ -19,7 +19,7 @@ const SubTaskConfig = () => {
                 key={field.key}
                 labelCol={{ span: 24 }}
               >
-                <Row className={`${prefix}formList`} gutter={[10, 10]}>
+                <Row className={`${prefix}-formList`} gutter={[10, 10]}>
                   <Col>
                     <Form.Item
                       {...field}
@@ -68,6 +68,7 @@ const SubTaskConfig = () => {
                     </Form.Item>
                   </Col>
                   <MinusCircleOutlined
+                    data-testid="deleteSubtaskBtn"
                     className="dynamic-delete-button"
                     style={{ lineHeight: '32px', height: 32 }}
                     onClick={() => remove(field.name)}
@@ -97,6 +98,7 @@ const SubTaskConfig = () => {
                   <InputNumber
                     min={1}
                     max={50}
+                    data-testid={'batchAddInput'}
                     value={addTestNumber}
                     onChange={(value) => setAddTestNumber(value || 0)}
                   />

@@ -89,7 +89,7 @@ const StatusTag = ({
   return (
     <div
       data-testid={'status-tag'}
-      className={classNames(`${prefix}statusTag`, props.className)}
+      className={classNames(`${prefix}-statusTag`, props.className)}
       style={{
         ...statusCSSMap.get(status),
         borderRadius: shape === 'circle' ? '50%' : '4px',
@@ -110,9 +110,9 @@ const StatusTag = ({
         <img
           data-testid={'required-icon'}
           src={diamondSVG}
-          className={classNames(`${prefix}required`, {
-            [`${prefix}circleRequired`]: shape === 'circle',
-            [`${prefix}rectRequired`]: shape !== 'circle',
+          className={classNames(`${prefix}-required`, {
+            [`${prefix}-circleRequired`]: shape === 'circle',
+            [`${prefix}-rectRequired`]: shape !== 'circle',
           })}
         />
       )}

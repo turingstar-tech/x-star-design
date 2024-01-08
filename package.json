@@ -1,6 +1,6 @@
 {
   "name": "x-star-design",
-  "version": "0.0.40",
+  "version": "0.0.43",
   "description": "A react component library developed by turingstar",
   "license": "MIT",
   "module": "dist/index.js",
@@ -20,7 +20,7 @@
     "prepare": "husky install && dumi setup",
     "prepublishOnly": "father doctor && npm run build",
     "start": "npm run dev",
-    "test": "jest"
+    "test": "TZ=UTC-8 jest"
   },
   "commitlint": {
     "extends": [

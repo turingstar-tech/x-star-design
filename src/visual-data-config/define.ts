@@ -22,12 +22,7 @@ export interface SubTaskItem {
 // 删除空对象 删除'', null, undefined
 export const isEmpty = (obj: object) => {
   if (typeof obj === 'object') {
-    for (let i in obj) {
-      if (obj.hasOwnProperty(i)) {
-        return false;
-      }
-    }
-    return true;
+    return !Object.keys(obj).length;
   } else {
     return obj === '' || obj === null || obj === undefined;
   }
@@ -38,14 +33,12 @@ export const isEmpty = (obj: object) => {
  * @param {Object} obj 来源对象
  */
 export const compactObj = (obj: any) => {
-  for (let i in obj) {
-    if (obj.hasOwnProperty(i)) {
-      if (typeof obj[i as keyof typeof obj] === 'object') {
-        compactObj(obj[i]);
-      }
-      if (isEmpty(obj[i])) {
-        delete obj[i];
-      }
+  for (const i of Object.keys(obj)) {
+    if (typeof obj[i as keyof typeof obj] === 'object') {
+      compactObj(obj[i]);
+    }
+    if (isEmpty(obj[i])) {
+      delete obj[i];
     }
   }
   return obj;

@@ -131,7 +131,7 @@ const CodeMirrorWrapper = ({
 
   return (
     <CodeMirror
-      className={classNames(className, `${prefix}codeMirror`)}
+      className={classNames(className, `${prefix}-codeMirror`)}
       value={value}
       extensions={langConfigMap}
       onChange={onChange}

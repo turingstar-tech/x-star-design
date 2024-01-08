@@ -88,45 +88,45 @@ describe('draggable layout', () => {
     await user.pointer({ target: wrapper, coords: { x: 200 } });
 
     // 左右侧均未收起
-    expect(divider).not.toHaveClass(`${prefix}draggable-divider-active`);
+    expect(divider).not.toHaveClass(`${prefix}-draggable-divider-active`);
 
     await user.pointer({ target: wrapper, coords: { x: 100 } });
 
     // 左侧收起
-    expect(divider).toHaveClass(`${prefix}draggable-divider-active`);
+    expect(divider).toHaveClass(`${prefix}-draggable-divider-active`);
 
     await user.pointer({ target: wrapper, coords: { x: 0 } });
 
     // 左侧收起
-    expect(divider).toHaveClass(`${prefix}draggable-divider-active`);
+    expect(divider).toHaveClass(`${prefix}-draggable-divider-active`);
 
-    jest.runOnlyPendingTimers();
+    jest.runAllTimers();
     await user.pointer({ target: wrapper, coords: { x: 100 } });
 
     // 左侧收起
-    expect(divider).toHaveClass(`${prefix}draggable-divider-active`);
+    expect(divider).toHaveClass(`${prefix}-draggable-divider-active`);
 
     await user.pointer({ target: wrapper, coords: { x: 300 } });
 
     // 左右侧均未收起
-    expect(divider).not.toHaveClass(`${prefix}draggable-divider-active`);
+    expect(divider).not.toHaveClass(`${prefix}-draggable-divider-active`);
 
-    jest.runOnlyPendingTimers();
+    jest.runAllTimers();
     await user.pointer({ target: wrapper, coords: { x: 400 } });
 
     // 右侧收起
-    expect(divider).toHaveClass(`${prefix}draggable-divider-active`);
+    expect(divider).toHaveClass(`${prefix}-draggable-divider-active`);
 
-    jest.runOnlyPendingTimers();
+    jest.runAllTimers();
     await user.pointer({ target: wrapper, coords: { x: 500 } });
 
     // 右侧收起
-    expect(divider).toHaveClass(`${prefix}draggable-divider-active`);
+    expect(divider).toHaveClass(`${prefix}-draggable-divider-active`);
 
     await user.pointer({ target: wrapper, coords: { x: 200 } });
 
     // 左右侧均未收起
-    expect(divider).not.toHaveClass(`${prefix}draggable-divider-active`);
+    expect(divider).not.toHaveClass(`${prefix}-draggable-divider-active`);
 
     // 松开鼠标左键
     await user.pointer({ target: container, keys: '[/MouseLeft]' });
@@ -134,10 +134,10 @@ describe('draggable layout', () => {
     // 遮罩未渲染
     expect(screen.queryByTestId('mask')).not.toBeInTheDocument();
 
-    jest.runOnlyPendingTimers();
+    jest.runAllTimers();
     await user.pointer({ target: wrapper, coords: { x: 100 } });
 
     // 左右侧均未收起
-    expect(divider).not.toHaveClass(`${prefix}draggable-divider-active`);
+    expect(divider).not.toHaveClass(`${prefix}-draggable-divider-active`);
   });
 });

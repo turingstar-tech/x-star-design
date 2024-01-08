@@ -90,7 +90,7 @@ const CodeMirrorWrapper = ({
           });
         return diagnostics;
       }),
-    [],
+    [lang],
   );
   const langConfigMap = useMemo(() => {
     switch (lang) {

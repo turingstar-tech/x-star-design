@@ -6,7 +6,7 @@ import { syntaxTree } from '@codemirror/language';
 import { Diagnostic, linter } from '@codemirror/lint';
 import CodeMirror from '@uiw/react-codemirror';
 import classNames from 'classnames';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { prefix } from '../utils/global';
 import {
   LangId,
@@ -72,7 +72,7 @@ const CodeMirrorWrapper = ({
       options,
     };
   };
-  const regexpLinter = useMemo(
+  const regexpLinter = useCallback(
     () =>
       linter((view) => {
         const diagnostics: Diagnostic[] = [];
@@ -105,7 +105,7 @@ const CodeMirrorWrapper = ({
           autocompletion({
             override: [(context) => langCompletions(context, Language.CPP)],
           }),
-          regexpLinter,
+          regexpLinter(),
         ];
       case LangId.PY2:
       case LangId.PY3:
@@ -114,7 +114,7 @@ const CodeMirrorWrapper = ({
           autocompletion({
             override: [(context) => langCompletions(context, Language.PYTHON)],
           }),
-          regexpLinter,
+          regexpLinter(),
         ];
       case LangId.JAVA:
         return [
@@ -122,12 +122,12 @@ const CodeMirrorWrapper = ({
           autocompletion({
             override: [(context) => langCompletions(context, Language.JAVA)],
           }),
-          regexpLinter,
+          regexpLinter(),
         ];
       default:
         return [];
     }
-  }, [lang, regexpLinter]);
+  }, [lang]);
 
   return (
     <CodeMirror

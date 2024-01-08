@@ -19,26 +19,26 @@ enum LangId {
     PLAIN = "plain"
 }
 export default () => {
-  const [submitLang,setSubmitLang] = useState(LangId.CPP14)
+  const [submitLang,setSubmitLang] = useState(LangId.CPP14);
   return <>
-  <Select
-    value={submitLang}
-    onChange={(value) => {
-      setSubmitLang?.(value);
-    }}
-    options={[{
-      value: LangId.PY3,
-      label: 'Python3.8'
-    },{
-      value: LangId.CPP14,
-      label: 'C++14'
-    }]}
-  />
-  <CodeMirrorWrapper
-    lang={submitLang}
-    theme={Theme.VSCODE}
-    style={{ height: 500 }}
-  />
+    <Select
+      value={submitLang}
+      onChange={(value) => {
+        setSubmitLang?.(value);
+      }}
+      options={[{
+        value: LangId.PY3,
+        label: 'Python3.8'
+      },{
+        value: LangId.CPP14,
+        label: 'C++14'
+      }]}
+    />
+    <CodeMirrorWrapper
+      lang={submitLang}
+      theme={Theme.VSCODE}
+      style={{ height: 500 }}
+    />
   </>
 
 };

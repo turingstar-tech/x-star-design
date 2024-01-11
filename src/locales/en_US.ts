@@ -15,7 +15,8 @@ export default {
     File_Output_Format: 'File I/O Output File',
     File_Input_Output_Format_Tip: 'Leave blank for no File I/O',
     Interactive_Library: 'Interactive Function Library Filename',
-    Interactive_Library_Tip: 'Leave blank for no function library',
+    Interactive_Library_Tip:
+      'Fill in the compiled file name (without .cpp). Leave blank for no function library',
     Evaluation_Method: 'Evaluation Method',
     Single_Point_Data_Testing: 'Single point data test',
     SubTask: 'SubTask',

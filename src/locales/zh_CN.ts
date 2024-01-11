@@ -14,7 +14,8 @@ export default {
     File_Output_Format: '文件读写输出文件',
     File_Input_Output_Format_Tip: '不填表示不需要文件读写',
     Interactive_Library: '交互题函数库文件名',
-    Interactive_Library_Tip: '不填表示不使用函数库',
+    Interactive_Library_Tip:
+      '填写编译后的文件名(不要带.cpp)，不填表示不使用函数库',
     Evaluation_Method: '测评方式',
     Single_Point_Data_Testing: '单点数据测试',
     SubTask: '子任务',

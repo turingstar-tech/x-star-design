@@ -36,6 +36,12 @@ interface FeedbackProps {
   //form: FormInstance<any>;
 }
 
+export interface FeedbackFormTypes {
+  feedback: number;
+  feedbackType: string[];
+  textArea: string;
+}
+
 const Feedback: React.FC<FeedbackProps> = ({
   feedbackList,
   activeColor,
@@ -141,15 +147,17 @@ const Feedback: React.FC<FeedbackProps> = ({
   return (
     <Popover
       content={content}
-      open
       title={t('FEEDBACK_ON_THE_PROBLEM')}
       placement="bottom"
       onOpenChange={(open) => {
         if (open) {
           setShowSubmitContent(false);
+        } else {
+          form.resetFields();
+          setChoiceType(undefined);
         }
       }}
-      overlayInnerStyle={{ width: '325px', minHeight: '300px' }}
+      overlayInnerStyle={{ width: '325px', minHeight: '320px' }}
     >
       <Space size={0}>
         <Button

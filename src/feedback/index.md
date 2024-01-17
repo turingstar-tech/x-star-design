@@ -33,10 +33,8 @@ export default () => {
       value: 'F',
     },
   ];
-  // const [form] = Form.useForm();
   return (
     <Feedback
-      // form={form}
       activeColor="#1890ff"
       feedbackList={list}
       onSubmit={(value) => console.log(value)}

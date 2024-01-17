@@ -75,7 +75,7 @@ export default {
       'Thank you for your valuable comments, we will continue to improve~',
     FEEDBACK_TYPE: 'Feedback Type',
     SUBMIT: 'Submit',
-    FEEDBACK_ON_THE_PROBLEM: 'Feedback on the problem',
+    FEEDBACK_ON_THE_PROBLEM: 'Your feedback on this problem',
     ACCLAIM: 'Acclaim',
     BAD_REVIEW: 'Bad Review',
   },

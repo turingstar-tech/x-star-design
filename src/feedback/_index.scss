@@ -1,0 +1,59 @@
+.#{$prefix}-feedbackContent {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  .#{$prefix}-feedbackRow {
+    width: 100%;
+    margin-bottom: 20px;
+    .#{$prefix}-feedbackCol {
+      font-size: 36px;
+      text-align: center;
+    }
+  }
+  .#{$prefix}-feedbackButton {
+    width: 100%;
+  }
+  :global(.#{$prefix}-form-item) {
+    margin-bottom: 10px;
+  }
+  .#{$prefix}-feedbackHidden {
+    display: none;
+  }
+  .#{$prefix}-feedbackRadioGroup {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+
+    .ant-radio {
+      display: none !important;
+    }
+  }
+
+  .ant-form-item {
+    margin-bottom: 10px;
+  }
+}
+
+.#{$prefix}-feedbackSpace {
+  width: 100%;
+  text-align: center;
+  .#{$prefix}-feedbackIcon {
+    font-size: 45px;
+  }
+}
+
+.ant-popover-title {
+  margin-bottom: 0 !important;
+}
+
+.ant-popover-inner {
+  display: flex;
+  flex-direction: column;
+
+  .ant-popover-inner-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+}

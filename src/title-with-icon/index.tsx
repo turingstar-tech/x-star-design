@@ -1,6 +1,7 @@
+import { RightSquareFilled } from '@ant-design/icons';
+import { ConfigContext } from 'antd/es/config-provider';
 import classNames from 'classnames';
-import React from 'react';
-import rightSvg from '../assets/title-with-icon/right.svg';
+import React, { useContext } from 'react';
 import { prefix } from '../utils/global';
 type TitleWithIconProps = {
   title: React.ReactNode;
@@ -14,20 +15,24 @@ const TitleWithIcon = ({
   title,
   description,
   id,
-}: TitleWithIconProps) => (
-  <div
-    data-testid="wrapper"
-    className={classNames(className, `${prefix}-titleSection`)}
-    id={id}
-  >
-    <img src={rightSvg} alt="" />
-    <span data-testid="title" className={`${prefix}-title`}>
-      {title}
-    </span>
-    <span data-testid="description" className={`${prefix}-description`}>
-      {description}
-    </span>
-  </div>
-);
+}: TitleWithIconProps) => {
+  const { theme } = useContext(ConfigContext);
+  const { colorPrimary } = theme?.token || {};
+  return (
+    <div
+      data-testid="wrapper"
+      className={classNames(className, `${prefix}-titleSection`)}
+      id={id}
+    >
+      <RightSquareFilled style={{ color: colorPrimary || '#1990fe' }} />
+      <span data-testid="title" className={`${prefix}-title`}>
+        {title}
+      </span>
+      <span data-testid="description" className={`${prefix}-description`}>
+        {description}
+      </span>
+    </div>
+  );
+};
 
 export default TitleWithIcon;

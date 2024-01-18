@@ -82,7 +82,7 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-window": "^1.8.5",
     "@umijs/lint": "^4.0.0",
-    "antd": "5.2.2",
+    "antd": "5.10.0",
     "babel-plugin-inline-import-data-uri": "^1.0.1",
     "dumi": "^2.2.0",
     "eslint": "^8.23.0",

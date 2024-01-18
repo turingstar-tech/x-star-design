@@ -5,6 +5,7 @@
 ```jsx
 import { XTabs } from 'x-star-design';
 import { NodeIndexOutlined, TeamOutlined } from '@ant-design/icons';
+import { ConfigProvider } from 'antd';
 export default () => {
   const items = [
     {
@@ -20,7 +21,17 @@ export default () => {
       children: 'Tab2',
     },
   ];
-  return <XTabs items={items} />;
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#ffad11',
+        },
+      }}
+    >
+      <XTabs items={items} />
+    </ConfigProvider>
+  );
 };
 ```
 

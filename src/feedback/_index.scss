@@ -28,12 +28,12 @@
     display: flex;
     justify-content: space-evenly;
 
-    .ant-radio {
+    .#{$prefix}-radio {
       display: none !important;
     }
   }
 
-  .ant-form-item {
+  .#{$prefix}-form-item {
     margin-bottom: 10px;
   }
 }
@@ -54,15 +54,15 @@
   width: unset;
 }
 
-.ant-popover-title {
+.#{$prefix}-popover-title {
   margin-bottom: 0 !important;
 }
 
-.ant-popover-inner {
+.#{$prefix}-popover-inner {
   display: flex;
   flex-direction: column;
 
-  .ant-popover-inner-content {
+  .#{$prefix}-popover-inner-content {
     display: flex;
     align-items: center;
     flex: 1;

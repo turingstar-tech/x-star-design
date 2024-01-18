@@ -19,6 +19,7 @@ import {
 } from 'antd';
 import classNames from 'classnames';
 import React, { useState } from 'react';
+import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
 import { prefix } from '../utils/global';
 const { Text } = Typography;
@@ -196,55 +197,57 @@ const Feedback: React.FC<FeedbackProps> = ({
   );
 
   return (
-    <Popover
-      content={content}
-      title={t('FEEDBACK_ON_THE_PROBLEM')}
-      placement="bottom"
-      trigger={['click']}
-      onOpenChange={(open) => {
-        if (open) {
-          setShowSubmitContent(false);
-        } else {
-          form.resetFields();
-        }
-      }}
-      overlayInnerStyle={{ width: '400px', minHeight: '320px', padding: 20 }}
-    >
-      <Space size={0}>
-        <Button
-          type="link"
-          icon={
-            choiceType === 1 ? (
-              <LikeFilled style={{ color: activeColor }} />
-            ) : (
-              <LikeOutlined />
-            )
+    <ConfigProviderWrapper>
+      <Popover
+        content={content}
+        title={t('FEEDBACK_ON_THE_PROBLEM')}
+        placement="bottom"
+        trigger={['click']}
+        onOpenChange={(open) => {
+          if (open) {
+            setShowSubmitContent(false);
+          } else {
+            form.resetFields();
           }
-          onClick={() => {
-            setChoiceType(1);
-            form.setFieldsValue({ [`${feedbackKey}`]: 1 });
-          }}
-        >
-          {t('ACCLAIM')}
-        </Button>
-        <Button
-          type="link"
-          icon={
-            choiceType === 0 ? (
-              <DislikeFilled style={{ color: activeColor }} />
-            ) : (
-              <DislikeOutlined />
-            )
-          }
-          onClick={() => {
-            setChoiceType(0);
-            form.setFieldsValue({ [`${feedbackKey}`]: 0 });
-          }}
-        >
-          {t('BAD_REVIEW')}
-        </Button>
-      </Space>
-    </Popover>
+        }}
+        overlayInnerStyle={{ width: '400px', minHeight: '320px', padding: 20 }}
+      >
+        <Space size={0}>
+          <Button
+            type="link"
+            icon={
+              choiceType === 1 ? (
+                <LikeFilled style={{ color: activeColor }} />
+              ) : (
+                <LikeOutlined />
+              )
+            }
+            onClick={() => {
+              setChoiceType(1);
+              form.setFieldsValue({ [`${feedbackKey}`]: 1 });
+            }}
+          >
+            {t('ACCLAIM')}
+          </Button>
+          <Button
+            type="link"
+            icon={
+              choiceType === 0 ? (
+                <DislikeFilled style={{ color: activeColor }} />
+              ) : (
+                <DislikeOutlined />
+              )
+            }
+            onClick={() => {
+              setChoiceType(0);
+              form.setFieldsValue({ [`${feedbackKey}`]: 0 });
+            }}
+          >
+            {t('BAD_REVIEW')}
+          </Button>
+        </Space>
+      </Popover>
+    </ConfigProviderWrapper>
   );
 };
 

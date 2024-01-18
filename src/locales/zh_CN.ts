@@ -73,5 +73,6 @@ export default {
     ACCLAIM: '好评',
     BAD_REVIEW: '差评',
     PLEASE_SELECT_FEEDBACK_TYPE: '请填写反馈评价',
+    FEEDBACK_TEXTAREA_PLACEHOLDER: '请详细描述你的反馈，我们会尽快处理',
   },
 } as const;

@@ -79,5 +79,7 @@ export default {
     ACCLAIM: 'Acclaim',
     BAD_REVIEW: 'Bad Review',
     PLEASE_SELECT_FEEDBACK_TYPE: 'Please fill in the feedback review',
+    FEEDBACK_TEXTAREA_PLACEHOLDER:
+      'Please describe your feedback in detail and we will deal with it as soon as possible',
   },
 } as const;

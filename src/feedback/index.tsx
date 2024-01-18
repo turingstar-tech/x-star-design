@@ -141,7 +141,10 @@ const Feedback: React.FC<FeedbackProps> = ({
             { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
           ]}
         >
-          <TextArea placeholder="请详细描述你的反馈，我们会尽快处理" />
+          <TextArea
+            placeholder="请详细描述你的反馈，我们会尽快处理"
+            className={`${prefix}-feedbackTextArea`}
+          />
         </Form.Item>
         <Form.Item>
           <Button
@@ -174,7 +177,7 @@ const Feedback: React.FC<FeedbackProps> = ({
       content={content}
       title={t('FEEDBACK_ON_THE_PROBLEM')}
       placement="bottom"
-      mouseLeaveDelay={0.6}
+      trigger={['click']}
       onOpenChange={(open) => {
         if (open) {
           setShowSubmitContent(false);

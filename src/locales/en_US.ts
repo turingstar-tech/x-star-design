@@ -78,5 +78,6 @@ export default {
     FEEDBACK_ON_THE_PROBLEM: 'Your feedback on this problem',
     ACCLAIM: 'Acclaim',
     BAD_REVIEW: 'Bad Review',
+    PLEASE_SELECT_FEEDBACK_TYPE: 'Please fill in the feedback review',
   },
 } as const;

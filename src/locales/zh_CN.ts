@@ -72,5 +72,6 @@ export default {
     FEEDBACK_ON_THE_PROBLEM: '您对本题目的反馈',
     ACCLAIM: '好评',
     BAD_REVIEW: '差评',
+    PLEASE_SELECT_FEEDBACK_TYPE: '请填写反馈评价',
   },
 } as const;

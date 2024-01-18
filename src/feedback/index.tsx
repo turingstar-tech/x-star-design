@@ -52,7 +52,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   const [choiceType, setChoiceType] = useState<number | undefined>();
   const [showSubmitContent, setShowSubmitContent] = useState<boolean>(false);
   const { format: t } = useLocale('Feedback');
-  const submittedContent = (
+  const submittedContent = () => (
     <Space
       direction="vertical"
       className={classNames(`${prefix}-feedbackSpace`, {
@@ -66,89 +66,115 @@ const Feedback: React.FC<FeedbackProps> = ({
       <div>{t('FEEDBACK_RESPONSE')}</div>
     </Space>
   );
+  const submitFormContent = () => (
+    <Form form={form} onFinish={onSubmit}>
+      <Space
+        className={classNames({
+          [`${prefix}-feedbackHidden`]: showSubmitContent,
+        })}
+        direction="vertical"
+        size={0}
+        style={{ width: '100%' }}
+      >
+        <div>
+          <Form.Item
+            name="feedback"
+            rules={[
+              { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
+            ]}
+          >
+            <Radio.Group
+              className={classNames(`${prefix}-feedbackRadioGroup`)}
+              style={{ padding: '20px 0 10px 0' }}
+            >
+              <Radio value={1}>
+                <LikeFilled
+                  style={{
+                    color: choiceType === 1 ? activeColor : '#d9d9d9',
+                    transition: 'color 0.3s ease-in-out',
+                    fontSize: '36px',
+                  }}
+                  onClick={() => {
+                    setChoiceType(1);
+                  }}
+                />
+              </Radio>
+              <Radio value={0}>
+                <DislikeFilled
+                  style={{
+                    color: choiceType === 0 ? activeColor : '#d9d9d9',
+                    transition: 'color 0.3s ease-in-out',
+                    fontSize: '36px',
+                  }}
+                  onClick={() => {
+                    setChoiceType(0);
+                  }}
+                />
+              </Radio>
+            </Radio.Group>
+          </Form.Item>
+        </div>
+        <div style={{ marginBottom: 10 }}>
+          <Text type="secondary" style={{ marginBottom: '24px' }}>
+            {t('FEEDBACK_TYPE')}
+          </Text>
+        </div>
+        <Form.Item
+          name="feedbackType"
+          rules={[
+            { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
+          ]}
+        >
+          <Checkbox.Group style={{ width: '100%' }}>
+            <Row gutter={[4, 4]} style={{ width: '100%' }}>
+              {feedbackList?.map((item: feedbackItem) => (
+                <Col span={8} key={item.value}>
+                  <Checkbox value={item.value}>{item.label}</Checkbox>
+                </Col>
+              ))}
+            </Row>
+          </Checkbox.Group>
+        </Form.Item>
+        <Form.Item
+          name="textArea"
+          rules={[
+            { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
+          ]}
+        >
+          <TextArea placeholder="请详细描述你的反馈，我们会尽快处理" />
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            className={classNames(`${prefix}-feedbackButton`)}
+            htmlType="submit"
+            onClick={async () => {
+              try {
+                await form.validateFields();
+                setShowSubmitContent(true);
+              } catch (err) {}
+            }}
+          >
+            {t('SUBMIT')}
+          </Button>
+        </Form.Item>
+      </Space>
+    </Form>
+  );
+
   const content = (
     <div className={classNames(`${prefix}-feedbackContent`)}>
-      {submittedContent}
-      <Form form={form} onFinish={onSubmit}>
-        <Space
-          className={classNames({
-            [`${prefix}-feedbackHidden`]: showSubmitContent,
-          })}
-          direction="vertical"
-          size={0}
-          style={{ width: '100%' }}
-        >
-          <div>
-            <Form.Item name="feedback">
-              <Radio.Group
-                className={classNames(`${prefix}-feedbackRadioGroup`)}
-                style={{ padding: '20px 0 10px 0' }}
-              >
-                <Radio value={1}>
-                  <LikeFilled
-                    style={{
-                      color: choiceType === 1 ? activeColor : '#d9d9d9',
-                      transition: 'color 0.3s ease-in-out',
-                      fontSize: '36px',
-                    }}
-                    onClick={() => {
-                      setChoiceType(1);
-                    }}
-                  />
-                </Radio>
-                <Radio value={0}>
-                  <DislikeFilled
-                    style={{
-                      color: choiceType === 0 ? activeColor : '#d9d9d9',
-                      transition: 'color 0.3s ease-in-out',
-                      fontSize: '36px',
-                    }}
-                    onClick={() => {
-                      setChoiceType(0);
-                    }}
-                  />
-                </Radio>
-              </Radio.Group>
-            </Form.Item>
-          </div>
-          <div style={{ marginBottom: 10 }}>
-            <Text type="secondary" style={{ marginBottom: '24px' }}>
-              {t('FEEDBACK_TYPE')}
-            </Text>
-          </div>
-          <Form.Item name="feedbackType">
-            <Checkbox.Group style={{ width: '100%' }}>
-              <Row gutter={[4, 4]} style={{ width: '100%' }}>
-                {feedbackList?.map((item: feedbackItem) => (
-                  <Col span={12} key={item.value}>
-                    <Checkbox value={item.value}>{item.label}</Checkbox>
-                  </Col>
-                ))}
-              </Row>
-            </Checkbox.Group>
-          </Form.Item>
-          <Form.Item name="textArea">
-            <TextArea placeholder="请详细描述你的反馈，我们会尽快处理" />
-          </Form.Item>
-          <Form.Item>
-            <Button
-              type="primary"
-              className={classNames(`${prefix}-feedbackButton`)}
-              htmlType="submit"
-              onClick={() => setShowSubmitContent(true)}
-            >
-              {t('SUBMIT')}
-            </Button>
-          </Form.Item>
-        </Space>
-      </Form>
+      {submittedContent()}
+      {submitFormContent()}
     </div>
   );
+
   return (
     <Popover
       content={content}
       title={t('FEEDBACK_ON_THE_PROBLEM')}
       placement="bottom"
+      mouseLeaveDelay={0.6}
       onOpenChange={(open) => {
         if (open) {
           setShowSubmitContent(false);
@@ -157,14 +183,14 @@ const Feedback: React.FC<FeedbackProps> = ({
           setChoiceType(undefined);
         }
       }}
-      overlayInnerStyle={{ width: '325px', minHeight: '320px' }}
+      overlayInnerStyle={{ width: '400px', minHeight: '320px' }}
     >
       <Space size={0}>
         <Button
           type="link"
           icon={
             choiceType === 1 ? (
-              <LikeFilled style={{ color: '#1890ff' }} />
+              <LikeFilled style={{ color: activeColor }} />
             ) : (
               <LikeOutlined />
             )
@@ -180,7 +206,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           type="link"
           icon={
             choiceType === 0 ? (
-              <DislikeFilled style={{ color: '#1890ff' }} />
+              <DislikeFilled style={{ color: activeColor }} />
             ) : (
               <DislikeOutlined />
             )

@@ -183,7 +183,6 @@ const Feedback: React.FC<FeedbackProps> = ({
           setShowSubmitContent(false);
         } else {
           form.resetFields();
-          setChoiceType(undefined);
         }
       }}
       overlayInnerStyle={{ width: '400px', minHeight: '320px' }}

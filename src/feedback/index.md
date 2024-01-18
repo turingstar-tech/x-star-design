@@ -38,6 +38,9 @@ export default () => {
       activeColor="#1890ff"
       feedbackList={list}
       onSubmit={(value) => console.log(value)}
+      feedbackKey={'feedbackTest'}
+      feedbackTypeKey={'feedbackTypeTest'}
+      feedbackTextAreaKey={'feedbackTextAreaTest'}
     />
   );
 };

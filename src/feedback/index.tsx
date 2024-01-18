@@ -30,22 +30,39 @@ type feedbackItem = {
 };
 
 interface FeedbackProps {
+  /**
+   * @description Radio.Group 的选项
+   */
   feedbackList?: feedbackItem[];
+  /**
+   * @description 选中的颜色
+   */
   activeColor: string;
-  onSubmit?: (value: string) => void;
-  //form: FormInstance<any>;
-}
-
-export interface FeedbackFormTypes {
-  feedback: number;
-  feedbackType: string[];
-  textArea: string;
+  /**
+   * @description 提交的回调
+   */
+  onSubmit?: (value: any) => void;
+  /**
+   * @description 好评、差评的Form.Item name
+   */
+  feedbackKey: string;
+  /**
+   * @description 问题类型的Form.Item name
+   */
+  feedbackTypeKey: string;
+  /**
+   * @description 问题描述TextArea的Form.Item name
+   */
+  feedbackTextAreaKey: string;
 }
 
 const Feedback: React.FC<FeedbackProps> = ({
   feedbackList,
   activeColor,
   onSubmit,
+  feedbackKey,
+  feedbackTypeKey,
+  feedbackTextAreaKey,
   //form
 }) => {
   const [form] = Form.useForm();
@@ -84,7 +101,7 @@ const Feedback: React.FC<FeedbackProps> = ({
       >
         <div>
           <Form.Item
-            name="feedback"
+            name={feedbackKey}
             rules={[
               { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
             ]}
@@ -126,7 +143,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           </Text>
         </div>
         <Form.Item
-          name="feedbackType"
+          name={feedbackTypeKey}
           rules={[
             { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
           ]}
@@ -142,7 +159,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           </Checkbox.Group>
         </Form.Item>
         <Form.Item
-          name="textArea"
+          name={feedbackTextAreaKey}
           rules={[
             { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
           ]}
@@ -205,7 +222,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           }
           onClick={() => {
             setChoiceType(1);
-            form.setFieldsValue({ feedback: 1 });
+            form.setFieldsValue({ [`${feedbackKey}`]: 1 });
           }}
         >
           {t('ACCLAIM')}
@@ -221,7 +238,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           }
           onClick={() => {
             setChoiceType(0);
-            form.setFieldsValue({ feedback: 0 });
+            form.setFieldsValue({ [`${feedbackKey}`]: 0 });
           }}
         >
           {t('BAD_REVIEW')}

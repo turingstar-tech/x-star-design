@@ -67,7 +67,13 @@ const Feedback: React.FC<FeedbackProps> = ({
     </Space>
   );
   const submitFormContent = () => (
-    <Form form={form} onFinish={onSubmit}>
+    <Form
+      form={form}
+      onFinish={onSubmit}
+      className={classNames(`${prefix}-feedbackForm`, {
+        [`${prefix}-feedbackFormHidden`]: showSubmitContent,
+      })}
+    >
       <Space
         className={classNames({
           [`${prefix}-feedbackHidden`]: showSubmitContent,

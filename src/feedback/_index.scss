@@ -46,6 +46,14 @@
   }
 }
 
+.#{$prefix}-feedbackForm {
+  width: 100%;
+}
+
+.#{$prefix}-feedbackFormHidden {
+  width: unset;
+}
+
 .ant-popover-title {
   margin-bottom: 0 !important;
 }

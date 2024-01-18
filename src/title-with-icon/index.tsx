@@ -18,7 +18,6 @@ const TitleWithIcon = ({
 }: TitleWithIconProps) => {
   const { theme } = useContext(ConfigContext);
   const { colorPrimary } = theme?.token || {};
-  console.log(colorPrimary);
   return (
     <div
       data-testid="wrapper"

@@ -1,3 +1,6 @@
+$primary-color: var(--xtabs-primary-color);
+$secondary-color: var(--xtabs-secondary-color);
+
 .#{$prefix}-XTabs {
   &.#{$prefix}-tabs,
   &.ant-tabs {
@@ -10,14 +13,14 @@
 
   .#{$prefix}-tabs-nav-wrap,
   .ant-tabs-nav-wrap {
-    background-color: #e3ecff;
+    background-color: $secondary-color;
   }
 
   &.#{$prefix}-tabs-card > .#{$prefix}-tabs-nav .#{$prefix}-tabs-tab,
   &.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab {
     width: 130px;
     height: 130px;
-    background-color: #e3ecff;
+    background-color: unset;
     display: flex;
     align-content: center;
     align-items: center;
@@ -28,16 +31,26 @@
 
   &.#{$prefix}-tabs-card > .#{$prefix}-tabs-nav .#{$prefix}-tabs-tab-active,
   &.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active {
-    border-left: 6px solid #1890ff;
+    border-left: 6px solid $primary-color;
     background-color: #fff;
     transition: all 0.1s cubic-bezier(0.645, 0.045, 0.355, 1);
     border-radius: 0;
+  }
+
+  &.#{$prefix}-tabs .#{$prefix}-tabs-tab:hover,
+  &.ant-tabs .ant-tabs-tab:hover {
+    color: $primary-color;
   }
 
   .#{$prefix}-tabs-tab-btn,
   .ant-tabs-tab-btn {
     text-align: center;
     white-space: normal;
+  }
+
+  .#{$prefix}-tabs-content-holder,
+  .ant-tabs-content-holder {
+    border-left: 0;
   }
 
   .#{$prefix}-tabs-content,

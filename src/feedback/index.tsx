@@ -146,7 +146,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             className={`${prefix}-feedbackTextArea`}
           />
         </Form.Item>
-        <Form.Item>
+        <Form.Item style={{ marginBottom: 0 }}>
           <Button
             type="primary"
             className={classNames(`${prefix}-feedbackButton`)}
@@ -185,7 +185,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           form.resetFields();
         }
       }}
-      overlayInnerStyle={{ width: '400px', minHeight: '320px' }}
+      overlayInnerStyle={{ width: '400px', minHeight: '320px', padding: 20 }}
     >
       <Space size={0}>
         <Button

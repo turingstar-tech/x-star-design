@@ -70,4 +70,16 @@ export default {
     RETRY: 'Retry',
     TECHNICAL_DEPARTMENT_CONTACT_EMAIL: 'Technical department contact email: ',
   },
+  Feedback: {
+    FEEDBACK_RESPONSE:
+      'Thank you for your valuable comments, we will continue to improve~',
+    FEEDBACK_TYPE: 'Feedback Type',
+    SUBMIT: 'Submit',
+    FEEDBACK_ON_THE_PROBLEM: 'Your feedback on this problem',
+    ACCLAIM: 'Acclaim',
+    BAD_REVIEW: 'Bad Review',
+    PLEASE_SELECT_FEEDBACK_TYPE: 'Please fill in the feedback review',
+    FEEDBACK_TEXTAREA_PLACEHOLDER:
+      'Please describe your feedback in detail and we will deal with it as soon as possible',
+  },
 } as const;

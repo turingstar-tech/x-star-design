@@ -65,4 +65,14 @@ export default {
     RETRY: '重试',
     TECHNICAL_DEPARTMENT_CONTACT_EMAIL: '技术部联系邮箱：',
   },
+  Feedback: {
+    FEEDBACK_RESPONSE: '感谢您宝贵的意见，我们会持续改进~',
+    FEEDBACK_TYPE: '反馈类型',
+    SUBMIT: '提交',
+    FEEDBACK_ON_THE_PROBLEM: '您对本题目的反馈',
+    ACCLAIM: '好评',
+    BAD_REVIEW: '差评',
+    PLEASE_SELECT_FEEDBACK_TYPE: '请填写反馈评价',
+    FEEDBACK_TEXTAREA_PLACEHOLDER: '请详细描述你的反馈，我们会尽快处理',
+  },
 } as const;

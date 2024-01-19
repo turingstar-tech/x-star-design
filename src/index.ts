@@ -8,6 +8,7 @@ export { default as ContactButton } from './contact-button';
 export { default as DraggableLayout } from './draggable-layout';
 export { default as ErrorBoundary } from './error-boundary';
 export type { FallbackProps } from './error-boundary';
+export { default as Feedback } from './feedback';
 export { default as InputNumbers } from './input-numbers';
 export { default as LoadingMask } from './loading-mask';
 export { LocaleProvider } from './locales';

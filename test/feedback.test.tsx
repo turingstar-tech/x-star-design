@@ -79,12 +79,6 @@ describe('Feedback', () => {
     await act(async () => {
       fireEvent.click(likeButton);
     });
-    /*     fireEvent.change(getByTestId('feedbackKey-testId'), {
-          target: { value: 0 },
-        });
-        fireEvent.change(getByTestId('feedbackTypeKey-testId'), {
-          target: { value: ['A', 'B', 'C'] },
-        }); */
     await act(async () => {
       fireEvent.click(getByTestId('feedbackKey-testId'));
     });
@@ -100,12 +94,10 @@ describe('Feedback', () => {
     await act(async () => {
       fireEvent.click(getByText('Submit'));
     });
-    //await waitFor(() => {
     expect(onSubmitMock).toHaveBeenCalledWith({
       feedbackTest: 1,
       feedbackTextAreaTest: 'test',
       feedbackTypeTest: ['C', 'E'],
     });
-    // })
   });
 });

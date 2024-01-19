@@ -115,29 +115,33 @@ const Feedback: React.FC<FeedbackProps> = ({
               className={classNames(`${prefix}-feedbackRadioGroup`)}
               style={{ padding: '20px 0 10px 0' }}
             >
-              <Radio value={1} data-testid="feedbackKey-testId">
-                <LikeFilled
-                  style={{
-                    color: choiceType === 1 ? activeColor : '#d9d9d9',
-                    transition: 'color 0.3s ease-in-out',
-                    fontSize: '36px',
-                  }}
-                  onClick={() => {
-                    setChoiceType(1);
-                  }}
-                />
+              <Radio
+                value={1}
+                data-testid="feedbackKey-testId"
+                onClick={() => {
+                  setChoiceType(1);
+                }}
+                style={{
+                  color: choiceType === 1 ? activeColor : '#d9d9d9',
+                  transition: 'color 0.3s ease-in-out',
+                  fontSize: '36px',
+                }}
+              >
+                <LikeFilled />
               </Radio>
-              <Radio value={0}>
-                <DislikeFilled
-                  style={{
-                    color: choiceType === 0 ? activeColor : '#d9d9d9',
-                    transition: 'color 0.3s ease-in-out',
-                    fontSize: '36px',
-                  }}
-                  onClick={() => {
-                    setChoiceType(0);
-                  }}
-                />
+              <Radio
+                value={0}
+                data-testid="feedbackKey-testId-dislike"
+                style={{
+                  color: choiceType === 0 ? activeColor : '#d9d9d9',
+                  transition: 'color 0.3s ease-in-out',
+                  fontSize: '36px',
+                }}
+                onClick={() => {
+                  setChoiceType(0);
+                }}
+              >
+                <DislikeFilled />
               </Radio>
             </Radio.Group>
           </Form.Item>

@@ -100,4 +100,33 @@ describe('Feedback', () => {
       feedbackTypeTest: ['C', 'E'],
     });
   });
+  test('form radio button will be updated when click', async () => {
+    const { getByTestId } = render(
+      <Feedback
+        activeColor="#1890ff"
+        feedbackList={list}
+        feedbackKey={'feedbackTest'}
+        feedbackTypeKey={'feedbackTypeTest'}
+        feedbackTextAreaKey={'feedbackTextAreaTest'}
+      />,
+    );
+    const likeButton = getByTestId('feedback-button-like');
+    // 鼠标点击
+    await act(async () => {
+      fireEvent.click(likeButton);
+    });
+    const likeRadioButton = getByTestId('feedbackKey-testId');
+    const dislikeRadioButton = getByTestId('feedbackKey-testId-dislike');
+    // 鼠标点击
+    await act(async () => {
+      fireEvent.click(likeRadioButton);
+    });
+    expect(likeRadioButton).toBeChecked();
+    expect(dislikeRadioButton).not.toBeChecked();
+    await act(async () => {
+      fireEvent.click(dislikeRadioButton);
+    });
+    expect(likeRadioButton).not.toBeChecked();
+    expect(dislikeRadioButton).toBeChecked();
+  });
 });

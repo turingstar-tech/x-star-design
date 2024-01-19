@@ -1,40 +1,57 @@
-.#{$prefix}-feedbackContent {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  .#{$prefix}-feedbackRow {
-    width: 100%;
-    margin-bottom: 20px;
-    .#{$prefix}-feedbackCol {
-      font-size: 36px;
-      text-align: center;
-    }
-  }
-  .#{$prefix}-feedbackButton {
-    width: 100%;
-  }
-  .#{$prefix}-feedbackTextArea {
-    height: 100px;
-  }
-  :global(.#{$prefix}-form-item) {
-    margin-bottom: 10px;
-  }
-  .#{$prefix}-feedbackHidden {
-    display: none;
-  }
-  .#{$prefix}-feedbackRadioGroup {
-    width: 100%;
+.#{$prefix}-feedbackContainer {
+  .#{$prefix}-feedbackContent {
     display: flex;
-    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    .#{$prefix}-feedbackRow {
+      width: 100%;
+      margin-bottom: 20px;
+      .#{$prefix}-feedbackCol {
+        font-size: 36px;
+        text-align: center;
+      }
+    }
+    .#{$prefix}-feedbackButton {
+      width: 100%;
+    }
+    .#{$prefix}-feedbackTextArea {
+      height: 100px;
+    }
+    :global(.#{$prefix}-form-item) {
+      margin-bottom: 10px;
+    }
+    .#{$prefix}-feedbackHidden {
+      display: none;
+    }
+    .#{$prefix}-feedbackRadioGroup {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
 
-    .#{$prefix}-radio {
-      display: none !important;
+      .#{$prefix}-radio {
+        display: none !important;
+      }
+    }
+
+    .#{$prefix}-form-item {
+      margin-bottom: 10px;
     }
   }
+  .#{$prefix}-popover-title {
+    margin-bottom: 0 !important;
+  }
 
-  .#{$prefix}-form-item {
-    margin-bottom: 10px;
+  .#{$prefix}-popover-inner {
+    display: flex;
+    flex-direction: column;
+
+    .#{$prefix}-popover-inner-content {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
   }
 }
 
@@ -52,19 +69,4 @@
 
 .#{$prefix}-feedbackFormHidden {
   width: unset;
-}
-
-.#{$prefix}-popover-title {
-  margin-bottom: 0 !important;
-}
-
-.#{$prefix}-popover-inner {
-  display: flex;
-  flex-direction: column;
-
-  .#{$prefix}-popover-inner-content {
-    display: flex;
-    align-items: center;
-    flex: 1;
-  }
 }

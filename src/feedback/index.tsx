@@ -18,7 +18,7 @@ import {
   Typography,
 } from 'antd';
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
 import { prefix } from '../utils/global';
@@ -70,6 +70,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   const [choiceType, setChoiceType] = useState<number | undefined>();
   const [showSubmitContent, setShowSubmitContent] = useState<boolean>(false);
   const { format: t } = useLocale('Feedback');
+  const mainContainer = useRef<HTMLDivElement>(null);
   const submittedContent = () => (
     <Space
       direction="vertical"
@@ -199,57 +200,67 @@ const Feedback: React.FC<FeedbackProps> = ({
 
   return (
     <ConfigProviderWrapper>
-      <Popover
-        content={content}
-        title={t('FEEDBACK_ON_THE_PROBLEM')}
-        placement="bottom"
-        trigger={['click']}
-        onOpenChange={(open) => {
-          if (open) {
-            setShowSubmitContent(false);
-          } else {
-            form.resetFields();
-          }
-        }}
-        overlayInnerStyle={{ width: '400px', minHeight: '320px', padding: 20 }}
+      <div
+        ref={mainContainer}
+        className={classNames(`${prefix}-feedbackContainer`)}
       >
-        <Space size={0}>
-          <Button
-            type="link"
-            data-testid="feedback-button-like"
-            icon={
-              choiceType === 1 ? (
-                <LikeFilled style={{ color: activeColor }} />
-              ) : (
-                <LikeOutlined />
-              )
+        <Popover
+          content={content}
+          title={t('FEEDBACK_ON_THE_PROBLEM')}
+          placement="bottom"
+          getPopupContainer={() => mainContainer.current!}
+          trigger={['click']}
+          onOpenChange={(open) => {
+            if (open) {
+              setShowSubmitContent(false);
+            } else {
+              form.resetFields();
             }
-            onClick={() => {
-              setChoiceType(1);
-              form.setFieldsValue({ [`${feedbackKey}`]: 1 });
-            }}
-          >
-            {t('ACCLAIM')}
-          </Button>
-          <Button
-            type="link"
-            data-testid="feedback-button-dislike"
-            icon={
-              choiceType === 0 ? (
-                <DislikeFilled style={{ color: activeColor }} />
-              ) : (
-                <DislikeOutlined />
-              )
-            }
-            onClick={() => {
-              setChoiceType(0);
-              form.setFieldsValue({ [`${feedbackKey}`]: 0 });
-            }}
-          >
-            {t('BAD_REVIEW')}
-          </Button>
-        </Space>
-      </Popover>
+          }}
+          overlayInnerStyle={{
+            width: '400px',
+            minHeight: '320px',
+            padding: 20,
+          }}
+        >
+          <Space size={0}>
+            <Button
+              type="link"
+              data-testid="feedback-button-like"
+              icon={
+                choiceType === 1 ? (
+                  <LikeFilled style={{ color: activeColor }} />
+                ) : (
+                  <LikeOutlined />
+                )
+              }
+              onClick={() => {
+                setChoiceType(1);
+                form.setFieldsValue({ [`${feedbackKey}`]: 1 });
+              }}
+            >
+              {t('ACCLAIM')}
+            </Button>
+            <Button
+              type="link"
+              data-testid="feedback-button-dislike"
+              icon={
+                choiceType === 0 ? (
+                  <DislikeFilled style={{ color: activeColor }} />
+                ) : (
+                  <DislikeOutlined />
+                )
+              }
+              onClick={() => {
+                setChoiceType(0);
+                form.setFieldsValue({ [`${feedbackKey}`]: 0 });
+              }}
+            >
+              {t('BAD_REVIEW')}
+            </Button>
+          </Space>
+        </Popover>
+      </div>
     </ConfigProviderWrapper>
   );
 };

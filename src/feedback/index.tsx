@@ -87,7 +87,10 @@ const Feedback: React.FC<FeedbackProps> = ({
   const submitFormContent = () => (
     <Form
       form={form}
-      onFinish={onSubmit}
+      onFinish={(val) => {
+        onSubmit?.(val);
+        setShowSubmitContent(true);
+      }}
       className={classNames(`${prefix}-feedbackForm`, {
         [`${prefix}-feedbackFormHidden`]: showSubmitContent,
       })}
@@ -103,7 +106,6 @@ const Feedback: React.FC<FeedbackProps> = ({
         <div>
           <Form.Item
             name={feedbackKey}
-            data-testid="feedbackKey-testId"
             rules={[
               { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
             ]}
@@ -112,7 +114,7 @@ const Feedback: React.FC<FeedbackProps> = ({
               className={classNames(`${prefix}-feedbackRadioGroup`)}
               style={{ padding: '20px 0 10px 0' }}
             >
-              <Radio value={1}>
+              <Radio value={1} data-testid="feedbackKey-testId">
                 <LikeFilled
                   style={{
                     color: choiceType === 1 ? activeColor : '#d9d9d9',
@@ -146,12 +148,14 @@ const Feedback: React.FC<FeedbackProps> = ({
         </div>
         <Form.Item
           name={feedbackTypeKey}
-          data-testid="feedbackTypeKey-testId"
           rules={[
             { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
           ]}
         >
-          <Checkbox.Group style={{ width: '100%' }}>
+          <Checkbox.Group
+            style={{ width: '100%' }}
+            data-testid="feedbackTypeKey-testId"
+          >
             <Row gutter={[4, 4]} style={{ width: '100%' }}>
               {feedbackList?.map((item: feedbackItem) => (
                 <Col span={8} key={item.value}>
@@ -162,13 +166,13 @@ const Feedback: React.FC<FeedbackProps> = ({
           </Checkbox.Group>
         </Form.Item>
         <Form.Item
-          data-testid="feedbackTextAreaKey-testId"
           name={feedbackTextAreaKey}
           rules={[
             { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
           ]}
         >
           <TextArea
+            data-testid="feedbackTextAreaKey-testId"
             placeholder="请详细描述你的反馈，我们会尽快处理"
             className={`${prefix}-feedbackTextArea`}
           />
@@ -178,12 +182,6 @@ const Feedback: React.FC<FeedbackProps> = ({
             type="primary"
             className={classNames(`${prefix}-feedbackButton`)}
             htmlType="submit"
-            onClick={async () => {
-              try {
-                await form.validateFields();
-                setShowSubmitContent(true);
-              } catch (err) {}
-            }}
           >
             {t('SUBMIT')}
           </Button>

@@ -79,26 +79,33 @@ describe('Feedback', () => {
     await act(async () => {
       fireEvent.click(likeButton);
     });
-    fireEvent.change(getByTestId('feedbackKey-testId'), {
-      target: { initialValue: 0 },
+    /*     fireEvent.change(getByTestId('feedbackKey-testId'), {
+          target: { value: 0 },
+        });
+        fireEvent.change(getByTestId('feedbackTypeKey-testId'), {
+          target: { value: ['A', 'B', 'C'] },
+        }); */
+    await act(async () => {
+      fireEvent.click(getByTestId('feedbackKey-testId'));
     });
-    fireEvent.change(getByTestId('feedbackTypeKey-testId'), {
-      target: { initialValue: ['A', 'B', 'C'] },
+    await act(async () => {
+      fireEvent.click(getByText('翻译错误'));
+    });
+    await act(async () => {
+      fireEvent.click(getByText('题目过于简单'));
     });
     fireEvent.change(getByTestId('feedbackTextAreaKey-testId'), {
-      target: { initialValue: 'test' },
+      target: { value: 'test' },
     });
     await act(async () => {
       fireEvent.click(getByText('Submit'));
     });
     //await waitFor(() => {
-    expect(onSubmitMock).toHaveBeenCalledWith(
-      JSON.stringify({
-        feedbackTest: 0,
-        feedbackTypeTest: ['A', 'B', 'C'],
-        feedbackTextAreaTest: 'test',
-      }),
-    );
+    expect(onSubmitMock).toHaveBeenCalledWith({
+      feedbackTest: 1,
+      feedbackTextAreaTest: 'test',
+      feedbackTypeTest: ['C', 'E'],
+    });
     // })
   });
 });

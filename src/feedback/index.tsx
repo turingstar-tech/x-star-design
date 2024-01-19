@@ -103,6 +103,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         <div>
           <Form.Item
             name={feedbackKey}
+            data-testid="feedbackKey-testId"
             rules={[
               { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
             ]}
@@ -145,6 +146,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         </div>
         <Form.Item
           name={feedbackTypeKey}
+          data-testid="feedbackTypeKey-testId"
           rules={[
             { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
           ]}
@@ -160,6 +162,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           </Checkbox.Group>
         </Form.Item>
         <Form.Item
+          data-testid="feedbackTextAreaKey-testId"
           name={feedbackTextAreaKey}
           rules={[
             { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
@@ -215,6 +218,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         <Space size={0}>
           <Button
             type="link"
+            data-testid="feedback-button-like"
             icon={
               choiceType === 1 ? (
                 <LikeFilled style={{ color: activeColor }} />
@@ -231,6 +235,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           </Button>
           <Button
             type="link"
+            data-testid="feedback-button-dislike"
             icon={
               choiceType === 0 ? (
                 <DislikeFilled style={{ color: activeColor }} />

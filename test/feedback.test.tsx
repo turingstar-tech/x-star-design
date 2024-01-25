@@ -1,10 +1,11 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals';
 import '@testing-library/jest-dom/jest-globals';
 import { act, fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { Feedback } from '../src';
 
-const list = [
+const badList = [
   {
     label: '题目描述不清',
     value: 'A',
@@ -30,6 +31,26 @@ const list = [
     value: 'F',
   },
 ];
+
+const goodList = [
+  {
+    label: '高质量的题目',
+    value: 1,
+  },
+  {
+    label: '高质量的题解',
+    value: 2,
+  },
+  {
+    label: '高质量的题目',
+    value: 4,
+  },
+  {
+    label: '帮助我更好的掌握算法知识点',
+    value: 3,
+  },
+];
+
 describe('Feedback', () => {
   beforeEach(() => {
     window.matchMedia = jest.fn().mockImplementation((query) => {
@@ -49,6 +70,9 @@ describe('Feedback', () => {
     const { getByTestId } = render(
       <Feedback
         activeColor="#1890ff"
+        feedbackListGood={goodList}
+        feedbackListBad={badList}
+        onSubmit={(value) => console.log(value)}
         feedbackKey={'feedbackTest'}
         feedbackTypeKey={'feedbackTypeTest'}
         feedbackTextAreaKey={'feedbackTextAreaTest'}
@@ -64,23 +88,22 @@ describe('Feedback', () => {
   });
   test('Form submission will be triggered when click', async () => {
     const onSubmitMock = jest.fn();
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
     const { getByTestId, getByText } = render(
       <Feedback
         activeColor="#1890ff"
-        feedbackList={list}
-        onSubmit={onSubmitMock}
+        feedbackListGood={goodList}
+        feedbackListBad={badList}
+        onSubmit={(value) => console.log(value)}
         feedbackKey={'feedbackTest'}
         feedbackTypeKey={'feedbackTypeTest'}
         feedbackTextAreaKey={'feedbackTextAreaTest'}
       />,
     );
     const likeButton = getByTestId('feedback-button-like');
-    // 鼠标点击
+    await user.hover(likeButton);
     await act(async () => {
-      fireEvent.click(likeButton);
-    });
-    await act(async () => {
-      fireEvent.click(getByTestId('feedbackKey-testId'));
+      fireEvent.click(getByTestId('feedbackKey-testId-like'));
     });
     await act(async () => {
       fireEvent.click(getByText('翻译错误'));
@@ -104,7 +127,9 @@ describe('Feedback', () => {
     const { getByTestId } = render(
       <Feedback
         activeColor="#1890ff"
-        feedbackList={list}
+        feedbackListGood={goodList}
+        feedbackListBad={badList}
+        onSubmit={(value) => console.log(value)}
         feedbackKey={'feedbackTest'}
         feedbackTypeKey={'feedbackTypeTest'}
         feedbackTextAreaKey={'feedbackTextAreaTest'}

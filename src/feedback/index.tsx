@@ -26,7 +26,7 @@ const { Text } = Typography;
 const { TextArea } = Input;
 
 type feedbackItem = {
-  value: string;
+  value: string | number;
   label: string;
 };
 
@@ -129,7 +129,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             >
               <Radio
                 value={2}
-                data-testid="feedbackKey-testId"
+                data-testid="feedbackKey-testId-like"
                 onClick={() => {
                   setChoiceType(2);
                 }}

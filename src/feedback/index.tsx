@@ -32,9 +32,13 @@ type feedbackItem = {
 
 interface FeedbackProps {
   /**
-   * @description Radio.Group 的选项
+   * @description 好评 Radio.Group 的选项
    */
-  feedbackList?: feedbackItem[];
+  feedbackListGood?: feedbackItem[];
+  /**
+   * @description 差评 Radio.Group 的选项
+   */
+  feedbackListBad?: feedbackItem[];
   /**
    * @description 选中的颜色
    */
@@ -58,7 +62,8 @@ interface FeedbackProps {
 }
 
 const Feedback: React.FC<FeedbackProps> = ({
-  feedbackList,
+  feedbackListGood,
+  feedbackListBad,
   activeColor,
   onSubmit,
   feedbackKey,
@@ -71,6 +76,13 @@ const Feedback: React.FC<FeedbackProps> = ({
   const [showSubmitContent, setShowSubmitContent] = useState<boolean>(false);
   const { format: t } = useLocale('Feedback');
   const mainContainer = useRef<HTMLDivElement>(null);
+  const choiceTypeList = () => {
+    if (choiceType === 2) {
+      return feedbackListGood;
+    } else {
+      return feedbackListBad;
+    }
+  };
   const submittedContent = () => (
     <Space
       direction="vertical"
@@ -116,13 +128,13 @@ const Feedback: React.FC<FeedbackProps> = ({
               style={{ padding: '20px 0 10px 0' }}
             >
               <Radio
-                value={1}
+                value={2}
                 data-testid="feedbackKey-testId"
                 onClick={() => {
-                  setChoiceType(1);
+                  setChoiceType(2);
                 }}
                 style={{
-                  color: choiceType === 1 ? activeColor : '#d9d9d9',
+                  color: choiceType === 2 ? activeColor : '#d9d9d9',
                   transition: 'color 0.3s ease-in-out',
                   fontSize: '36px',
                 }}
@@ -130,15 +142,15 @@ const Feedback: React.FC<FeedbackProps> = ({
                 <LikeFilled />
               </Radio>
               <Radio
-                value={0}
+                value={1}
                 data-testid="feedbackKey-testId-dislike"
                 style={{
-                  color: choiceType === 0 ? activeColor : '#d9d9d9',
+                  color: choiceType === 1 ? activeColor : '#d9d9d9',
                   transition: 'color 0.3s ease-in-out',
                   fontSize: '36px',
                 }}
                 onClick={() => {
-                  setChoiceType(0);
+                  setChoiceType(1);
                 }}
               >
                 <DislikeFilled />
@@ -162,7 +174,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             data-testid="feedbackTypeKey-testId"
           >
             <Row gutter={[4, 4]} style={{ width: '100%' }}>
-              {feedbackList?.map((item: feedbackItem) => (
+              {choiceTypeList()?.map((item: feedbackItem) => (
                 <Col span={8} key={item.value}>
                   <Checkbox value={item.value}>{item.label}</Checkbox>
                 </Col>
@@ -213,7 +225,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           title={t('FEEDBACK_ON_THE_PROBLEM')}
           placement="bottom"
           getPopupContainer={() => mainContainer.current!}
-          trigger={['click']}
+          mouseLeaveDelay={0.4}
           onOpenChange={(open) => {
             if (open) {
               setShowSubmitContent(false);
@@ -222,7 +234,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             }
           }}
           overlayInnerStyle={{
-            width: '400px',
+            width: '425px',
             minHeight: '320px',
             padding: 20,
           }}
@@ -232,15 +244,15 @@ const Feedback: React.FC<FeedbackProps> = ({
               type="link"
               data-testid="feedback-button-like"
               icon={
-                choiceType === 1 ? (
+                choiceType === 2 ? (
                   <LikeFilled style={{ color: activeColor }} />
                 ) : (
                   <LikeOutlined />
                 )
               }
               onClick={() => {
-                setChoiceType(1);
-                form.setFieldsValue({ [`${feedbackKey}`]: 1 });
+                setChoiceType(2);
+                form.setFieldsValue({ [`${feedbackKey}`]: 2 });
               }}
             >
               {t('ACCLAIM')}
@@ -249,15 +261,15 @@ const Feedback: React.FC<FeedbackProps> = ({
               type="link"
               data-testid="feedback-button-dislike"
               icon={
-                choiceType === 0 ? (
+                choiceType === 1 ? (
                   <DislikeFilled style={{ color: activeColor }} />
                 ) : (
                   <DislikeOutlined />
                 )
               }
               onClick={() => {
-                setChoiceType(0);
-                form.setFieldsValue({ [`${feedbackKey}`]: 0 });
+                setChoiceType(1);
+                form.setFieldsValue({ [`${feedbackKey}`]: 1 });
               }}
             >
               {t('BAD_REVIEW')}

@@ -7,7 +7,7 @@ import { Feedback } from 'x-star-design';
 import { Form } from 'antd';
 
 export default () => {
-  const list = [
+  const badList = [
     {
       label: '题目描述不清',
       value: 'A',
@@ -33,10 +33,30 @@ export default () => {
       value: 'F',
     },
   ];
+
+  const goodList = [
+    {
+      label: '高质量的题目',
+      value: 1,
+    },
+    {
+      label: '高质量的题解',
+      value: 2,
+    },
+    {
+      label: '高质量的题目',
+      value: 4,
+    },
+    {
+      label: '帮助我更好的掌握算法知识点',
+      value: 3,
+    },
+  ];
   return (
     <Feedback
       activeColor="#1890ff"
-      feedbackList={list}
+      feedbackListGood={goodList}
+      feedbackListBad={badList}
       onSubmit={(value) => console.log(value)}
       feedbackKey={'feedbackTest'}
       feedbackTypeKey={'feedbackTypeTest'}

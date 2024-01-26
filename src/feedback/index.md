@@ -55,7 +55,7 @@ export default () => {
   return (
     <Feedback
       activeColor="#1890ff"
-      feedbackListGood={goodList}
+      //feedbackListGood={goodList}
       feedbackListBad={badList}
       onSubmit={(value) => console.log(value)}
       feedbackKey={'feedbackTest'}

@@ -72,7 +72,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   //form
 }) => {
   const [form] = Form.useForm();
-  const [choiceType, setChoiceType] = useState<number | undefined>();
+  const [choiceType, setChoiceType] = useState<number>();
   const [showSubmitContent, setShowSubmitContent] = useState<boolean>(false);
   const { format: t } = useLocale('Feedback');
   const mainContainer = useRef<HTMLDivElement>(null);
@@ -158,30 +158,35 @@ const Feedback: React.FC<FeedbackProps> = ({
             </Radio.Group>
           </Form.Item>
         </div>
-        <div style={{ marginBottom: 10 }}>
-          <Text type="secondary" style={{ marginBottom: '24px' }}>
-            {t('FEEDBACK_TYPE')}
-          </Text>
-        </div>
-        <Form.Item
-          name={feedbackTypeKey}
-          rules={[
-            { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
-          ]}
-        >
-          <Checkbox.Group
-            style={{ width: '100%' }}
-            data-testid="feedbackTypeKey-testId"
-          >
-            <Row gutter={[4, 4]} style={{ width: '100%' }}>
-              {choiceTypeList()?.map((item: feedbackItem) => (
-                <Col span={8} key={item.value}>
-                  <Checkbox value={item.value}>{item.label}</Checkbox>
-                </Col>
-              ))}
-            </Row>
-          </Checkbox.Group>
-        </Form.Item>
+        {choiceTypeList()?.length && (
+          <>
+            <div style={{ marginBottom: 10 }}>
+              <Text type="secondary" style={{ marginBottom: '24px' }}>
+                {t('FEEDBACK_TYPE')}
+              </Text>
+            </div>
+            <Form.Item
+              name={feedbackTypeKey}
+              rules={[
+                { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
+              ]}
+            >
+              <Checkbox.Group
+                style={{ width: '100%' }}
+                data-testid="feedbackTypeKey-testId"
+              >
+                <Row gutter={[4, 4]} style={{ width: '100%' }}>
+                  {choiceTypeList()?.map((item: feedbackItem) => (
+                    <Col span={8} key={item.value}>
+                      <Checkbox value={item.value}>{item.label}</Checkbox>
+                    </Col>
+                  ))}
+                </Row>
+              </Checkbox.Group>
+            </Form.Item>
+          </>
+        )}
+
         <Form.Item
           name={feedbackTextAreaKey}
           rules={[
@@ -199,6 +204,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             type="primary"
             className={classNames(`${prefix}-feedbackButton`)}
             htmlType="submit"
+            onClick={() => form.setFieldValue(feedbackKey, choiceType)}
           >
             {t('SUBMIT')}
           </Button>

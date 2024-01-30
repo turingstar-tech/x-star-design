@@ -32,6 +32,11 @@ type feedbackItem = {
 
 interface FeedbackProps {
   /**
+   * @description 标题
+   * @default 您对本题目的反馈
+   */
+  title?: string;
+  /**
    * @description 好评 Radio.Group 的选项
    */
   feedbackListGood?: feedbackItem[];
@@ -62,6 +67,7 @@ interface FeedbackProps {
 }
 
 const Feedback: React.FC<FeedbackProps> = ({
+  title,
   feedbackListGood,
   feedbackListBad,
   activeColor,
@@ -73,6 +79,7 @@ const Feedback: React.FC<FeedbackProps> = ({
 }) => {
   const [form] = Form.useForm();
   const [choiceType, setChoiceType] = useState<number>();
+  const [open, setOpen] = useState<boolean>(false);
   const [showSubmitContent, setShowSubmitContent] = useState<boolean>(false);
   const { format: t } = useLocale('Feedback');
   const mainContainer = useRef<HTMLDivElement>(null);
@@ -119,9 +126,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         <div>
           <Form.Item
             name={feedbackKey}
-            rules={[
-              { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
-            ]}
+            rules={[{ required: true, message: t('FEEDBACK_MESSAGE_1') }]}
           >
             <Radio.Group
               className={classNames(`${prefix}-feedbackRadioGroup`)}
@@ -167,9 +172,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             </div>
             <Form.Item
               name={feedbackTypeKey}
-              rules={[
-                { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
-              ]}
+              rules={[{ required: true, message: t('FEEDBACK_MESSAGE_2') }]}
             >
               <Checkbox.Group
                 style={{ width: '100%' }}
@@ -177,7 +180,7 @@ const Feedback: React.FC<FeedbackProps> = ({
               >
                 <Row gutter={[4, 4]} style={{ width: '100%' }}>
                   {choiceTypeList()?.map((item: feedbackItem) => (
-                    <Col span={8} key={item.value}>
+                    <Col span={24} key={item.value}>
                       <Checkbox value={item.value}>{item.label}</Checkbox>
                     </Col>
                   ))}
@@ -189,9 +192,7 @@ const Feedback: React.FC<FeedbackProps> = ({
 
         <Form.Item
           name={feedbackTextAreaKey}
-          rules={[
-            { required: true, message: t('PLEASE_SELECT_FEEDBACK_TYPE') },
-          ]}
+          rules={[{ required: true, message: t('FEEDBACK_MESSAGE_3') }]}
         >
           <TextArea
             data-testid="feedbackTextAreaKey-testId"
@@ -228,19 +229,22 @@ const Feedback: React.FC<FeedbackProps> = ({
       >
         <Popover
           content={content}
-          title={t('FEEDBACK_ON_THE_PROBLEM')}
+          title={title ?? t('FEEDBACK_ON_THE_PROBLEM')}
           placement="bottom"
+          trigger={['click']}
           getPopupContainer={() => mainContainer.current!}
           mouseLeaveDelay={0.4}
           onOpenChange={(open) => {
             if (open) {
               setShowSubmitContent(false);
+              setOpen(true);
             } else {
               form.resetFields();
+              setOpen(false);
             }
           }}
           overlayInnerStyle={{
-            width: '425px',
+            width: '350px',
             minHeight: '320px',
             padding: 20,
           }}
@@ -256,9 +260,12 @@ const Feedback: React.FC<FeedbackProps> = ({
                   <LikeOutlined />
                 )
               }
-              onClick={() => {
+              onClick={(e) => {
                 setChoiceType(2);
                 form.setFieldsValue({ [`${feedbackKey}`]: 2 });
+                if (open) {
+                  e.stopPropagation();
+                }
               }}
             >
               {t('ACCLAIM')}
@@ -273,9 +280,12 @@ const Feedback: React.FC<FeedbackProps> = ({
                   <DislikeOutlined />
                 )
               }
-              onClick={() => {
+              onClick={(e) => {
                 setChoiceType(1);
                 form.setFieldsValue({ [`${feedbackKey}`]: 1 });
+                if (open) {
+                  e.stopPropagation();
+                }
               }}
             >
               {t('BAD_REVIEW')}

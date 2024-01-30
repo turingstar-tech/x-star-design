@@ -74,5 +74,8 @@ export default {
     BAD_REVIEW: '差评',
     PLEASE_SELECT_FEEDBACK_TYPE: '请填写反馈评价',
     FEEDBACK_TEXTAREA_PLACEHOLDER: '请详细描述你的反馈，我们会尽快处理',
+    FEEDBACK_MESSAGE_1: '请填写满意度',
+    FEEDBACK_MESSAGE_2: '请勾选反馈类型',
+    FEEDBACK_MESSAGE_3: '请填写反馈内容',
   },
 } as const;

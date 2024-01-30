@@ -48,14 +48,16 @@ export default () => {
       value: 4,
     },
     {
-      label: '帮助我更好的掌握算法知识点',
+      label:
+        '帮助我更好的掌握算法知识点帮助我更好的掌握算法知识点帮助我更好的掌握算法知识点帮助我更好的掌握算法知识点帮助我更好的掌握算法知识点帮助我更好的掌握算法知识点',
       value: 3,
     },
   ];
   return (
     <Feedback
+      title={'你的评价'}
       activeColor="#1890ff"
-      //feedbackListGood={goodList}
+      feedbackListGood={goodList}
       feedbackListBad={badList}
       onSubmit={(value) => console.log(value)}
       feedbackKey={'feedbackTest'}

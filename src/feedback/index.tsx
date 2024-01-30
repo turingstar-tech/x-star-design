@@ -143,10 +143,12 @@ const Feedback: React.FC<FeedbackProps> = ({
                 style={{
                   color: choiceType === 2 ? activeColor : '#d9d9d9',
                   transition: 'color 0.3s ease-in-out',
-                  fontSize: '36px',
                 }}
               >
-                <LikeFilled />
+                <Space direction="vertical">
+                  <LikeFilled style={{ fontSize: '36px' }} />
+                  {t('ACCLAIM')}
+                </Space>
               </Radio>
               <Radio
                 value={1}
@@ -154,13 +156,15 @@ const Feedback: React.FC<FeedbackProps> = ({
                 style={{
                   color: choiceType === 1 ? activeColor : '#d9d9d9',
                   transition: 'color 0.3s ease-in-out',
-                  fontSize: '36px',
                 }}
                 onClick={() => {
                   setChoiceType(1);
                 }}
               >
-                <DislikeFilled />
+                <Space direction="vertical">
+                  <DislikeFilled style={{ fontSize: '36px' }} />
+                  {t('BAD_REVIEW')}
+                </Space>
               </Radio>
             </Radio.Group>
           </Form.Item>
@@ -194,15 +198,29 @@ const Feedback: React.FC<FeedbackProps> = ({
 
         <Form.Item
           name={feedbackTextAreaKey}
-          rules={[{ required: true, message: t('FEEDBACK_MESSAGE_3') }]}
+          rules={[
+            { required: true, message: t('FEEDBACK_MESSAGE_3') },
+            {
+              validator: (_, value) => {
+                //空格字符串校验
+                if (/^\s+$/g.test(value)) {
+                  return Promise.reject();
+                }
+                return Promise.resolve();
+              },
+              message: t('FEEDBACK_MESSAGE_3'),
+            },
+          ]}
         >
           <TextArea
             data-testid="feedbackTextAreaKey-testId"
-            placeholder="请详细描述你的反馈，我们会尽快处理"
-            className={`${prefix}-feedbackTextArea`}
+            placeholder={t('FEEDBACK_TEXTAREA_PLACEHOLDER')}
+            showCount
+            maxLength={200}
+            style={{ height: '100px', resize: 'none' }}
           />
         </Form.Item>
-        <Form.Item style={{ marginBottom: 0 }}>
+        <Form.Item style={{ marginBottom: 0, marginTop: 16 }}>
           <Button
             type="primary"
             className={classNames(`${prefix}-feedbackButton`)}
@@ -254,6 +272,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           <Space size={0} data-testid="popover-testId">
             <Button
               type="link"
+              className={classNames(`${prefix}-outsideFeedbackButton`)}
               data-testid="feedback-button-like"
               icon={
                 choiceType === 2 ? (
@@ -269,12 +288,11 @@ const Feedback: React.FC<FeedbackProps> = ({
                   e.stopPropagation();
                 }
               }}
-            >
-              {t('ACCLAIM')}
-            </Button>
+            />
             <Button
               type="link"
               data-testid="feedback-button-dislike"
+              className={classNames(`${prefix}-outsideFeedbackButton`)}
               icon={
                 choiceType === 1 ? (
                   <DislikeFilled style={{ color: activeColor }} />
@@ -289,9 +307,7 @@ const Feedback: React.FC<FeedbackProps> = ({
                   e.stopPropagation();
                 }
               }}
-            >
-              {t('BAD_REVIEW')}
-            </Button>
+            />
           </Space>
         </Popover>
       </div>

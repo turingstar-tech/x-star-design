@@ -76,8 +76,8 @@ export default {
     FEEDBACK_TYPE: 'Feedback Type',
     SUBMIT: 'Submit',
     FEEDBACK_ON_THE_PROBLEM: 'Your feedback on this problem',
-    ACCLAIM: 'Acclaim',
-    BAD_REVIEW: 'Bad Review',
+    ACCLAIM: 'Like',
+    BAD_REVIEW: 'Dislike',
     PLEASE_SELECT_FEEDBACK_TYPE: 'Please fill in the feedback review',
     FEEDBACK_TEXTAREA_PLACEHOLDER:
       'Please describe your feedback in detail and we will deal with it as soon as possible',

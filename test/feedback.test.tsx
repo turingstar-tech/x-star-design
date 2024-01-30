@@ -108,7 +108,7 @@ describe('Feedback', () => {
       />,
     );
     const likeButton = getByTestId('feedback-button-like');
-    await user.hover(likeButton);
+    await user.click(likeButton);
     await act(async () => {
       await jest.runAllTimersAsync();
     });
@@ -166,5 +166,58 @@ describe('Feedback', () => {
     });
     expect(likeRadioButton).not.toBeChecked();
     expect(dislikeRadioButton).toBeChecked();
+  });
+  test('click the button will effect the form value', async () => {
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+    const onSubmitMock = jest.fn();
+    const { getByTestId, getByText } = render(
+      <>
+        <Feedback
+          activeColor="#1890ff"
+          feedbackListGood={goodList}
+          feedbackListBad={badList}
+          onSubmit={onSubmitMock}
+          feedbackKey={'feedbackTest'}
+          feedbackTypeKey={'feedbackTypeTest'}
+          feedbackTextAreaKey={'feedbackTextAreaTest'}
+        />
+        <div data-testid="unfocus">unfocus</div>
+      </>,
+    );
+    const likeButton = getByTestId('feedback-button-like');
+    const dislikeButton = getByTestId('feedback-button-dislike');
+    const outside = getByTestId('unfocus');
+    await act(async () => {
+      fireEvent.click(dislikeButton);
+    });
+    await act(async () => {
+      await jest.runAllTimersAsync();
+    });
+    await act(async () => {
+      user.click(outside);
+    });
+    await act(async () => {
+      fireEvent.click(dislikeButton);
+    });
+    await act(async () => {
+      fireEvent.click(likeButton);
+    });
+    fireEvent.click(getByTestId('feedbackKey-testId-like'));
+    fireEvent.click(getByText('高质量题目'));
+    fireEvent.click(getByText('帮助我更好的掌握算法知识点'));
+    fireEvent.change(getByTestId('feedbackTextAreaKey-testId'), {
+      target: { value: 'test' },
+    });
+    await act(async () => {
+      fireEvent.click(getByText('Submit'));
+    });
+    await act(async () => {
+      await jest.runAllTimersAsync();
+    });
+    expect(onSubmitMock).toHaveBeenCalledWith({
+      feedbackTest: 2,
+      feedbackTextAreaTest: 'test',
+      feedbackTypeTest: [4, 3],
+    });
   });
 });

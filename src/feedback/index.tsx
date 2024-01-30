@@ -107,6 +107,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   const submitFormContent = () => (
     <Form
       form={form}
+      data-testid="feedback-form-testId"
       onFinish={(val) => {
         onSubmit?.(val);
         setShowSubmitContent(true);
@@ -131,6 +132,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             <Radio.Group
               className={classNames(`${prefix}-feedbackRadioGroup`)}
               style={{ padding: '20px 0 10px 0' }}
+              data-testid="radioGroup-testId"
             >
               <Radio
                 value={2}
@@ -249,7 +251,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             padding: 20,
           }}
         >
-          <Space size={0}>
+          <Space size={0} data-testid="popover-testId">
             <Button
               type="link"
               data-testid="feedback-button-like"

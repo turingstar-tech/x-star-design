@@ -53,7 +53,7 @@ interface FeedbackProps {
    */
   onSubmit?: (value: any) => void;
   /**
-   * @description 好评、差评的Form.Item name
+   * @description 好评、差评的Form.Item name 1:差评 2:好评
    */
   feedbackKey: string;
   /**

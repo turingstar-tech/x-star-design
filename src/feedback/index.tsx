@@ -163,7 +163,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           >
             <Row gutter={[4, 4]} style={{ width: '100%' }}>
               {feedbackList?.map((item: feedbackItem) => (
-                <Col span={8} key={item.value}>
+                <Col span={24} key={item.value}>
                   <Checkbox value={item.value}>{item.label}</Checkbox>
                 </Col>
               ))}

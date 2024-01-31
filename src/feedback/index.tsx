@@ -78,7 +78,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   //form
 }) => {
   const [form] = Form.useForm();
-  const [choiceType, setChoiceType] = useState<number>();
+  const [choiceType, setChoiceType] = useState<number | undefined>();
   const [open, setOpen] = useState<boolean>(false);
   const [showSubmitContent, setShowSubmitContent] = useState<boolean>(false);
   const { format: t } = useLocale('Feedback');
@@ -111,6 +111,7 @@ const Feedback: React.FC<FeedbackProps> = ({
       onFinish={(val) => {
         onSubmit?.(val);
         setShowSubmitContent(true);
+        setChoiceType(undefined);
       }}
       className={classNames(`${prefix}-feedbackForm`, {
         [`${prefix}-feedbackFormHidden`]: showSubmitContent,

@@ -78,7 +78,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   //form
 }) => {
   const [form] = Form.useForm();
-  const [choiceType, setChoiceType] = useState<number | undefined>();
+  const [choiceType, setChoiceType] = useState<number>();
   const [open, setOpen] = useState<boolean>(false);
   const [showSubmitContent, setShowSubmitContent] = useState<boolean>(false);
   const { format: t } = useLocale('Feedback');

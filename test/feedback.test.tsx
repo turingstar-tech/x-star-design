@@ -206,6 +206,16 @@ describe('Feedback', () => {
     fireEvent.click(getByText('高质量题目'));
     fireEvent.click(getByText('帮助我更好的掌握算法知识点'));
     fireEvent.change(getByTestId('feedbackTextAreaKey-testId'), {
+      target: { value: '      ' },
+    });
+    await act(async () => {
+      fireEvent.click(getByText('Submit'));
+    });
+    await act(async () => {
+      await jest.runAllTimersAsync();
+    });
+    expect(onSubmitMock).not.toBeCalled();
+    fireEvent.change(getByTestId('feedbackTextAreaKey-testId'), {
       target: { value: 'test' },
     });
     await act(async () => {

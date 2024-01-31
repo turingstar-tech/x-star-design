@@ -15,9 +15,6 @@
     .#{$prefix}-feedbackButton {
       width: 100%;
     }
-    .#{$prefix}-feedbackTextArea {
-      height: 100px;
-    }
     :global(.#{$prefix}-form-item) {
       margin-bottom: 10px;
     }
@@ -40,6 +37,12 @@
   }
   .#{$prefix}-popover-title {
     margin-bottom: 0 !important;
+  }
+
+  .#{$prefix}-outsideFeedbackButton {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    font-size: 12px;
   }
 
   .#{$prefix}-popover-inner {

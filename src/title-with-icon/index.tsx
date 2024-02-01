@@ -3,28 +3,30 @@ import { ConfigContext } from 'antd/es/config-provider';
 import classNames from 'classnames';
 import React, { useContext } from 'react';
 import { prefix } from '../utils/global';
-type TitleWithIconProps = {
-  title: React.ReactNode;
-  className?: string;
-  description?: React.ReactNode;
+
+interface TitleWithIconProps {
   id?: string;
-};
+  className?: string;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+}
 
 const TitleWithIcon = ({
+  id,
   className,
   title,
   description,
-  id,
 }: TitleWithIconProps) => {
   const { theme } = useContext(ConfigContext);
-  const { colorPrimary } = theme?.token || {};
+  const { colorPrimary = '#1990fe' } = theme?.token ?? {};
+
   return (
     <div
       data-testid="wrapper"
-      className={classNames(className, `${prefix}-titleSection`)}
       id={id}
+      className={classNames(className, `${prefix}-titleSection`)}
     >
-      <RightSquareFilled style={{ color: colorPrimary || '#1990fe' }} />
+      <RightSquareFilled style={{ color: colorPrimary }} />
       <span data-testid="title" className={`${prefix}-title`}>
         {title}
       </span>

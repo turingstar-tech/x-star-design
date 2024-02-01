@@ -3,6 +3,7 @@ import { ConfigContext } from 'antd/es/config-provider';
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { prefix } from '../utils/global';
+
 //hash颜色转换rgba
 function hexToRGBA(hex: string, alpha: number) {
   let r = '',
@@ -19,16 +20,20 @@ function hexToRGBA(hex: string, alpha: number) {
   }
   return `rgba(${+r},${+g},${+b},${alpha})`;
 }
+
 type XTabsItem = Exclude<TabsProps['items'], undefined> extends (infer Item)[]
   ? Item & { icon?: React.ReactNode }
-  : undefined;
+  : never;
+
 interface XTabsProps extends TabsProps {
-  items: XTabsItem[];
+  items?: XTabsItem[];
 }
+
 const XTabs = ({ items, ...props }: XTabsProps) => {
-  const { theme } = useContext(ConfigContext);
-  const { colorPrimary = '#1990fe' } = theme?.token || {};
   const colorThemeRef = useRef<HTMLDivElement>(null);
+  const { theme } = useContext(ConfigContext);
+  const { colorPrimary = '#1990fe' } = theme?.token ?? {};
+
   useEffect(() => {
     //设置主题色
     colorThemeRef.current?.style.setProperty(
@@ -39,11 +44,7 @@ const XTabs = ({ items, ...props }: XTabsProps) => {
       '--xtabs-secondary-color',
       hexToRGBA(colorPrimary, 0.15),
     );
-    return () => {
-      colorThemeRef.current?.style.removeProperty('--xtabs-primary-color');
-      colorThemeRef.current?.style.removeProperty('--xtabs-secondary-color');
-    };
-  }, []);
+  }, [colorPrimary]);
 
   const newItems = useMemo(
     () =>
@@ -58,11 +59,16 @@ const XTabs = ({ items, ...props }: XTabsProps) => {
       })),
     [items],
   );
+
   return (
     <ConfigProviderWrapper>
-      <div ref={colorThemeRef} data-testid={'xtabsColorTheme'}>
+      <div
+        data-testid={'xtabsColorTheme'}
+        ref={colorThemeRef}
+        className={`${prefix}-xtabs-wrapper`}
+      >
         <Tabs
-          className={`${prefix}-XTabs`}
+          className={`${prefix}-xtabs`}
           tabPosition={'left'}
           size="large"
           type="card"

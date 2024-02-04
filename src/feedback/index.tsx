@@ -18,7 +18,7 @@ import {
   Typography,
 } from 'antd';
 import classNames from 'classnames';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
 import { prefix } from '../utils/global';
@@ -90,6 +90,9 @@ const Feedback: React.FC<FeedbackProps> = ({
       return feedbackListBad;
     }
   };
+  useEffect(() => {
+    form.setFieldsValue({ [`${feedbackTypeKey}`]: undefined });
+  }, [choiceType]);
   const submittedContent = () => (
     <Space
       direction="vertical"
@@ -261,6 +264,7 @@ const Feedback: React.FC<FeedbackProps> = ({
               setOpen(true);
             } else {
               form.resetFields();
+              setChoiceType(undefined);
               setOpen(false);
             }
           }}

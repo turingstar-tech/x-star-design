@@ -200,7 +200,6 @@ const Feedback: React.FC<FeedbackProps> = ({
         <Form.Item
           name={feedbackTextAreaKey}
           rules={[
-            { required: true, message: t('FEEDBACK_MESSAGE_3') },
             {
               validator: (_, value) => {
                 //空格字符串校验

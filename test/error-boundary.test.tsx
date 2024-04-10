@@ -6,8 +6,8 @@ import ErrorBoundary from '../src/error-boundary'; // 模拟全局的错误处�
 console.error = () => {};
 describe('error-boundary', () => {
   test('renders with correct situation', () => {
-    render(<ErrorBoundary />);
-    expect(screen.queryByTestId('errorPage')).not.toBeInTheDocument();
+    render(<ErrorBoundary>123</ErrorBoundary>);
+    expect(screen.queryByText('123')).toBeInTheDocument();
   });
 
   test('renders with error situation', () => {
@@ -20,31 +20,56 @@ describe('error-boundary', () => {
         <ErrorComponent />
       </ErrorBoundary>,
     );
-    expect(screen.queryByTestId('errorPage')).toBeInTheDocument();
-    //重置
+    expect(screen.queryByTestId('alert')).toBeInTheDocument();
+
+    // 重置
     const resetBtn = screen.getByText('>> Retry');
     fireEvent.click(resetBtn);
-    expect(screen.queryByTestId('errorPage')).toBeInTheDocument();
-    //更改error Page
+    expect(screen.queryByTestId('alert')).toBeInTheDocument();
+
+    // 使用 fallback
     rerender(
-      <ErrorBoundary fallback={<>123</>}>
+      <ErrorBoundary fallback={<>456</>}>
         <ErrorComponent />
       </ErrorBoundary>,
     );
-    expect(screen.queryByText('123')).toBeInTheDocument();
+    expect(screen.queryByText('456')).toBeInTheDocument();
+
+    // 使用 fallbackRender
+    rerender(
+      <ErrorBoundary fallbackRender={() => <>789</>}>
+        <ErrorComponent />
+      </ErrorBoundary>,
+    );
+    expect(screen.queryByText('789')).toBeInTheDocument();
   });
 
   test('render with onError', () => {
-    // 模拟全局的错误处理函数
-    const onError = jest.fn();
     const ErrorComponent = () => {
       throw new Error('test');
     };
+
+    // 使用错误处理函数
+    const onError = jest.fn();
     render(
       <ErrorBoundary onError={onError}>
         <ErrorComponent />
       </ErrorBoundary>,
     );
     expect(onError).toHaveBeenCalled();
+  });
+
+  test('render with fetch error', () => {
+    // 抛出动态导入错误
+    const ErrorComponent = () => {
+      throw new Error('Failed to fetch dynamically imported module:');
+    };
+
+    render(
+      <ErrorBoundary>
+        <ErrorComponent />
+      </ErrorBoundary>,
+    );
+    expect(screen.queryByTestId('hint')).toBeInTheDocument();
   });
 });

@@ -58,12 +58,14 @@ export default {
     CONTACT_US: '联系我们',
   },
   ErrorPage: {
-    ERROR: '☹ 出错啦',
+    RELOAD_HINT: '监测到页面更新，正在刷新页面...',
+    ERROR: '💔 出错啦',
     ERROR_BOUNDARY_TIP_1: '不好意思，代码意外卷入了黑洞，页面发生了崩溃。',
     ERROR_BOUNDARY_TIP_2: '您可以重试访问该页面，或可以先访问其他页面。',
     RETURN_TO_HOME: '回到首页',
     RETRY: '重试',
     TECHNICAL_DEPARTMENT_CONTACT_EMAIL: '技术部联系邮箱：',
+    ERROR_MESSAGE: '错误信息：',
   },
   Feedback: {
     FEEDBACK_RESPONSE: '感谢您宝贵的意见，我们会持续改进~',

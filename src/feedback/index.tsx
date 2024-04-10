@@ -254,6 +254,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           content={content}
           title={title ?? t('FEEDBACK_ON_THE_PROBLEM')}
           placement="bottom"
+          forceRender
           trigger={['click']}
           getPopupContainer={() => mainContainer.current!}
           mouseLeaveDelay={0.4}

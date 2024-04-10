@@ -6,8 +6,16 @@
 import { ErrorBoundary } from 'x-star-design';
 import ErrorPage from './error-page';
 
+const ErrorComponent = () => {
+  throw new Error('test');
+};
+
 export default () => {
-  return <ErrorBoundary></ErrorBoundary>;
+  return (
+    <ErrorBoundary>
+      <ErrorComponent />
+    </ErrorBoundary>
+  );
 };
 ```
 

@@ -61,7 +61,8 @@ export default {
     CONTACT_US: 'Contact Us',
   },
   ErrorPage: {
-    ERROR: '☹ Error',
+    RELOAD_HINT: 'Page update detected, reloading the page...',
+    ERROR: '💔 Error',
     ERROR_BOUNDARY_TIP_1:
       'Sorry, the code accidentally got caught in a black hole and the page crashed.',
     ERROR_BOUNDARY_TIP_2:
@@ -69,6 +70,7 @@ export default {
     RETURN_TO_HOME: 'Return to home',
     RETRY: 'Retry',
     TECHNICAL_DEPARTMENT_CONTACT_EMAIL: 'Technical department contact email: ',
+    ERROR_MESSAGE: 'Error message: ',
   },
   Feedback: {
     FEEDBACK_RESPONSE:

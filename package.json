@@ -68,7 +68,7 @@
     "x-star-utils": "^0.0.9"
   },
   "devDependencies": {
-    "@ant-design/icons": "4.7.0",
+    "@ant-design/icons": "^5.3.6",
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
     "@babel/preset-react": "^7.23.3",
@@ -83,7 +83,7 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-window": "^1.8.5",
     "@umijs/lint": "^4.0.0",
-    "antd": "5.10.0",
+    "antd": "^5.16.1",
     "babel-plugin-inline-import-data-uri": "^1.0.1",
     "dumi": "^2.2.0",
     "eslint": "^8.23.0",

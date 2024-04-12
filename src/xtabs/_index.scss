@@ -3,75 +3,82 @@ $secondary-color: var(--xtabs-secondary-color);
 
 .#{$prefix}-xtabs-wrapper {
   width: 100%;
-}
 
-.#{$prefix}-xtabs {
-  &.#{$prefix}-tabs {
-    width: 100%;
-    min-height: 80vh;
-    border: 0;
-    background-color: #fff;
-    color: #9e9e9e;
-  }
+  .#{$prefix}-xtabs {
+    &.#{$prefix}-tabs {
+      width: 100%;
+      min-height: 80vh;
+      border: 0;
+      background-color: #fff;
+      color: #9e9e9e;
+    }
 
-  .#{$prefix}-tabs-nav-wrap {
-    background-color: $secondary-color;
-  }
+    .#{$prefix}-tabs-nav-wrap {
+      background-color: $secondary-color;
+    }
 
-  &.#{$prefix}-tabs-card > .#{$prefix}-tabs-nav .#{$prefix}-tabs-tab {
-    width: 130px;
-    height: 130px;
-    background-color: unset;
-    display: flex;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
-    border: 0;
-    color: #9e9e9e;
-  }
+    &.#{$prefix}-tabs-card > .#{$prefix}-tabs-nav .#{$prefix}-tabs-tab {
+      width: 130px;
+      height: 130px;
+      background-color: unset;
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      color: #9e9e9e;
+    }
 
-  &.#{$prefix}-tabs-card > .#{$prefix}-tabs-nav .#{$prefix}-tabs-tab-active {
-    border-left: 6px solid $primary-color;
-    background-color: #fff;
-    transition: all 0.1s cubic-bezier(0.645, 0.045, 0.355, 1);
-    border-radius: 0;
-  }
+    &.#{$prefix}-tabs-card > .#{$prefix}-tabs-nav .#{$prefix}-tabs-tab-active {
+      border-left: 6px solid $primary-color;
+      background-color: #fff;
+      transition: all 0.1s cubic-bezier(0.645, 0.045, 0.355, 1);
+      border-radius: 0;
+    }
 
-  &.#{$prefix}-tabs .#{$prefix}-tabs-tab:hover {
-    color: $primary-color;
-  }
+    &.#{$prefix}-tabs .#{$prefix}-tabs-tab:hover {
+      color: $primary-color;
+    }
 
-  .#{$prefix}-tabs-tab-btn {
-    text-align: center;
-    white-space: normal;
-  }
+    .#{$prefix}-tabs-tab-btn {
+      text-align: center;
+      white-space: normal;
+    }
 
-  .#{$prefix}-tabs-content-holder {
-    border-left: 0;
-  }
+    .#{$prefix}-tabs-content-holder {
+      border-left: 0;
+    }
 
-  .#{$prefix}-tabs-content {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    border: 1px solid #d7d7d7;
-    padding: 0 20px;
-  }
+    .#{$prefix}-tabs-content {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #d7d7d7;
+      padding: 0 20px;
+    }
 
-  .#{$prefix}-tabs-tabpane {
-    padding: 0 24px 24px;
-  }
+    .#{$prefix}-tabs-tabpane {
+      padding: 0 24px 24px;
+    }
 
-  .#{$prefix}-icon-img {
-    text-align: center;
-    font-size: 44px;
-    padding-left: 10px;
-  }
+    .#{$prefix}-tabs-tab-icon {
+      display: none;
+    }
 
-  .#{$prefix}-icon-title {
-    font-size: 16px;
-    display: block;
-    padding-top: 10px;
-    font-style: normal;
+    .#{$prefix}-icon-img {
+      font-size: 44px;
+
+      .anticon {
+        margin: 0;
+      }
+    }
+
+    .#{$prefix}-icon-title {
+      margin-top: -5px;
+      padding-bottom: 10px;
+      display: block;
+      font-size: 16px;
+      font-style: normal;
+    }
   }
 }

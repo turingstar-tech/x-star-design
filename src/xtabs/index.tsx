@@ -1,5 +1,6 @@
 import { Tabs, TabsProps } from 'antd';
 import { ConfigContext } from 'antd/es/config-provider';
+import classNames from 'classnames';
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { prefix } from '../utils/global';
@@ -29,7 +30,7 @@ interface XTabsProps extends TabsProps {
   items?: XTabsItem[];
 }
 
-const XTabs = ({ items, ...props }: XTabsProps) => {
+const XTabs = ({ className, items, ...props }: XTabsProps) => {
   const colorThemeRef = useRef<HTMLDivElement>(null);
   const { theme } = useContext(ConfigContext);
   const { colorPrimary = '#1990fe' } = theme?.token ?? {};
@@ -68,8 +69,8 @@ const XTabs = ({ items, ...props }: XTabsProps) => {
         className={`${prefix}-xtabs-wrapper`}
       >
         <Tabs
-          className={`${prefix}-xtabs`}
-          tabPosition={'left'}
+          className={classNames(`${prefix}-xtabs`, className)}
+          tabPosition="left"
           size="large"
           type="card"
           destroyInactiveTabPane

@@ -276,34 +276,36 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
   return (
     <ConfigProviderWrapper>
       <ResizeObserver onResize={({ width }) => setTableWidth(width)}>
-        <Table
-          {...props}
-          className={classNames(`${prefix}-virtual-table`, props.className)}
-          pagination={false}
-          components={{
-            header: {
-              /**
-               * 渲染自定义表头，修复固定列问题
-               */
-              row: ({ children, ...rest }: any) => {
-                const newChildren = [...children];
-                for (let i = 0, left = 0; i < newChildren.length; i++) {
-                  const props = newChildren[i].props;
-                  if (!props.column.fixed) {
-                    break;
+        <div>
+          <Table
+            {...props}
+            className={classNames(`${prefix}-virtual-table`, props.className)}
+            pagination={false}
+            components={{
+              header: {
+                /**
+                 * 渲染自定义表头，修复固定列问题
+                 */
+                row: ({ children, ...rest }: any) => {
+                  const newChildren = [...children];
+                  for (let i = 0, left = 0; i < newChildren.length; i++) {
+                    const props = newChildren[i].props;
+                    if (!props.column.fixed) {
+                      break;
+                    }
+                    newChildren[i] = {
+                      ...newChildren[i],
+                      props: { ...props, fixLeft: left },
+                    };
+                    left += props.column.width;
                   }
-                  newChildren[i] = {
-                    ...newChildren[i],
-                    props: { ...props, fixLeft: left },
-                  };
-                  left += props.column.width;
-                }
-                return <tr {...rest}>{newChildren}</tr>;
+                  return <tr {...rest}>{newChildren}</tr>;
+                },
               },
-            },
-            body: renderVirtualList,
-          }}
-        />
+              body: renderVirtualList,
+            }}
+          />
+        </div>
       </ResizeObserver>
     </ConfigProviderWrapper>
   );

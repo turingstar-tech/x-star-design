@@ -15,7 +15,7 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   };
-}) as (query: string) => MediaQueryList;
+}) as typeof window.matchMedia;
 
 const columns = [
   { dataIndex: 'id', title: 'ID' },

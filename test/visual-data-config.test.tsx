@@ -14,7 +14,7 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   };
-}) as (query: string) => MediaQueryList;
+}) as typeof window.matchMedia;
 jest.useFakeTimers();
 describe('renders visual data config', () => {
   test('renders width single data', async () => {

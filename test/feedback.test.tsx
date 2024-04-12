@@ -66,7 +66,7 @@ describe('Feedback', () => {
         removeEventListener: jest.fn(),
         dispatchEvent: jest.fn(),
       };
-    }) as (query: string) => MediaQueryList;
+    }) as typeof window.matchMedia;
   });
   test('The button color will be updated when click', async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });

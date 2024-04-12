@@ -17,7 +17,7 @@ describe('user avatar', () => {
         removeEventListener: jest.fn(),
         dispatchEvent: jest.fn(),
       };
-    }) as (query: string) => MediaQueryList;
+    }) as typeof window.matchMedia;
   });
   test('render correct user avatar', () => {
     const { getByTestId } = render(

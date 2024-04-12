@@ -15,7 +15,7 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   };
-}) as (query: string) => MediaQueryList;
+}) as typeof window.matchMedia;
 describe('code detail modal', () => {
   test('renders code detail correctly', () => {
     const codeData = {

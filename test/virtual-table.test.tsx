@@ -20,7 +20,7 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   };
-}) as (query: string) => MediaQueryList;
+}) as typeof window.matchMedia;
 
 describe('virtual table', () => {
   test('renders table with correct columns and data', () => {
@@ -176,12 +176,11 @@ describe('virtual table', () => {
     );
 
     // 模拟宽度
-    const table = container.querySelector(
-      `.${prefix}-virtual-table`,
-    ) as HTMLElement;
-    jest.spyOn(table, 'clientWidth', 'get').mockReturnValue(500);
+    const wrapper = container.querySelector(`.${prefix}-virtual-table`)!
+      .parentElement!;
+    jest.spyOn(wrapper, 'clientWidth', 'get').mockReturnValue(500);
     jest
-      .spyOn(table, 'getBoundingClientRect')
+      .spyOn(wrapper, 'getBoundingClientRect')
       .mockReturnValue({ width: 500 } as DOMRect);
 
     // 等待重新渲染
@@ -192,7 +191,7 @@ describe('virtual table', () => {
         }),
     );
 
-    const tableBody = container.querySelector(`.${prefix}-virtual-grid`)!;
+    const tableBody = container.querySelector(`.${prefix}-virtual-grid`);
     expect(tableBody).toHaveStyle({ width: '500px' });
 
     const tabelCell = container.querySelector(`.${prefix}-virtual-table-cell`);

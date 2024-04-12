@@ -7,7 +7,7 @@ import { XTabs } from '../src';
 
 describe('xtabs', () => {
   test('render correct xtabs', () => {
-    const { getAllByText, getByText } = render(
+    const { getAllByText } = render(
       <XTabs
         items={[
           {
@@ -28,11 +28,11 @@ describe('xtabs', () => {
 
     expect(getAllByText('Tab1')).toHaveLength(2);
     expect(getAllByText('Tab2')).toHaveLength(1);
-    expect(getByText('Icon1')).toBeInTheDocument();
-    expect(getByText('Icon2')).toBeInTheDocument();
+    expect(getAllByText('Icon1')).toHaveLength(2);
+    expect(getAllByText('Icon2')).toHaveLength(2);
   });
   test('render with theme xtabs', () => {
-    const { getAllByText, getByText, getByTestId } = render(
+    const { getAllByText, getByTestId } = render(
       <ConfigProvider
         theme={{
           token: {
@@ -59,6 +59,6 @@ describe('xtabs', () => {
         '--xtabs-primary-color',
       ),
     ).toBe('#000');
-    expect(getByText('Icon1')).toBeInTheDocument();
+    expect(getAllByText('Icon1')).toHaveLength(2);
   });
 });

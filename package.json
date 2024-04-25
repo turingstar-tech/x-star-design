@@ -78,6 +78,7 @@
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.0",
     "@testing-library/user-event": "^14.5.1",
+    "@types/randomcolor": "^0.5.9",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@types/react-window": "^1.8.5",

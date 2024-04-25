@@ -3092,6 +3092,11 @@
   dependencies:
     types-ramda "^0.29.4"
 
+"@types/randomcolor@^0.5.9":
+  version "0.5.9"
+  resolved "https://registry.npmmirror.com/@types/randomcolor/-/randomcolor-0.5.9.tgz#38ffddf734a83fe9b829a122f3d17004e6c36c94"
+  integrity sha512-k58cfpkK15AKn1m+oRd9nh5BnuiowhbyvBBdAzcddtARMr3xRzP0VlFaAKovSG6N6Knx08EicjPlOMzDejerrQ==
+
 "@types/react-dom@^18.0.0":
   version "18.2.7"
   resolved "https://registry.npmmirror.com/@types/react-dom/-/react-dom-18.2.7.tgz#67222a08c0a6ae0a0da33c3532348277c70abb63"

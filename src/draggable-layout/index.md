@@ -4,11 +4,12 @@
 
 ```jsx
 import { DraggableLayout } from 'x-star-design';
+import styles from './_example.module.scss';
 
 export default () => (
   <DraggableLayout
     style={{ border: '1px solid #000', height: 500 }}
-    dividerClassName={'x-star-design-divider-example'}
+    dividerClassName={styles.divider}
     dividerWidth="16px"
     dividerChildren="⋮"
     defaultWidth="50%"

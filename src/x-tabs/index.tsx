@@ -38,11 +38,11 @@ const XTabs = ({ className, items, ...props }: XTabsProps) => {
   useEffect(() => {
     //设置主题色
     colorThemeRef.current?.style.setProperty(
-      '--xtabs-primary-color',
+      '--x-tabs-primary-color',
       colorPrimary,
     );
     colorThemeRef.current?.style.setProperty(
-      '--xtabs-secondary-color',
+      '--x-tabs-secondary-color',
       hexToRGBA(colorPrimary, 0.15),
     );
   }, [colorPrimary]);
@@ -64,12 +64,12 @@ const XTabs = ({ className, items, ...props }: XTabsProps) => {
   return (
     <ConfigProviderWrapper>
       <div
-        data-testid={'xtabsColorTheme'}
+        data-testid="xTabsColorTheme"
         ref={colorThemeRef}
-        className={`${prefix}-xtabs-wrapper`}
+        className={`${prefix}-x-tabs-wrapper`}
       >
         <Tabs
-          className={classNames(`${prefix}-xtabs`, className)}
+          className={classNames(`${prefix}-x-tabs`, className)}
           tabPosition="left"
           size="large"
           type="card"

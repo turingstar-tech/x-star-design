@@ -59,7 +59,6 @@
     "@uiw/react-codemirror": "^4.21.9",
     "ahooks": "^3.7.8",
     "classnames": "^2.3.2",
-    "dayjs": "^1.11.10",
     "randomcolor": "^0.6.2",
     "rc-resize-observer": "^1.4.0",
     "react-error-boundary": "^4.0.13",
@@ -85,6 +84,7 @@
     "@umijs/lint": "^4.0.0",
     "antd": "^5.16.1",
     "babel-plugin-inline-import-data-uri": "^1.0.1",
+    "dayjs": "^1.11.10",
     "dumi": "^2.2.0",
     "eslint": "^8.23.0",
     "father": "^4.1.0",
@@ -103,7 +103,8 @@
   },
   "peerDependencies": {
     "@ant-design/icons": ">=4.7.0",
-    "antd": ">=4.23",
+    "antd": ">=4.23.0",
+    "dayjs": ">=1.0.0",
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
   },

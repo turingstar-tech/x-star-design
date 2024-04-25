@@ -1,5 +1,6 @@
 import React from 'react';
 import { prefix } from '../utils/global';
+
 const RainbowCat = ({ text }: { text: string }) => (
   <div className={`${prefix}-rainbowContent`}>
     <img
@@ -12,4 +13,5 @@ const RainbowCat = ({ text }: { text: string }) => (
     </div>
   </div>
 );
+
 export default RainbowCat;

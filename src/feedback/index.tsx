@@ -25,10 +25,10 @@ import { prefix } from '../utils/global';
 const { Text } = Typography;
 const { TextArea } = Input;
 
-type feedbackItem = {
+interface FeedbackItem {
   value: string | number;
   label: string;
-};
+}
 
 interface FeedbackProps {
   /**
@@ -39,11 +39,11 @@ interface FeedbackProps {
   /**
    * @description 好评 Radio.Group 的选项
    */
-  feedbackListGood?: feedbackItem[];
+  feedbackListGood?: FeedbackItem[];
   /**
    * @description 差评 Radio.Group 的选项
    */
-  feedbackListBad?: feedbackItem[];
+  feedbackListBad?: FeedbackItem[];
   /**
    * @description 选中的颜色
    */
@@ -101,7 +101,7 @@ const Feedback: React.FC<FeedbackProps> = ({
       })}
       style={{ width: '100%' }}
     >
-      <div className={classNames(`${prefix}-feedbackIcon`)}>
+      <div className={`${prefix}-feedbackIcon`}>
         <CoffeeOutlined />
       </div>
       <div>{t('FEEDBACK_RESPONSE')}</div>
@@ -134,7 +134,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             rules={[{ required: true, message: t('FEEDBACK_MESSAGE_1') }]}
           >
             <Radio.Group
-              className={classNames(`${prefix}-feedbackRadioGroup`)}
+              className={`${prefix}-feedbackRadioGroup`}
               style={{ padding: '20px 0 10px 0' }}
               data-testid="radioGroup-testId"
             >
@@ -189,7 +189,7 @@ const Feedback: React.FC<FeedbackProps> = ({
                 data-testid="feedbackTypeKey-testId"
               >
                 <Row gutter={[4, 4]} style={{ width: '100%' }}>
-                  {choiceTypeList()?.map((item: feedbackItem) => (
+                  {choiceTypeList()?.map((item: FeedbackItem) => (
                     <Col span={24} key={item.value}>
                       <Checkbox value={item.value}>{item.label}</Checkbox>
                     </Col>
@@ -226,7 +226,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         <Form.Item style={{ marginBottom: 0, marginTop: 16 }}>
           <Button
             type="primary"
-            className={classNames(`${prefix}-feedbackButton`)}
+            className={`${prefix}-feedbackButton`}
             htmlType="submit"
             onClick={() => form.setFieldValue(feedbackKey, choiceType)}
           >
@@ -238,7 +238,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   );
 
   const content = (
-    <div className={classNames(`${prefix}-feedbackContent`)}>
+    <div className={`${prefix}-feedbackContent`}>
       {submittedContent()}
       {submitFormContent()}
     </div>
@@ -246,10 +246,7 @@ const Feedback: React.FC<FeedbackProps> = ({
 
   return (
     <ConfigProviderWrapper>
-      <div
-        ref={mainContainer}
-        className={classNames(`${prefix}-feedbackContainer`)}
-      >
+      <div ref={mainContainer} className={`${prefix}-feedbackContainer`}>
         <Popover
           content={content}
           title={title ?? t('FEEDBACK_ON_THE_PROBLEM')}
@@ -277,7 +274,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           <Space size={0} data-testid="popover-testId">
             <Button
               type="link"
-              className={classNames(`${prefix}-outsideFeedbackButton`)}
+              className={`${prefix}-outsideFeedbackButton`}
               data-testid="feedback-button-like"
               icon={
                 choiceType === 2 ? (
@@ -297,7 +294,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             <Button
               type="link"
               data-testid="feedback-button-dislike"
-              className={classNames(`${prefix}-outsideFeedbackButton`)}
+              className={`${prefix}-outsideFeedbackButton`}
               icon={
                 choiceType === 1 ? (
                   <DislikeFilled style={{ color: activeColor }} />

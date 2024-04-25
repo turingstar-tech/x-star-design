@@ -1,8 +1,8 @@
 import { describe, expect, jest, test } from '@jest/globals';
-import '@testing-library/jest-dom/jest-globals';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import VisualDataConfig from '../src/visual-data-config';
+
 window.matchMedia = jest.fn().mockImplementation((query) => {
   return {
     matches: false,
@@ -15,7 +15,9 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
     dispatchEvent: jest.fn(),
   };
 }) as typeof window.matchMedia;
+
 jest.useFakeTimers();
+
 describe('renders visual data config', () => {
   test('renders width single data', async () => {
     const onConfirmMock = jest.fn();

@@ -1,9 +1,8 @@
 import { describe, expect, test } from '@jest/globals';
-import '@testing-library/jest-dom/jest-globals';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { ContactButton } from '../src';
 import xcQrCode from '../src/assets/contact-button/xcQrCode.png';
+import ContactButton from '../src/contact-button';
 
 describe('contact button', () => {
   test('render correct contact button', () => {
@@ -14,6 +13,7 @@ describe('contact button', () => {
     expect(contactButton).toBeInTheDocument();
     expect(contactButton).toHaveTextContent('联系我们');
   });
+
   test('displays popover on hover', async () => {
     //英文环境
     document.cookie = 'lang=en';

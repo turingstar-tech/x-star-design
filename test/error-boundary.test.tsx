@@ -1,9 +1,10 @@
 import { describe, expect, jest, test } from '@jest/globals';
-import '@testing-library/jest-dom/jest-globals';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import ErrorBoundary from '../src/error-boundary'; // 模拟全局的错误处理函数
+
 console.error = () => {};
+
 describe('error-boundary', () => {
   test('renders with correct situation', () => {
     render(<ErrorBoundary>123</ErrorBoundary>);

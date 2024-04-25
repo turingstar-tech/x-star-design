@@ -7,16 +7,13 @@ export interface InputNumbersValue {
   end?: string | number | null;
 }
 
-type InputNumbersValueProps = Omit<InputNumberProps, 'value' | 'onChange'> & {
+interface InputNumbersProps
+  extends Omit<InputNumberProps, 'value' | 'onChange'> {
   value?: InputNumbersValue;
   onChange?: (value: InputNumbersValue) => void;
-};
+}
 
-const InputNumbers = ({
-  value,
-  onChange,
-  ...props
-}: InputNumbersValueProps) => {
+const InputNumbers = ({ value, onChange, ...props }: InputNumbersProps) => {
   const [start, setStart] = useState<number | string | null | undefined>(
     value?.start,
   );

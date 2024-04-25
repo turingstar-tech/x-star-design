@@ -1,9 +1,9 @@
 import { describe, expect, jest, test } from '@jest/globals';
-import '@testing-library/jest-dom/jest-globals';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { LangId } from '../src';
 import CodeDetailModal from '../src/code-detail-modal';
+import { LangId } from '../src/code-mirror-wrapper/define';
+
 window.matchMedia = jest.fn().mockImplementation((query) => {
   return {
     matches: false,
@@ -16,6 +16,7 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
     dispatchEvent: jest.fn(),
   };
 }) as typeof window.matchMedia;
+
 describe('code detail modal', () => {
   test('renders code detail correctly', () => {
     const codeData = {

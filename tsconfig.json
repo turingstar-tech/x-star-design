@@ -12,5 +12,11 @@
       "x-star-design/*": ["src/*", "*"]
     }
   },
-  "include": [".dumi/**/*", ".dumirc.ts", "src/**/*", "test/**/*"]
+  "include": [
+    ".dumi/**/*",
+    ".dumirc.ts",
+    "src/**/*",
+    "test/**/*",
+    "jest-setup.ts"
+  ]
 }

@@ -1,7 +1,6 @@
 import { describe, expect, jest, test } from '@jest/globals';
-import '@testing-library/jest-dom/jest-globals';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { ColumnsType } from 'antd/es/table';
+import type { TableColumnsType } from 'antd';
 import React from 'react';
 import { prefix } from '../src/utils/global';
 import VirtualTable from '../src/virtual-table';
@@ -24,7 +23,7 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
 
 describe('virtual table', () => {
   test('renders table with correct columns and data', () => {
-    const columns: ColumnsType<any> = [
+    const columns: TableColumnsType<any> = [
       {
         title: 'name',
         key: 'name',
@@ -126,7 +125,7 @@ describe('virtual table', () => {
 
   // 测试横向滚动
   test('renders table with horizontal scrolling', () => {
-    const columns: ColumnsType<any> = [
+    const columns: TableColumnsType<any> = [
       {
         title: 'firstName',
         key: 'firstName',

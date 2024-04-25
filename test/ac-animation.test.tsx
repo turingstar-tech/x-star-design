@@ -1,5 +1,4 @@
 import { describe, expect, jest, test } from '@jest/globals';
-import '@testing-library/jest-dom/jest-globals';
 import { fireEvent, render } from '@testing-library/react';
 import 'jest-canvas-mock'; // 导入jest-canvas-mock库
 import React from 'react';

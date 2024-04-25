@@ -1,5 +1,4 @@
 import { describe, expect, jest, test } from '@jest/globals';
-import '@testing-library/jest-dom/jest-globals';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import SortTable from '../src/sort-table';

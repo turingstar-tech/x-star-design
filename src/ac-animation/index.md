@@ -1,7 +1,3 @@
----
-nav: 组件
----
-
 # AcAnimation
 
 这是 AC 反馈动效 AcAnimation

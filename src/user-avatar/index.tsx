@@ -1,12 +1,12 @@
+import type { AvatarProps } from 'antd';
 import { Avatar, Tooltip } from 'antd';
-import { AvatarProps } from 'antd/es/avatar';
 import randomColor from 'randomcolor';
 import React, { useMemo } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 
-type UserAvatarProps = AvatarProps & {
+interface UserAvatarProps extends AvatarProps {
   user: { realName?: string; userName?: string } | null | undefined;
-};
+}
 
 const UserAvatar: React.FC<UserAvatarProps> = ({ user, style, ...props }) => {
   const name =

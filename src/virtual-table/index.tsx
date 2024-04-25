@@ -1,5 +1,5 @@
+import type { TableColumnGroupType, TableColumnType, TableProps } from 'antd';
 import { Table } from 'antd';
-import type { ColumnGroupType, ColumnType, TableProps } from 'antd/es/table';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
 import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
@@ -27,9 +27,12 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
      * @returns 展平的列
      */
     const flatten = (
-      columns: (ColumnGroupType<RecordType> | ColumnType<RecordType>)[],
+      columns: (
+        | TableColumnGroupType<RecordType>
+        | TableColumnType<RecordType>
+      )[],
     ) => {
-      const result: ColumnType<RecordType>[] = [];
+      const result: TableColumnType<RecordType>[] = [];
       columns?.forEach((column) =>
         result.push(
           ...('children' in column ? flatten(column.children) : [column]),

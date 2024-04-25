@@ -7,6 +7,7 @@ import xcQrCode from '../assets/contact-button/xcQrCode.png';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
 import { prefix } from '../utils/global';
+
 const ContactButton: React.FC = () => {
   const { format: t, locale } = useLocale('ContactButton');
   const lang = locale === 'zh_CN' ? 'zh' : 'en';
@@ -40,4 +41,5 @@ const ContactButton: React.FC = () => {
     </ConfigProviderWrapper>
   );
 };
+
 export default ContactButton;

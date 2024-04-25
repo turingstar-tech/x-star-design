@@ -1,5 +1,4 @@
 import { Tooltip } from 'antd';
-import classNames from 'classnames';
 import React from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
@@ -58,18 +57,18 @@ const statusZh = new Map<string, string>([
   [Status.WrongAnswer, '答案错误'],
 ]);
 
-type SubmissionStatusProps = {
-  status: string;
+interface SubmissionStatusProps {
   className?: string;
-  onClick?: () => void;
   style?: React.CSSProperties;
-};
+  status: string;
+  onClick?: () => void;
+}
 
 const SubmissionStatus = ({
   className,
+  style,
   status,
   onClick,
-  style,
 }: SubmissionStatusProps) => {
   const { locale } = useLocale('CodeDetailModal');
 
@@ -78,11 +77,11 @@ const SubmissionStatus = ({
       <Tooltip title={locale === 'zh_CN' && statusZh?.get(status)}>
         <div
           data-testid={'submissionStatus'}
-          className={classNames(className)}
+          className={className}
           style={{
-            cursor: onClick ? 'pointer' : 'initial',
             fontWeight: 'bold',
             color: scopeColor.get(status),
+            cursor: onClick ? 'pointer' : 'unset',
             ...style,
           }}
           onClick={onClick}

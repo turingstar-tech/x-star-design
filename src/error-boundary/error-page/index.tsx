@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React from 'react';
 import type { FallbackProps } from 'react-error-boundary';
 import { useLocale } from '../../locales';
@@ -15,24 +14,24 @@ const ErrorPage = ({ error, resetErrorBoundary }: FallbackProps) => {
   }
 
   return (
-    <div className={classNames(`${prefix}-errorPage`)}>
-      <div className={classNames('hello')} />
-      <div className={classNames('ip')} />
-      <div className={classNames('planets')} />
-      <div className={classNames('content')}>
+    <div className={`${prefix}-errorPage`}>
+      <div className="hello" />
+      <div className="ip" />
+      <div className="planets" />
+      <div className="content">
         {isFetchError(error) ? (
-          <div data-testid="hint" className={classNames('hint')}>
-            <div className={classNames('description')}>
+          <div data-testid="hint" className="hint">
+            <div className="description">
               <div>{t('RELOAD_HINT')}</div>
             </div>
           </div>
         ) : (
-          <div data-testid="alert" className={classNames('alert')}>
+          <div data-testid="alert" className="alert">
             <h2 style={{ fontWeight: 'bold' }}>{t('ERROR')}</h2>
-            <div className={classNames('description')}>
+            <div className="description">
               <div>{t('ERROR_BOUNDARY_TIP_1')}</div>
               <div>{t('ERROR_BOUNDARY_TIP_2')}</div>
-              <div className={classNames('actions')}>
+              <div className="actions">
                 <a href="/">{`>> ${t('RETURN_TO_HOME')}`}</a>
                 <a onClick={resetErrorBoundary}>{`>> ${t('RETRY')}`}</a>
               </div>

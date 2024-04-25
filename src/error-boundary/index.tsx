@@ -20,3 +20,4 @@ const ErrorBoundary = ({
 };
 
 export default ErrorBoundary;
+export type { FallbackProps } from 'react-error-boundary';

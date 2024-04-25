@@ -1,8 +1,7 @@
 import { describe, expect, jest, test } from '@jest/globals';
-import '@testing-library/jest-dom/jest-globals';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { InputNumbers } from '../src';
+import InputNumbers from '../src/input-numbers';
 
 describe('input-numbers', () => {
   test('renders input numbers with correct initial values', () => {

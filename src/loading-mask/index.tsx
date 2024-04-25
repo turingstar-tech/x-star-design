@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { useDelayedMount } from 'x-star-utils';
 import { prefix } from '../utils/global';
+
 interface LoadingMaskProps {
   loading: boolean;
 }
@@ -17,10 +18,9 @@ const LoadingMask = ({ loading }: LoadingMaskProps) => {
       {mount && (
         <div
           data-testid={'loadingMask'}
-          className={classNames(
-            `${prefix}-loadingMask`,
-            `${visible ? '' : `${prefix}-loadingHide`}`,
-          )}
+          className={classNames(`${prefix}-loadingMask`, {
+            [`${prefix}-loadingHide`]: !visible,
+          })}
         >
           <div className={`${prefix}-loadingLoader`}>
             <div className={`${prefix}-loadingSquare`} />

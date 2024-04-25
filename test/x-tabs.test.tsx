@@ -1,12 +1,11 @@
 import { describe, expect, test } from '@jest/globals';
-import '@testing-library/jest-dom/jest-globals';
 import { render } from '@testing-library/react';
 import { ConfigProvider } from 'antd';
 import React from 'react';
-import { XTabs } from '../src';
+import XTabs from '../src/x-tabs';
 
-describe('xtabs', () => {
-  test('render correct xtabs', () => {
+describe('x-tabs', () => {
+  test('render correct x-tabs', () => {
     const { getAllByText } = render(
       <XTabs
         items={[
@@ -31,7 +30,8 @@ describe('xtabs', () => {
     expect(getAllByText('Icon1')).toHaveLength(2);
     expect(getAllByText('Icon2')).toHaveLength(2);
   });
-  test('render with theme xtabs', () => {
+
+  test('render with theme x-tabs', () => {
     const { getAllByText, getByTestId } = render(
       <ConfigProvider
         theme={{
@@ -55,8 +55,8 @@ describe('xtabs', () => {
     );
     expect(getAllByText('Tab1')).toHaveLength(1);
     expect(
-      getByTestId('xtabsColorTheme').style.getPropertyValue(
-        '--xtabs-primary-color',
+      getByTestId('xTabsColorTheme').style.getPropertyValue(
+        '--x-tabs-primary-color',
       ),
     ).toBe('#000');
     expect(getAllByText('Icon1')).toHaveLength(2);

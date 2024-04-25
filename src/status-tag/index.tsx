@@ -7,6 +7,7 @@ import halfCorrectSVG from '../assets/status-tag/half-correct.svg';
 import wrongSVG from '../assets/status-tag/wrong.svg';
 import { prefix } from '../utils/global';
 import { StatusTagProps, StatusTagStyle, StatusTagType } from './define';
+
 const StatusTag = ({
   shape,
   status,

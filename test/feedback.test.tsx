@@ -1,9 +1,21 @@
-import { beforeEach, describe, expect, jest, test } from '@jest/globals';
-import '@testing-library/jest-dom/jest-globals';
+import { describe, expect, jest, test } from '@jest/globals';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { Feedback } from '../src';
+import Feedback from '../src/feedback';
+
+window.matchMedia = jest.fn().mockImplementation((query) => {
+  return {
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  };
+}) as typeof window.matchMedia;
 
 jest.useFakeTimers();
 
@@ -54,20 +66,6 @@ const goodList = [
 ];
 
 describe('Feedback', () => {
-  beforeEach(() => {
-    window.matchMedia = jest.fn().mockImplementation((query) => {
-      return {
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
-      };
-    }) as typeof window.matchMedia;
-  });
   test('The button color will be updated when click', async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
     const { getByTestId } = render(
@@ -93,6 +91,7 @@ describe('Feedback', () => {
     fireEvent.click(dislikeButton);
     expect(screen.getAllByRole('img')[1]).toHaveStyle('color: #1890ff');
   });
+
   test('Form submission will be triggered when click', async () => {
     const onSubmitMock = jest.fn();
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
@@ -131,6 +130,7 @@ describe('Feedback', () => {
       feedbackTypeTest: [4, 3],
     });
   });
+
   test('form radio button will be updated when click', async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
     const { getByTestId } = render(
@@ -167,6 +167,7 @@ describe('Feedback', () => {
     expect(likeRadioButton).not.toBeChecked();
     expect(dislikeRadioButton).toBeChecked();
   });
+
   test('click the button will effect the form value', async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
     const onSubmitMock = jest.fn();

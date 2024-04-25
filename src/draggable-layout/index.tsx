@@ -143,9 +143,7 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
       <div
         data-testid="divider"
         ref={dividerRef}
-        className={
-          dividerClassName ?? classNames(`${prefix}-draggable-divider`)
-        }
+        className={dividerClassName ?? `${prefix}-draggable-divider`}
         style={{ left: `calc(${defaultWidth} - ${dividerWidth} / 2)` }}
         onMouseDown={dragStart}
       >

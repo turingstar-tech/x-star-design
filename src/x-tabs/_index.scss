@@ -1,10 +1,10 @@
-$primary-color: var(--xtabs-primary-color);
-$secondary-color: var(--xtabs-secondary-color);
+$primary-color: var(--x-tabs-primary-color);
+$secondary-color: var(--x-tabs-secondary-color);
 
-.#{$prefix}-xtabs-wrapper {
+.#{$prefix}-x-tabs-wrapper {
   width: 100%;
 
-  .#{$prefix}-xtabs {
+  .#{$prefix}-x-tabs {
     &.#{$prefix}-tabs {
       width: 100%;
       min-height: 80vh;

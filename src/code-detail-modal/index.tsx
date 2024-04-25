@@ -1,6 +1,6 @@
 import { DownloadOutlined } from '@ant-design/icons';
-import { Button, Modal, ModalProps, Table } from 'antd';
-import { ColumnsType } from 'antd/es/table';
+import type { ModalProps, TableColumnsType } from 'antd';
+import { Button, Modal, Table } from 'antd';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { getTransResult } from 'x-star-utils';
@@ -11,11 +11,13 @@ import { useLocale } from '../locales';
 import SubmissionStatus from '../submission-status';
 import { prefix } from '../utils/global';
 import { CodeDetail, langVL } from './define';
+
 interface CodeDetailModalProps extends ModalProps {
   codeData: CodeDetail;
   open: boolean;
   onCancel: () => void;
 }
+
 const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
   codeData,
   open,
@@ -25,7 +27,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
   const { format: t, locale } = useLocale('CodeDetailModal');
   const lang = locale === 'zh_CN' ? 'zh' : 'en';
   const [showCode, setShowCode] = useState(false);
-  const columns: ColumnsType<CodeDetail> = [
+  const columns: TableColumnsType<CodeDetail> = [
     {
       key: 'problemNameZh',
       align: 'center',
@@ -149,4 +151,5 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
     </ConfigProviderWrapper>
   );
 };
+
 export default CodeDetailModal;

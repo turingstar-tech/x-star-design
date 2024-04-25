@@ -1,7 +1,6 @@
 import { MenuOutlined } from '@ant-design/icons';
-import type { TableProps } from 'antd';
+import type { TableColumnsType, TableProps } from 'antd';
 import { Table } from 'antd';
-import { ColumnsType } from 'antd/es/table';
 import React, { useRef } from 'react';
 import type { SortEnd } from 'react-sortable-hoc';
 import {
@@ -27,7 +26,7 @@ const SortTable = <RecordType extends Record<string, unknown>>(
     />
   ));
 
-  const newColumns: ColumnsType<RecordType> = [
+  const newColumns: TableColumnsType<RecordType> = [
     {
       title: 'Sort',
       dataIndex: 'sort',

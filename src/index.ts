@@ -26,4 +26,4 @@ export { default as TitleWithIcon } from './title-with-icon';
 export { default as UserAvatar } from './user-avatar';
 export { default as VirtualTable } from './virtual-table';
 export { default as VisualDataConfig } from './visual-data-config';
-export { default as XTabs } from './xtabs';
+export { default as XTabs } from './x-tabs';

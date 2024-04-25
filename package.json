@@ -45,7 +45,7 @@
     ]
   },
   "dependencies": {
-    "@babel/runtime": "^7.23.1",
+    "@babel/runtime": "^7.24.1",
     "@codemirror/autocomplete": "^6.9.0",
     "@codemirror/lang-cpp": "^6.0.2",
     "@codemirror/lang-java": "^6.0.1",
@@ -68,10 +68,10 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^5.3.6",
-    "@babel/core": "^7.23.3",
-    "@babel/preset-env": "^7.23.3",
-    "@babel/preset-react": "^7.23.3",
-    "@babel/preset-typescript": "^7.23.3",
+    "@babel/core": "^7.24.1",
+    "@babel/preset-env": "^7.24.1",
+    "@babel/preset-react": "^7.24.1",
+    "@babel/preset-typescript": "^7.24.1",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@jest/globals": "^29.7.0",

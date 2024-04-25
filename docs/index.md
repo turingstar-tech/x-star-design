@@ -1,7 +1,7 @@
 ---
 hero:
-  title: X-Star-Design
-  description: 一个由信友队前端团队基于 AntDesign 5.0 开发的 React 组件库
+  title: x-star-design
+  description: 一个由信友队前端团队基于 Ant Design 5.0 开发的 React 组件库
   actions:
     - text: 立即上手
       link: /guide

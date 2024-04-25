@@ -20,7 +20,7 @@
     "prepare": "husky install && dumi setup",
     "prepublishOnly": "father doctor && npm run build",
     "start": "npm run dev",
-    "test": "TZ=UTC-8 jest"
+    "test": "TZ=Asia/Shanghai jest"
   },
   "commitlint": {
     "extends": [

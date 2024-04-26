@@ -1,9 +1,8 @@
 import { DownloadOutlined } from '@ant-design/icons';
 import type { ModalProps, TableColumnsType } from 'antd';
 import { Button, Modal, Table } from 'antd';
-import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { getTransResult } from 'x-star-utils';
+import { formatDate, getTransResult } from 'x-star-utils';
 import CodeMirrorWrapper from '../code-mirror-wrapper';
 import { Theme } from '../code-mirror-wrapper/define';
 import ConfigProviderWrapper from '../config-provider-wrapper';
@@ -107,7 +106,7 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
       dataIndex: 'submissionTime',
       render(v) {
         return v ? (
-          <span>{dayjs.unix(v).format('YYYY-MM-DD HH:mm:ss (UTCZ)')}</span>
+          <span>{formatDate(v * 1000, { lang, separator: '-' })}</span>
         ) : (
           '-'
         );

@@ -30,6 +30,7 @@ describe('code detail modal', () => {
       memory: 8536,
       submissionTime: 1696733459,
     };
+
     render(<CodeDetailModal codeData={codeData} open onCancel={() => {}} />);
 
     // 检查标题是否正确渲染
@@ -38,24 +39,23 @@ describe('code detail modal', () => {
     // 检查问题名称是否正确渲染
     expect(screen.getByText('Print right triangles')).toBeInTheDocument();
 
-    //检查语言
+    // 检查语言
     expect(screen.getByText('Python3.8')).toBeInTheDocument();
 
     // 检查状态
     expect(screen.getByText('Accepted')).toBeInTheDocument();
 
-    //检查分数
+    // 检查分数
     expect(screen.getByText('100')).toBeInTheDocument();
 
-    //检查内存
+    // 检查内存
     expect(screen.getByText('8536KB')).toBeInTheDocument();
 
-    //检查时间
-    expect(
-      screen.getByText('2023-10-08 10:50:59 (UTC+08:00)'),
-    ).toBeInTheDocument();
+    // 检查时间
+    expect(screen.getByText('Oct 08, 2023, 10:50 AM')).toBeInTheDocument();
+    expect(screen.getByText('UTC+8')).toBeInTheDocument();
 
-    //检查编译结果
+    // 检查编译结果
     expect(screen.getByText('compiled successfully')).toBeInTheDocument();
 
     // 模拟点击按钮来显示代码
@@ -94,27 +94,26 @@ describe('code detail modal', () => {
     // 检查问题名称是否正确渲染
     expect(screen.getByText('Print right triangles')).toBeInTheDocument();
 
-    //检查语言
+    // 检查语言
     expect(screen.getByText('plain')).toBeInTheDocument();
 
     // 检查状态
     expect(screen.getByText('Accepted')).toBeInTheDocument();
 
-    //检查分数
+    // 检查分数
     expect(screen.getByText('100')).toBeInTheDocument();
 
-    //检查内存
+    // 检查内存
     expect(screen.getByText('8536KB')).toBeInTheDocument();
 
-    //检查时间
-    expect(
-      screen.getByText('2023-10-08 10:50:59 (UTC+08:00)'),
-    ).toBeInTheDocument();
+    // 检查时间
+    expect(screen.getByText('Oct 08, 2023, 10:50 AM')).toBeInTheDocument();
+    expect(screen.getByText('UTC+8')).toBeInTheDocument();
 
-    //检查编译结果
+    // 检查编译结果
     expect(screen.getByText('compiled successfully')).toBeInTheDocument();
 
-    //测试下载
+    // 测试下载
     const button = screen.getByTestId('downloadBtn');
     expect(button).toHaveAttribute('href', codeData.source);
 
@@ -122,6 +121,7 @@ describe('code detail modal', () => {
     rerender(
       <CodeDetailModal codeData={codeData} open={false} onCancel={() => {}} />,
     );
+
     expect(document.querySelector('.x-star-design-modal-wrap')).toHaveStyle({
       display: 'none',
     });
@@ -129,6 +129,7 @@ describe('code detail modal', () => {
 
   test('renders code detail with zh and extremely situation', () => {
     document.cookie = 'lang=zh';
+
     const codeData = {
       problemNameZh: '打印直角三角形',
       problemNameEn: 'Print right triangles',
@@ -140,10 +141,13 @@ describe('code detail modal', () => {
       memory: 8536,
       submissionTime: 0,
     };
+
     render(<CodeDetailModal codeData={codeData} open onCancel={() => {}} />);
-    //测试中文环境
+
+    // 测试中文环境
     expect(screen.getByText('代码详情')).toBeInTheDocument();
-    //测试分数和时间
+
+    // 测试分数和时间
     expect(screen.getAllByRole('cell')[3]).toHaveTextContent('-');
     expect(screen.getAllByRole('cell')[6]).toHaveTextContent('-');
   });

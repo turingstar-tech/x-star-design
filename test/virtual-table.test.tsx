@@ -160,7 +160,9 @@ describe('virtual table', () => {
     fireEvent.scroll(tableBody);
 
     // 有阴影
-    expect(tabelCell).toHaveStyle({ boxShadow: '4px 0px 4px #f0f0f0' });
+    expect(tabelCell).toHaveStyle({
+      boxShadow: '4px 0px 8px -2px rgba(5, 5, 5, 0.06)',
+    });
   });
 
   // 测试宽度改变

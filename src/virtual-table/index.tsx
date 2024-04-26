@@ -1,8 +1,10 @@
+import { useContext } from '@rc-component/context';
 import type { TableColumnGroupType, TableColumnType, TableProps } from 'antd';
 import { Table } from 'antd';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
-import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import TableContext from 'rc-table/es/context/TableContext';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { GridChildComponentProps } from 'react-window';
 import { VariableSizeGrid as Grid } from 'react-window';
 import ConfigProviderWrapper from '../config-provider-wrapper';
@@ -15,7 +17,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
   /**
    * 表格实际宽度
    */
-  const [tableWidth, setTableWidth] = useState(100);
+  const [tableWidth, setTableWidth] = useState(0);
 
   /**
    * 自动设置列宽
@@ -31,13 +33,17 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
         | TableColumnGroupType<RecordType>
         | TableColumnType<RecordType>
       )[],
+      parentKey = 'key',
     ) => {
       const result: TableColumnType<RecordType>[] = [];
-      columns?.forEach((column) =>
+      columns.forEach((column, index) => {
+        const mergedKey = `${parentKey}-${index}`;
         result.push(
-          ...('children' in column ? flatten(column.children) : [column]),
-        ),
-      );
+          ...('children' in column
+            ? flatten(column.children, mergedKey)
+            : [{ key: mergedKey, ...column }]),
+        );
+      });
       return result;
     };
 
@@ -66,14 +72,16 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
            */
           return {
             ...column,
-            width: ((column.width as number) / totalWidth) * tableWidth,
+            width: Math.floor(
+              ((column.width as number) / totalWidth) * tableWidth,
+            ),
           };
         }
         return column;
       }
       return {
         ...column,
-        width: tableWidth / widthColumnCount,
+        width: Math.floor(tableWidth / widthColumnCount),
       };
     });
   }, [columns, tableWidth]);
@@ -106,7 +114,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
       shouldForceUpdate: true,
     });
 
-  useEffect(() => resetVirtualGrid, [mergedColumns]);
+  useEffect(() => resetVirtualGrid, [tableWidth]);
 
   /**
    * 起始渲染行
@@ -114,12 +122,24 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
   const startRowIndex = useRef(0);
 
   /**
-   * 渲染虚拟列表
+   * 虚拟列表
    */
-  const renderVirtualList: NonNullable<
-    TableProps<RecordType>['components']
-  >['body'] = (rawData, { ref, onScroll }) => {
-    (ref as any).current = connectObject;
+  const VirtualList = ({
+    rawData,
+    info: { scrollbarSize, ref, onScroll },
+  }: {
+    rawData: readonly RecordType[];
+    info: any;
+  }) => {
+    const { onColumnResize } = useContext(TableContext, ['onColumnResize']);
+
+    useEffect(() => {
+      mergedColumns.forEach((column) =>
+        onColumnResize!(column.key!, column.width as number),
+      );
+    }, []);
+
+    ref.current = connectObject;
 
     /**
      * 内容实际高度
@@ -150,10 +170,6 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
           {...props}
           className={classNames(
             `${prefix}-virtual-table-cell`,
-            {
-              'virtual-table-cell-last':
-                columnIndex === mergedColumns.length - 1,
-            },
             props?.className,
           )}
           style={{
@@ -171,7 +187,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
                   rowIndex,
                 )
               : column.dataIndex !== undefined &&
-                record[column.dataIndex as string]) as ReactNode
+                record[column.dataIndex as string]) as React.ReactNode
           }
         </div>
       );
@@ -207,7 +223,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
                     startRowIndex.current,
                     startRowIndex.current +
                       Math.ceil((scroll!.y as number) / 54) +
-                      2,
+                      8,
                   )
                   .map((_, rowIndex) => (
                     <Cell
@@ -225,7 +241,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
                         boxShadow:
                           gridRef.current?.state.scrollLeft > 0 &&
                           columnIndex === fixedColumns.length - 1
-                            ? '4px 0px 4px #f0f0f0'
+                            ? '4px 0px 8px -2px rgba(5, 5, 5, 0.06)'
                             : undefined,
                         transition: 'box-shadow 0.3s',
                       }}
@@ -255,10 +271,9 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
         columnCount={mergedColumns.length}
         columnWidth={(index) => {
           const { width } = mergedColumns[index];
-          return totalHeight > (scroll!.y! as number) &&
-            columns &&
-            index === columns.length - 1
-            ? (width as number) - 7
+          return totalHeight > (scroll!.y as number) &&
+            index === mergedColumns.length - 1
+            ? (width as number) - scrollbarSize
             : (width as number);
         }}
         height={scroll!.y as number}
@@ -267,7 +282,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
         width={tableWidth}
         innerElementType={innerElementType}
         onScroll={({ scrollTop, scrollLeft }) => {
-          startRowIndex.current = Math.max(Math.floor(scrollTop / 54) - 1, 0);
+          startRowIndex.current = Math.max(Math.floor(scrollTop / 54) - 4, 0);
           onScroll({ scrollLeft });
         }}
       >
@@ -285,27 +300,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
             className={classNames(`${prefix}-virtual-table`, props.className)}
             pagination={false}
             components={{
-              header: {
-                /**
-                 * 渲染自定义表头，修复固定列问题
-                 */
-                row: ({ children, ...rest }: any) => {
-                  const newChildren = [...children];
-                  for (let i = 0, left = 0; i < newChildren.length; i++) {
-                    const props = newChildren[i].props;
-                    if (!props.column.fixed) {
-                      break;
-                    }
-                    newChildren[i] = {
-                      ...newChildren[i],
-                      props: { ...props, fixLeft: left },
-                    };
-                    left += props.column.width;
-                  }
-                  return <tr {...rest}>{newChildren}</tr>;
-                },
-              },
-              body: renderVirtualList,
+              body: (data, info) => <VirtualList rawData={data} info={info} />,
             }}
           />
         </div>

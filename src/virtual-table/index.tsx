@@ -294,7 +294,7 @@ const VirtualTable = <RecordType extends Record<string, unknown>>(
   return (
     <ConfigProviderWrapper>
       <ResizeObserver onResize={({ width }) => setTableWidth(width)}>
-        <div>
+        <div style={{ width: '100%' }}>
           <Table
             {...props}
             className={classNames(`${prefix}-virtual-table`, props.className)}

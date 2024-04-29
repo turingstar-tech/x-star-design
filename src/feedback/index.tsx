@@ -49,6 +49,10 @@ interface FeedbackProps {
    */
   activeColor: string;
   /**
+   * @description icon的类名
+   */
+  iconClassName?: string;
+  /**
    * @description 提交的回调
    */
   onSubmit?: (value: any) => void;
@@ -75,6 +79,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   feedbackKey,
   feedbackTypeKey,
   feedbackTextAreaKey,
+  iconClassName = '',
   //form
 }) => {
   const [form] = Form.useForm();
@@ -278,9 +283,12 @@ const Feedback: React.FC<FeedbackProps> = ({
               data-testid="feedback-button-like"
               icon={
                 choiceType === 2 ? (
-                  <LikeFilled style={{ color: activeColor }} />
+                  <LikeFilled
+                    className={iconClassName}
+                    style={{ color: activeColor }}
+                  />
                 ) : (
-                  <LikeOutlined />
+                  <LikeOutlined className={iconClassName} />
                 )
               }
               onClick={(e) => {
@@ -297,9 +305,12 @@ const Feedback: React.FC<FeedbackProps> = ({
               className={`${prefix}-outsideFeedbackButton`}
               icon={
                 choiceType === 1 ? (
-                  <DislikeFilled style={{ color: activeColor }} />
+                  <DislikeFilled
+                    className={iconClassName}
+                    style={{ color: activeColor }}
+                  />
                 ) : (
-                  <DislikeOutlined />
+                  <DislikeOutlined className={iconClassName} />
                 )
               }
               onClick={(e) => {

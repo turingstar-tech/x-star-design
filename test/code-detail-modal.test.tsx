@@ -52,7 +52,7 @@ describe('code detail modal', () => {
     expect(screen.getByText('8536KB')).toBeInTheDocument();
 
     // 检查时间
-    expect(screen.getByText('Oct 08, 2023, 10:50 AM')).toBeInTheDocument();
+    expect(screen.getByText('Oct 08, 2023, 10:50:59 AM')).toBeInTheDocument();
     expect(screen.getByText('UTC+8')).toBeInTheDocument();
 
     // 检查编译结果
@@ -107,7 +107,7 @@ describe('code detail modal', () => {
     expect(screen.getByText('8536KB')).toBeInTheDocument();
 
     // 检查时间
-    expect(screen.getByText('Oct 08, 2023, 10:50 AM')).toBeInTheDocument();
+    expect(screen.getByText('Oct 08, 2023, 10:50:59 AM')).toBeInTheDocument();
     expect(screen.getByText('UTC+8')).toBeInTheDocument();
 
     // 检查编译结果

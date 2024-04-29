@@ -3,8 +3,9 @@
 这是反馈组件
 
 ```jsx
-import { Feedback } from 'x-star-design';
 import { Form } from 'antd';
+import { Feedback } from 'x-star-design';
+import styles from './_example.module.scss';
 
 export default () => {
   const badList = [
@@ -56,10 +57,10 @@ export default () => {
   return (
     <Feedback
       title={'你的评价'}
-      activeColor="#1890ff"
       feedbackListGood={goodList}
-      iconClassName="feed-back-icon"
       feedbackListBad={badList}
+      activeColor="#1890ff"
+      iconClassName={styles.icon}
       onSubmit={(value) => console.log(value)}
       feedbackKey={'feedbackTest'}
       feedbackTypeKey={'feedbackTypeTest'}

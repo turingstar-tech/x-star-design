@@ -75,11 +75,11 @@ const Feedback: React.FC<FeedbackProps> = ({
   feedbackListGood,
   feedbackListBad,
   activeColor,
+  iconClassName,
   onSubmit,
   feedbackKey,
   feedbackTypeKey,
   feedbackTextAreaKey,
-  iconClassName = '',
   //form
 }) => {
   const [form] = Form.useForm();

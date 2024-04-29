@@ -7,7 +7,7 @@ import { SubmissionStatus } from 'x-star-design';
 import { Space } from 'antd';
 
 export default () => (
-  <Space>
+  <Space wrap>
     <SubmissionStatus status={'Accepted'} onClick={() => alert('点击了AC')} />
     <SubmissionStatus status={'Wrong Answer'} />
     <SubmissionStatus status={'Time Limit Exceeded'} />

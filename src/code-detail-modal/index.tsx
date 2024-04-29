@@ -105,11 +105,9 @@ const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
       title: t('Submission_Time'),
       dataIndex: 'submissionTime',
       render(v) {
-        return v ? (
-          <span>{formatDate(v * 1000, { lang, separator: '-' })}</span>
-        ) : (
-          '-'
-        );
+        return v
+          ? formatDate(v * 1000, { lang, separator: '-', showSecond: true })
+          : '-';
       },
     },
   ];

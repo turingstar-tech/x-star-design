@@ -63,7 +63,7 @@
     "react-error-boundary": "^4.0.13",
     "react-sortable-hoc": "^2.0.0",
     "react-window": "^1.8.9",
-    "x-star-utils": "^0.0.12"
+    "x-star-utils": "^0.0.13"
   },
   "devDependencies": {
     "@ant-design/icons": "^5.3.6",
@@ -83,9 +83,9 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-window": "^1.8.5",
     "@umijs/lint": "^4.0.0",
-    "antd": "^5.16.4",
+    "antd": "^5.16.5",
     "babel-plugin-inline-import-data-uri": "^1.0.1",
-    "dayjs": "^1.11.10",
+    "dayjs": "^1.11.11",
     "dumi": "^2.2.0",
     "eslint": "^8.23.0",
     "father": "^4.1.0",

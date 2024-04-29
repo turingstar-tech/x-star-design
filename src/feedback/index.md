@@ -58,6 +58,7 @@ export default () => {
       title={'你的评价'}
       activeColor="#1890ff"
       feedbackListGood={goodList}
+      iconClassName="feed-back-icon"
       feedbackListBad={badList}
       onSubmit={(value) => console.log(value)}
       feedbackKey={'feedbackTest'}

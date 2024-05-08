@@ -4,7 +4,7 @@ $secondary-color: var(--x-tabs-secondary-color);
 .#{$prefix}-x-tabs-wrapper {
   width: 100%;
 
-  .#{$prefix}-x-tabs {
+  > .#{$prefix}-x-tabs {
     &.#{$prefix}-tabs {
       width: 100%;
       min-height: 80vh;

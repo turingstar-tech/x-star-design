@@ -8,7 +8,10 @@ import { UserAvatar } from 'x-star-design';
 export default () => {
   return (
     <>
-      <UserAvatar user={{ userName: 'XYD & X-Camp' }} />
+      <UserAvatar
+        user={{ userName: 'XYD & X-Camp' }}
+        tooltipProps={{ placement: 'left' }}
+      />
       <UserAvatar
         user={{ userName: 'XYD & X-Camp', realName: '信友队和X-Camp' }}
       />

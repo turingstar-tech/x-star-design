@@ -83,7 +83,7 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-window": "^1.8.5",
     "@umijs/lint": "^4.0.0",
-    "antd": "^5.16.5",
+    "antd": "^5.17.0",
     "babel-plugin-inline-import-data-uri": "^1.0.1",
     "dayjs": "^1.11.11",
     "dumi": "^2.2.0",

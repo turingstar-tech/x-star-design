@@ -9,31 +9,27 @@ interface UserAvatarProps extends AvatarProps {
   tooltipProps?: TooltipProps;
 }
 
-const UserAvatar: React.FC<UserAvatarProps> = ({
+const UserAvatar = ({
   user,
-  style,
   tooltipProps,
+  style,
   ...props
-}) => {
+}: UserAvatarProps) => {
   const name =
-    [user?.realName, user?.userName]?.filter(Boolean)?.join(' | ') || 'Unknown';
+    [user?.realName, user?.userName].filter(Boolean).join(' | ') || 'Unknown';
+
   const background = useMemo(
-    () =>
-      randomColor({
-        luminosity: 'bright',
-        seed: name,
-        format: 'rgb',
-      }),
+    () => randomColor({ luminosity: 'bright', seed: name, format: 'rgb' }),
     [name],
   );
 
   return (
     <ConfigProviderWrapper>
-      <Tooltip title={user?.realName ?? 'Unknown'} {...tooltipProps}>
+      <Tooltip title={user?.realName || 'Unknown'} {...tooltipProps}>
         <Avatar
+          data-testid="userAvatar"
           style={{ background, ...style }}
           {...props}
-          data-testid={'userAvatar'}
         >
           {name[0].toUpperCase()}
         </Avatar>

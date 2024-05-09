@@ -66,7 +66,7 @@
     "x-star-utils": "^0.0.18"
   },
   "devDependencies": {
-    "@ant-design/icons": "^5.3.6",
+    "@ant-design/icons": "^5.3.7",
     "@babel/core": "^7.24.1",
     "@babel/preset-env": "^7.24.1",
     "@babel/preset-react": "^7.24.1",
@@ -98,7 +98,7 @@
     "prettier-plugin-organize-imports": "^3.0.0",
     "prettier-plugin-packagejson": "^2.2.18",
     "rc-resize-observer": "^1.4.0",
-    "rc-table": "^7.45.4",
+    "rc-table": "^7.45.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "stylelint": "^14.9.1",

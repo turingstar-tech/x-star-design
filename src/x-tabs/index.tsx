@@ -54,7 +54,7 @@ const XTabs = ({ className, items, ...props }: XTabsProps) => {
         label: (
           <div className={`${prefix}-icon-pane`}>
             <div className={`${prefix}-icon-img`}>{item.icon}</div>
-            <em className={`${prefix}-icon-title`}>{item?.label}</em>
+            <span className={`${prefix}-icon-title`}>{item.label}</span>
           </div>
         ),
       })),

@@ -46,12 +46,17 @@ $secondary-color: var(--x-tabs-secondary-color);
           > .#{$prefix}-icon-pane {
             > .#{$prefix}-icon-img {
               font-size: 44px;
+
+              > .anticon {
+                margin-right: 0;
+              }
             }
 
             > .#{$prefix}-icon-title {
               margin-top: -5px;
               padding-bottom: 10px;
               display: block;
+              white-space: normal;
             }
           }
         }

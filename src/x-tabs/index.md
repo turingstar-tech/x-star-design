@@ -9,7 +9,7 @@ import { ConfigProvider } from 'antd';
 export default () => {
   const items = [
     {
-      label: 'Tab1',
+      label: 'Tab1 is Tab1 not Tab2',
       key: 'Tab1',
       icon: <NodeIndexOutlined />,
       children: 'Tab1',

@@ -1,4 +1,6 @@
-import { InputNumber, InputNumberProps, Space } from 'antd';
+import { useUpdateEffect } from 'ahooks';
+import type { InputNumberProps } from 'antd';
+import { InputNumber, Space } from 'antd';
 import React, { useState } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 
@@ -8,41 +10,53 @@ export interface InputNumbersValue {
 }
 
 interface InputNumbersProps
-  extends Omit<InputNumberProps, 'value' | 'onChange'> {
+  extends Omit<InputNumberProps, 'defaultValue' | 'value' | 'onChange'> {
+  defaultValue?: InputNumbersValue;
   value?: InputNumbersValue;
   onChange?: (value: InputNumbersValue) => void;
 }
 
-const InputNumbers = ({ value, onChange, ...props }: InputNumbersProps) => {
-  const [start, setStart] = useState<number | string | null | undefined>(
-    value?.start,
-  );
-  const [end, setEnd] = useState<number | string | null | undefined>(
-    value?.end,
-  );
+const InputNumbers = ({
+  defaultValue,
+  value,
+  onChange,
+  ...props
+}: InputNumbersProps) => {
+  const [innerValue, setInnerValue] = useState(value ?? defaultValue);
+
+  const mergedValue = value !== undefined ? value : innerValue;
+
+  useUpdateEffect(() => {
+    if (value === undefined) {
+      setInnerValue(undefined);
+    }
+  }, [value]);
+
   return (
     <ConfigProviderWrapper>
-      <Space split={'-'} align="center">
+      <Space align="center" split="-">
         <InputNumber
           data-testid="start-input"
           min={0}
           max={100}
           {...props}
-          value={value?.start || start}
+          value={mergedValue ? mergedValue.start ?? '' : undefined}
           onChange={(v) => {
-            setStart(v);
-            onChange?.({ start: v, end });
+            const newValue = { ...mergedValue, start: v };
+            setInnerValue(newValue);
+            onChange?.(newValue);
           }}
         />
         <InputNumber
           data-testid="end-input"
           min={0}
           max={100}
-          value={value?.end || end}
           {...props}
+          value={mergedValue ? mergedValue.end ?? '' : undefined}
           onChange={(v) => {
-            setEnd(v);
-            onChange?.({ start, end: v });
+            const newValue = { ...innerValue, end: v };
+            setInnerValue(newValue);
+            onChange?.(newValue);
           }}
         />
       </Space>

@@ -19,10 +19,11 @@ describe('input-numbers', () => {
     const { getByTestId } = render(<InputNumbers onChange={handleChange} />);
     const startInput = getByTestId('start-input');
     const endInput = getByTestId('end-input');
-    //更改start
+
+    // 更改 start
     fireEvent.change(startInput, { target: { value: 10 } });
     expect(handleChange).toHaveBeenCalledWith({ start: 10, end: undefined });
-    //更改end
+    // 更改 end
     fireEvent.change(endInput, { target: { value: 20 } });
     expect(handleChange).toHaveBeenCalledWith({ start: 10, end: 20 });
   });
@@ -37,5 +38,37 @@ describe('input-numbers', () => {
     expect(handleChange).not.toHaveBeenCalled();
     fireEvent.change(endInput, { target: { value: null } });
     expect(handleChange).not.toHaveBeenCalled();
+  });
+
+  test('handles value changes between non-undefined and undefined correctly', () => {
+    const { getByTestId, rerender } = render(
+      <InputNumbers value={{ start: 10, end: 20 }} />,
+    );
+    const startInput = getByTestId('start-input') as HTMLInputElement;
+    const endInput = getByTestId('end-input') as HTMLInputElement;
+    expect(startInput.value).toBe('10');
+    expect(endInput.value).toBe('20');
+
+    rerender(<InputNumbers />);
+    expect(startInput.value).toBe('');
+    expect(endInput.value).toBe('');
+
+    rerender(<InputNumbers value={{ start: 20, end: 10 }} />);
+    expect(startInput.value).toBe('20');
+    expect(endInput.value).toBe('10');
+  });
+
+  test('handles undefined start or end correctly', () => {
+    const { getByTestId, rerender } = render(
+      <InputNumbers value={{ end: 20 }} />,
+    );
+    const startInput = getByTestId('start-input') as HTMLInputElement;
+    const endInput = getByTestId('end-input') as HTMLInputElement;
+    expect(startInput.value).toBe('');
+    expect(endInput.value).toBe('20');
+
+    rerender(<InputNumbers value={{ start: 10 }} />);
+    expect(startInput.value).toBe('10');
+    expect(endInput.value).toBe('');
   });
 });

@@ -2,7 +2,6 @@ $primary-color: var(--anchor-x-tabs-primary-color);
 $secondary-color: var(--anchor-x-tabs-secondary-color);
 .#{$prefix}-anchorXTabs {
   width: 120px;
-  height: 100%;
   background-color: $secondary-color;
   .#{$prefix}-anchorItem {
     display: flex;

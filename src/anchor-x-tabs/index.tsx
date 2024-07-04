@@ -1,11 +1,12 @@
 import { useInViewport, useMemoizedFn } from 'ahooks';
 import { BasicTarget } from 'ahooks/lib/utils/domTarget';
+import { Flex } from 'antd';
 import { ConfigContext } from 'antd/es/config-provider';
 import classNames from 'classnames';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import ConfigProviderWrapper from '../config-provider-wrapper';
 import { hexToRGBA, prefix } from '../utils/global';
 interface AnchorTabProps {
+  children?: React.ReactNode;
   items: {
     key: string;
     title: string;
@@ -13,16 +14,18 @@ interface AnchorTabProps {
   }[];
   stickyOffset?: number;
   rootMargin?: string;
-  target: BasicTarget | BasicTarget[];
 }
+
 const AnchorXTabs = ({
+  children,
   items,
   rootMargin,
-  target,
   stickyOffset,
 }: AnchorTabProps) => {
   const [activeItem, setActiveItem] = useState('');
+  const [target, setTarget] = useState<BasicTarget | BasicTarget[]>();
   const colorThemeRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useContext(ConfigContext);
   const { colorPrimary = '#1990fe' } = theme?.token ?? {};
 
@@ -36,10 +39,12 @@ const AnchorXTabs = ({
       '--anchor-x-tabs-secondary-color',
       hexToRGBA(colorPrimary, 0.15),
     );
+
+    setTarget(Array.from(containerRef.current!.children));
   }, [colorPrimary]);
 
   const callback = useMemoizedFn((entry) => {
-    const id = entry.target.getAttribute('id') || '';
+    const id = entry.target.getAttribute('id');
     if (entry.isIntersecting) {
       setActiveItem(id);
     }
@@ -57,9 +62,8 @@ const AnchorXTabs = ({
     callback,
     rootMargin,
   });
-
   return (
-    <ConfigProviderWrapper>
+    <Flex gap={30} data-testid={'container'}>
       <div className={`${prefix}-anchorXTabs`} ref={colorThemeRef}>
         <div style={{ position: 'sticky', top: stickyOffset ?? 64 }}>
           {items.map((item) => {
@@ -71,6 +75,7 @@ const AnchorXTabs = ({
               <div
                 className={anchorItemClassName}
                 onClick={() => handleMenuClick(item.key)}
+                data-testid={`anchor-x-tabs-${item.key}`}
                 key={item.key}
               >
                 <div className={`${prefix}-icon`}>{item.icon}</div>
@@ -80,7 +85,8 @@ const AnchorXTabs = ({
           })}
         </div>
       </div>
-    </ConfigProviderWrapper>
+      <div ref={containerRef}>{children}</div>
+    </Flex>
   );
 };
 

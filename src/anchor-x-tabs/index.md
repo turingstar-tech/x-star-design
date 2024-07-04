@@ -5,14 +5,12 @@
 ```jsx
 import { AnchorXTabs } from 'x-star-design';
 import { Button, ConfigProvider, Flex } from 'antd';
-import { useEffect, useState } from 'react';
 import { ClockCircleFilled, ProfileFilled } from '@ant-design/icons';
 export default () => {
-  const [target, setTarget] = useState([]);
   const items = [
     {
       key: 'item1',
-      title: 'item111111111111111111',
+      title: 'item1',
       icon: <ProfileFilled />,
     },
     {
@@ -21,11 +19,6 @@ export default () => {
       icon: <ClockCircleFilled />,
     },
   ];
-  useEffect(() => {
-    const elements = document.getElementsByClassName('anchor-x-tab');
-    const arrayElements = Array.from(elements);
-    setTarget(arrayElements);
-  }, []);
 
   return (
     <ConfigProvider
@@ -35,27 +28,14 @@ export default () => {
         },
       }}
     >
-      <Flex gap={30}>
-        <div>
-          <AnchorXTabs
-            items={items}
-            target={target}
-            rootMargin={'-800px 0px -800px 0px'}
-          />
+      <AnchorXTabs items={items} rootMargin={'-800px 0px -800px 0px'}>
+        <div id={'item1'}>
+          {Array.from({ length: 50 }, (_, i) => i + 1).map((item) => (
+            <div>{item}</div>
+          ))}
         </div>
-        <div>
-          <div
-            id={'item1'}
-            className={'anchor-x-tab'}
-            style={{ height: '100vh' }}
-          >
-            {'item1'}
-          </div>
-          <div id={'item2'} className={'anchor-x-tab'}>
-            {'item2'}
-          </div>
-        </div>
-      </Flex>
+        <div id={'item2'}>{'item2'}</div>
+      </AnchorXTabs>
     </ConfigProvider>
   );
 };

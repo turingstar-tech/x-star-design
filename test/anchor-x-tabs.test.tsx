@@ -91,7 +91,7 @@ describe('anchor-x-tabs', () => {
         right: 0,
       } as DOMRect);
     });
-    Element.prototype.scrollIntoView = scrollIntoViewMock;
+    content2.scrollIntoView = scrollIntoViewMock;
 
     // 触发点击事件
     fireEvent.click(screen.getByTestId('anchor-x-tabs-tab2'));

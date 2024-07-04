@@ -1,6 +1,6 @@
 # Aliplayer
 
-这是 阿里云播放器 Aliplayer
+这是阿里云播放器 Aliplayer
 
 ```jsx
 import { Aliplayer, AliplayerConfig } from 'x-star-design';

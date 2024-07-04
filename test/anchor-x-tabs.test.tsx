@@ -15,9 +15,20 @@ window.IntersectionObserver = mockIntersectionObserver as any;
 
 // 定义测试数据
 const items = [
-  { key: 'tab1', title: 'Tab 1', icon: <span>Icon 1</span> },
-  { key: 'tab2', title: 'Tab 2', icon: <span>Icon 2</span> },
+  {
+    key: 'tab1',
+    title: 'Tab 1',
+    icon: <span>Icon 1</span>,
+    children: 'Content 1',
+  },
+  {
+    key: 'tab2',
+    title: 'Tab 2',
+    icon: <span>Icon 2</span>,
+    children: 'Content 2',
+  },
 ];
+
 function isInViewport(element: HTMLElement) {
   const rect = element.getBoundingClientRect();
   return (
@@ -28,18 +39,15 @@ function isInViewport(element: HTMLElement) {
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
 }
-//window 宽高 1024*768
+
+// window 宽高 1024*768
 describe('anchor-x-tabs', () => {
   test('renders the component with items', async () => {
-    render(
-      <AnchorXTabs items={items}>
-        <div id="tab1">Content 1</div>
-        <div id="tab2">Content 2</div>
-      </AnchorXTabs>,
-    );
+    render(<AnchorXTabs items={items} />);
     const content1 = screen.getByText('Content 1');
     const content2 = screen.getByText('Content 2');
-    //模拟两个content的位置 一个在视口内，一个在视口外
+
+    // 模拟两个 content 的位置，一个在视口内，一个在视口外
     jest
       .spyOn(content1, 'getBoundingClientRect')
       .mockReturnValue({ top: 100, left: 0, bottom: 200, right: 0 } as DOMRect);
@@ -49,7 +57,8 @@ describe('anchor-x-tabs', () => {
       bottom: 1000,
       right: 0,
     } as DOMRect);
-    //useInViewport
+
+    // useInViewport
     const calls = mockIntersectionObserver.mock.calls;
     const [observerCallback] = calls[calls.length - 1] as any;
     act(() => {
@@ -66,29 +75,32 @@ describe('anchor-x-tabs', () => {
     expect(screen.getByTestId('anchor-x-tabs-tab2')).not.toHaveClass(
       'x-star-design-active',
     );
-    //点击第二个tab模拟两个content的位置
-    jest
-      .spyOn(content1, 'getBoundingClientRect')
-      .mockReturnValue({ top: -100, left: 0, bottom: 0, right: 0 } as DOMRect);
-    jest.spyOn(content2, 'getBoundingClientRect').mockReturnValue({
-      top: 500,
-      left: 0,
-      bottom: 700,
-      right: 0,
-    } as DOMRect);
 
-    const scrollIntoViewMock = jest.fn();
+    // 点击第二个 tab 模拟两个 content 的位置
+    const scrollIntoViewMock = jest.fn(() => {
+      jest.spyOn(content1, 'getBoundingClientRect').mockReturnValue({
+        top: -100,
+        left: 0,
+        bottom: 0,
+        right: 0,
+      } as DOMRect);
+      jest.spyOn(content2, 'getBoundingClientRect').mockReturnValue({
+        top: 500,
+        left: 0,
+        bottom: 700,
+        right: 0,
+      } as DOMRect);
+    });
     Element.prototype.scrollIntoView = scrollIntoViewMock;
-    //触发点击事件
-    fireEvent.click(screen.getByTestId('anchor-x-tabs-tab2'));
 
+    // 触发点击事件
+    fireEvent.click(screen.getByTestId('anchor-x-tabs-tab2'));
     act(() => {
       observerCallback([
         { target: content1, isIntersecting: isInViewport(content1) },
         { target: content2, isIntersecting: isInViewport(content2) },
       ]);
     });
-
     expect(isInViewport(content1)).toBe(false);
     expect(isInViewport(content2)).toBe(true);
     expect(screen.getByTestId('anchor-x-tabs-tab1')).not.toHaveClass(
@@ -97,8 +109,5 @@ describe('anchor-x-tabs', () => {
     expect(screen.getByTestId('anchor-x-tabs-tab2')).toHaveClass(
       'x-star-design-active',
     );
-  });
-  test('render the component with null target', async () => {
-    render(<AnchorXTabs items={items} />);
   });
 });

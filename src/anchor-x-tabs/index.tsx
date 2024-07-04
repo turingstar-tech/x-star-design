@@ -1,52 +1,51 @@
 import { useInViewport, useMemoizedFn } from 'ahooks';
-import { BasicTarget } from 'ahooks/lib/utils/domTarget';
 import { Flex } from 'antd';
 import { ConfigContext } from 'antd/es/config-provider';
 import classNames from 'classnames';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { hexToRGBA, prefix } from '../utils/global';
+import { hexToRgb } from '../utils/color';
+import { prefix } from '../utils/global';
+
 interface AnchorTabProps {
-  children?: React.ReactNode;
   items: {
     key: string;
     title: string;
     icon: React.ReactNode;
+    children: React.ReactNode;
   }[];
-  stickyOffset?: number;
   rootMargin?: string;
+  stickyOffset?: number;
 }
 
 const AnchorXTabs = ({
-  children,
   items,
-  rootMargin,
-  stickyOffset,
+  rootMargin = '-50% 0px -50% 0px',
+  stickyOffset = 64,
 }: AnchorTabProps) => {
-  const [activeItem, setActiveItem] = useState('');
-  const [target, setTarget] = useState<BasicTarget | BasicTarget[]>();
   const colorThemeRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useContext(ConfigContext);
   const { colorPrimary = '#1990fe' } = theme?.token ?? {};
 
   useEffect(() => {
-    //设置主题色
+    // 设置主题色
     colorThemeRef.current?.style.setProperty(
       '--anchor-x-tabs-primary-color',
       colorPrimary,
     );
     colorThemeRef.current?.style.setProperty(
       '--anchor-x-tabs-secondary-color',
-      hexToRGBA(colorPrimary, 0.15),
+      hexToRgb(colorPrimary, 0.15),
     );
-
-    setTarget(Array.from(containerRef.current!.children));
   }, [colorPrimary]);
 
-  const callback = useMemoizedFn((entry) => {
-    const id = entry.target.getAttribute('id');
+  const targetRef = useRef<HTMLDivElement[]>([]);
+
+  const [activeItem, setActiveItem] = useState('');
+
+  const callback = useMemoizedFn((entry: IntersectionObserverEntry) => {
     if (entry.isIntersecting) {
-      setActiveItem(id);
+      const key = entry.target.getAttribute('id')!;
+      setActiveItem(key);
     }
   });
 
@@ -58,25 +57,24 @@ const AnchorXTabs = ({
       inline: 'nearest',
     });
   };
-  useInViewport(target, {
-    callback,
-    rootMargin,
-  });
+
+  useInViewport(targetRef.current, { callback, rootMargin });
+
   return (
-    <Flex gap={30} data-testid={'container'}>
-      <div className={`${prefix}-anchorXTabs`} ref={colorThemeRef}>
-        <div style={{ position: 'sticky', top: stickyOffset ?? 64 }}>
+    <Flex data-testid="container" gap={30}>
+      <div ref={colorThemeRef} className={`${prefix}-anchor-x-tabs`}>
+        <div style={{ position: 'sticky', top: stickyOffset }}>
           {items.map((item) => {
-            const isActive = activeItem === item.key;
-            const anchorItemClassName = classNames(`${prefix}-anchorItem`, {
+            const isActive = item.key === activeItem;
+            const anchorItemClassName = classNames(`${prefix}-anchor-item`, {
               [`${prefix}-active`]: isActive,
             });
             return (
               <div
-                className={anchorItemClassName}
-                onClick={() => handleMenuClick(item.key)}
                 data-testid={`anchor-x-tabs-${item.key}`}
                 key={item.key}
+                className={anchorItemClassName}
+                onClick={() => handleMenuClick(item.key)}
               >
                 <div className={`${prefix}-icon`}>{item.icon}</div>
                 <div className={`${prefix}-title`}>{item.title}</div>
@@ -85,7 +83,17 @@ const AnchorXTabs = ({
           })}
         </div>
       </div>
-      <div ref={containerRef}>{children}</div>
+      <div>
+        {items.map((item, index) => (
+          <div
+            key={item.key}
+            ref={(el: HTMLDivElement) => (targetRef.current[index] = el)}
+            id={item.key}
+          >
+            {item.children}
+          </div>
+        ))}
+      </div>
     </Flex>
   );
 };

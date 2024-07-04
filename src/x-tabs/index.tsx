@@ -3,7 +3,8 @@ import { ConfigContext } from 'antd/es/config-provider';
 import classNames from 'classnames';
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
-import { hexToRGBA, prefix } from '../utils/global';
+import { hexToRgb } from '../utils/color';
+import { prefix } from '../utils/global';
 
 type XTabsItem = Exclude<TabsProps['items'], undefined> extends (infer Item)[]
   ? Item & { icon?: React.ReactNode }
@@ -19,14 +20,14 @@ const XTabs = ({ className, items, ...props }: XTabsProps) => {
   const { colorPrimary = '#1990fe' } = theme?.token ?? {};
 
   useEffect(() => {
-    //设置主题色
+    // 设置主题色
     colorThemeRef.current?.style.setProperty(
       '--x-tabs-primary-color',
       colorPrimary,
     );
     colorThemeRef.current?.style.setProperty(
       '--x-tabs-secondary-color',
-      hexToRGBA(colorPrimary, 0.15),
+      hexToRgb(colorPrimary, 0.15),
     );
   }, [colorPrimary]);
 

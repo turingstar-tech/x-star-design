@@ -3,23 +3,26 @@
 这是带有固钉的 AnchorXTabs
 
 ```jsx
-import { AnchorXTabs } from 'x-star-design';
-import { Button, ConfigProvider, Flex } from 'antd';
 import { ClockCircleFilled, ProfileFilled } from '@ant-design/icons';
+import { ConfigProvider } from 'antd';
+import { AnchorXTabs } from 'x-star-design';
 export default () => {
   const items = [
     {
       key: 'item1',
       title: 'item1',
       icon: <ProfileFilled />,
+      children: Array.from({ length: 50 }, (_, i) => i + 1).map((item) => (
+        <div>{item}</div>
+      )),
     },
     {
       key: 'item2',
       title: 'item2',
       icon: <ClockCircleFilled />,
+      children: 'item2',
     },
   ];
-
   return (
     <ConfigProvider
       theme={{
@@ -28,14 +31,7 @@ export default () => {
         },
       }}
     >
-      <AnchorXTabs items={items} rootMargin={'-800px 0px -800px 0px'}>
-        <div id={'item1'}>
-          {Array.from({ length: 50 }, (_, i) => i + 1).map((item) => (
-            <div>{item}</div>
-          ))}
-        </div>
-        <div id={'item2'}>{'item2'}</div>
-      </AnchorXTabs>
+      <AnchorXTabs stickyOffset={76} items={items} />
     </ConfigProvider>
   );
 };

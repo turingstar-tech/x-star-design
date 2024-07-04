@@ -1,20 +1,22 @@
 $primary-color: var(--anchor-x-tabs-primary-color);
 $secondary-color: var(--anchor-x-tabs-secondary-color);
-.#{$prefix}-anchorXTabs {
+
+.#{$prefix}-anchor-x-tabs {
   width: 120px;
   background-color: $secondary-color;
-  .#{$prefix}-anchorItem {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 14px;
+
+  .#{$prefix}-anchor-item {
     min-height: 120px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     word-break: break-all;
     font-size: 16px;
     font-weight: 500;
     color: #a5a5a5;
     background-color: transparent;
-    flex-direction: column;
     cursor: pointer;
 
     .#{$prefix}-icon {
@@ -28,9 +30,9 @@ $secondary-color: var(--anchor-x-tabs-secondary-color);
   }
 
   .#{$prefix}-active {
-    border-left: 6px solid $primary-color;
     color: $primary-color;
     background-color: #fff;
+    border-left: 6px solid $primary-color;
 
     .#{$prefix}-icon {
       font-size: 40px;

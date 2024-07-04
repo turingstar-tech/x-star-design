@@ -57,7 +57,7 @@
     "@uiw/codemirror-theme-okaidia": "^4.21.9",
     "@uiw/codemirror-theme-vscode": "^4.21.9",
     "@uiw/react-codemirror": "^4.21.9",
-    "ahooks": "^3.7.8",
+    "ahooks": "^3.8.0",
     "classnames": "^2.3.2",
     "randomcolor": "^0.6.2",
     "react-error-boundary": "^4.0.13",

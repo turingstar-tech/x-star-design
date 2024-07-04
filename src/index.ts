@@ -1,6 +1,7 @@
 export { default as AcAnimation } from './ac-animation';
 export { default as Aliplayer } from './aliplayer';
 export type { AliplayerConfig, AliplayerInstance } from './aliplayer';
+export { default as AnchorXTabs } from './anchor-x-tabs';
 export { default as CodeDetailModal } from './code-detail-modal';
 export { default as CodeMirrorWrapper } from './code-mirror-wrapper';
 export { LangId, Language, Theme } from './code-mirror-wrapper/define';

@@ -25,19 +25,19 @@ export enum Status {
 }
 
 const statusColor = new Map<string, string>([
-  [Status.Abnormal, '#9256f5'],
+  [Status.Abnormal, '#8b008b'],
   [Status.Accepted, '#00ad07'],
   [Status.CheckerJudgementFailed, '#ff4500'],
   [Status.CompileError, '#f5b13d'],
   [Status.DangerousSyscall, '#ff69b4'],
   [Status.Hidden, '#808080'],
-  [Status.JudgeFailed, '#ff0000'],
-  [Status.JudgementFailed, '#ff6347'],
+  [Status.JudgeFailed, '#2f4f4f'],
+  [Status.JudgementFailed, '#4b0082'],
   [Status.MemoryLimitExceeded, '#9256f5'],
   [Status.OutputLimitExceeded, '#4682b4'],
   [Status.Pending, '#ffa500'],
   [Status.PresentationError, '#1e90ff'],
-  [Status.Running, '#ffa500'],
+  [Status.Running, '#ff8c00'],
   [Status.RuntimeError, '#f56ed3'],
   [Status.Skipped, '#20b2aa'],
   [Status.SpecialJudgeError, '#ffd700'],

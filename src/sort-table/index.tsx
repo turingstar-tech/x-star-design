@@ -1,30 +1,110 @@
-import { MenuOutlined } from '@ant-design/icons';
-import type { TableColumnsType, TableProps } from 'antd';
-import { Table } from 'antd';
-import React, { useRef } from 'react';
-import type { SortEnd } from 'react-sortable-hoc';
+import { HolderOutlined } from '@ant-design/icons';
+import type { DragEndEvent } from '@dnd-kit/core';
+import { DndContext } from '@dnd-kit/core';
+import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import {
-  SortableContainer,
-  SortableElement,
-  SortableHandle,
-} from 'react-sortable-hoc';
-import ConfigProviderWrapper from '../config-provider-wrapper';
+  SortableContext,
+  arrayMove,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import type { TableColumnsType, TableProps } from 'antd';
+import { Button, Table } from 'antd';
+import React, { useContext, useMemo, useState } from 'react';
 
-interface SortTableProps<RecordType> extends TableProps<RecordType> {
+interface RowContextProps {
+  setActivatorNodeRef?: (element: HTMLElement | null) => void;
+  listeners?: SyntheticListenerMap;
+}
+
+const RowContext = React.createContext<RowContextProps>({});
+
+const DragHandle: React.FC = () => {
+  const { setActivatorNodeRef, listeners } = useContext(RowContext);
+
+  return (
+    <Button
+      type="text"
+      size="small"
+      icon={<HolderOutlined />}
+      style={{ cursor: 'move' }}
+      ref={setActivatorNodeRef}
+      data-testid="dragHandle"
+      {...listeners}
+    />
+  );
+};
+
+interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
+  'data-row-key': string;
+}
+
+const Row: React.FC<RowProps> = (props) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    setActivatorNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: props['data-row-key'] });
+
+  const style: React.CSSProperties = {
+    ...props.style,
+    transform: CSS.Translate.toString(transform),
+    transition,
+    ...(isDragging ? { position: 'relative', zIndex: 9999 } : {}),
+  };
+
+  const contextValue = useMemo<RowContextProps>(
+    () => ({ setActivatorNodeRef, listeners }),
+    [setActivatorNodeRef, listeners],
+  );
+
+  return (
+    <RowContext.Provider value={contextValue}>
+      <tr
+        {...props}
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        data-testid="tableRow"
+      />
+    </RowContext.Provider>
+  );
+};
+
+export interface NewSortableTableProps<RecordType>
+  extends TableProps<RecordType> {
   onSortEnd?: (newDataSource: RecordType[]) => void;
 }
 
-const SortTable = <RecordType extends Record<string, unknown>>(
-  props: SortTableProps<RecordType>,
+const SortTable = <RecordType extends Record<string, any>>(
+  props: NewSortableTableProps<RecordType>,
 ) => {
   const { dataSource = [], rowKey, onSortEnd: onEnd } = props;
+  const [newDataSource, setNewDataSource] = useState<RecordType[]>([
+    ...dataSource,
+  ]);
 
-  const DragHandle = SortableHandle(() => (
-    <MenuOutlined
-      style={{ cursor: 'grab', color: '#999' }}
-      data-testid="dragHandle"
-    />
-  ));
+  const onDragEnd = ({ active, over }: DragEndEvent) => {
+    if (active.id !== over?.id) {
+      setNewDataSource((prevState) => {
+        const activeIndex = prevState.findIndex(
+          (record) => record.key === active?.id,
+        );
+        const overIndex = prevState.findIndex(
+          (record) => record.key === over?.id,
+        );
+        const result = arrayMove(prevState, activeIndex, overIndex);
+        onEnd?.(result);
+        return result;
+      });
+    }
+  };
 
   const newColumns: TableColumnsType<RecordType> = [
     {
@@ -33,72 +113,26 @@ const SortTable = <RecordType extends Record<string, unknown>>(
       align: 'center',
       width: 80,
       ellipsis: true,
-      className: 'drag-visible',
       render: () => <DragHandle />,
     },
     ...(props.columns ?? []),
   ];
 
-  const SortableItem = SortableElement(
-    (props: React.HTMLAttributes<HTMLTableRowElement>) => (
-      <tr {...props} data-testid="tableRow" />
-    ),
-  );
-
-  const bodyRef = useRef<HTMLTableSectionElement>(null);
-
-  const SortableBody = SortableContainer(
-    (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
-      <tbody {...props} ref={bodyRef} />
-    ),
-  );
-
-  const onSortEnd = (sortEnd: SortEnd) => {
-    const { oldIndex, newIndex } = sortEnd;
-    if (oldIndex !== newIndex) {
-      const newData = [...dataSource]; // 创建 dataSource 的副本
-      // 移除旧位置的元素，并将其插入新位置
-      const [removedItem] = newData.splice(oldIndex, 1);
-      newData.splice(newIndex, 0, removedItem);
-      const filteredData = newData.filter((el) => !!el); // 过滤掉空元素
-      onEnd?.(filteredData);
-    }
-  };
-
-  const DraggableContainer = (props: any) => (
-    <SortableBody
-      {...props}
-      useDragHandle
-      disableAutoscroll
-      helperClass="row-dragging"
-      helperContainer={() => bodyRef.current!}
-      onSortEnd={onSortEnd}
-    />
-  );
-
-  const DraggableBodyRow = (props: any) => {
-    // function findIndex base on Table rowKey props and should always be a right array index
-    const index = dataSource.findIndex(
-      (x) => typeof rowKey === 'string' && x[rowKey] === props['data-row-key'],
-    );
-    return <SortableItem {...props} key={index} index={index} />;
-  };
-
   return (
-    <ConfigProviderWrapper>
-      <Table
-        {...props}
-        columns={newColumns}
-        dataSource={dataSource}
-        rowKey={rowKey}
-        components={{
-          body: {
-            wrapper: DraggableContainer,
-            row: DraggableBodyRow,
-          },
-        }}
-      />
-    </ConfigProviderWrapper>
+    <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
+      <SortableContext
+        items={newDataSource.map((i) => i.key)}
+        strategy={verticalListSortingStrategy}
+      >
+        <Table
+          {...props}
+          columns={newColumns}
+          rowKey={rowKey}
+          components={{ body: { row: Row } }}
+          dataSource={newDataSource}
+        />
+      </SortableContext>
+    </DndContext>
   );
 };
 

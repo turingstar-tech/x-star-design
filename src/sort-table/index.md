@@ -11,8 +11,7 @@ export default () => {
     { title: 'B', dataIndex: 'key', width: 150, key: 'B' },
     { title: 'C', dataIndex: 'key', width: 150, key: 'C' },
   ];
-  const data = Array.from({ length: 10 }, (_, key) => ({ key }));
-  console.log(data);
+  const data = Array.from({ length: 10 }, (_, key) => ({ key: key + 100 }));
   return (
     <SortTable
       columns={columns}

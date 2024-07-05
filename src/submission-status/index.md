@@ -3,22 +3,32 @@
 这是代码提交结果状态组件
 
 ```jsx
-import { SubmissionStatus } from 'x-star-design';
+import { LocaleProvider, SubmissionStatus } from 'x-star-design';
 import { Space } from 'antd';
 
 export default () => (
-  <Space wrap>
-    <SubmissionStatus status={'Accepted'} onClick={() => alert('点击了AC')} />
-    <SubmissionStatus status={'Wrong Answer'} />
-    <SubmissionStatus status={'Time Limit Exceeded'} />
-    <SubmissionStatus status={'Compile Error'} />
-    <SubmissionStatus status={'Runtime Error'} />
-    <SubmissionStatus status={'Memory Limit Exceeded'} />
-    <SubmissionStatus status={'Running'} />
-    <SubmissionStatus status={'Testing'} />
-    <SubmissionStatus status={'Abnormal'} />
-    <SubmissionStatus status={'Pending'} />
-  </Space>
+  <LocaleProvider locale="zh_CN">
+    <Space wrap>
+      <SubmissionStatus status="Abnormal" />
+      <SubmissionStatus status="Accepted" onClick={() => alert('点击了AC')} />
+      <SubmissionStatus status="Checker Judgement Failed" />
+      <SubmissionStatus status="Compile Error" />
+      <SubmissionStatus status="Dangerous Syscall" />
+      <SubmissionStatus status="Hidden" />
+      <SubmissionStatus status="Judge Failed" />
+      <SubmissionStatus status="Judgement Failed" />
+      <SubmissionStatus status="Memory Limit Exceeded" />
+      <SubmissionStatus status="Output Limit Exceeded" />
+      <SubmissionStatus status="Pending" />
+      <SubmissionStatus status="Presentation Error" />
+      <SubmissionStatus status="Running" />
+      <SubmissionStatus status="Runtime Error" />
+      <SubmissionStatus status="Skipped" />
+      <SubmissionStatus status="Special Judge Error" />
+      <SubmissionStatus status="Time Limit Exceeded" />
+      <SubmissionStatus status="Wrong Answer" />
+    </Space>
+  </LocaleProvider>
 );
 ```
 

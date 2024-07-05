@@ -9,6 +9,7 @@ export enum Status {
   CheckerJudgementFailed = 'Checker Judgement Failed',
   CompileError = 'Compile Error',
   DangerousSyscall = 'Dangerous Syscall',
+  Hidden = 'Hidden',
   JudgeFailed = 'Judge Failed',
   JudgementFailed = 'Judgement Failed',
   MemoryLimitExceeded = 'Memory Limit Exceeded',
@@ -20,40 +21,48 @@ export enum Status {
   Skipped = 'Skipped',
   SpecialJudgeError = 'Special Judge Error',
   TimeLimitExceeded = 'Time Limit Exceeded',
-  Unknown = 'Unknown',
   WrongAnswer = 'Wrong Answer',
 }
 
-const scopeColor = new Map<string, string>([
+const statusColor = new Map<string, string>([
+  [Status.Abnormal, '#9256f5'],
   [Status.Accepted, '#00ad07'],
-  [Status.WrongAnswer, '#f44336'],
-  [Status.TimeLimitExceeded, '#56A2F5'],
-  [Status.CompileError, '#F5B13D'],
-  [Status.RuntimeError, '#F56ED3'],
-  [Status.MemoryLimitExceeded, '#9256F5'],
-  [Status.Running, '#ffa500'],
-  [Status.Abnormal, '#9256F5'],
+  [Status.CheckerJudgementFailed, '#ff4500'],
+  [Status.CompileError, '#f5b13d'],
+  [Status.DangerousSyscall, '#ff69b4'],
+  [Status.Hidden, '#808080'],
+  [Status.JudgeFailed, '#ff0000'],
+  [Status.JudgementFailed, '#ff6347'],
+  [Status.MemoryLimitExceeded, '#9256f5'],
+  [Status.OutputLimitExceeded, '#4682b4'],
   [Status.Pending, '#ffa500'],
+  [Status.PresentationError, '#1e90ff'],
+  [Status.Running, '#ffa500'],
+  [Status.RuntimeError, '#f56ed3'],
+  [Status.Skipped, '#20b2aa'],
+  [Status.SpecialJudgeError, '#ffd700'],
+  [Status.TimeLimitExceeded, '#56a2f5'],
+  [Status.WrongAnswer, '#f44336'],
 ]);
 
 const statusZh = new Map<string, string>([
-  [Status.Abnormal, ''],
-  [Status.Accepted, '答案正确'],
-  [Status.CheckerJudgementFailed, '代码检查失败'],
+  [Status.Abnormal, '评测异常'],
+  [Status.Accepted, '评测通过'],
+  [Status.CheckerJudgementFailed, '检查器评测失败'],
   [Status.CompileError, '编译错误'],
   [Status.DangerousSyscall, '危险系统调用'],
+  [Status.Hidden, '结果隐藏'],
   [Status.JudgeFailed, '评测失败'],
   [Status.JudgementFailed, '评测失败'],
   [Status.MemoryLimitExceeded, '内存超限'],
   [Status.OutputLimitExceeded, '输出超限'],
-  [Status.Pending, '排队'],
-  [Status.PresentationError, '段错误'],
-  [Status.Running, '运行'],
-  [Status.RuntimeError, '运行出错'],
-  [Status.Skipped, '忽略'],
-  [Status.SpecialJudgeError, ''],
-  [Status.TimeLimitExceeded, '运行超时'],
-  [Status.Unknown, 'OI赛制提交结果不可见'],
+  [Status.Pending, '等待'],
+  [Status.PresentationError, '格式错误'],
+  [Status.Running, '运行中'],
+  [Status.RuntimeError, '运行时错误'],
+  [Status.Skipped, '跳过'],
+  [Status.SpecialJudgeError, '特判器错误'],
+  [Status.TimeLimitExceeded, '时间超限'],
   [Status.WrongAnswer, '答案错误'],
 ]);
 
@@ -74,13 +83,13 @@ const SubmissionStatus = ({
 
   return (
     <ConfigProviderWrapper>
-      <Tooltip title={locale === 'zh_CN' && statusZh?.get(status)}>
+      <Tooltip title={locale === 'zh_CN' && statusZh.get(status)}>
         <div
           data-testid={'submissionStatus'}
           className={className}
           style={{
             fontWeight: 'bold',
-            color: scopeColor.get(status),
+            color: statusColor.get(status),
             cursor: onClick ? 'pointer' : 'unset',
             ...style,
           }}

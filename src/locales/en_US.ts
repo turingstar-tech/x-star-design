@@ -87,4 +87,7 @@ export default {
     FEEDBACK_MESSAGE_2: 'Please check the feedback type',
     FEEDBACK_MESSAGE_3: 'Please fill in the feedback content',
   },
+  MicroApp: {
+    Loading: 'Loading',
+  },
 } as const;

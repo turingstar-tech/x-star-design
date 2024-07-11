@@ -13,7 +13,6 @@ export default () => {
   return (
     <MicroApp
       key={'/test'}
-      style={{ position: 'relative', zIndex: 0 }}
       name="xinyoudui"
       entry={'https://www.xinyoudui.com'}
       pathname={'/test'}

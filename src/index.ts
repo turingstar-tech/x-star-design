@@ -13,6 +13,7 @@ export { default as Feedback } from './feedback';
 export { default as InputNumbers } from './input-numbers';
 export { default as LoadingMask } from './loading-mask';
 export { LocaleProvider } from './locales';
+export { default as MicroApp } from './micro-app';
 export { default as RainbowCat } from './rainbow-cat';
 export { default as SortTable } from './sort-table';
 export { default as StatusTag } from './status-tag';

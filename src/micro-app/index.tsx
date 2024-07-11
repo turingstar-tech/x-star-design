@@ -1,40 +1,43 @@
 import { initGlobalState, loadMicroApp } from 'qiankun';
-import React, { CSSProperties, useEffect, useMemo } from 'react';
+import type { CSSProperties } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import { randomString } from 'x-star-utils';
 import { useLocale } from '../locales';
 import RainbowCat from '../rainbow-cat';
+
 interface MicroAppProps {
+  className?: string;
+  style?: CSSProperties;
   name: string;
   entry: string;
   pathname: string;
-  className?: string;
-  style?: CSSProperties;
-  microProps?: Record<string, any>;
+  microProps?: Record<string, unknown>;
 }
 
 const MicroApp = ({
+  className,
+  style,
   name,
   entry,
   pathname,
   microProps,
-  className,
-  style,
 }: MicroAppProps) => {
-  const { format: t } = useLocale('MicroApp');
   const microAppId = useMemo(() => `microapp-${randomString(8)}`, []);
+
+  const { format: t } = useLocale('MicroApp');
+
   useEffect(() => {
-    // 创建一个loading元素
+    // 创建一个加载元素
     let rainbowCatContainer: HTMLDivElement | null = null;
 
     const showLoading = async () => {
-      // 在加载子应用之前，创建一个容器并挂载RainbowCat组件
+      // 加载子应用前，创建一个容器并挂载 RainbowCat 组件
       rainbowCatContainer = document.createElement('div');
       rainbowCatContainer.style.position = 'absolute';
-      rainbowCatContainer.style.zIndex = '99999';
-      rainbowCatContainer.style.width = '100%';
-      rainbowCatContainer.style.left = '0';
       rainbowCatContainer.style.top = '0';
+      rainbowCatContainer.style.left = '0';
+      rainbowCatContainer.style.width = '100%';
       const microAppContainer = document.getElementById(microAppId)!;
       microAppContainer.append(rainbowCatContainer);
       ReactDOM.createRoot(rainbowCatContainer).render(
@@ -43,8 +46,8 @@ const MicroApp = ({
     };
 
     const hideLoading = async () => {
-      // 在挂载子应用之前，卸载RainbowCat组件
-      rainbowCatContainer!.remove();
+      // 挂载子应用前，卸载 RainbowCat 组件
+      rainbowCatContainer?.remove();
       rainbowCatContainer = null;
     };
 
@@ -54,35 +57,31 @@ const MicroApp = ({
         name,
         entry,
         container: `#${microAppId}`,
-        props: {
-          pathname,
-          ...microProps,
-        },
+        props: { pathname, ...microProps },
       },
       undefined,
-      {
-        beforeLoad: showLoading,
-        beforeMount: hideLoading,
-      },
+      { beforeLoad: showLoading, beforeMount: hideLoading },
     );
     return () => {
       microApp.unmount();
     };
   }, []);
+
   return (
     <div
       id={microAppId}
-      style={{ textAlign: 'start', minHeight: 600, ...style }}
       className={className}
+      style={{ position: 'relative', minHeight: 600, ...style }}
     />
   );
 };
+
 MicroApp.useGlobalState = ({
   lang,
   setLang,
 }: {
   lang: 'zh' | 'en';
-  setLang: (value?: 'zh' | 'en' | undefined) => void;
+  setLang: (lang?: 'zh' | 'en') => void;
 }) => {
   const actions = useMemo(() => initGlobalState({ lang }), []); // 初始化全局状态
 
@@ -97,4 +96,5 @@ MicroApp.useGlobalState = ({
     actions.setGlobalState({ lang }); // 主应用切换语言时同步给微应用
   }, [lang]);
 };
+
 export default MicroApp;

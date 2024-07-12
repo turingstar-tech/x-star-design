@@ -80,4 +80,7 @@ export default {
     FEEDBACK_MESSAGE_2: '请勾选反馈类型',
     FEEDBACK_MESSAGE_3: '请填写反馈内容',
   },
+  MicroApp: {
+    Loading: '加载中',
+  },
 } as const;

@@ -1,6 +1,7 @@
 export { default as AcAnimation } from './ac-animation';
 export { default as Aliplayer } from './aliplayer';
 export type { AliplayerConfig, AliplayerInstance } from './aliplayer';
+export { default as AnchorXTabs } from './anchor-x-tabs';
 export { default as CodeDetailModal } from './code-detail-modal';
 export { default as CodeMirrorWrapper } from './code-mirror-wrapper';
 export { LangId, Language, Theme } from './code-mirror-wrapper/define';
@@ -12,6 +13,7 @@ export { default as Feedback } from './feedback';
 export { default as InputNumbers } from './input-numbers';
 export { default as LoadingMask } from './loading-mask';
 export { LocaleProvider } from './locales';
+export { default as MicroApp } from './micro-app';
 export { default as RainbowCat } from './rainbow-cat';
 export { default as SortTable } from './sort-table';
 export { default as StatusTag } from './status-tag';

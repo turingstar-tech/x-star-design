@@ -1,6 +1,6 @@
 # XTabs
 
-这是二次封装的 tabs 组件
+这是二次封装的 Tabs 组件
 
 ```jsx
 import { XTabs } from 'x-star-design';

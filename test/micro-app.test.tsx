@@ -1,5 +1,5 @@
 import { describe, expect, jest, test } from '@jest/globals';
-import { render, renderHook, screen } from '@testing-library/react';
+import { act, render, renderHook, screen } from '@testing-library/react';
 import React from 'react';
 import MicroApp from '../src/micro-app';
 jest.mock('qiankun', () => ({
@@ -37,9 +37,13 @@ describe('micro app', () => {
         pathname={'/test'}
       />,
     );
-    await jest.advanceTimersByTimeAsync(2000);
+    await act(async () => {
+      await jest.advanceTimersByTimeAsync(2000);
+    });
     expect(screen.queryByText('Loading')).toBeInTheDocument();
-    await jest.advanceTimersByTimeAsync(2000);
+    await act(async () => {
+      await jest.advanceTimersByTimeAsync(2000);
+    });
     expect(screen.queryByText('Loading')).not.toBeInTheDocument();
   });
   test('global state lang call', async () => {

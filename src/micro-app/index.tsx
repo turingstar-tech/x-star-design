@@ -37,12 +37,8 @@ const MicroApp = ({
       },
       undefined,
       {
-        beforeLoad: async () => {
-          setLoading(true);
-        },
-        beforeMount: async () => {
-          setLoading(false);
-        },
+        beforeLoad: async () => setLoading(true),
+        beforeMount: async () => setLoading(false),
       },
     );
     return () => {

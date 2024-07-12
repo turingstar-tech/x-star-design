@@ -12,10 +12,10 @@ import { MicroApp } from 'x-star-design';
 export default () => {
   return (
     <MicroApp
-      key={'/test'}
+      key="/test"
       name="xinyoudui"
-      entry={'https://www.xinyoudui.com'}
-      pathname={'/test'}
+      entry="https://www.xinyoudui.com"
+      pathname="/test"
     />
   );
 };

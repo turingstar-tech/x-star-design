@@ -1,5 +1,4 @@
 import { useInViewport, useMemoizedFn } from 'ahooks';
-import { Flex } from 'antd';
 import { ConfigContext } from 'antd/es/config-provider';
 import classNames from 'classnames';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -61,7 +60,10 @@ const AnchorXTabs = ({
   useInViewport(targetRef.current, { callback, rootMargin });
 
   return (
-    <Flex data-testid="container" gap={30}>
+    <div
+      data-testid="container"
+      className={`${prefix}-anchor-x-tabs-container`}
+    >
       <div ref={colorThemeRef} className={`${prefix}-anchor-x-tabs`}>
         <div style={{ position: 'sticky', top: stickyOffset }}>
           {items.map((item) => {
@@ -94,7 +96,7 @@ const AnchorXTabs = ({
           </div>
         ))}
       </div>
-    </Flex>
+    </div>
   );
 };
 

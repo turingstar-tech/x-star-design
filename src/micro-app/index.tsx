@@ -1,7 +1,6 @@
 import { initGlobalState, loadMicroApp } from 'qiankun';
 import type { CSSProperties } from 'react';
-import React, { useEffect, useMemo } from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { useEffect, useMemo, useState } from 'react';
 import { randomString } from 'x-star-utils';
 import { useLocale } from '../locales';
 import RainbowCat from '../rainbow-cat';
@@ -24,33 +23,10 @@ const MicroApp = ({
   microProps,
 }: MicroAppProps) => {
   const microAppId = useMemo(() => `microapp-${randomString(8)}`, []);
-
+  const [loading, setLoading] = useState(false);
   const { format: t } = useLocale('MicroApp');
 
   useEffect(() => {
-    // 创建一个加载元素
-    let rainbowCatContainer: HTMLDivElement | null = null;
-
-    const showLoading = async () => {
-      // 加载子应用前，创建一个容器并挂载 RainbowCat 组件
-      rainbowCatContainer = document.createElement('div');
-      rainbowCatContainer.style.position = 'absolute';
-      rainbowCatContainer.style.top = '0';
-      rainbowCatContainer.style.left = '0';
-      rainbowCatContainer.style.width = '100%';
-      const microAppContainer = document.getElementById(microAppId)!;
-      microAppContainer.append(rainbowCatContainer);
-      ReactDOM.createRoot(rainbowCatContainer).render(
-        <RainbowCat text={t('Loading')} />,
-      );
-    };
-
-    const hideLoading = async () => {
-      // 挂载子应用前，卸载 RainbowCat 组件
-      rainbowCatContainer?.remove();
-      rainbowCatContainer = null;
-    };
-
     // 启动 qiankun
     const microApp = loadMicroApp(
       {
@@ -60,7 +36,14 @@ const MicroApp = ({
         props: { pathname, ...microProps },
       },
       undefined,
-      { beforeLoad: showLoading, beforeMount: hideLoading },
+      {
+        beforeLoad: async () => {
+          setLoading(true);
+        },
+        beforeMount: async () => {
+          setLoading(false);
+        },
+      },
     );
     return () => {
       microApp.unmount();
@@ -72,7 +55,9 @@ const MicroApp = ({
       id={microAppId}
       className={className}
       style={{ position: 'relative', minHeight: 600, ...style }}
-    />
+    >
+      {loading && <RainbowCat text={t('Loading')} />}
+    </div>
   );
 };
 

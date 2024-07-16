@@ -14,10 +14,11 @@ jest.mock('qiankun', () => ({
     setTimeout(beforeLoad, 1000);
     setTimeout(beforeMount, 3000);
     return {
-      unmount: jest.fn(),
+      unmount: () => {},
     };
   },
-  initGlobalState: jest.fn(() => {
+
+  initGlobalState: () => {
     const listeners: any[] = [];
     return {
       onGlobalStateChange: (listener: any) => listeners.push(listener),
@@ -25,7 +26,7 @@ jest.mock('qiankun', () => ({
       setGlobalState: (state: any) =>
         listeners.forEach((listener) => listener(state)),
     };
-  }),
+  },
 }));
 
 describe('micro app', () => {

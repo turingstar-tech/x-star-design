@@ -3,6 +3,7 @@ $secondary-color: var(--anchor-x-tabs-secondary-color);
 .#{$prefix}-anchor-x-tabs-container {
   display: flex;
   gap: 30px;
+
   .#{$prefix}-anchor-x-tabs {
     width: 120px;
     background-color: $secondary-color;

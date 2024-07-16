@@ -21,17 +21,17 @@ interface RowContextProps {
 
 const RowContext = React.createContext<RowContextProps>({});
 
-const DragHandle: React.FC = () => {
+const DragHandle = () => {
   const { setActivatorNodeRef, listeners } = useContext(RowContext);
 
   return (
     <Button
+      data-testid="dragHandle"
       type="text"
       size="small"
       icon={<HolderOutlined />}
       style={{ cursor: 'move' }}
       ref={setActivatorNodeRef}
-      data-testid="dragHandle"
       {...listeners}
     />
   );
@@ -41,7 +41,7 @@ interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   'data-row-key': string;
 }
 
-const Row: React.FC<RowProps> = (props) => {
+const Row = (props: RowProps) => {
   const {
     attributes,
     listeners,
@@ -67,23 +67,22 @@ const Row: React.FC<RowProps> = (props) => {
   return (
     <RowContext.Provider value={contextValue}>
       <tr
+        data-testid="tableRow"
         {...props}
         ref={setNodeRef}
         style={style}
         {...attributes}
-        data-testid="tableRow"
       />
     </RowContext.Provider>
   );
 };
 
-export interface NewSortableTableProps<RecordType>
-  extends TableProps<RecordType> {
+interface SortTableProps<RecordType> extends TableProps<RecordType> {
   onSortEnd?: (newDataSource: RecordType[]) => void;
 }
 
 const SortTable = <RecordType extends Record<string, any>>(
-  props: NewSortableTableProps<RecordType>,
+  props: SortTableProps<RecordType>,
 ) => {
   const { dataSource = [], rowKey, onSortEnd: onEnd } = props;
   const [newDataSource, setNewDataSource] = useState<RecordType[]>([

@@ -30,7 +30,7 @@ jest.mock('qiankun', () => ({
 }));
 
 describe('micro app', () => {
-  test('should render the MicroApp component and show loading', () => {
+  test('should render MicroApp component and show loading', () => {
     render(
       <MicroApp
         key="/test"
@@ -43,6 +43,22 @@ describe('micro app', () => {
     expect(screen.queryByText('Loading')).toBeInTheDocument();
     act(() => jest.advanceTimersByTime(2000));
     expect(screen.queryByText('Loading')).not.toBeInTheDocument();
+  });
+
+  test('should show custom loading', () => {
+    render(
+      <MicroApp
+        key="/test"
+        name="xinyoudui"
+        entry="https://www.xinyoudui.com"
+        pathname="/test"
+        fallback={<div>自定义加载</div>}
+      />,
+    );
+    act(() => jest.advanceTimersByTime(2000));
+    expect(screen.queryByText('自定义加载')).toBeInTheDocument();
+    act(() => jest.advanceTimersByTime(2000));
+    expect(screen.queryByText('自定义加载')).not.toBeInTheDocument();
   });
 
   test('global state lang call', () => {

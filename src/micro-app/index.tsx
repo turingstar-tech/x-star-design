@@ -12,6 +12,7 @@ interface MicroAppProps {
   entry: string;
   pathname: string;
   microProps?: Record<string, unknown>;
+  fallback?: React.ReactNode;
 }
 
 const MicroApp = ({
@@ -21,6 +22,7 @@ const MicroApp = ({
   entry,
   pathname,
   microProps,
+  fallback,
 }: MicroAppProps) => {
   const microAppId = useMemo(() => `microapp-${randomString(8)}`, []);
   const [loading, setLoading] = useState(false);
@@ -52,7 +54,12 @@ const MicroApp = ({
       className={className}
       style={{ position: 'relative', minHeight: 600, ...style }}
     >
-      {loading && <RainbowCat text={t('Loading')} />}
+      {loading &&
+        (fallback !== undefined ? (
+          fallback
+        ) : (
+          <RainbowCat text={t('Loading')} />
+        ))}
     </div>
   );
 };

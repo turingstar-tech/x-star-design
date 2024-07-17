@@ -13,9 +13,7 @@ jest.mock('qiankun', () => ({
   ) => {
     setTimeout(beforeLoad, 1000);
     setTimeout(beforeMount, 3000);
-    return {
-      unmount: () => {},
-    };
+    return { unmount: () => {} };
   },
 
   initGlobalState: () => {

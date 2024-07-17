@@ -12,7 +12,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import type { TableColumnsType, TableProps } from 'antd';
 import { Button, Table } from 'antd';
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 interface RowContextProps {
   setActivatorNodeRef?: (element: HTMLElement | null) => void;
@@ -27,11 +27,11 @@ const DragHandle = () => {
   return (
     <Button
       data-testid="dragHandle"
+      ref={setActivatorNodeRef}
+      style={{ cursor: 'move' }}
       type="text"
       size="small"
       icon={<HolderOutlined />}
-      style={{ cursor: 'move' }}
-      ref={setActivatorNodeRef}
       {...listeners}
     />
   );
@@ -78,57 +78,46 @@ const Row = (props: RowProps) => {
 };
 
 interface SortTableProps<RecordType> extends TableProps<RecordType> {
-  onSortEnd?: (newDataSource: RecordType[]) => void;
+  onSortEnd?: (data: RecordType[]) => void;
 }
 
-const SortTable = <RecordType extends Record<string, any>>(
+const SortTable = <RecordType extends Record<string | number | symbol, any>>(
   props: SortTableProps<RecordType>,
 ) => {
-  const { dataSource = [], rowKey, onSortEnd: onEnd } = props;
-  const [newDataSource, setNewDataSource] = useState<RecordType[]>([
-    ...dataSource,
-  ]);
+  const { rowKey = 'key', dataSource = [] } = props;
+
+  const getKey = (record: RecordType) =>
+    typeof rowKey === 'function' ? rowKey(record) : record[rowKey];
 
   const onDragEnd = ({ active, over }: DragEndEvent) => {
-    if (active.id !== over?.id) {
-      setNewDataSource((prevState) => {
-        const activeIndex = prevState.findIndex(
-          (record) => record.key === active?.id,
-        );
-        const overIndex = prevState.findIndex(
-          (record) => record.key === over?.id,
-        );
-        const result = arrayMove(prevState, activeIndex, overIndex);
-        onEnd?.(result);
-        return result;
-      });
+    if (over && active.id !== over.id) {
+      const activeIndex = dataSource.findIndex(
+        (record) => getKey(record) === active.id,
+      );
+      const overIndex = dataSource.findIndex(
+        (record) => getKey(record) === over.id,
+      );
+      props.onSortEnd?.(
+        arrayMove(dataSource as RecordType[], activeIndex, overIndex),
+      );
     }
   };
 
-  const newColumns: TableColumnsType<RecordType> = [
-    {
-      title: 'Sort',
-      dataIndex: 'sort',
-      align: 'center',
-      width: 80,
-      ellipsis: true,
-      render: () => <DragHandle />,
-    },
+  const columns: TableColumnsType<RecordType> = [
+    { key: 'sort', align: 'center', width: 80, render: () => <DragHandle /> },
     ...(props.columns ?? []),
   ];
 
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
       <SortableContext
-        items={newDataSource.map((i) => i.key)}
+        items={dataSource.map((record) => getKey(record))}
         strategy={verticalListSortingStrategy}
       >
         <Table
           {...props}
-          columns={newColumns}
-          rowKey={rowKey}
           components={{ body: { row: Row } }}
-          dataSource={newDataSource}
+          columns={columns}
         />
       </SortableContext>
     </DndContext>

@@ -16,110 +16,102 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
   };
 }) as typeof window.matchMedia;
 
-const columns = [
-  { dataIndex: 'id', title: 'ID' },
-  { dataIndex: 'name', title: 'Name' },
-];
-
 const data = [
-  { id: 1, name: 'John', sort: 1 },
-  { id: 2, name: 'Jane', sort: 2 },
-  { id: 3, name: 'Bob', sort: 3 },
+  { id: 1, name: 'John' },
+  { id: 2, name: 'Jane' },
+  { id: 3, name: 'Bob' },
 ];
 
 describe('sort table', () => {
   test('renders table with sortable rows', () => {
-    render(<SortTable columns={columns} dataSource={data} rowKey="id" />);
+    // 验证拖拽手柄数量
+    const { rerender } = render(<SortTable rowKey="id" dataSource={data} />);
+    expect(screen.queryAllByTestId('dragHandle')).toHaveLength(data.length);
 
-    // 验证表头中的 Sort 列
-    expect(screen.getByText('Sort')).toBeInTheDocument();
-
-    // 验证每行中的拖动手柄
-    expect(screen.getAllByTestId('dragHandle')).toHaveLength(data.length);
-  });
-
-  test('renders empty column and data', () => {
-    render(<SortTable />);
-
-    expect(screen.getByText('Sort')).toBeInTheDocument();
-
+    rerender(<SortTable />);
     expect(screen.queryAllByTestId('dragHandle')).toHaveLength(0);
   });
 
   test('triggers onSortEnd callback when rows are sorted', async () => {
     const onSortEndMock = jest.fn();
-    const { container } = render(
+    render(
       <SortTable
-        columns={columns}
+        rowKey={({ id }) => id}
         dataSource={data}
-        rowKey="id"
         onSortEnd={onSortEndMock}
       />,
     );
 
-    // 确保已添加事件监听器
-    await new Promise((resolve) => {
-      resolve(0);
-    });
-
-    // 渲染三行
-    const tableRows = screen.getAllByTestId('tableRow');
+    // 验证表格行数量
+    const tableRows = screen.queryAllByTestId('tableRow');
     expect(tableRows).toHaveLength(data.length);
 
-    // 模拟行高度
-    tableRows.forEach((row, index) =>
-      jest.spyOn(row, 'offsetTop', 'get').mockReturnValue(index * 54),
-    );
+    // 模拟表格行大小
+    for (let i = 0; i < data.length; i++) {
+      jest.spyOn(tableRows[i], 'getBoundingClientRect').mockReturnValue({
+        top: i * 10,
+        right: 10,
+        bottom: (i + 1) * 10,
+        left: 0,
+        width: 10,
+        height: 10,
+      } as DOMRect);
+    }
 
-    // 模拟将第一行拖到第二行
-    const dragHandles = screen.getAllByTestId('dragHandle');
-    Object.defineProperty(MouseEvent.prototype, 'pageY', {
+    // 模拟指针事件
+    Object.defineProperty(Event.prototype, 'isPrimary', {
+      value: true,
+      configurable: true,
+    });
+    Object.defineProperty(Event.prototype, 'button', {
       value: 0,
       configurable: true,
     });
-    fireEvent.mouseDown(dragHandles[0]);
-    Object.defineProperty(MouseEvent.prototype, 'pageY', {
-      value: 54,
-      configurable: true,
-    });
-    fireEvent.mouseMove(container);
-    fireEvent.mouseUp(container);
-
-    // 验证回调函数是否被调用并传递了正确的排序后的数据源
-    expect(onSortEndMock).toHaveBeenCalledTimes(1);
-    expect(onSortEndMock).toHaveBeenNthCalledWith(1, [
-      { id: 2, name: 'Jane', sort: 2 },
-      { id: 1, name: 'John', sort: 1 },
-      { id: 3, name: 'Bob', sort: 3 },
-    ]);
-
-    // 模拟将第三行往下拖
-    fireEvent.mouseDown(dragHandles[2]);
-    Object.defineProperty(MouseEvent.prototype, 'pageY', {
-      value: 108,
-      configurable: true,
-    });
-    fireEvent.mouseMove(container);
-    fireEvent.mouseUp(container);
-
-    // 未发生改变
-    expect(onSortEndMock).toHaveBeenCalledTimes(1);
-
-    // 模拟将第三行拖到第一行
-    fireEvent.mouseDown(dragHandles[2]);
-    Object.defineProperty(MouseEvent.prototype, 'pageY', {
+    Object.defineProperty(Event.prototype, 'clientX', {
       value: 0,
       configurable: true,
     });
-    fireEvent.mouseMove(container);
-    fireEvent.mouseUp(container);
 
-    // 测试时未处理 onSortEnd，所以是在原数据的基础上修改
-    expect(onSortEndMock).toHaveBeenCalledTimes(2);
-    expect(onSortEndMock).toHaveBeenNthCalledWith(2, [
-      { id: 3, name: 'Bob', sort: 3 },
-      { id: 1, name: 'John', sort: 1 },
-      { id: 2, name: 'Jane', sort: 2 },
+    const dragHandles = screen.queryAllByTestId('dragHandle');
+
+    // 模拟将第一行拖拽到第二行
+    Object.defineProperty(Event.prototype, 'clientY', {
+      value: 0,
+      configurable: true,
+    });
+    fireEvent.pointerDown(dragHandles[0]);
+
+    Object.defineProperty(Event.prototype, 'clientY', {
+      value: 10,
+      configurable: true,
+    });
+    fireEvent.pointerMove(dragHandles[0]);
+
+    fireEvent.pointerUp(dragHandles[0]);
+
+    // 验证回调函数是否被调用并传递了正确的数据源
+    expect(onSortEndMock).toBeCalledWith([
+      { id: 2, name: 'Jane' },
+      { id: 1, name: 'John' },
+      { id: 3, name: 'Bob' },
     ]);
+
+    // 模拟拖拽越界
+    Object.defineProperty(Event.prototype, 'clientY', {
+      value: 0,
+      configurable: true,
+    });
+    fireEvent.pointerDown(dragHandles[0]);
+
+    Object.defineProperty(Event.prototype, 'clientY', {
+      value: 50,
+      configurable: true,
+    });
+    fireEvent.pointerMove(dragHandles[0]);
+
+    fireEvent.pointerUp(dragHandles[0]);
+
+    // 验证回调函数是否未被调用
+    expect(onSortEndMock).toBeCalledTimes(1);
   });
 });

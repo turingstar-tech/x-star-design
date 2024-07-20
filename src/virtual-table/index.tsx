@@ -10,7 +10,7 @@ import { VariableSizeGrid as Grid } from 'react-window';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { prefix } from '../utils/global';
 
-const VirtualTable = <RecordType extends Record<string, unknown>>(
+const VirtualTable = <RecordType extends Record<string | number | symbol, any>>(
   props: TableProps<RecordType>,
 ) => {
   const { columns, scroll } = props;

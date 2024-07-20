@@ -6,11 +6,7 @@ import SubmissionStatus from '../src/submission-status';
 
 jest.useFakeTimers();
 
-jest.mock('../src/locales', () => ({
-  useLocale: () => ({
-    locale: 'zh_CN',
-  }),
-}));
+jest.mock('../src/locales', () => ({ useLocale: () => ({ locale: 'zh_CN' }) }));
 
 describe('submission status', () => {
   test('renders with correct CSS class and style', () => {

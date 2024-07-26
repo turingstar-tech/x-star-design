@@ -8,15 +8,20 @@ interface ContestTimeInputProps {
     limitMinute?: number | null | undefined;
   };
   onChange?: (limitTime: ContestTimeInputProps['value']) => void;
+  suffix?: React.ReactNode;
+  prefix?: React.ReactNode;
 }
 const ContestTimeInput = ({
   value: initValue,
   onChange,
+  suffix,
+  prefix,
 }: ContestTimeInputProps) => {
   const [value, setValue] = useState(initValue);
   const { format: t } = useLocale('ContestTimeInput');
   return (
-    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+      {prefix}
       <InputNumber
         min={0}
         data-testid="hour-input"
@@ -29,7 +34,7 @@ const ContestTimeInput = ({
         }}
         precision={0}
       />
-      <span style={{ margin: '0 5px' }}>{t('HOUR')}</span>
+      <span>{t('HOUR')}</span>
       <InputNumber
         min={0}
         max={59} // 一年8760小时
@@ -42,8 +47,8 @@ const ContestTimeInput = ({
           setValue({ ...value, limitMinute: newValue });
         }}
       />
-
-      <span style={{ marginLeft: 5 }}>{t('MINUTE')}</span>
+      <span>{t('MINUTE')}</span>
+      {suffix}
     </div>
   );
 };

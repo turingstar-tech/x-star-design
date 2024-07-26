@@ -65,7 +65,7 @@ export type Configuration = {
   type?: string;
 };
 
-export interface TimingConfig {
+export interface RawConfig {
   contestTime?: [Dayjs, Dayjs] | number | string;
   gradeTime: Dayjs;
   rankListTime: Dayjs;
@@ -116,7 +116,7 @@ export type ReleaseType = keyof Omit<Configuration['general'], 'disorder'>;
 export type GenerateConfigReturn<T extends ReleaseType> = Record<
   T,
   {
-    type: TimingConfig[T];
+    type: RawConfig[T];
     scheduled: {
       releaseTime?: number;
     };

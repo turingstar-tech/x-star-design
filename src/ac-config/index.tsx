@@ -13,8 +13,8 @@ import {
   ContestExamType,
   DisorderConfigStatus,
   GenerateConfigReturn,
+  RawConfig,
   ReleaseType,
-  TimingConfig,
 } from './define';
 
 export interface AcConfigProps extends Omit<FormProps, 'children'> {
@@ -27,7 +27,7 @@ export interface AcConfigProps extends Omit<FormProps, 'children'> {
 const getIntNumber = (num: number) => Math.floor(num || 0);
 
 export interface AcConfigRef {
-  getConfigData: () => Configuration;
+  getConfigData: (initData: RawConfig) => Configuration;
   form: FormInstance<any>;
 }
 
@@ -119,13 +119,13 @@ const AcConfig = forwardRef<AcConfigRef, AcConfigProps>(
 
     useImperativeHandle(ref, () => ({
       form,
-      getConfigData: (initData?: TimingConfig) => {
-        const rawData = initData ?? (form.getFieldsValue() as TimingConfig);
+      getConfigData: (initData?: RawConfig) => {
+        const rawData = initData ?? (form.getFieldsValue() as RawConfig);
         //生成一些通用的config
         const generateConfig = <T extends ReleaseType>(
           release: T,
-          status: TimingConfig[T],
-          timeType: keyof TimingConfig,
+          status: RawConfig[T],
+          timeType: keyof RawConfig,
         ) => {
           return {
             [release]: {

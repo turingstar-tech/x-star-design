@@ -157,6 +157,5 @@ export default {
     NumberDownloadsAllowed: 'Number of downloads allowed',
     General_Configuration: 'General Configuration',
     Programming_Problem_Configuration: 'Programming ProblemConfiguration',
-    allowSubmission: 'allow submission',
   },
 } as const;

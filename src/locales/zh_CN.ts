@@ -148,6 +148,5 @@ export default {
     NumberDownloadsAllowed: '允许下载次数',
     General_Configuration: '通用配置',
     Programming_Problem_Configuration: '编程题配置',
-    allowSubmission: '允许提交',
   },
 } as const;

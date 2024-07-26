@@ -229,7 +229,7 @@ const GeneralConfigItem = ({
               }),
             ]}
           >
-            <ContestTimeInput suffix={t('allowSubmission')} />
+            <ContestTimeInput suffix={t('ALLOW_SUBMIT')} />
           </Form.Item>
         </Form.Item>
       )}

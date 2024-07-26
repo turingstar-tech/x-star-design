@@ -226,11 +226,8 @@ const GeneralConfigItem = ({
               }),
             ]}
           >
-            <ContestTimeInput />
+            <ContestTimeInput suffix={t('ALLOW_SUBMIT')} />
           </Form.Item>
-          <span style={{ marginLeft: 5, verticalAlign: 'sub' }}>
-            {t('ALLOW_SUBMIT')}
-          </span>
         </Form.Item>
       )}
       <Form.Item name={'disorder'} label={t('RandomOrder')}>

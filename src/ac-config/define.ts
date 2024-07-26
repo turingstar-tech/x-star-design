@@ -9,7 +9,7 @@ export interface GeneralConfigStatus<T extends string = 'General'> {
   type: T extends 'Grade'
     ? Omit<ConfigStatus, 'afterGradeRelease'>
     : T extends 'RankList'
-    ? Omit<ConfigStatus, 'afterExam'> & 'never'
+    ? Omit<ConfigStatus, 'afterExam'> | 'always'
     : T extends 'Submission'
     ? SubmissionConfigStatus
     : ConfigStatus;

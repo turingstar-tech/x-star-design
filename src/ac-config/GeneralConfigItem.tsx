@@ -1,4 +1,12 @@
-import { Checkbox, DatePicker, Form, FormInstance, Radio } from 'antd';
+import {
+  Checkbox,
+  Col,
+  DatePicker,
+  Form,
+  FormInstance,
+  Radio,
+  Row,
+} from 'antd';
 import React from 'react';
 // import TimingFormItem from '../../common/TimingFormItem';
 // import ContestTimeInput from './ContestTimeInput';
@@ -223,23 +231,38 @@ const GeneralConfigItem = ({
           >
             <ContestTimeInput />
           </Form.Item>
-          <span style={{ marginLeft: 5 }}>{t('ALLOW_SUBMIT')} </span>
+          <span style={{ marginLeft: 5, verticalAlign: 'sub' }}>
+            {t('ALLOW_SUBMIT')}
+          </span>
         </Form.Item>
       )}
       <Form.Item name={'disorder'} label={t('randomOrder')}>
-        <Checkbox.Group
-          options={[
-            { label: t('moduleOrder'), value: 'part' },
-            { label: t('programmingOrder'), value: 'program' },
-            { label: t('objectiveOrder'), value: 'objective' },
-            {
-              label: t('compositeInternalOrder'),
-              value: 'combinationInternal',
-            },
-            { label: t('singleChoiceOrder'), value: 'singleOption' },
-            { label: t('multipleChoiceOrder'), value: 'multipleOption' },
-          ]}
-        />
+        <Checkbox.Group>
+          <Row>
+            <Col span={8}>
+              <Checkbox value="part">{t('moduleOrder')}</Checkbox>
+            </Col>
+            <Col span={8}>
+              <Checkbox value="program">{t('programmingOrder')}</Checkbox>
+            </Col>
+            <Col span={8}>
+              <Checkbox value="objective">{t('objectiveOrder')}</Checkbox>
+            </Col>
+            <Col span={8}>
+              <Checkbox value="combinationInternal">
+                {t('compositeInternalOrder')}
+              </Checkbox>
+            </Col>
+            <Col span={8}>
+              <Checkbox value="singleOption">{t('singleChoiceOrder')}</Checkbox>
+            </Col>
+            <Col span={8}>
+              <Checkbox value="multipleOption">
+                {t('multipleChoiceOrder')}
+              </Checkbox>
+            </Col>
+          </Row>
+        </Checkbox.Group>
       </Form.Item>
     </div>
   );

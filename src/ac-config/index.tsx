@@ -116,8 +116,8 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
 
     useImperativeHandle(ref, () => ({
       form,
-      getConfigData: () => {
-        const rawData = form.getFieldsValue() as TimingConfig;
+      getConfigData: (data?: TimingConfig) => {
+        const rawData = data ?? (form.getFieldsValue() as TimingConfig);
         // 生成一些通用的 config
         const generateConfig = <T extends ReleaseType>(
           release: T,

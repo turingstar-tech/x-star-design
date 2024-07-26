@@ -7,13 +7,15 @@ import { langVL } from './define';
 interface ProgramConfigItemProps {
   type: 'advanced' | 'simple';
 }
+
 const ProgramConfigItem = ({ type }: ProgramConfigItemProps) => {
   const { format: t } = useLocale('AcConfig');
+
   return (
     <>
       <div style={{ display: type === 'advanced' ? 'block' : 'none' }}>
         <Form.Item
-          label={t('bookXJOIcontest.ProgramingLanguage')}
+          label={t('ProgrammingLanguage')}
           name={'lang'}
           rules={[{ required: true }]}
         >

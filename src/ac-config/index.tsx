@@ -19,19 +19,16 @@ import {
 
 export interface AcConfigProps extends Omit<FormProps, 'children'> {
   type?: 'simple' | 'advanced';
-  // form: FormInstance<any>;
   contestType?: ContestExamType;
   initialValues?: Configuration;
 }
 
-const getIntNumber = (num: number) => Math.floor(num || 0);
-
-export interface AcConfigRef {
-  getConfigData: (initData: RawConfig) => Configuration;
+export interface AcConfigHandle {
   form: FormInstance<any>;
+  getConfigData: (initData: RawConfig) => Configuration;
 }
 
-const AcConfig = forwardRef<AcConfigRef, AcConfigProps>(
+const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
   ({ type = 'advanced', contestType, initialValues, ...props }, ref) => {
     const [form] = Form.useForm();
     const { format: t, locale } = useLocale('AcConfig');
@@ -75,8 +72,8 @@ const AcConfig = forwardRef<AcConfigRef, AcConfigProps>(
           ? 'noLimit'
           : 'limitTime',
       limitTime: {
-        limitHour: noLimit ? 0 : getIntNumber((limitTime || 0) / 3600),
-        limitMinute: getIntNumber(((limitTime || 0) % 3600) / 60),
+        limitHour: noLimit ? 0 : Math.floor((limitTime || 0) / 3600),
+        limitMinute: Math.floor(((limitTime || 0) % 3600) / 60),
       },
       gradeRelease: gradeRelease?.type,
       gradeTime: dayjs.unix(
@@ -101,7 +98,7 @@ const AcConfig = forwardRef<AcConfigRef, AcConfigProps>(
       rankShowUserLabel,
       submission: submission?.type,
       submissionLimitTime: {
-        limitHour: getIntNumber((submission?.submissionTimed || 0) / 60),
+        limitHour: Math.floor((submission?.submissionTimed || 0) / 60),
         limitMinute: (submission?.submissionTimed || 0) % 60,
       },
       lang,
@@ -119,9 +116,9 @@ const AcConfig = forwardRef<AcConfigRef, AcConfigProps>(
 
     useImperativeHandle(ref, () => ({
       form,
-      getConfigData: (initData?: RawConfig) => {
-        const rawData = initData ?? (form.getFieldsValue() as RawConfig);
-        //生成一些通用的config
+      getConfigData: (data?: RawConfig) => {
+        const rawData = data ?? (form.getFieldsValue() as RawConfig);
+        // 生成一些通用的 config
         const generateConfig = <T extends ReleaseType>(
           release: T,
           status: RawConfig[T],
@@ -224,6 +221,7 @@ const AcConfig = forwardRef<AcConfigRef, AcConfigProps>(
         return updateConfig;
       },
     }));
+
     return (
       <ConfigProviderWrapper>
         <Form
@@ -272,4 +270,5 @@ const AcConfig = forwardRef<AcConfigRef, AcConfigProps>(
     );
   },
 );
+
 export default AcConfig;

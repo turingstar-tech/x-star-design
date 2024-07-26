@@ -6,10 +6,11 @@ import ContestTimeInput from '../src/contest-time-input';
 describe('contest-time-input.test', () => {
   test('renders input time with correct initial values', () => {
     const { getByTestId } = render(
-      <ContestTimeInput value={{ limitHour: 10, limitMinute: 20 }} />,
+      <ContestTimeInput defaultValue={{ limitHour: 10, limitMinute: 20 }} />,
     );
     const hourInput = getByTestId('hour-input') as HTMLInputElement;
     const minuteInput = getByTestId('minute-input') as HTMLInputElement;
+
     expect(hourInput.value).toBe('10');
     expect(minuteInput.value).toBe('20');
   });
@@ -22,13 +23,11 @@ describe('contest-time-input.test', () => {
     const hourInput = getByTestId('hour-input');
     const minuteInput = getByTestId('minute-input');
 
-    // 更改 start
+    // 更改 hour
     fireEvent.change(hourInput, { target: { value: 10 } });
-    expect(handleChange).toHaveBeenCalledWith({
-      limitHour: 10,
-      limitMinute: undefined,
-    });
-    // 更改 end
+    expect(handleChange).toHaveBeenCalledWith({ limitHour: 10 });
+
+    // 更改 minute
     fireEvent.change(minuteInput, { target: { value: 20 } });
     expect(handleChange).toHaveBeenCalledWith({
       limitHour: 10,
@@ -38,17 +37,18 @@ describe('contest-time-input.test', () => {
 
   test('handles undefined hour correctly', () => {
     const { getByTestId } = render(
-      <ContestTimeInput value={{ limitMinute: 20 }} />,
+      <ContestTimeInput defaultValue={{ limitMinute: 20 }} />,
     );
     const hourInput = getByTestId('hour-input') as HTMLInputElement;
     const minuteInput = getByTestId('minute-input') as HTMLInputElement;
+
     expect(hourInput.value).toBe('0');
     expect(minuteInput.value).toBe('20');
   });
 
   test('handles undefined minute correctly', () => {
     const { getByTestId } = render(
-      <ContestTimeInput value={{ limitHour: 10 }} />,
+      <ContestTimeInput defaultValue={{ limitHour: 10 }} />,
     );
     const hourInput = getByTestId('hour-input') as HTMLInputElement;
     const minuteInput = getByTestId('minute-input') as HTMLInputElement;
@@ -58,19 +58,14 @@ describe('contest-time-input.test', () => {
   });
 
   test('should not allow invalid hour and minute values', () => {
-    const { getByTestId } = render(
-      <ContestTimeInput
-        value={{ limitHour: undefined, limitMinute: undefined }}
-      />,
-    );
-
+    const { getByTestId } = render(<ContestTimeInput defaultValue={{}} />);
     const hourInput = getByTestId('hour-input');
     const minuteInput = getByTestId('minute-input');
 
-    fireEvent.change(hourInput, { target: { value: undefined } });
+    fireEvent.change(hourInput, { target: {} });
     expect(hourInput).toHaveValue('0');
 
-    fireEvent.change(minuteInput, { target: { value: undefined } });
+    fireEvent.change(minuteInput, { target: {} });
     expect(minuteInput).toHaveValue('0');
   });
 });

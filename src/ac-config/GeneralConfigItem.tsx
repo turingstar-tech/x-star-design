@@ -8,8 +8,6 @@ import {
   Row,
 } from 'antd';
 import React from 'react';
-// import TimingFormItem from '../../common/TimingFormItem';
-// import ContestTimeInput from './ContestTimeInput';
 import ContestTimeInput from '../contest-time-input';
 import { useLocale } from '../locales';
 import TimingFormItem from './TimingFormItem';
@@ -26,18 +24,17 @@ const GeneralConfigItem = ({
   contestType,
   form,
 }: GeneralConfigItemProps) => {
-  const FOREVER = 876000; // 100年=87600小时
+  const FOREVER = 876000; // 100 年 = 876000 小时
   const { format: t } = useLocale('AcConfig');
 
-  // 监听submission字段
+  // 监听 submission 字段
   const submitType = Form.useWatch('submission', form);
+
   return (
     <div>
       <Form.Item
         name={'contestTime'}
-        label={
-          contestType === 'contest' ? t('EXAM_TIME') : t('Homework_Time_01')
-        }
+        label={contestType === 'contest' ? t('ExamTime') : t('HomeworkTime')}
         rules={[{ required: true }]}
         extra={
           contestType === 'contest' && <span>{t('Contest_Time_Tip')}</span>
@@ -163,7 +160,7 @@ const GeneralConfigItem = ({
       />
       <div style={{ display: type === 'advanced' ? 'block' : 'none' }}>
         <Form.Item
-          label={t('rankListShowRealName')}
+          label={t('RanklistShowRealName')}
           name={'rankListShowRealName'}
         >
           <Radio.Group>
@@ -173,7 +170,7 @@ const GeneralConfigItem = ({
             <Radio value={false}>{t('PROHIBIT')}</Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label={t('rankShowUserLabel')} name={'rankShowUserLabel'}>
+        <Form.Item label={t('RankShowUserLabel')} name={'rankShowUserLabel'}>
           <Radio.Group>
             <Radio value>{t('ALLOW')}</Radio>
             <Radio value={false} data-testid="rankShowUserLabel-prohibit">
@@ -233,29 +230,29 @@ const GeneralConfigItem = ({
           </Form.Item>
         </Form.Item>
       )}
-      <Form.Item name={'disorder'} label={t('randomOrder')}>
+      <Form.Item name={'disorder'} label={t('RandomOrder')}>
         <Checkbox.Group>
           <Row>
             <Col span={8}>
-              <Checkbox value="part">{t('moduleOrder')}</Checkbox>
+              <Checkbox value="part">{t('PartOrder')}</Checkbox>
             </Col>
             <Col span={8}>
-              <Checkbox value="program">{t('programmingOrder')}</Checkbox>
+              <Checkbox value="program">{t('ProgrammingOrder')}</Checkbox>
             </Col>
             <Col span={8}>
-              <Checkbox value="objective">{t('objectiveOrder')}</Checkbox>
+              <Checkbox value="objective">{t('ObjectiveOrder')}</Checkbox>
             </Col>
             <Col span={8}>
               <Checkbox value="combinationInternal">
-                {t('compositeInternalOrder')}
+                {t('CompositeInternalOrder')}
               </Checkbox>
             </Col>
             <Col span={8}>
-              <Checkbox value="singleOption">{t('singleChoiceOrder')}</Checkbox>
+              <Checkbox value="singleOption">{t('SingleChoiceOrder')}</Checkbox>
             </Col>
             <Col span={8}>
               <Checkbox value="multipleOption">
-                {t('multipleChoiceOrder')}
+                {t('MultipleChoiceOrder')}
               </Checkbox>
             </Col>
           </Row>

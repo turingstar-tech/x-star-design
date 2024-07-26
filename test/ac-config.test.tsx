@@ -142,8 +142,6 @@ describe('AcConfig', () => {
       },
     });
 
-    console.dir(ref.current?.getConfigData());
-
     expect(JSON.stringify(ref.current?.getConfigData())).toBe(
       JSON.stringify({
         general: {

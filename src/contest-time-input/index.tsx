@@ -1,49 +1,52 @@
-// import { useFormatMessage } from '@/utils/intl';
 import { InputNumber } from 'antd';
 import React, { useState } from 'react';
 import { useLocale } from '../locales';
-interface ContestTimeInputProps {
-  value?: {
-    limitHour?: number | null | undefined;
-    limitMinute?: number | null | undefined;
-  };
-  onChange?: (limitTime: ContestTimeInputProps['value']) => void;
+
+interface ContestTimeInputValue {
+  limitHour?: number | null;
+  limitMinute?: number | null;
 }
+
+interface ContestTimeInputProps {
+  defaultValue?: ContestTimeInputValue;
+  onChange?: (value: ContestTimeInputValue) => void;
+}
+
 const ContestTimeInput = ({
-  value: initValue,
+  defaultValue,
   onChange,
 }: ContestTimeInputProps) => {
-  const [value, setValue] = useState(initValue);
+  const [value, setValue] = useState(defaultValue);
   const { format: t } = useLocale('ContestTimeInput');
+
   return (
     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
       <InputNumber
-        min={0}
         data-testid="hour-input"
-        max={8760} // 一年8760小时
         style={{ width: 60 }}
-        value={value?.limitHour || 0}
-        onChange={(newValue) => {
-          onChange?.({ ...value, limitHour: newValue });
-          setValue({ ...value, limitHour: newValue });
-        }}
-        precision={0}
-      />
-      <span style={{ margin: '0 5px' }}>{t('HOUR')}</span>
-      <InputNumber
         min={0}
-        max={59} // 一年8760小时
-        style={{ width: 60 }}
-        data-testid="minute-input"
+        max={8760} // 一年 8760 小时
         precision={0}
-        value={value?.limitMinute || 0}
+        value={value?.limitHour ?? 0}
         onChange={(newValue) => {
-          onChange?.({ ...value, limitMinute: newValue });
-          setValue({ ...value, limitMinute: newValue });
+          setValue({ ...value, limitHour: newValue });
+          onChange?.({ ...value, limitHour: newValue });
         }}
       />
-
-      <span style={{ marginLeft: 5 }}>{t('MINUTE')}</span>
+      <span style={{ margin: '0 5px' }}>{t('Hour')}</span>
+      <InputNumber
+        data-testid="minute-input"
+        style={{ width: 60 }}
+        min={0}
+        max={59}
+        precision={0}
+        value={value?.limitMinute ?? 0}
+        onChange={(newValue) => {
+          setValue({ ...value, limitMinute: newValue });
+          onChange?.({ ...value, limitMinute: newValue });
+        }}
+      />
+      <span style={{ marginLeft: 5 }}>{t('Minute')}</span>
     </div>
   );
 };

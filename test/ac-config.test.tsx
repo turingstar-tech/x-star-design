@@ -1,7 +1,8 @@
 import { describe, expect, jest, test } from '@jest/globals';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import React, { createRef } from 'react';
-import AcConfig, { AcConfigRef } from '../src/ac-config';
+import type { AcConfigHandle } from '../src/ac-config';
+import AcConfig from '../src/ac-config';
 import { ContestExamType } from '../src/ac-config/define';
 
 window.matchMedia = jest.fn().mockImplementation((query) => {
@@ -21,7 +22,7 @@ jest.useFakeTimers();
 
 describe('AcConfig', () => {
   test('render contest AcConfig', async () => {
-    const ref = createRef<AcConfigRef>();
+    const ref = createRef<AcConfigHandle>();
     const { getByText, getByLabelText, getByTestId } = render(
       <AcConfig
         ref={ref}
@@ -74,7 +75,7 @@ describe('AcConfig', () => {
     // fireEvent.change(getByLabelText('Score Display Time'),
     //   { value: 1721870628 },
     // );
-    // RankList Visible
+    // Ranklist Visible
     fireEvent.click(getByTestId('rankListRelease-afterGradeRelease'));
     //After-contest paper visibility
     await act(async () => {
@@ -90,7 +91,7 @@ describe('AcConfig', () => {
     // );
     // Answer/Solution Display
     fireEvent.click(getByTestId('answerRelease-afterExam'));
-    //Student Ranklist displays real names
+    // Student Ranklist displays real names
     fireEvent.click(getByTestId('rankListShowRealName-allow'));
     // Student Ranklist displays user labels
     fireEvent.click(getByTestId('rankShowUserLabel-prohibit'));
@@ -208,7 +209,7 @@ describe('AcConfig', () => {
   });
 
   test('render homework AcConfig', async () => {
-    const ref = createRef<AcConfigRef>();
+    const ref = createRef<AcConfigHandle>();
     const { getByText, getByLabelText, getByTestId } = render(
       <AcConfig
         ref={ref}
@@ -259,7 +260,7 @@ describe('AcConfig', () => {
       expect(getByText('Score Display Time')).toBeInTheDocument();
     });
 
-    // RankList Visible
+    // Ranklist Visible
     fireEvent.click(getByTestId('rankListRelease-afterGradeRelease'));
     //After-contest paper visibility
     await act(async () => {
@@ -273,7 +274,7 @@ describe('AcConfig', () => {
 
     // Answer/Solution Display
     fireEvent.click(getByTestId('answerRelease-afterExam'));
-    //Student Ranklist displays real names
+    // Student Ranklist displays real names
     fireEvent.click(getByTestId('rankListShowRealName-allow'));
     // Student Ranklist displays user labels
     fireEvent.click(getByTestId('rankShowUserLabel-prohibit'));
@@ -389,7 +390,7 @@ describe('AcConfig', () => {
   });
 
   test('invalid config with validate 1', async () => {
-    const ref = createRef<AcConfigRef>();
+    const ref = createRef<AcConfigHandle>();
     const { getByText, getByTestId, getAllByTestId } = render(
       <AcConfig ref={ref} contestType={ContestExamType.Homework} />,
     );
@@ -430,7 +431,7 @@ describe('AcConfig', () => {
     );
   });
   test('invalid config with validate 2', async () => {
-    const ref = createRef<AcConfigRef>();
+    const ref = createRef<AcConfigHandle>();
     const { getByTestId, getAllByTestId } = render(
       <AcConfig ref={ref} contestType={ContestExamType.Homework} />,
     );
@@ -470,7 +471,7 @@ describe('AcConfig', () => {
   });
 
   test('homework limitTime', async () => {
-    const ref = createRef<AcConfigRef>();
+    const ref = createRef<AcConfigHandle>();
     const { getAllByTestId } = render(
       <AcConfig ref={ref} contestType={ContestExamType.Homework} />,
     );
@@ -491,7 +492,7 @@ describe('AcConfig', () => {
   });
 
   test('simple type AcConfig', async () => {
-    const ref = createRef<AcConfigRef>();
+    const ref = createRef<AcConfigHandle>();
     const { getAllByText } = render(
       <AcConfig
         ref={ref}

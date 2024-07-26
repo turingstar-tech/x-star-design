@@ -1,11 +1,13 @@
 import { DatePicker, Form } from 'antd';
 import React from 'react';
 import { useLocale } from '../locales';
+
 interface TimingFormItemIProps {
   field: string;
   name: string;
   label: string;
 }
+
 const TimingFormItem: React.FC<TimingFormItemIProps> = ({
   field,
   name,
@@ -31,9 +33,7 @@ const TimingFormItem: React.FC<TimingFormItemIProps> = ({
     <Form.Item
       noStyle
       shouldUpdate={(perValues, nextValues) => {
-        /**
-         * 成绩发布方式改变时更新
-         */
+        // 成绩发布方式改变时更新
         return perValues[field] !== nextValues[field];
       }}
     >

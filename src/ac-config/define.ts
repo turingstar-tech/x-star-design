@@ -5,10 +5,15 @@ export type ConfigStatus =
   | 'afterApproval'
   | 'scheduled'
   | 'afterGradeRelease';
+
+export type SubmissionConfigStatus =
+  | 'noEarlySubmission'
+  | 'allowEarlySubmission';
+
 export interface GeneralConfigStatus<T extends string = 'General'> {
   type: T extends 'Grade'
     ? Omit<ConfigStatus, 'afterGradeRelease'>
-    : T extends 'RankList'
+    : T extends 'Ranklist'
     ? Omit<ConfigStatus, 'afterExam'> | 'always'
     : T extends 'Submission'
     ? SubmissionConfigStatus
@@ -16,25 +21,24 @@ export interface GeneralConfigStatus<T extends string = 'General'> {
   scheduled?: {
     releaseTime?: number;
   };
-
   submissionTimed?: number;
 }
+
 export type ProgramConfigStatus = 'always' | 'never' | 'afterExam';
-export type SubmissionConfigStatus =
-  | 'noEarlySubmission'
-  | 'allowEarlySubmission';
-export type DisorderConfigStatus = {
+
+export interface DisorderConfigStatus {
   part: boolean;
   program: boolean;
   objective: boolean;
   combinationInternal: boolean;
   singleOption: boolean;
   multipleOption: boolean;
-};
-export type Configuration = {
+}
+
+export interface Configuration {
   general: {
     gradeRelease: GeneralConfigStatus<'Grade'>;
-    rankListRelease: GeneralConfigStatus<'RankList'>;
+    rankListRelease: GeneralConfigStatus<'Ranklist'>;
     paperRelease: GeneralConfigStatus;
     answerRelease: GeneralConfigStatus;
     submission: GeneralConfigStatus<'Submission'>;
@@ -63,7 +67,7 @@ export type Configuration = {
     endTime?: number;
   };
   type?: string;
-};
+}
 
 export interface TimingConfig {
   contestTime?: [Dayjs, Dayjs] | number | string;
@@ -72,18 +76,33 @@ export interface TimingConfig {
   paperTime: Dayjs;
   answerTime: Dayjs;
   gradeRelease: GeneralConfigStatus<'Grade'>['type'];
-  rankListRelease: GeneralConfigStatus<'RankList'>['type'];
+  rankListRelease: GeneralConfigStatus<'Ranklist'>['type'];
   paperRelease: GeneralConfigStatus['type'];
   answerRelease: GeneralConfigStatus['type'];
   tipRelease: GeneralConfigStatus['type'];
   tipTime: Dayjs;
   submission: SubmissionConfigStatus;
   disorder: Array<keyof DisorderConfigStatus>;
-  personalScoreVisibility: 'always' | 'never' | 'afterExam'; //个人分数可见性
-  rankingMethod: 'score' | 'acNumber'; //排名方式
-  highScoreProgramVisibility: 'always' | 'never' | 'afterExam'; //高分代码可见性
-  downloadDataEnable: boolean; // 是否xjoi比赛允许下载错误数据
-  downloadDataCount: number; // 允许下载次数
+  /**
+   * 个人分数可见性
+   */
+  personalScoreVisibility: 'always' | 'never' | 'afterExam';
+  /**
+   * 排名方式
+   */
+  rankingMethod: 'score' | 'acNumber';
+  /**
+   * 高分代码可见性
+   */
+  highScoreProgramVisibility: 'always' | 'never' | 'afterExam';
+  /**
+   * XJOI 比赛是否允许下载错误数据
+   */
+  downloadDataEnable: boolean;
+  /**
+   * 允许下载次数
+   */
+  downloadDataCount: number;
   scoreTypeInMatch: 'latestSubmit' | 'maxScore';
   lang: (
     | 'gcc'
@@ -96,23 +115,32 @@ export interface TimingConfig {
     | 'java8'
     | 'fpc'
   )[];
-
-  // 学生排行榜真实姓名
+  /**
+   * 学生排行榜真实姓名
+   */
   rankListShowRealName: boolean;
-  // 学生排行榜用户标签
+  /**
+   * 学生排行榜用户标签
+   */
   rankShowUserLabel: boolean;
-  //提前交卷时间限制
+  /**
+   * 提前交卷时间限制
+   */
   submissionLimitTime: {
     limitHour: number;
     limitMinute: number;
   };
-  //作业时长限制
+  /**
+   * 作业时长限制
+   */
   limitTime: {
     limitHour: number;
     limitMinute: number;
   };
 }
+
 export type ReleaseType = keyof Omit<Configuration['general'], 'disorder'>;
+
 export type GenerateConfigReturn<T extends ReleaseType> = Record<
   T,
   {

@@ -58,9 +58,15 @@ export type Configuration = {
     noLimit?: boolean;
     limitTime?: number;
   };
+  contest?: {
+    startTime?: number;
+    endTime?: number;
+  };
+  type?: string;
 };
 
 export interface TimingConfig {
+  contestTime?: [Dayjs, Dayjs] | number | string;
   gradeTime: Dayjs;
   rankListTime: Dayjs;
   paperTime: Dayjs;
@@ -69,21 +75,42 @@ export interface TimingConfig {
   rankListRelease: GeneralConfigStatus<'RankList'>['type'];
   paperRelease: GeneralConfigStatus['type'];
   answerRelease: GeneralConfigStatus['type'];
-  submission: SubmissionConfigStatus;
   tipRelease: GeneralConfigStatus['type'];
+  tipTime: Dayjs;
+  submission: SubmissionConfigStatus;
   disorder: Array<keyof DisorderConfigStatus>;
+  personalScoreVisibility: 'always' | 'never' | 'afterExam'; //个人分数可见性
+  rankingMethod: 'score' | 'acNumber'; //排名方式
+  highScoreProgramVisibility: 'always' | 'never' | 'afterExam'; //高分代码可见性
+  downloadDataEnable: boolean; // 是否xjoi比赛允许下载错误数据
+  downloadDataCount: number; // 允许下载次数
+  scoreTypeInMatch: 'latestSubmit' | 'maxScore';
+  lang: (
+    | 'gcc'
+    | 'g++'
+    | 'g++11'
+    | 'g++14'
+    | 'g++17'
+    | 'python2.7'
+    | 'python3.8'
+    | 'java8'
+    | 'fpc'
+  )[];
+
+  // 学生排行榜真实姓名
   rankListShowRealName: boolean;
+  // 学生排行榜用户标签
   rankShowUserLabel: boolean;
-  program: {
-    highScoreProgramVisibility: ProgramConfigStatus;
-    personalScoreVisibility: ProgramConfigStatus;
-    rankingMethod: 'score' | 'acNumber';
-    scoreTypeInMatch: 'latestSubmit' | 'maxScore';
-    downloadDataEnable: boolean;
-    downloadDataCount: number;
-    lang: string[];
+  //提前交卷时间限制
+  submissionLimitTime: {
+    limitHour: number;
+    limitMinute: number;
   };
-  homework: string;
+  //作业时长限制
+  limitTime: {
+    limitHour: number;
+    limitMinute: number;
+  };
 }
 export type ReleaseType = keyof Omit<Configuration['general'], 'disorder'>;
 export type GenerateConfigReturn<T extends ReleaseType> = Record<

@@ -1,0 +1,5 @@
+.#{$prefix}-ac-config-space {
+  & > :last-child {
+    align-self: flex-start;
+  }
+}

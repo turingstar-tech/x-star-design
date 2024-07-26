@@ -19,6 +19,7 @@ const ProgramConfigItem = ({ type }: ProgramConfigItemProps) => {
         >
           <Select
             mode="multiple"
+            data-testid="lang-select"
             allowClear
             style={{ maxWidth: 350 }}
             options={Array.from(langVL, ([value, label]) => ({
@@ -32,14 +33,19 @@ const ProgramConfigItem = ({ type }: ProgramConfigItemProps) => {
           name={'personalScoreVisibility'}
         >
           <Radio.Group>
-            <Radio value={'always'}>{t('always')}</Radio>
+            <Radio
+              value={'always'}
+              data-testid="personalScoreVisibility-always"
+            >
+              {t('always')}
+            </Radio>
             <Radio value={'never'}>{t('never')}</Radio>
             <Radio value={'afterExam'}>{t('afterExam')}</Radio>
           </Radio.Group>
         </Form.Item>
         <Form.Item name={'tipRelease'} label={t('TIPS_DISPLAY')}>
           <Radio.Group>
-            <Radio value={'afterExam'}>
+            <Radio value={'afterExam'} data-testid="tipRelease-afterExam">
               {t('DISPLAY_AFTER_TEACHER_CONFIRMATION_01')}
             </Radio>
             <Radio value={'afterGradeRelease'}>
@@ -59,14 +65,21 @@ const ProgramConfigItem = ({ type }: ProgramConfigItemProps) => {
         />
         <Form.Item label={t('RankingValue')} name={'scoreTypeInMatch'}>
           <Radio.Group>
-            <Radio value={'latestSubmit'}>{t('LatestSubmit')}</Radio>
+            <Radio
+              value={'latestSubmit'}
+              data-testid="scoreTypeInMatch-latestSubmit"
+            >
+              {t('LatestSubmit')}
+            </Radio>
             <Radio value={'maxScore'}>{t('maxScore')}</Radio>
           </Radio.Group>
         </Form.Item>
 
         <Form.Item label={t('rankingMethod')} name={'rankingMethod'}>
           <Radio.Group>
-            <Radio value={'score'}>{t('Sort_By_Score')}</Radio>
+            <Radio value={'score'} data-testid="rankingMethod-score">
+              {t('Sort_By_Score')}
+            </Radio>
             <Radio value={'acNumber'}>{t('Sort_By_AC_Count')}</Radio>
           </Radio.Group>
         </Form.Item>
@@ -75,7 +88,12 @@ const ProgramConfigItem = ({ type }: ProgramConfigItemProps) => {
           name={'highScoreProgramVisibility'}
         >
           <Radio.Group>
-            <Radio value={'always'}>{t('always')}</Radio>
+            <Radio
+              value={'always'}
+              data-testid="highScoreProgramVisibility-always"
+            >
+              {t('always')}
+            </Radio>
             <Radio value={'never'}>{t('never')}</Radio>
             <Radio value={'afterExam'}>{t('afterExam')}</Radio>
           </Radio.Group>
@@ -84,8 +102,12 @@ const ProgramConfigItem = ({ type }: ProgramConfigItemProps) => {
 
       <Form.Item label={t('downloadDataEnable')} name={'downloadDataEnable'}>
         <Radio.Group>
-          <Radio value>{t('ALLOW')}</Radio>
-          <Radio value={false}>{t('PROHIBIT')}</Radio>
+          <Radio value data-testid="downloadDataEnable-true">
+            {t('ALLOW')}
+          </Radio>
+          <Radio value={false} data-testid="downloadDataEnable-false">
+            {t('PROHIBIT')}
+          </Radio>
         </Radio.Group>
       </Form.Item>
       <Form.Item
@@ -105,6 +127,7 @@ const ProgramConfigItem = ({ type }: ProgramConfigItemProps) => {
               <InputNumber<number>
                 min={0}
                 max={100}
+                data-testid="downloadDataCount-input"
                 disabled={!getFieldValue('downloadDataEnable')}
                 // formatter={(value) => parseInt(value?.toString()).toString() || '0'}
                 // parser={(val) => {

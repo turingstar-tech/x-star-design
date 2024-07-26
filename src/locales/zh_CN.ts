@@ -137,7 +137,7 @@ export default {
     afterExam: '考试结束后',
     TIPS_DISPLAY: '提示显示',
     TIPS_DISPLAY_TIME: '提示显示时间',
-    RankingValue: 'Problem Submission Result',
+    RankingValue: '题目提交结果',
     LatestSubmit: '按照最新提交取分',
     maxScore: '按照最高的一次提交取分',
     rankingMethod: '排名规则',

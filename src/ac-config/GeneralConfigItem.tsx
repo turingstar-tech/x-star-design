@@ -36,10 +36,14 @@ const GeneralConfigItem = ({
         }
       >
         {contestType === 'contest' ? (
-          <RangePicker showTime format={'YYYY-MM-DD HH:mm'} />
+          <RangePicker
+            showTime
+            format={'YYYY-MM-DD HH:mm'}
+            data-testid="contest-config-time-input"
+          />
         ) : (
           <Radio.Group style={{ display: 'flex' }}>
-            <Radio value={'limitTime'}>
+            <Radio value={'limitTime'} data-testid="contestTime-limitTime">
               <Form.Item
                 dependencies={['contestTime']}
                 noStyle
@@ -76,7 +80,9 @@ const GeneralConfigItem = ({
             <Radio value={'afterApproval'}>
               {t('RELEASE_AFTER_TEACHER_CONFIRMATION')}
             </Radio>
-            <Radio value={'scheduled'}>{t('SCHEDULED_RELEASE')}</Radio>
+            <Radio value={'scheduled'} data-testid="gradeRelease-scheduled">
+              {t('SCHEDULED_RELEASE')}
+            </Radio>
           </Radio.Group>
         </Form.Item>
         {/* 定时发布具有的时间选择框 */}
@@ -89,7 +95,10 @@ const GeneralConfigItem = ({
         {/* 成绩发布后排行榜对学生是否可见 */}
         <Form.Item name={'rankListRelease'} label={t('LEADERBOARD_VISIBLE')}>
           <Radio.Group>
-            <Radio value={'afterGradeRelease'}>
+            <Radio
+              value={'afterGradeRelease'}
+              data-testid="rankListRelease-afterGradeRelease"
+            >
               {t('VISIBLE_AFTER_GRADE_RELEASE')}
             </Radio>
             <Radio value={'afterApproval'}>
@@ -114,7 +123,9 @@ const GeneralConfigItem = ({
             <Radio value={'afterApproval'}>
               {t('VISIBLE_AFTER_TEACHER_CONFIRMATION')}
             </Radio>
-            <Radio value={'scheduled'}>{t('TIMED_VISIBILITY')}</Radio>
+            <Radio value={'scheduled'} data-testid="paperRelease-scheduled">
+              {t('TIMED_VISIBILITY')}
+            </Radio>
           </Radio.Group>
         </Form.Item>
         <TimingFormItem
@@ -125,7 +136,7 @@ const GeneralConfigItem = ({
       </div>
       <Form.Item name={'answerRelease'} label={t('ANSWER_DISPLAY')}>
         <Radio.Group>
-          <Radio value={'afterExam'}>
+          <Radio value={'afterExam'} data-testid="answerRelease-afterExam">
             {t('DISPLAY_AFTER_TEACHER_CONFIRMATION_01')}
           </Radio>
           <Radio value={'afterGradeRelease'}>
@@ -148,14 +159,18 @@ const GeneralConfigItem = ({
           name={'rankListShowRealName'}
         >
           <Radio.Group>
-            <Radio value>{t('ALLOW')}</Radio>
+            <Radio value data-testid="rankListShowRealName-allow">
+              {t('ALLOW')}
+            </Radio>
             <Radio value={false}>{t('PROHIBIT')}</Radio>
           </Radio.Group>
         </Form.Item>
         <Form.Item label={t('rankShowUserLabel')} name={'rankShowUserLabel'}>
           <Radio.Group>
             <Radio value>{t('ALLOW')}</Radio>
-            <Radio value={false}>{t('PROHIBIT')}</Radio>
+            <Radio value={false} data-testid="rankShowUserLabel-prohibit">
+              {t('PROHIBIT')}
+            </Radio>
           </Radio.Group>
         </Form.Item>
       </div>
@@ -163,7 +178,12 @@ const GeneralConfigItem = ({
         <Radio.Group>
           <Radio value={'allowEarlySubmission'}>{t('ALLOW')}</Radio>
           <Radio value={'noEarlySubmission'}>{t('PROHIBIT')}</Radio>
-          <Radio value={'timedSubmission'}>{t('ALLOW_SETTIMEOUT_SUBMI')}</Radio>
+          <Radio
+            value={'timedSubmission'}
+            data-testid="submission-timedSubmission"
+          >
+            {t('ALLOW_SETTIMEOUT_SUBMI')}
+          </Radio>
         </Radio.Group>
       </Form.Item>
       {submitType === 'timedSubmission' && (
@@ -171,6 +191,7 @@ const GeneralConfigItem = ({
           <Form.Item
             name={'submissionLimitTime'}
             noStyle
+            data-testid="submissionLimitTime"
             dependencies={['contestTime', 'limitTime']}
             rules={[
               ({ getFieldValue }) => ({

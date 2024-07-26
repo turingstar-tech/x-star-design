@@ -12,7 +12,21 @@ const TimingFormItem: React.FC<TimingFormItemIProps> = ({
   label,
 }) => {
   const { locale } = useLocale('AcConfig');
-  const lang = locale === 'zh_CN' ? 'zh' : 'en';
+  const lang = {
+    zh_CN: 'zh',
+    en_US: 'en',
+  }[locale];
+
+  const showTimeFormat = {
+    zh_CN: 'HH:mm',
+    en_US: 'h:mm A',
+  }[locale];
+
+  const dateFormat = {
+    zh_CN: 'YYYY-MM-DD HH:mm',
+    en_US: 'YYYY-MM-DD h:mm A',
+  }[locale];
+
   return (
     <Form.Item
       noStyle
@@ -34,11 +48,9 @@ const TimingFormItem: React.FC<TimingFormItemIProps> = ({
                 <DatePicker
                   showTime={{
                     use12Hours: lang === 'en',
-                    format: lang === 'en' ? 'h:mm A' : 'HH:mm',
+                    format: showTimeFormat,
                   }}
-                  format={
-                    lang === 'en' ? 'YYYY-MM-DD h:mm A' : 'YYYY-MM-DD HH:mm'
-                  }
+                  format={dateFormat}
                 />
               </Form.Item>
             )}

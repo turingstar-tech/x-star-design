@@ -1,86 +1,275 @@
 import { Divider, Form, FormInstance, FormProps, Space } from 'antd';
-import React from 'react';
+import classNames from 'classnames';
+import dayjs, { Dayjs } from 'dayjs';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { getDescription } from 'x-star-utils';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
+import { prefix } from '../utils/global';
 import GeneralConfigItem from './GeneralConfigItem';
 import ProgramConfigItem from './ProgramConfigItem';
-import { ContestExamType } from './define';
+import {
+  Configuration,
+  ContestExamType,
+  DisorderConfigStatus,
+  GenerateConfigReturn,
+  ReleaseType,
+  TimingConfig,
+} from './define';
 
-interface AcConfigProps extends Omit<FormProps, 'children'> {
+export interface AcConfigProps extends Omit<FormProps, 'children'> {
   type?: 'simple' | 'advanced';
-  form: FormInstance<any>;
+  // form: FormInstance<any>;
   contestType?: ContestExamType;
-  locale: 'zh_CN' | 'en_US';
+  initialValues?: Configuration;
 }
 
-const AcConfig: React.FC<AcConfigProps> = ({
-  type = 'advanced',
-  form,
-  contestType,
-  ...props
-}) => {
-  const { format: t, locale } = useLocale('AcConfig');
-  const lang = locale === 'zh_CN' ? 'zh' : 'en';
-  return (
-    <ConfigProviderWrapper>
-      <Form
-        form={form}
-        labelAlign="right"
-        onFinish={props?.onFinish}
-        onChangeCapture={(e) => {
-          if (props?.disabled) {
-            e.stopPropagation();
-          }
-        }}
-        initialValues={props?.initialValues}
-        // initialValues={{
-        //   ...configInitialValues,
-        //   ...config,
-        //   contestTime: isChangeContestType
-        //     ? contestType === 'contest'
-        //       ? []
-        //       : 'noLimit'
-        //     : config?.contestTime || (contestType === 'contest' ? [] : 'noLimit'),
-        //   disorder: config?.disorder
-        //     ? Object.keys(config.disorder).filter((key) => config.disorder[key] === true)
-        //     : [],
-        // }}
-      >
-        {type === 'advanced' ? (
-          <Space
-            direction="horizontal"
-            size={30}
-            split={<Divider type="vertical" style={{ fontSize: 400 }} />}
-          >
-            <div>
-              <h3>{getDescription(lang, t('General_Configuration'))}</h3>
+const getIntNumber = (num: number) => Math.floor(num || 0);
+
+export interface AcConfigRef {
+  getConfigData: () => Configuration;
+  form: FormInstance<any>;
+}
+
+const AcConfig = forwardRef<AcConfigRef, AcConfigProps>(
+  ({ type = 'advanced', contestType, initialValues, ...props }, ref) => {
+    const [form] = Form.useForm();
+    const { format: t, locale } = useLocale('AcConfig');
+    const language = {
+      zh_CN: 'zh',
+      en_US: 'en',
+    }[locale] as 'zh' | 'en';
+
+    const { noLimit, limitTime } = initialValues?.homework || {
+      limitTime: 0,
+      noLimit: false,
+    };
+    const {
+      gradeRelease,
+      rankListRelease,
+      paperRelease,
+      answerRelease,
+      submission,
+      tipRelease,
+      disorder,
+    } = initialValues?.general || {};
+    const {
+      personalScoreVisibility,
+      rankingMethod,
+      highScoreProgramVisibility,
+      downloadDataEnable,
+      downloadDataCount,
+      scoreTypeInMatch,
+      lang,
+    } = initialValues?.program || {};
+
+    const { rankListShowRealName, rankShowUserLabel } =
+      initialValues?.rank || {};
+    const formInitialValues = {
+      contestTime:
+        contestType === 'contest'
+          ? [initialValues?.contest?.startTime, initialValues?.contest?.endTime]
+              .filter((i) => i !== undefined)
+              .map((item) => dayjs(item * 1000))
+          : noLimit
+          ? 'noLimit'
+          : 'limitTime',
+      limitTime: {
+        limitHour: noLimit ? 0 : getIntNumber((limitTime || 0) / 3600),
+        limitMinute: getIntNumber(((limitTime || 0) % 3600) / 60),
+      },
+      gradeRelease: gradeRelease?.type,
+      gradeTime: dayjs.unix(
+        gradeRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+      ),
+      disorder: Object.keys(disorder || {}).filter(
+        (key) => disorder?.[key as keyof typeof disorder] === true,
+      ),
+      rankListRelease: rankListRelease?.type,
+      rankListTime: dayjs.unix(
+        rankListRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+      ),
+      paperRelease: paperRelease?.type,
+      paperTime: dayjs.unix(
+        paperRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+      ),
+      answerRelease: answerRelease?.type,
+      answerTime: dayjs.unix(
+        answerRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+      ),
+      rankListShowRealName,
+      rankShowUserLabel,
+      submission: submission?.type,
+      submissionLimitTime: {
+        limitHour: getIntNumber((submission?.submissionTimed || 0) / 60),
+        limitMinute: (submission?.submissionTimed || 0) % 60,
+      },
+      lang,
+      personalScoreVisibility,
+      tipRelease: tipRelease?.type,
+      tipTime: dayjs.unix(
+        tipRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+      ),
+      scoreTypeInMatch,
+      rankingMethod,
+      highScoreProgramVisibility,
+      downloadDataEnable,
+      downloadDataCount,
+    };
+
+    useImperativeHandle(ref, () => ({
+      form,
+      getConfigData: () => {
+        const rawData = form.getFieldsValue() as TimingConfig;
+        //生成一些通用的config
+        const generateConfig = <T extends ReleaseType>(
+          release: T,
+          status: TimingConfig[T],
+          timeType: keyof TimingConfig,
+        ) => {
+          return {
+            [release]: {
+              type: status,
+              scheduled: {
+                releaseTime:
+                  status === 'scheduled'
+                    ? (rawData[timeType] as Dayjs).second(0).unix().valueOf()
+                    : undefined,
+              },
+            },
+          } as GenerateConfigReturn<T>;
+        };
+        const getFormatDisorder = () => {
+          const disorderMap: Record<keyof DisorderConfigStatus, boolean> = {
+            part: false,
+            program: false,
+            objective: false,
+            combinationInternal: false,
+            singleOption: false,
+            multipleOption: false,
+          };
+          rawData.disorder.forEach((item) => {
+            disorderMap[item] = true;
+          });
+          return disorderMap;
+        };
+        const updateConfig: Configuration = {
+          general: {
+            ...generateConfig(
+              'gradeRelease',
+              rawData.gradeRelease,
+              'gradeTime',
+            ),
+            ...generateConfig(
+              'paperRelease',
+              rawData.paperRelease,
+              'paperTime',
+            ),
+            ...generateConfig(
+              'rankListRelease',
+              rawData.rankListRelease,
+              'rankListTime',
+            ),
+            ...generateConfig('tipRelease', rawData.tipRelease, 'tipTime'),
+            ...generateConfig(
+              'answerRelease',
+              rawData.answerRelease,
+              'answerTime',
+            ),
+            submission: {
+              type: rawData.submission,
+              scheduled: {},
+              submissionTimed:
+                (rawData?.submissionLimitTime?.limitHour || 0) * 60 +
+                (rawData?.submissionLimitTime?.limitMinute || 0),
+            },
+            disorder: getFormatDisorder(),
+          },
+          rank: {
+            rankListShowRealName: rawData.rankListShowRealName,
+            rankShowUserLabel: rawData.rankShowUserLabel,
+          },
+          program: {
+            personalScoreVisibility: rawData.personalScoreVisibility,
+            rankingMethod: rawData.rankingMethod,
+            highScoreProgramVisibility: rawData.highScoreProgramVisibility,
+            downloadDataEnable: rawData.downloadDataEnable,
+            downloadDataCount: rawData.downloadDataCount,
+            scoreTypeInMatch: rawData.scoreTypeInMatch,
+            lang: rawData.lang,
+          },
+        };
+        if (contestType === ContestExamType.Exam) {
+          updateConfig['contest'] = {
+            startTime: (rawData?.contestTime as [Dayjs, Dayjs])?.[0]
+              ?.second(0)
+              .unix()
+              .valueOf(),
+            endTime: (rawData?.contestTime as [Dayjs, Dayjs])?.[1]
+              ?.second(0)
+              .unix()
+              .valueOf(),
+          };
+        }
+        if (contestType === ContestExamType.Homework) {
+          updateConfig['homework'] = {
+            limitTime:
+              rawData.contestTime === 'noLimit'
+                ? undefined
+                : (rawData?.limitTime?.limitHour * 3600 || 0) +
+                  (rawData?.limitTime?.limitMinute * 60 || 0),
+            noLimit: rawData.contestTime === 'noLimit',
+          };
+        }
+        return updateConfig;
+      },
+    }));
+    return (
+      <ConfigProviderWrapper>
+        <Form
+          form={form}
+          labelAlign="right"
+          onFinish={props?.onFinish}
+          initialValues={formInitialValues}
+        >
+          {type === 'advanced' ? (
+            <Space
+              direction="horizontal"
+              size={30}
+              className={classNames(`${prefix}-ac-config-space`)}
+              split={<Divider type="vertical" style={{ fontSize: 400 }} />}
+            >
+              <div>
+                <h3>{getDescription(language, t('General_Configuration'))}</h3>
+                <GeneralConfigItem
+                  type={type}
+                  contestType={contestType}
+                  form={form}
+                />
+              </div>
+              <div>
+                <h3>
+                  {getDescription(
+                    language,
+                    t('Programming_Problem_Configuration'),
+                  )}
+                </h3>
+                <ProgramConfigItem type={type} />
+              </div>
+            </Space>
+          ) : (
+            <>
               <GeneralConfigItem
                 type={type}
                 contestType={contestType}
                 form={form}
               />
-            </div>
-            <div>
-              <h3>
-                {getDescription(lang, t('Programming_Problem_Configuration'))}
-              </h3>
               <ProgramConfigItem type={type} />
-            </div>
-          </Space>
-        ) : (
-          <>
-            <GeneralConfigItem
-              type={type}
-              contestType={contestType}
-              form={form}
-            />
-            <ProgramConfigItem type={type} />
-          </>
-        )}
-      </Form>
-    </ConfigProviderWrapper>
-  );
-};
-
+            </>
+          )}
+        </Form>
+      </ConfigProviderWrapper>
+    );
+  },
+);
 export default AcConfig;

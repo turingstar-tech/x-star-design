@@ -23,6 +23,7 @@ describe('aliplayer', () => {
       playauth: 'eyJTZWN1cml0eVRva2VuIjoiQ0FJU2',
       autoplay: false,
       language: 'zh-cn',
+      encryptType: 1,
     };
     // render
     render(<Aliplayer config={mockConfig} />);
@@ -56,6 +57,7 @@ describe('aliplayer', () => {
       playauth: 'eyJTZWN1cml0eVRva2VuIjoiQ0FJU2',
       autoplay: false,
       language: 'zh-cn',
+      encryptType: 1,
     };
     const { rerender, unmount } = render(
       <Aliplayer config={mockConfig} onCreate={onCreate} />,
@@ -71,6 +73,7 @@ describe('aliplayer', () => {
       playauth: 'new-test',
       autoplay: true,
       language: 'en-us',
+      encryptType: 1,
     };
     rerender(<Aliplayer config={newMockConfig} onCreate={onCreate} />);
     jest.runAllTimers();

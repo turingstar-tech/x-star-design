@@ -10,6 +10,7 @@ export default () => {
     playauth: 'eyJTZWN1cml0eVRva2VuIjoiQ0FJU2',
     autoplay: false,
     language: 'zh-cn',
+    encryptType: 1,
   };
   return <Aliplayer config={aliplayerConfig} />;
 };

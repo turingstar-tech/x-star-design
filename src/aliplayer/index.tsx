@@ -10,8 +10,6 @@ export interface AliplayerConfig {
   playauth: string;
   autoplay: boolean;
   language: string;
-  encryptType: number;
-  keyShortCuts: boolean;
 }
 
 /**
@@ -77,7 +75,7 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
         if (Aliplayer) {
           // 创建 Aliplayer 实例
           player.current = new Aliplayer(
-            { ...config, id, encryptType: 1 },
+            { ...config, id, encryptType: 1, keyShortCuts: true },
             (player: AliplayerInstance) => onCreate?.(player),
           );
           resize();

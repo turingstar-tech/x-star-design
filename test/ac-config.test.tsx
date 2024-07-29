@@ -2,7 +2,7 @@ import { describe, expect, jest, test } from '@jest/globals';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import React, { createRef } from 'react';
 import type { AcConfigHandle } from '../src/ac-config';
-import AcConfig from '../src/ac-config';
+import AcConfig, { getConfigData } from '../src/ac-config';
 import { ContestExamType } from '../src/ac-config/define';
 
 window.matchMedia = jest.fn().mockImplementation((query) => {
@@ -143,7 +143,14 @@ describe('AcConfig', () => {
       },
     });
 
-    expect(JSON.stringify(ref.current?.getConfigData())).toBe(
+    expect(
+      JSON.stringify(
+        getConfigData({
+          rawData: ref?.current?.form.getFieldsValue(),
+          contestType: ContestExamType.Exam,
+        }),
+      ),
+    ).toBe(
       JSON.stringify({
         general: {
           gradeRelease: {
@@ -324,7 +331,14 @@ describe('AcConfig', () => {
         value: 10,
       },
     });
-    expect(JSON.stringify(ref.current?.getConfigData())).toBe(
+    expect(
+      JSON.stringify(
+        getConfigData({
+          rawData: ref?.current?.form.getFieldsValue(),
+          contestType: ContestExamType.Homework,
+        }),
+      ),
+    ).toBe(
       JSON.stringify({
         general: {
           gradeRelease: {
@@ -467,7 +481,12 @@ describe('AcConfig', () => {
     await act(async () => {
       ref.current?.form.submit();
     });
-    expect(ref.current?.getConfigData().homework?.limitTime).toBe(4800);
+    expect(
+      getConfigData({
+        rawData: ref?.current?.form.getFieldsValue(),
+        contestType: ContestExamType.Homework,
+      }).homework?.limitTime,
+    ).toBe(4800);
   });
 
   test('homework limitTime', async () => {
@@ -488,7 +507,12 @@ describe('AcConfig', () => {
     await act(async () => {
       ref.current?.form.submit();
     });
-    expect(ref.current?.getConfigData().homework?.limitTime).toBe(0);
+    expect(
+      getConfigData({
+        rawData: ref?.current?.form.getFieldsValue(),
+        contestType: ContestExamType.Homework,
+      }).homework?.limitTime,
+    ).toBe(0);
   });
 
   test('simple type AcConfig', async () => {

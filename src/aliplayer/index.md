@@ -11,6 +11,7 @@ export default () => {
     autoplay: false,
     language: 'zh-cn',
     encryptType: 1,
+    keyShortCuts: true,
   };
   return <Aliplayer config={aliplayerConfig} />;
 };

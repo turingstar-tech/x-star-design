@@ -11,6 +11,7 @@ export interface AliplayerConfig {
   autoplay: boolean;
   language: string;
   encryptType: number;
+  keyShortCuts: boolean;
 }
 
 /**

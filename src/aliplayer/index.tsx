@@ -8,8 +8,10 @@ import { randomString } from 'x-star-utils';
 export interface AliplayerConfig {
   vid: string;
   playauth: string;
-  autoplay: boolean;
-  language: string;
+  autoplay?: boolean;
+  language?: string;
+  encryptType?: number;
+  keyShortCuts?: boolean;
 }
 
 /**
@@ -75,7 +77,7 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
         if (Aliplayer) {
           // 创建 Aliplayer 实例
           player.current = new Aliplayer(
-            { ...config, id, encryptType: 1, keyShortCuts: true },
+            { encryptType: 1, keyShortCuts: true, ...config, id },
             (player: AliplayerInstance) => onCreate?.(player),
           );
           resize();

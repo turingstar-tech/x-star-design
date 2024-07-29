@@ -10,6 +10,7 @@ export interface AliplayerConfig {
   playauth: string;
   autoplay: boolean;
   language: string;
+  encryptType: number;
 }
 
 /**
@@ -75,7 +76,7 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
         if (Aliplayer) {
           // 创建 Aliplayer 实例
           player.current = new Aliplayer(
-            { ...config, id },
+            { ...config, id, encryptType: 1 },
             (player: AliplayerInstance) => onCreate?.(player),
           );
           resize();

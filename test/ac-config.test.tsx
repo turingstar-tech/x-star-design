@@ -526,4 +526,54 @@ describe('AcConfig', () => {
     );
     expect(getAllByText('Visible after grade release')[0]).not.toBeVisible();
   });
+
+  test('onFinish Called', async () => {
+    const ref = createRef<AcConfigHandle>();
+    const onChange = jest.fn();
+    render(
+      <AcConfig
+        ref={ref}
+        type="simple"
+        onFinish={onChange}
+        initialValues={
+          {
+            program: {
+              lang: ['g++', 'gcc'],
+            },
+            general: {
+              gradeRelease: {
+                type: 'scheduled',
+                scheduled: {
+                  releaseTime: 1721899977,
+                },
+              },
+              paperRelease: {
+                type: 'scheduled',
+                scheduled: {
+                  releaseTime: 1721899977,
+                },
+              },
+              disorder: {
+                part: false,
+                program: false,
+                objective: false,
+                combinationInternal: false,
+                singleOption: false,
+                multipleOption: false,
+              },
+            },
+            homework: {
+              limitTime: undefined,
+              noLimit: true,
+            },
+            type: 'homework',
+          } as any
+        }
+      />,
+    );
+    await act(async () => {
+      ref.current?.form.submit();
+    });
+    expect(onChange).toBeCalled();
+  });
 });

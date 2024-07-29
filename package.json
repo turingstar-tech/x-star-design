@@ -55,6 +55,7 @@
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/modifiers": "^7.0.0",
     "@dnd-kit/sortable": "^8.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@uiw/codemirror-theme-bbedit": "^4.21.9",
     "@uiw/codemirror-theme-eclipse": "^4.21.9",
     "@uiw/codemirror-theme-okaidia": "^4.21.9",
@@ -66,7 +67,7 @@
     "randomcolor": "^0.6.2",
     "react-error-boundary": "^4.0.13",
     "react-window": "^1.8.9",
-    "x-star-utils": "^0.0.20"
+    "x-star-utils": "^0.0.21"
   },
   "devDependencies": {
     "@ant-design/icons": "^5.3.7",

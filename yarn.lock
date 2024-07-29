@@ -15949,10 +15949,10 @@ x-path@^0.0.2:
   dependencies:
     path-extra "^1.0.2"
 
-x-star-utils@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.npmmirror.com/x-star-utils/-/x-star-utils-0.0.20.tgz#4eba80cc3fbd9ce505729167f35e634a08f77fa4"
-  integrity sha512-0+s4kGKWdobI0Mumr1z5FeUzMSQfwMokXPBylNMzuxXxVhhxAnhjKJi3BhohDxWZiJRq9E7HXNwtA8cvfKIcvA==
+x-star-utils@^0.0.21:
+  version "0.0.21"
+  resolved "https://registry.npmmirror.com/x-star-utils/-/x-star-utils-0.0.21.tgz#48468e08d891ce3df99c921be40ce18b3bdf40e6"
+  integrity sha512-52uaS79Cn8jesXAw3EQnJ7DCcPmeJoUWGYyFjWqvTa+4n9OdO01fq21dEiy/msjcZFqHJFsjduL3pgjpu/Jfdg==
   dependencies:
     "@aws-sdk/client-s3" "^3.569.0"
     "@babel/runtime" "^7.24.1"

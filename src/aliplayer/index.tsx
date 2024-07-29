@@ -8,8 +8,10 @@ import { randomString } from 'x-star-utils';
 export interface AliplayerConfig {
   vid: string;
   playauth: string;
-  autoplay: boolean;
-  language: string;
+  autoplay?: boolean;
+  language?: string;
+  encryptType?: number;
+  keyShortCuts?: boolean;
 }
 
 /**
@@ -39,14 +41,14 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
     const link = window.document.createElement('link');
     link.rel = 'stylesheet';
     link.href =
-      'https://g.alicdn.com/de/prismplayer/2.11.0/skins/default/aliplayer-min.css';
-    const scirpt = window.document.createElement('script');
-    scirpt.type = 'text/javascript';
-    scirpt.src =
-      'https://g.alicdn.com/de/prismplayer/2.11.0/aliplayer-h5-min.js';
+      'https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/skins/default/aliplayer-min.css';
+    const script = window.document.createElement('script');
+    script.type = 'text/javascript';
+    script.src =
+      'https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/aliplayer-h5-min.js';
     const head = window.document.querySelector('head');
     head?.append(link);
-    head?.append(scirpt);
+    head?.append(script);
   };
 
   if (!(window as any).Aliplayer) {
@@ -75,7 +77,7 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
         if (Aliplayer) {
           // 创建 Aliplayer 实例
           player.current = new Aliplayer(
-            { ...config, id },
+            { encryptType: 1, keyShortCuts: true, ...config, id },
             (player: AliplayerInstance) => onCreate?.(player),
           );
           resize();

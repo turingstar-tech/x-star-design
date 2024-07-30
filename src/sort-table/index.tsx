@@ -13,6 +13,7 @@ import { CSS } from '@dnd-kit/utilities';
 import type { TableColumnsType, TableProps } from 'antd';
 import { Button, Table } from 'antd';
 import React, { useContext, useMemo } from 'react';
+import ConfigProviderWrapper from '../config-provider-wrapper';
 
 interface RowContextProps {
   setActivatorNodeRef?: (element: HTMLElement | null) => void;
@@ -50,7 +51,7 @@ const Row = (props: RowProps) => {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: props['data-row-key'] });
+  } = useSortable({ id: props['data-row-key'] ?? '' });
 
   const style: React.CSSProperties = {
     ...props.style,
@@ -109,18 +110,20 @@ const SortTable = <RecordType extends Record<string | number | symbol, any>>(
   ];
 
   return (
-    <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
-      <SortableContext
-        items={dataSource.map((record) => getKey(record))}
-        strategy={verticalListSortingStrategy}
-      >
-        <Table
-          {...props}
-          components={{ body: { row: Row } }}
-          columns={columns}
-        />
-      </SortableContext>
-    </DndContext>
+    <ConfigProviderWrapper>
+      <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
+        <SortableContext
+          items={dataSource.map((record) => getKey(record))}
+          strategy={verticalListSortingStrategy}
+        >
+          <Table
+            {...props}
+            components={{ body: { row: Row } }}
+            columns={columns}
+          />
+        </SortableContext>
+      </DndContext>
+    </ConfigProviderWrapper>
   );
 };
 

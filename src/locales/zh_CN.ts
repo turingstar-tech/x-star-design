@@ -148,5 +148,10 @@ export default {
     NumberDownloadsAllowed: '允许下载次数',
     General_Configuration: '通用配置',
     Programming_Problem_Configuration: '编程题配置',
+    practice_end_restore_order: '练习结束后自动恢复顺序',
+    No_limit: '不限制',
+    RestrictionsDuringHomeworkExam: '作业/考试结束前限制',
+    ResourceRestriction: '限制资源访问',
+    ResourceRestrictionDesc: '限制访问其他课件、学习空间、精品题库、论坛',
   },
 } as const;

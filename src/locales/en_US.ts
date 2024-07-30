@@ -157,5 +157,12 @@ export default {
     NumberDownloadsAllowed: 'Number of downloads allowed',
     General_Configuration: 'General Configuration',
     Programming_Problem_Configuration: 'Programming ProblemConfiguration',
+    practice_end_restore_order:
+      'Automatically restore order after the practice ends',
+    No_limit: 'No Restrictions',
+    RestrictionsDuringHomeworkExam: 'Restrictions During Homework/Exam',
+    ResourceRestriction: 'Resource Restriction',
+    ResourceRestrictionDesc:
+      'Access to other course materials, Learning spaces, Premium Problem Bank, and forums is restricted.',
   },
 } as const;

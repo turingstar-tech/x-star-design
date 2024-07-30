@@ -10,6 +10,7 @@ export type SubmissionConfigStatus =
   | 'noEarlySubmission'
   | 'allowEarlySubmission';
 
+export type restrictionStatus = { type: 'never' | 'beforeHomeworkExam' };
 export interface GeneralConfigStatus<T extends string = 'General'> {
   type: T extends 'Grade'
     ? Omit<ConfigStatus, 'afterGradeRelease'>
@@ -44,6 +45,7 @@ export interface Configuration {
     submission: GeneralConfigStatus<'Submission'>;
     tipRelease: GeneralConfigStatus;
     disorder: DisorderConfigStatus;
+    restriction: restrictionStatus;
   };
   rank: {
     rankListShowRealName: boolean;
@@ -82,6 +84,7 @@ export interface RawConfig {
   tipRelease: GeneralConfigStatus['type'];
   tipTime: Dayjs;
   submission: SubmissionConfigStatus;
+  restriction: restrictionStatus['type'];
   disorder: Array<keyof DisorderConfigStatus>;
   /**
    * 个人分数可见性

@@ -86,6 +86,9 @@ export const getConfigData = ({
           (rawData?.submissionLimitTime?.limitMinute || 0),
       },
       disorder: getFormatDisorder(),
+      restriction: {
+        type: rawData.restriction,
+      },
     },
     rank: {
       rankListShowRealName: rawData.rankListShowRealName,

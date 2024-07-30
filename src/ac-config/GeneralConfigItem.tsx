@@ -1,3 +1,4 @@
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import {
   Checkbox,
   Col,
@@ -6,6 +7,8 @@ import {
   FormInstance,
   Radio,
   Row,
+  Space,
+  Tooltip,
 } from 'antd';
 import React from 'react';
 import ContestTimeInput from '../contest-time-input';
@@ -255,8 +258,37 @@ const GeneralConfigItem = ({
                 {t('MultipleChoiceOrder')}
               </Checkbox>
             </Col>
+            <Col span={24}>
+              <span
+                style={{
+                  fontSize: '14px',
+                  color: 'rgba(0, 0, 0, 0.45)',
+                  marginTop: '10px',
+                }}
+              >
+                {t('practice_end_restore_order')}
+              </span>
+            </Col>
           </Row>
         </Checkbox.Group>
+      </Form.Item>
+      <Form.Item
+        name={'restriction'}
+        label={
+          <Space>
+            <span>{t('ResourceRestriction')}</span>
+            <Tooltip title={t('ResourceRestrictionDesc')}>
+              <QuestionCircleOutlined />
+            </Tooltip>
+          </Space>
+        }
+      >
+        <Radio.Group>
+          <Radio value={'never'}>{t('No_limit')}</Radio>
+          <Radio value={'beforeHomeworkExam'}>
+            {t('RestrictionsDuringHomeworkExam')}
+          </Radio>
+        </Radio.Group>
       </Form.Item>
     </div>
   );

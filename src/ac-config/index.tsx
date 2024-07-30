@@ -158,7 +158,9 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       submission,
       tipRelease,
       disorder,
+      restriction,
     } = initialValues?.general || {};
+
     const {
       personalScoreVisibility,
       rankingMethod,
@@ -222,6 +224,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       highScoreProgramVisibility,
       downloadDataEnable,
       downloadDataCount,
+      restriction: restriction?.type,
     };
 
     useImperativeHandle(ref, () => ({
@@ -231,6 +234,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
     return (
       <ConfigProviderWrapper>
         <Form
+          className={classNames(`${prefix}-ac-config-form`)}
           form={form}
           labelAlign="right"
           initialValues={formInitialValues}
@@ -242,7 +246,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
           {type === 'advanced' ? (
             <Space
               direction="horizontal"
-              size={30}
+              size={5}
               className={classNames(`${prefix}-ac-config-space`)}
               split={<Divider type="vertical" style={{ fontSize: 400 }} />}
             >

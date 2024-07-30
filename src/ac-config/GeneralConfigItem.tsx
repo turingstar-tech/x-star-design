@@ -235,7 +235,7 @@ const GeneralConfigItem = ({
       )}
       <Form.Item name={'disorder'} label={t('RandomOrder')}>
         <Checkbox.Group>
-          <Row>
+          <Row gutter={[8, 2]}>
             <Col span={8}>
               <Checkbox value="part">{t('PartOrder')}</Checkbox>
             </Col>

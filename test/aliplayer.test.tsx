@@ -27,7 +27,7 @@ describe('aliplayer', () => {
     // render
     render(<Aliplayer config={mockConfig} />);
     jest.runAllTimers();
-    const playerElement = screen.getByTestId('aliplayer-wrapper');
+    const playerElement = screen.getByTestId('aliplayer');
     expect(playerElement).toBeInTheDocument();
   });
 
@@ -61,7 +61,7 @@ describe('aliplayer', () => {
       <Aliplayer config={mockConfig} onCreate={onCreate} />,
     );
     jest.runAllTimers();
-    expect(screen.getByTestId('aliplayer-wrapper')).toBeInTheDocument();
+    expect(screen.getByTestId('aliplayer')).toBeInTheDocument();
     expect(dispose).toHaveBeenCalledTimes(0);
     expect(onCreate).toHaveBeenCalledTimes(1);
     expect(mockAliplayerInstance).toHaveBeenCalledTimes(1);

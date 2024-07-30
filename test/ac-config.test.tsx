@@ -196,6 +196,7 @@ describe('AcConfig', () => {
             singleOption: false,
             multipleOption: false,
           },
+          restriction: {},
         },
         rank: { rankListShowRealName: true, rankShowUserLabel: false },
         program: {
@@ -326,6 +327,9 @@ describe('AcConfig', () => {
     fireEvent.click(getByTestId('downloadDataEnable-true'));
     expect(getByTestId('downloadDataCount-input')).not.toBeDisabled();
 
+    // restriction
+    fireEvent.click(getByText('No Restrictions'));
+
     fireEvent.change(getByTestId('downloadDataCount-input'), {
       target: {
         value: 10,
@@ -384,6 +388,7 @@ describe('AcConfig', () => {
             singleOption: false,
             multipleOption: false,
           },
+          restriction: { type: 'never' },
         },
         rank: { rankListShowRealName: true, rankShowUserLabel: false },
         program: {

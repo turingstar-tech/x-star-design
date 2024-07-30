@@ -8,12 +8,10 @@ import { Form, Button } from 'antd';
 import { useRef } from 'react';
 
 export default () => {
-  const [form] = Form.useForm();
   const ref = useRef();
   return (
     <>
       <AcConfig
-        form={form}
         onFinish={(values) => console.log(values)}
         ref={ref}
         // type="simple"
@@ -81,9 +79,9 @@ export default () => {
       <Button
         onClick={() => {
           if (ref.current) {
-            const config = ref.current.getConfigData();
-            const form = ref.current.form;
-            console.log(config, form);
+            const { form } = ref.current;
+            console.log(form);
+            form.submit();
           }
         }}
         type="primary"

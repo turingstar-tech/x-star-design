@@ -1,7 +1,7 @@
 import { Divider, Form, FormInstance, FormProps, Space } from 'antd';
 import classNames from 'classnames';
 import dayjs, { Dayjs } from 'dayjs';
-import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { getDescription } from 'x-star-utils';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
@@ -169,63 +169,57 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
     const { rankListShowRealName, rankShowUserLabel } =
       initialValues?.rank || {};
 
-    useEffect(() => {
-      const formInitialValues = {
-        contestTime:
-          contestType === 'contest'
-            ? [
-                initialValues?.contest?.startTime,
-                initialValues?.contest?.endTime,
-              ]
-                .filter((i) => i !== undefined)
-                .map((item) => dayjs(item * 1000))
-            : noLimit
-            ? 'noLimit'
-            : 'limitTime',
-        limitTime: {
-          limitHour: noLimit ? 0 : Math.floor((limitTime || 0) / 3600),
-          limitMinute: Math.floor(((limitTime || 0) % 3600) / 60),
-        },
-        gradeRelease: gradeRelease?.type,
-        gradeTime: dayjs.unix(
-          gradeRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-        ),
-        disorder: Object.keys(disorder || {}).filter(
-          (key) => disorder?.[key as keyof typeof disorder] === true,
-        ),
-        rankListRelease: rankListRelease?.type,
-        rankListTime: dayjs.unix(
-          rankListRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-        ),
-        paperRelease: paperRelease?.type,
-        paperTime: dayjs.unix(
-          paperRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-        ),
-        answerRelease: answerRelease?.type,
-        answerTime: dayjs.unix(
-          answerRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-        ),
-        rankListShowRealName,
-        rankShowUserLabel,
-        submission: submission?.type,
-        submissionLimitTime: {
-          limitHour: Math.floor((submission?.submissionTimed || 0) / 60),
-          limitMinute: (submission?.submissionTimed || 0) % 60,
-        },
-        lang,
-        personalScoreVisibility,
-        tipRelease: tipRelease?.type,
-        tipTime: dayjs.unix(
-          tipRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-        ),
-        scoreTypeInMatch,
-        rankingMethod,
-        highScoreProgramVisibility,
-        downloadDataEnable,
-        downloadDataCount,
-      };
-      form.setFieldsValue(formInitialValues);
-    }, [initialValues]);
+    const formInitialValues = {
+      contestTime:
+        contestType === 'contest'
+          ? [initialValues?.contest?.startTime, initialValues?.contest?.endTime]
+              .filter((i) => i !== undefined)
+              .map((item) => dayjs(item * 1000))
+          : noLimit
+          ? 'noLimit'
+          : 'limitTime',
+      limitTime: {
+        limitHour: noLimit ? 0 : Math.floor((limitTime || 0) / 3600),
+        limitMinute: Math.floor(((limitTime || 0) % 3600) / 60),
+      },
+      gradeRelease: gradeRelease?.type,
+      gradeTime: dayjs.unix(
+        gradeRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+      ),
+      disorder: Object.keys(disorder || {}).filter(
+        (key) => disorder?.[key as keyof typeof disorder] === true,
+      ),
+      rankListRelease: rankListRelease?.type,
+      rankListTime: dayjs.unix(
+        rankListRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+      ),
+      paperRelease: paperRelease?.type,
+      paperTime: dayjs.unix(
+        paperRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+      ),
+      answerRelease: answerRelease?.type,
+      answerTime: dayjs.unix(
+        answerRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+      ),
+      rankListShowRealName,
+      rankShowUserLabel,
+      submission: submission?.type,
+      submissionLimitTime: {
+        limitHour: Math.floor((submission?.submissionTimed || 0) / 60),
+        limitMinute: (submission?.submissionTimed || 0) % 60,
+      },
+      lang,
+      personalScoreVisibility,
+      tipRelease: tipRelease?.type,
+      tipTime: dayjs.unix(
+        tipRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+      ),
+      scoreTypeInMatch,
+      rankingMethod,
+      highScoreProgramVisibility,
+      downloadDataEnable,
+      downloadDataCount,
+    };
 
     useImperativeHandle(ref, () => ({
       form,
@@ -236,6 +230,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         <Form
           form={form}
           labelAlign="right"
+          initialValues={formInitialValues}
           onFinish={(val: any) => {
             const configData = getConfigData({ rawData: val, contestType });
             props?.onFinish?.(configData);

@@ -1,0 +1,9 @@
+.#{$prefix}-ac-config-space {
+  & > :last-child {
+    align-self: flex-start;
+  }
+}
+
+.#{$prefix}-ac-config-form {
+  padding-right: 12px;
+}

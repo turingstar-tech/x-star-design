@@ -234,7 +234,8 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
     return (
       <ConfigProviderWrapper>
         <Form
-          className={classNames(`${prefix}-ac-config-form`)}
+          {...props}
+          className={classNames(`${prefix}-ac-config-form`, props?.className)}
           form={form}
           labelAlign="right"
           initialValues={formInitialValues}

@@ -54,4 +54,16 @@ describe('code mirror wrapper', () => {
     rerender(<CodeMirrorWrapper lang={LangId.PLAIN} />);
     expect(editor.dataset.language).toBe(undefined);
   });
+
+  test('render completion', async () => {
+    render(<CodeMirrorWrapper lang={LangId.PY2} />);
+    const editor = screen.getByRole('textbox');
+    editor.textContent = 'turtle.';
+    console.log(document.querySelector('.cm-tooltip-autocomplete'));
+    expect(
+      document.querySelector(
+        '.cm-tooltip-autocomplete .cm-tooltip .cm-tooltip-below',
+      ),
+    ).toBeInTheDocument();
+  });
 });

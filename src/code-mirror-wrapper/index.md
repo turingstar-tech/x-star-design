@@ -19,7 +19,7 @@ enum LangId {
   PLAIN = 'plain',
 }
 export default () => {
-  const [submitLang, setSubmitLang] = useState(LangId.CPP14);
+  const [submitLang, setSubmitLang] = useState(LangId.PY2);
   return (
     <>
       <Select
@@ -36,6 +36,10 @@ export default () => {
             value: LangId.CPP14,
             label: 'C++14',
           },
+          {
+            value:LangId.PY2,
+            label: 'Python2.7',
+          }
         ]}
       />
       <CodeMirrorWrapper

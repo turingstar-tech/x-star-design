@@ -10,7 +10,7 @@ class MockAliplayer implements AliplayerInstance {
   private time = 0;
   private duration = 10;
   private volume = 1;
-  private status = 'ready';
+  private status = 'loading';
   private handlers: Record<string, (() => void)[]> = {};
 
   constructor(
@@ -21,17 +21,15 @@ class MockAliplayer implements AliplayerInstance {
   }
 
   play() {
-    this.status = 'play';
+    if (this.status === 'ended') {
+      this.time = 0;
+    }
+    this.status = 'playing';
     this.handlers['play']?.forEach((handler) => handler());
   }
 
   pause() {
     this.status = 'pause';
-  }
-
-  replay() {
-    this.time = 0;
-    this.status = 'play';
   }
 
   seek(time: number) {
@@ -132,13 +130,13 @@ describe('aliplayer', () => {
 
     // 开始播放
     fireEvent.keyDown(container, { key: ' ' });
-    expect(player?.getStatus()).toBe('play');
+    expect(player?.getStatus()).toBe('playing');
 
     // 暂停播放
     fireEvent.keyDown(container, { key: ' ' });
     expect(player?.getStatus()).toBe('pause');
 
-    // 快进
+    // 前进
     fireEvent.keyDown(container, { key: 'ArrowRight' });
     expect(player?.getCurrentTime()).toBe(10);
     expect(player?.getStatus()).toBe('ended');
@@ -146,16 +144,16 @@ describe('aliplayer', () => {
     // 重播
     fireEvent.keyDown(container, { key: ' ' });
     expect(player?.getCurrentTime()).toBe(0);
-    expect(player?.getStatus()).toBe('play');
+    expect(player?.getStatus()).toBe('playing');
 
-    // 快退
+    // 后退
     fireEvent.keyDown(container, { key: 'ArrowLeft' });
     expect(player?.getCurrentTime()).toBe(0);
 
     // 焦点在输入框时，不响应快捷键
     screen.getByTestId('input').focus();
     fireEvent.keyDown(container, { key: ' ' });
-    expect(player?.getStatus()).toBe('play');
+    expect(player?.getStatus()).toBe('playing');
   });
 
   test('handles multiple players', () => {
@@ -176,10 +174,11 @@ describe('aliplayer', () => {
 
     player2.play();
     expect(player1.getStatus()).toBe('pause');
-    expect(player2.getStatus()).toBe('play');
+    expect(player2.getStatus()).toBe('playing');
 
+    // 只能有一个播放器在播放
     player1.play();
-    expect(player1.getStatus()).toBe('play');
+    expect(player1.getStatus()).toBe('playing');
     expect(player2.getStatus()).toBe('pause');
 
     // 移除不存在的播放器

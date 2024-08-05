@@ -20,7 +20,6 @@ export interface AliplayerConfig {
 export interface AliplayerInstance {
   play: () => void;
   pause: () => void;
-  replay: () => void;
   seek: (time: number) => void;
   getCurrentTime: () => number;
   getDuration: () => number;
@@ -53,19 +52,15 @@ export class AliplayerManager {
           case ' ': {
             e.preventDefault();
             switch (player.getStatus()) {
-              case 'ready':
-              case 'pause': {
+              case 'loading':
+              case 'pause':
+              case 'ended': {
                 player.play();
                 break;
               }
-              case 'play':
               case 'playing':
               case 'waiting': {
                 player.pause();
-                break;
-              }
-              case 'ended': {
-                player.replay();
                 break;
               }
             }
@@ -79,6 +74,7 @@ export class AliplayerManager {
           case 'ArrowDown': {
             e.preventDefault();
             player.setVolume(Math.max(player.getVolume() - 0.1, 0));
+            break;
           }
           case 'ArrowLeft': {
             e.preventDefault();

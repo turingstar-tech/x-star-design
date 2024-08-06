@@ -138,18 +138,21 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
   const player = useRef<AliplayerInstance>();
 
   useEffect(() => {
-    if (!(window as any).Aliplayer) {
+    if (!document.getElementById('aliplayer-css')) {
       const link = document.createElement('link');
+      link.id = 'aliplayer-css';
       link.rel = 'stylesheet';
       link.href =
         'https://g.alicdn.com/apsara-media-box/imp-web-player/2.25.0/skins/default/aliplayer-min.css';
+      document.head.append(link);
+    }
+    if (!document.getElementById('aliplayer-js')) {
       const script = document.createElement('script');
+      script.id = 'aliplayer-js';
       script.type = 'text/javascript';
       script.src =
         'https://g.alicdn.com/apsara-media-box/imp-web-player/2.25.0/aliplayer-h5-min.js';
-      const head = document.head;
-      head.append(link);
-      head.append(script);
+      document.head.append(script);
     }
   }, []);
 

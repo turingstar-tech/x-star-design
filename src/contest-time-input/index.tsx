@@ -12,6 +12,7 @@ interface ContestTimeInputProps {
   prefix?: React.ReactNode;
   defaultValue?: ContestTimeInputValue;
   onChange?: (value: ContestTimeInputValue) => void;
+  value?: ContestTimeInputValue;
 }
 
 const ContestTimeInput = ({
@@ -19,8 +20,9 @@ const ContestTimeInput = ({
   prefix,
   defaultValue,
   onChange,
+  value,
 }: ContestTimeInputProps) => {
-  const [value, setValue] = useState(defaultValue);
+  const [innerValue, setInnerValue] = useState(value ?? defaultValue);
   const { format: t } = useLocale('ContestTimeInput');
 
   return (
@@ -32,10 +34,10 @@ const ContestTimeInput = ({
         min={0}
         max={8760} // 一年 8760 小时
         precision={0}
-        value={value?.limitHour ?? 0}
+        value={innerValue?.limitHour ?? 0}
         onChange={(newValue) => {
-          setValue({ ...value, limitHour: newValue });
-          onChange?.({ ...value, limitHour: newValue });
+          setInnerValue({ ...innerValue, limitHour: newValue });
+          onChange?.({ ...innerValue, limitHour: newValue });
         }}
       />
       <span>{t('Hour')}</span>
@@ -45,10 +47,10 @@ const ContestTimeInput = ({
         min={0}
         max={59}
         precision={0}
-        value={value?.limitMinute ?? 0}
+        value={innerValue?.limitMinute ?? 0}
         onChange={(newValue) => {
-          setValue({ ...value, limitMinute: newValue });
-          onChange?.({ ...value, limitMinute: newValue });
+          setInnerValue({ ...innerValue, limitMinute: newValue });
+          onChange?.({ ...innerValue, limitMinute: newValue });
         }}
       />
       <span>{t('Minute')}</span>

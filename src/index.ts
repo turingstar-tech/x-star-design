@@ -17,6 +17,13 @@ export { default as LoadingMask } from './loading-mask';
 export { LocaleProvider } from './locales';
 export { default as MicroApp } from './micro-app';
 export { default as RainbowCat } from './rainbow-cat';
+export { default as ScoreReport } from './score-report';
+export type {
+  IScoreMessage,
+  IScoreReportDetail,
+  ScoreReportProps,
+  ScoreType,
+} from './score-report/define';
 export { default as SortTable } from './sort-table';
 export { default as StatusTag } from './status-tag';
 export type {

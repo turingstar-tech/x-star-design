@@ -1,0 +1,149 @@
+$max-width: 1440px;
+$mobile-width: 576px;
+
+.#{$prefix}-scoreReport-overflowStyle {
+  width: fit-content !important;
+  min-height: 850px !important;
+  background-color: #f5f5f5 !important;
+}
+
+.#{$prefix}-scoreReport-ContentStyles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  width: 100%;
+  height: 100vh;
+  min-height: 860px;
+
+  @media (max-width: $mobile-width) {
+    min-height: 780px;
+  }
+}
+
+.#{$prefix}-scoreReport-ContentContainer {
+  @media (min-width: $mobile-width) {
+    width: 800px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0 !important;
+  }
+
+  .#{$prefix}-scoreReport-courseRow {
+    @media (min-width: $mobile-width) {
+      max-width: 110rem;
+    }
+
+    .#{$prefix}-scoreReport-adv {
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .#{$prefix}-scoreReport-ScoreMessageWrapper {
+      padding: 24px;
+      width: 100%;
+      border-radius: 10px;
+      background-color: #fff;
+
+      .#{$prefix}-scoreReport-ScoreMessageTitle {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        margin: 30px 0 54px;
+
+        @media (max-width: $mobile-width) {
+          margin: 30px 0;
+        }
+
+        .#{$prefix}-scoreReport-qrCode {
+          position: absolute;
+          top: -26px;
+          right: 0;
+
+          @media (max-width: $mobile-width) {
+            top: -6px;
+          }
+        }
+      }
+
+      .#{$prefix}-scoreReport-ScoreMessage {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        font-size: 22px;
+
+        @media (max-width: $mobile-width) {
+          font-size: 16px;
+        }
+
+        .#{$prefix}-scoreReport-messageValue {
+          font-weight: bolder;
+        }
+      }
+
+      .#{$prefix}-scoreReport-ScoreMessageTable {
+        margin-top: 60px;
+
+        @media (max-width: $mobile-width) {
+          margin-top: 30px;
+        }
+      }
+
+      .#{$prefix}-scoreReport-ScoreMessageFooter {
+        @media (min-width: $mobile-width) {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin: 50px 0 30px;
+          gap: 30px;
+        }
+
+        @media (max-width: $mobile-width) {
+          display: flex;
+          margin-top: 30px;
+          min-width: 300px;
+          flex-direction: column;
+          gap: 30px;
+        }
+
+        h4 {
+          font-size: 16px !important;
+          color: #afafaf;
+        }
+
+        @media (max-width: $mobile-width) {
+          gap: 20px;
+
+          h4 {
+            font-size: 12px !important;
+          }
+        }
+
+        img {
+          width: 250px;
+
+          @media (max-width: $mobile-width) {
+            width: 100px;
+          }
+        }
+      }
+    }
+  }
+
+  .#{$prefix}-scoreReport-scoreDownload {
+    display: flex;
+    justify-content: end;
+    margin: 30px 0;
+    padding-right: 16px;
+    gap: 10px;
+
+    @media (min-width: $mobile-width) {
+      margin: 20px auto !important;
+      max-width: 110rem;
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { ConfigProvider } from 'antd';
 import React from 'react';
 import XTabs from '../src/x-tabs';
 
-describe('x-tabs', () => {
+describe('x tabs', () => {
   test('render correct x-tabs', () => {
     const { getAllByText } = render(
       <XTabs

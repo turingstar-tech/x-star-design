@@ -3,25 +3,43 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { LocaleProvider, useLocale } from '../src/locales';
 
-describe('locale test', () => {
-  test('locale with wrong test', () => {
-    const TestComponent = () => {
-      const { format: t } = useLocale('CodeDetailModal');
-      return <div>{t('Code')}</div>;
-    };
-    const { rerender } = render(
-      <LocaleProvider locale="abc">
-        <TestComponent />
-      </LocaleProvider>,
-    );
-    expect(screen.queryByText('代码')).toBeInTheDocument();
+const TestComponent = () => {
+  const { format: t } = useLocale('CodeDetailModal');
+  return <div>{t('Code')}</div>;
+};
 
-    rerender(
+describe('locale', () => {
+  test('locale with default test', () => {
+    const { rerender } = render(
       <LocaleProvider>
         <TestComponent />
       </LocaleProvider>,
     );
+    expect(screen.getByText('Code')).toBeInTheDocument();
 
-    expect(screen.queryByText('Code')).toBeInTheDocument();
+    rerender(
+      <LocaleProvider locale="zh_CN">
+        <TestComponent />
+      </LocaleProvider>,
+    );
+    expect(screen.getByText('代码')).toBeInTheDocument();
+  });
+
+  test('locale with wrong test', () => {
+    document.cookie = 'lang=zh';
+
+    const { rerender } = render(
+      <LocaleProvider>
+        <TestComponent />
+      </LocaleProvider>,
+    );
+    expect(screen.getByText('代码')).toBeInTheDocument();
+
+    rerender(
+      <LocaleProvider locale="abc">
+        <TestComponent />
+      </LocaleProvider>,
+    );
+    expect(screen.getByText('Code')).toBeInTheDocument();
   });
 });

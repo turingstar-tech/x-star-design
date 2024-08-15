@@ -20,7 +20,7 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
 
 jest.useFakeTimers();
 
-describe('AcConfig', () => {
+describe('ac config', () => {
   test('render contest AcConfig', async () => {
     const ref = createRef<AcConfigHandle>();
     const { getByText, getByLabelText, getByTestId } = render(

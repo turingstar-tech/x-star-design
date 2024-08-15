@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import RainbowCat from '../src/rainbow-cat';
 
-describe('title with icon', () => {
+describe('rainbow cat', () => {
   test('renders text', () => {
     render(<RainbowCat text="Test Title" />);
 

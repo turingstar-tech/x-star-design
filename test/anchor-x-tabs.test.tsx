@@ -41,7 +41,7 @@ function isInViewport(element: HTMLElement) {
 }
 
 // window 宽高 1024*768
-describe('anchor-x-tabs', () => {
+describe('anchor x tabs', () => {
   test('renders the component with items', async () => {
     render(<AnchorXTabs items={items} />);
     const content1 = screen.getByText('Content 1');

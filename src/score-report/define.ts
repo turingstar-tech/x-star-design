@@ -1,5 +1,5 @@
-import { type TableProps } from 'antd';
-import { ReactNode } from 'react';
+import type { TableProps } from 'antd';
+
 export interface ScoreType {
   requiredScore: number;
   optionalScore: number;
@@ -7,12 +7,13 @@ export interface ScoreType {
   optionalTotalScore: number;
 }
 
-export interface IScoreMessage {
-  label: string | number | ReactNode;
-  value?: string | number | ReactNode;
-  render?: (item: IScoreMessage) => ReactNode;
+export interface ScoreMessage {
+  label: string | number | React.ReactNode;
+  value?: string | number | React.ReactNode;
+  render?: (item: ScoreMessage) => React.ReactNode;
 }
-export interface IScoreReportDetail {
+
+export interface ScoreReportDetail {
   type: string;
   rank: number;
   username: string;
@@ -29,11 +30,11 @@ export interface IScoreReportDetail {
 
 export interface ScoreReportProps {
   tableProps: TableProps;
-  scoreMessage: IScoreMessage[]; // 成绩单 自定义行信息
-  scoreDetail: IScoreReportDetail; // 成绩单详情
-  token: string; // 成绩单编号
+  scoreMessage: ScoreMessage[]; // 成绩单 自定义行信息
+  scoreDetail: ScoreReportDetail; // 成绩单详情
   fileName: string; // 下载文件名
+  token: string; // 成绩单编号
   isMobile: boolean; // 是否移动端
   tenant: 'XYD' | 'XCAMP'; // 信友队 | xcamp
-  setLang: (...params: any[]) => void; // 外部传设置语言的函数
+  toggleLang: () => void; // 外部传切换语言的函数
 }

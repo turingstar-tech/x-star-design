@@ -9,7 +9,7 @@ import { useLocale } from '../locales';
 import { useSearchParams } from 'react-router-dom';
 import { ScoreReportProps } from './define';
 
-const ScoreReportDemo = ({ setLang }) => {
+const ScoreReportDemo = ({ toggleLang }) => {
   const [searchParams] = useSearchParams();
   const { locale: lang, format: t } = useLocale('ScoreReport');
   const testData = {
@@ -204,26 +204,26 @@ const ScoreReportDemo = ({ setLang }) => {
 
   return (
     <ScoreReport
-      setLang={setLang}
-      scoreMessage={testData.scoreMessage}
       tableProps={testData.tableProps}
+      scoreMessage={testData.scoreMessage}
       scoreDetail={testData.scoreDetail}
       fileName={testData.fileName}
       token={testData.token}
       isMobile={testData.isMobile}
       tenant={lang === 'zh_CN' ? 'XYD' : 'XCAMP'}
+      toggleLang={toggleLang}
     />
   );
 };
 
 export default () => {
   const [lang, setLang] = useState('zh_CN');
-  const handleChangeLang = () => {
+  const toggleLang = () => {
     setLang(lang === 'zh_CN' ? 'en_US' : 'zh_CN');
   };
   return (
     <LocaleProvider locale={lang}>
-      <ScoreReportDemo setLang={handleChangeLang} />
+      <ScoreReportDemo toggleLang={toggleLang} />
     </LocaleProvider>
   );
 };

@@ -82,8 +82,10 @@ const data = [
     tags: ['cool', 'teacher'],
   },
 ];
+
 export default () => {
   const [elementKey, setElementKey] = useState(dayjs().unix());
+
   // 配置观察选项，默认为此config
   const config = {
     attributes: true, // 监听属性变化
@@ -91,6 +93,7 @@ export default () => {
     subtree: true, // 监听整个子树
     characterData: true, // 监听文本内容变化
   };
+
   // 配置监听的回调
   const observedCallback = (mutationsList) => {
     mutationsList?.forEach((mutation) => {
@@ -112,9 +115,9 @@ export default () => {
   return (
     <DomObserver
       key={elementKey}
-      observedId={'observedDom'}
+      target={() => document.getElementById('observedDom')}
       config={config}
-      observedCallback={observedCallback}
+      callback={observedCallback}
     >
       <Table
         id={'observedDom'}

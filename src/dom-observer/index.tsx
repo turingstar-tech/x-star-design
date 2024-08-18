@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import type { DomObserverProps } from './define';
 
 const defaultOptions = {
@@ -35,7 +35,7 @@ const DomObserver = ({
     };
   });
 
-  return children;
+  return <>{children}</>;
 };
 
 export default DomObserver;

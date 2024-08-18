@@ -3,12 +3,10 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import DomObserver from '../src/dom-observer';
 
-const observe = jest.fn();
-
-window.MutationObserver.prototype.observe = observe;
-
 describe('dom observer', () => {
   test('observes the target element', () => {
+    const observe = jest.spyOn(window.MutationObserver.prototype, 'observe');
+
     // 通过函数获取元素
     const getDiv = () => document.getElementById('id')!;
     const { rerender } = render(

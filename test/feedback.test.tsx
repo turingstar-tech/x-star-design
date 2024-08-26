@@ -65,7 +65,7 @@ const goodList = [
   },
 ];
 
-describe('Feedback', () => {
+describe('feedback', () => {
   test('The button color will be updated when click', async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
     const { getByTestId } = render(

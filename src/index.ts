@@ -8,6 +8,8 @@ export { default as CodeMirrorWrapper } from './code-mirror-wrapper';
 export { LangId, Language, Theme } from './code-mirror-wrapper/define';
 export { default as ContactButton } from './contact-button';
 export { default as ContestTimeInput } from './contest-time-input';
+export { default as DomObserver } from './dom-observer';
+export type { DomObserverProps } from './dom-observer/define';
 export { default as DraggableLayout } from './draggable-layout';
 export { default as ErrorBoundary } from './error-boundary';
 export type { FallbackProps } from './error-boundary';
@@ -17,6 +19,13 @@ export { default as LoadingMask } from './loading-mask';
 export { LocaleProvider } from './locales';
 export { default as MicroApp } from './micro-app';
 export { default as RainbowCat } from './rainbow-cat';
+export { default as ScoreReport } from './score-report';
+export type {
+  ScoreMessage,
+  ScoreReportDetail,
+  ScoreReportProps,
+  ScoreType,
+} from './score-report/define';
 export { default as SortTable } from './sort-table';
 export { default as StatusTag } from './status-tag';
 export type {

@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import InputNumbers from '../src/input-numbers';
 
-describe('input-numbers', () => {
+describe('input numbers', () => {
   test('renders input numbers with correct initial values', () => {
     const { getByTestId } = render(
       <InputNumbers value={{ start: 10, end: 20 }} />,

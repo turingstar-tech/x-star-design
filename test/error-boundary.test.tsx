@@ -5,7 +5,7 @@ import ErrorBoundary from '../src/error-boundary'; // 模拟全局的错误处�
 
 console.error = () => {};
 
-describe('error-boundary', () => {
+describe('error boundary', () => {
   test('renders with correct situation', () => {
     render(<ErrorBoundary>123</ErrorBoundary>);
     expect(screen.queryByText('123')).toBeInTheDocument();

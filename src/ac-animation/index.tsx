@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { AcAnimationProps, ImgShowProps, titleShowProps } from './define';
+import type { AcAnimationProps, ImgShowProps, TitleShowProps } from './define';
 
-const AcAnimation: React.FC<AcAnimationProps> = ({
+const AcAnimation = ({
   title,
   imgUrl,
   imgSizeAndPosition = { scale: 1, offsetX: 0, offsetY: 0 },
   titleStyle,
   onFinish,
-}) => {
+}: AcAnimationProps) => {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d')!;
   let AnimationID = -1;
@@ -62,7 +62,7 @@ const AcAnimation: React.FC<AcAnimationProps> = ({
     ctx.restore();
   };
 
-  const renderText = (titleStyle?: titleShowProps) => {
+  const renderText = (titleStyle?: TitleShowProps) => {
     ctx.save();
     ctx.shadowOffsetX = 4;
     ctx.shadowOffsetY = 2;

@@ -66,7 +66,7 @@ const statusZh = new Map<string, string>([
   [Status.WrongAnswer, '答案错误'],
 ]);
 
-interface SubmissionStatusProps {
+export interface SubmissionStatusProps {
   className?: string;
   style?: React.CSSProperties;
   status: string;

@@ -7,7 +7,7 @@ export interface ImgShowProps {
   offsetY?: number;
 }
 
-export interface titleShowProps {
+export interface TitleShowProps {
   offsetX?: number;
   offsetY?: number;
   fontSize?: number;

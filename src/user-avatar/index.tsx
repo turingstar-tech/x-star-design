@@ -4,7 +4,7 @@ import randomColor from 'randomcolor';
 import React, { useMemo } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 
-interface UserAvatarProps extends AvatarProps {
+export interface UserAvatarProps extends AvatarProps {
   user: { realName?: string; userName?: string } | null | undefined;
   tooltipProps?: TooltipProps;
 }

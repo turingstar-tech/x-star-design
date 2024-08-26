@@ -5,7 +5,7 @@ import zh_CN from './zh_CN';
 
 const LocaleContext = React.createContext('');
 
-interface LocaleProviderProps {
+export interface LocaleProviderProps {
   children: React.ReactNode;
   locale?: string;
 }

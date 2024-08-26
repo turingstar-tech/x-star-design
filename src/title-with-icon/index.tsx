@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import React, { useContext } from 'react';
 import { prefix } from '../utils/global';
 
-interface TitleWithIconProps {
+export interface TitleWithIconProps {
   id?: string;
   className?: string;
   title?: React.ReactNode;

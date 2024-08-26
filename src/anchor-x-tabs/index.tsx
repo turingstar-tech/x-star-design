@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { hexToRgb } from '../utils/color';
 import { prefix } from '../utils/global';
 
-interface AnchorTabProps {
+export interface AnchorTabProps {
   items: {
     key: string;
     title: string;

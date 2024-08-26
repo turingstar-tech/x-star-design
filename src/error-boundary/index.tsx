@@ -3,12 +3,14 @@ import type { ErrorBoundaryProps as ReactErrorBoundaryProps } from 'react-error-
 import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary';
 import ErrorPage from './error-page';
 
+export type ErrorBoundaryProps = Partial<ReactErrorBoundaryProps>;
+
 const ErrorBoundary = ({
   fallback,
   fallbackRender,
   FallbackComponent = ErrorPage,
   ...rest
-}: Partial<ReactErrorBoundaryProps>) => {
+}: ErrorBoundaryProps) => {
   const props =
     fallback !== undefined
       ? { fallback, ...rest }

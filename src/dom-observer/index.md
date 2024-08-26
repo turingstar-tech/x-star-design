@@ -86,16 +86,16 @@ const data = [
 export default () => {
   const [elementKey, setElementKey] = useState(dayjs().unix());
 
-  // 配置观察选项，默认为此config
-  const config = {
+  // 配置观察选项，默认为此options
+  const options = {
     attributes: true, // 监听属性变化
+    characterData: true, // 监听文本内容变化
     childList: true, // 监听子节点变化
     subtree: true, // 监听整个子树
-    characterData: true, // 监听文本内容变化
   };
 
   // 配置监听的回调
-  const observedCallback = (mutationsList) => {
+  const callback = (mutationsList) => {
     mutationsList?.forEach((mutation) => {
       switch (mutation.type) {
         // case 'childList':
@@ -115,12 +115,12 @@ export default () => {
   return (
     <DomObserver
       key={elementKey}
-      target={() => document.getElementById('observedDom')}
-      config={config}
-      callback={observedCallback}
+      target={() => document.getElementById('observedDom')!}
+      options={options}
+      callback={callback}
     >
       <Table
-        id={'observedDom'}
+        id="observedDom"
         columns={columns}
         dataSource={data}
         pagination={false}

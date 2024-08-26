@@ -16,7 +16,7 @@ import {
   themeMap,
 } from './define';
 
-interface Props {
+export interface CodeMirrorWrapperProps {
   className?: string;
   value?: string;
   /**
@@ -51,7 +51,7 @@ const CodeMirrorWrapper = ({
   lang = LangId.CPP,
   readOnly = false,
   ...props
-}: Props) => {
+}: CodeMirrorWrapperProps) => {
   //自动提示增加自定义变量提示
   const langCompletions = (context: CompletionContext, lang: Language) => {
     const options = [...langCompleteOptionsMap[lang]];

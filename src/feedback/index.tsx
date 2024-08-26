@@ -30,7 +30,7 @@ interface FeedbackItem {
   label: string;
 }
 
-interface FeedbackProps {
+export interface FeedbackProps {
   /**
    * @description 标题
    * @default 您对本题目的反馈
@@ -70,7 +70,7 @@ interface FeedbackProps {
   feedbackTextAreaKey: string;
 }
 
-const Feedback: React.FC<FeedbackProps> = ({
+const Feedback = ({
   title,
   feedbackListGood,
   feedbackListBad,
@@ -80,8 +80,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   feedbackKey,
   feedbackTypeKey,
   feedbackTextAreaKey,
-  //form
-}) => {
+}: FeedbackProps) => {
   const [form] = Form.useForm();
   const [choiceType, setChoiceType] = useState<number>();
   const [open, setOpen] = useState<boolean>(false);

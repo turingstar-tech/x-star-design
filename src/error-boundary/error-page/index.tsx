@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FallbackProps } from 'react-error-boundary';
+import type { FallbackProps } from '..';
 import { useLocale } from '../../locales';
 import { prefix } from '../../utils/global';
 

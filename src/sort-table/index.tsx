@@ -78,7 +78,8 @@ const Row = (props: RowProps) => {
   );
 };
 
-interface SortTableProps<RecordType> extends TableProps<RecordType> {
+export interface SortTableProps<RecordType = any>
+  extends TableProps<RecordType> {
   onSortEnd?: (data: RecordType[]) => void;
 }
 

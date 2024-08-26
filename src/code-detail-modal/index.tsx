@@ -11,18 +11,18 @@ import SubmissionStatus from '../submission-status';
 import { prefix } from '../utils/global';
 import { CodeDetail, langVL } from './define';
 
-interface CodeDetailModalProps extends ModalProps {
+export interface CodeDetailModalProps extends ModalProps {
   codeData: CodeDetail;
   open: boolean;
   onCancel: () => void;
 }
 
-const CodeDetailModal: React.FC<CodeDetailModalProps> = ({
+const CodeDetailModal = ({
   codeData,
   open,
   onCancel,
   ...props
-}) => {
+}: CodeDetailModalProps) => {
   const { format: t, locale } = useLocale('CodeDetailModal');
   const lang = locale === 'zh_CN' ? 'zh' : 'en';
   const [showCode, setShowCode] = useState(false);

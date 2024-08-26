@@ -7,7 +7,7 @@ interface ContestTimeInputValue {
   limitMinute?: number | null;
 }
 
-interface ContestTimeInputProps {
+export interface ContestTimeInputProps {
   suffix?: React.ReactNode;
   prefix?: React.ReactNode;
   defaultValue?: ContestTimeInputValue;

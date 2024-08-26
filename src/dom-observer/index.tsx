@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
-import type { DomObserverProps } from './define';
 
-const defaultOptions = {
-  subtree: true, // 监听整个子树
-  childList: true, // 监听子节点变化
+const defaultOptions: MutationObserverInit = {
   attributes: true, // 监听属性变化
   characterData: true, // 监听文本内容变化
+  childList: true, // 监听子节点变化
+  subtree: true, // 监听整个子树
 };
+
+export interface DomObserverProps {
+  children: React.ReactNode; // 子组件
+  target: Element | (() => Element) | React.MutableRefObject<Element>; // 监听的元素
+  options?: MutationObserverInit;
+  callback: MutationCallback; // 监听的回调
+}
 
 const DomObserver = ({
   children,

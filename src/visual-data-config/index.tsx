@@ -16,11 +16,11 @@ import SingleDataConfig from './SingleDataConfig';
 import SubTaskConfig from './SubTaskConfig';
 import { ConfigItem, SubTaskItem, compactObj } from './define';
 
-const VisualDataConfig = ({
-  onConfirm,
-}: {
+export interface VisualDataConfigProps {
   onConfirm: (value: string) => void;
-}) => {
+}
+
+const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
   const [form] = Form.useForm();
   const { format: t } = useLocale('VisualDataConfig');
   useEffect(() => {

@@ -1,7 +1,11 @@
 import React from 'react';
 import { prefix } from '../utils/global';
 
-const RainbowCat = ({ text }: { text: string }) => (
+export interface RainbowCatProps {
+  text: string;
+}
+
+const RainbowCat = ({ text }: RainbowCatProps) => (
   <div className={`${prefix}-rainbowContent`}>
     <img
       src="https://static.production.xjoi.net/images/emoticon-1.gif"

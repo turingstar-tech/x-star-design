@@ -128,7 +128,7 @@ export class AliplayerManager {
 
 const aliplayerManager = new AliplayerManager();
 
-interface AliplayerProps {
+export interface AliplayerProps {
   config: AliplayerConfig;
   onCreate?: (player: AliplayerInstance) => void;
 }

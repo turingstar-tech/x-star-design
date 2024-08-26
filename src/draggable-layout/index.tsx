@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { useRef, useState } from 'react';
 import { prefix } from '../utils/global';
 
-interface DraggableLayoutProps {
+export interface DraggableLayoutProps {
   className?: string;
   style?: React.CSSProperties;
   dividerClassName?: string;
@@ -19,7 +19,7 @@ interface DraggableLayoutProps {
 /**
  * 可拖拽布局
  */
-const DraggableLayout: React.FC<DraggableLayoutProps> = ({
+const DraggableLayout = ({
   className,
   style,
   dividerClassName,
@@ -30,7 +30,7 @@ const DraggableLayout: React.FC<DraggableLayoutProps> = ({
   collapsible = [true, true],
   left,
   right,
-}) => {
+}: DraggableLayoutProps) => {
   const [dragging, setDragging] = useState(false);
 
   const transition = useRef(false);

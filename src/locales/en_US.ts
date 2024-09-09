@@ -165,4 +165,26 @@ export default {
     ResourceRestrictionDesc:
       'Access to other course materials, Learning spaces, Premium Problem Bank, and forums is restricted.',
   },
+  ScoreReport: {
+    In_Game_Total_Score: 'Timed Score',
+    ScoreReport: 'Score Report',
+    Score: 'Score:',
+    ScoreReportTitle: 'Score Report',
+    ScoreCopylink: 'copy link',
+    DownloadDom: 'Download the score report',
+    ScoreReportButtonTip: 'Visible after homework/exam',
+    clipboardSuccessTip: 'The link has been copied to the clipboard',
+    CopyFail:
+      'Copy failed, no permission to write to clipboard, refused to write to clipboard, please change browser.',
+    Example_RANK: 'Rank',
+    Example_In_Game_Total_Score: 'Timed Score',
+    Example_PROGRAMMING_QUESTIONS: 'Programming Problems',
+    Example_Objective_Question: 'Objective Problem',
+    Example_Problem_Type: 'Required',
+    Example_Option_Problem: 'Bonus',
+    Example_USER: 'User',
+    Example_Class: 'Class',
+    Example_Paper: 'Paper',
+    Example_Time: 'Time',
+  },
 } as const;

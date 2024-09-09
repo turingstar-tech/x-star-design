@@ -10,7 +10,7 @@ type XTabsItem = Exclude<TabsProps['items'], undefined> extends (infer Item)[]
   ? Item & { icon?: React.ReactNode }
   : never;
 
-interface XTabsProps extends TabsProps {
+export interface XTabsProps extends TabsProps {
   items?: XTabsItem[];
 }
 

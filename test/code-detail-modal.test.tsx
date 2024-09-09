@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import CodeDetailModal from '../src/code-detail-modal';
 import { LangId } from '../src/code-mirror-wrapper/define';
+import { LocaleProvider } from '../src/locales';
 
 window.matchMedia = jest.fn().mockImplementation((query) => {
   return {
@@ -128,8 +129,6 @@ describe('code detail modal', () => {
   });
 
   test('renders code detail with zh and extremely situation', () => {
-    document.cookie = 'lang=zh';
-
     const codeData = {
       problemNameZh: '打印直角三角形',
       problemNameEn: 'Print right triangles',
@@ -142,7 +141,11 @@ describe('code detail modal', () => {
       submissionTime: 0,
     };
 
-    render(<CodeDetailModal codeData={codeData} open onCancel={() => {}} />);
+    render(
+      <LocaleProvider locale="zh_CN">
+        <CodeDetailModal codeData={codeData} open onCancel={() => {}} />
+      </LocaleProvider>,
+    );
 
     // 测试中文环境
     expect(screen.getByText('代码详情')).toBeInTheDocument();

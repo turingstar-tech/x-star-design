@@ -17,10 +17,14 @@ export default () => {
         // type="simple"
         contestType={'homework'}
         initialValues={{
-          type: 'contest',
-          contest: {
-            startTime: 1715068020,
-            endTime: 1730965620,
+          type: 'homework',
+          // contest: {
+          //   startTime: 1715068020,
+          //   endTime: 1730965620,
+          // },
+          homework: {
+            limitTime: 420,
+            noLimit: false,
           },
           general: {
             gradeRelease: {
@@ -36,8 +40,8 @@ export default () => {
               type: 'afterExam',
             },
             submission: {
-              type: 'noEarlySubmission',
-              submissionTimed: 0,
+              type: 'timedSubmission',
+              submissionTimed: 60,
             },
             tipRelease: {
               type: 'afterExam',

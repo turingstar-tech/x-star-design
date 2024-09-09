@@ -2,15 +2,16 @@ import { QrcodeOutlined } from '@ant-design/icons';
 import { Card, Popover, Space } from 'antd';
 import React from 'react';
 import { getTransResult } from 'x-star-utils';
-import wechatCode from '../assets/contact-button/wechatCode.jpg';
-import xcQrCode from '../assets/contact-button/xcQrCode.png';
+import xcampQrCode from '../assets/contact-button/xcamp-qr-code.png';
+import xydQrCode from '../assets/contact-button/xyd-qr-code.jpg';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
 import { prefix } from '../utils/global';
 
-const ContactButton: React.FC = () => {
+const ContactButton = () => {
   const { format: t, locale } = useLocale('ContactButton');
   const lang = locale === 'zh_CN' ? 'zh' : 'en';
+
   return (
     <ConfigProviderWrapper>
       <Popover
@@ -21,7 +22,7 @@ const ContactButton: React.FC = () => {
               data-testid="qrCode"
               alt=""
               style={{ height: 100 }}
-              src={getTransResult(lang, wechatCode, xcQrCode)}
+              src={getTransResult(lang, xydQrCode, xcampQrCode)}
             />
             {t('CONTACT_TIP')}
             {t('CONTACT_TELEPHONE')}

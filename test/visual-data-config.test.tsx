@@ -18,7 +18,7 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
 
 jest.useFakeTimers();
 
-describe('renders visual data config', () => {
+describe('visual data config', () => {
   test('renders width single data', async () => {
     const onConfirmMock = jest.fn();
     const { getByText, getByLabelText } = render(

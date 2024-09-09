@@ -3,7 +3,7 @@ import React from 'react';
 import { useDelayedMount } from 'x-star-utils';
 import { prefix } from '../utils/global';
 
-interface LoadingMaskProps {
+export interface LoadingMaskProps {
   loading: boolean;
 }
 

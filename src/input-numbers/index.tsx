@@ -9,7 +9,7 @@ export interface InputNumbersValue {
   end?: string | number | null;
 }
 
-interface InputNumbersProps
+export interface InputNumbersProps
   extends Omit<InputNumberProps, 'defaultValue' | 'value' | 'onChange'> {
   defaultValue?: InputNumbersValue;
   value?: InputNumbersValue;

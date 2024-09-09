@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import ContestTimeInput from '../src/contest-time-input';
 
-describe('contest-time-input.test', () => {
+describe('contest time input', () => {
   test('renders input time with correct initial values', () => {
     const { getByTestId } = render(
       <ContestTimeInput defaultValue={{ limitHour: 10, limitMinute: 20 }} />,

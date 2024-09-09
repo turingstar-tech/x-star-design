@@ -7,7 +7,7 @@ export interface ImgShowProps {
   offsetY?: number;
 }
 
-export interface titleShowProps {
+export interface TitleShowProps {
   offsetX?: number;
   offsetY?: number;
   fontSize?: number;
@@ -32,7 +32,7 @@ export interface AcAnimationProps {
   /**
    * @default offsetX: 0, offsetY: 0, fontSize: 36, fontFamily: 'Arial', shadowColor: 'rgba(2,38,121,0.2)', color: '#022679' 相对canvas水平垂直居中
    */
-  titleStyle?: titleShowProps;
+  titleStyle?: TitleShowProps;
   /**
    * @description canvas卸载时的回调
    */

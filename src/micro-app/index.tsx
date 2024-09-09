@@ -5,7 +5,7 @@ import { randomString } from 'x-star-utils';
 import { useLocale } from '../locales';
 import RainbowCat from '../rainbow-cat';
 
-interface MicroAppProps {
+export interface MicroAppProps {
   className?: string;
   style?: CSSProperties;
   name: string;

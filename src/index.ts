@@ -54,6 +54,13 @@ export type {
 } from './status-tag/define';
 export { default as SubmissionStatus } from './submission-status';
 export type { SubmissionStatusProps } from './submission-status';
+export { TenantProvider, getThemeConfig, useTenant } from './tenant-provider';
+export type {
+  Tenant,
+  TenantName,
+  TenantProviderProps,
+  TenantTheme,
+} from './tenant-provider';
 export { default as TitleWithIcon } from './title-with-icon';
 export type { TitleWithIconProps } from './title-with-icon';
 export { default as UserAvatar } from './user-avatar';

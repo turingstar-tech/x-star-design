@@ -31,7 +31,7 @@ export interface StudyStatusCascaderProps {
   };
 }
 
-export interface TransformObjectToArrayParams {
+interface TransformObjectToArrayParams {
   data: StudyStatusProps;
   studyStatusCascaderOptions: StudyStatusOptionProps[];
 }

@@ -42,8 +42,8 @@ export const LevelKeysArr: any[] = ['countryName', 'stageName', 'sessionName'];
  * 将string[] 格式化为学业状态对象并且返回给表单
  * @param data
  */
-export const handleOptionsToLabels = (data: Array<StudyStatusOptionProps>) => {
-  const labels = data?.map((item) => item.label) || [];
+export const handleOptionsToLabels = (data: StudyStatusOptionProps[]) => {
+  const labels = data.map((item) => item.label);
   const keys = LevelKeysArr;
   const study_status: any = {};
   keys.forEach((item, index) => {
@@ -62,12 +62,9 @@ export const transformObjectToArray = ({
 }: TransformObjectToArrayParams) => {
   const values: (keyof typeof data)[] = [...LevelKeysArr];
   const labels: string[] = [];
-  if (studyStatusCascaderOptions.length === 0) {
-    return [];
-  }
   const handleValuesToLables = (
     value: string,
-    options: Array<StudyStatusOptionProps>,
+    options: StudyStatusOptionProps[],
   ) => {
     options.forEach((item) => {
       if (item.label === value) {
@@ -88,7 +85,7 @@ export const transformObjectToArray = ({
  * @param data
  */
 export const generateStudyStatusCascaderOptions = (
-  data: Array<StudyStatusCascaderOption>,
+  data: StudyStatusCascaderOption[],
 ) => {
   return data.map((countryItem: StudyStatusCascaderOption) => {
     const { stage: stageData, country } = countryItem;
@@ -96,7 +93,7 @@ export const generateStudyStatusCascaderOptions = (
       // 不存在只有一个年级的学段
       const children =
         stageItem.session.length > 1
-          ? stageItem.session?.map((sessionItem) => ({
+          ? stageItem.session.map((sessionItem) => ({
               value: sessionItem.name,
               label: sessionItem.name,
             }))
@@ -120,10 +117,10 @@ export const generateStudyStatusCascaderOptions = (
  * @param levelKeys
  */
 export const generateLevelKeys = (
-  levelKeys: StudyStatusCascaderProps['levelKeys'],
+  levelKeys: NonNullable<StudyStatusCascaderProps['levelKeys']>,
 ) => {
   LevelKeysArr.forEach((item, index) => {
-    if (levelKeys && item !== levelKeys[`level${index as 0 | 1 | 2}`]) {
+    if (item !== levelKeys[`level${index as 0 | 1 | 2}`]) {
       LevelKeysArr[index] = levelKeys[`level${index as 0 | 1 | 2}`];
     }
   });

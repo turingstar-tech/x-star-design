@@ -27,11 +27,10 @@ const StudyStatusCascader = ({
     [options],
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  levelKeys && generateLevelKeys(levelKeys);
+  generateLevelKeys(levelKeys);
 
   useEffect(() => {
-    if (value && cascaderOptions?.length) {
+    if (value && cascaderOptions.length) {
       setOriginalValue(
         transformObjectToArray({
           data: value,
@@ -50,10 +49,9 @@ const StudyStatusCascader = ({
       defaultValue={originalValue}
       displayRender={displayRender}
       placeholder={placeholder}
-      onChange={(value: string[], options) => {
-        setOriginalValue(value || []);
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        onChange && onChange(handleOptionsToLabels(options));
+      onChange={(value, options) => {
+        setOriginalValue(value);
+        onChange?.(handleOptionsToLabels(options));
       }}
     />
   );

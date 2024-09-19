@@ -180,9 +180,7 @@ const options = [
 describe('StudyStatusCascader', () => {
   const mockOnChange = jest.fn();
   test('renders correctly with default props', () => {
-    render(
-      <StudyStatusCascader options={options} placeholder={'请选择学业状态'} />,
-    );
+    render(<StudyStatusCascader placeholder={'请选择学业状态'} />);
 
     // 检查占位符是否存在
     const placeholderElement = screen.getByText('请选择学业状态');
@@ -264,5 +262,27 @@ describe('StudyStatusCascader', () => {
       session: '一年级',
       stage: '小初',
     });
+  });
+
+  test('renders correctly with given value', () => {
+    render(
+      <StudyStatusCascader
+        value={{
+          countryName: '中国',
+          sessionName: undefined,
+          stageName: '学前',
+        }}
+        options={options}
+        placeholder={'请选择学业状态'}
+      />,
+    );
+
+    // 检查占位符是否存在
+    const placeholderElement = screen.queryByText('请选择学业状态');
+    expect(placeholderElement).not.toBeInTheDocument();
+
+    // 检查值是否存在
+    const valueElement = screen.getByText('学前');
+    expect(valueElement).toBeInTheDocument();
   });
 });

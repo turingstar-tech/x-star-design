@@ -1,4 +1,4 @@
-# StatusTag
+# StudyStatusCascader
 
 学业状态组件
 

@@ -6,7 +6,7 @@ import {
   generateStudyStatusCascaderOptions,
   handleOptionsToLabels,
   transformObjectToArray,
-} from 'x-star-design/study-status-cascader/define';
+} from './define';
 
 const StudyStatusCascader = ({
   value,
@@ -44,7 +44,6 @@ const StudyStatusCascader = ({
   return (
     <Cascader
       value={originalValue}
-      loading={!options.length}
       options={cascaderOptions}
       expandTrigger="hover"
       allowClear={allowClear}

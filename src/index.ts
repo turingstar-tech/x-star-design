@@ -30,12 +30,26 @@ export { default as InputNumbers } from './input-numbers';
 export type { InputNumbersProps } from './input-numbers';
 export { default as LoadingMask } from './loading-mask';
 export type { LoadingMaskProps } from './loading-mask';
+export { default as LocaleAddressCascader } from './locale-address-cascader';
+export {
+  LEVEL,
+  USAMAP,
+  getCodesFromLabels,
+  getLabelsFromCodes,
+} from './locale-address-cascader/define';
+export type { LocaleAddressCascaderProps } from './locale-address-cascader/define';
 export { LocaleProvider } from './locales';
 export type { LocaleProviderProps } from './locales';
 export { default as MicroApp } from './micro-app';
 export type { MicroAppProps } from './micro-app';
 export { default as RainbowCat } from './rainbow-cat';
 export type { RainbowCatProps } from './rainbow-cat';
+export { default as SchoolCascader } from './school-cascader';
+export type {
+  ISchoolData,
+  SchoolCascaderProps,
+  SchoolItem,
+} from './school-cascader/define';
 export { default as ScoreReport } from './score-report';
 export type {
   ScoreMessage,

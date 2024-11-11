@@ -3283,6 +3283,11 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
+"@province-city-china/types@8.5.8":
+  version "8.5.8"
+  resolved "https://registry.npmmirror.com/@province-city-china/types/-/types-8.5.8.tgz#bc75b8a6f25652987adab3a518ece7a2cf96cf4d"
+  integrity sha512-KZ3NyM8HsaBVcn5BRhWaOeZRhqEvm18PfB6HfRDuZfwwWhJLoTxB81mTENrBlONr2g8fy/fSbjsh44gvOj+/Lw==
+
 "@rc-component/async-validator@^5.0.3":
   version "5.0.4"
   resolved "https://registry.npmmirror.com/@rc-component/async-validator/-/async-validator-5.0.4.tgz#5291ad92f00a14b6766fc81735c234277f83e948"
@@ -12739,6 +12744,13 @@ protoduck@^4.0.0:
   integrity sha512-9sxuz0YTU/68O98xuDn8NBxTVH9EuMhrBTxZdiBL0/qxRmWhB/5a8MagAebDa+98vluAZTs8kMZibCdezbRCeQ==
   dependencies:
     genfun "^4.0.1"
+
+province-city-china@^8.5.8:
+  version "8.5.8"
+  resolved "https://registry.npmmirror.com/province-city-china/-/province-city-china-8.5.8.tgz#b1f28cfe917388e67684cfb64f7cf2a5c30ed44a"
+  integrity sha512-gUV5kSOWHVufemkq6lygb0ngNZ4snMcONmr3QzxHuj1MYOQPphiyjHplfmywcVGWdGQgim30RXia/mYB007eLg==
+  dependencies:
+    "@province-city-china/types" "8.5.8"
 
 prr@~1.0.1:
   version "1.0.1"

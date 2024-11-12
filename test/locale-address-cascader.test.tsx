@@ -17,14 +17,14 @@ describe('LocaleAddressCascader', () => {
       />,
     );
 
-    expect(screen.getByText('请选择地区')).toBeInTheDocument();
+    expect(screen.getByText('省份1 / 城市1 / 区域1')).toBeInTheDocument();
   });
 
   test('updates originValue when value prop changes', () => {
     const { rerender } = render(
       <LocaleAddressCascader
         tenant="xyd"
-        value={['省份1', '城市1', '区域1']}
+        value={[]}
         onChange={mockOnChange}
         placeholder="请选择地区"
       />,
@@ -44,6 +44,6 @@ describe('LocaleAddressCascader', () => {
     );
 
     // Verify that the component re-renders correctly with the new value
-    expect(screen.getByText('请选择地区')).toBeInTheDocument();
+    expect(screen.getByText('省份2 / 城市2 / 区域3')).toBeInTheDocument();
   });
 });

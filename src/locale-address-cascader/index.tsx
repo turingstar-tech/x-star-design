@@ -12,14 +12,21 @@ const LocaleAddressCascader = ({
   tenant = 'xyd',
   value,
   onChange,
-  allowClear = true,
+  allowClear = false,
   placeholder,
 }: LocaleAddressCascaderProps) => {
   const [originValue, setOriginValue] = useState<string[]>([]);
 
   useEffect(() => {
     if (value) {
-      setOriginValue(getCodesFromLabels(value, tenant));
+      let res = getCodesFromLabels(value, tenant);
+
+      if (!res.length && value.length) {
+        // 切换域名不匹配时显示原值
+        res = value.filter((item) => !!item);
+      }
+
+      setOriginValue(res);
     }
   }, [value]);
 

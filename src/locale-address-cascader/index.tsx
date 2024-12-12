@@ -1,15 +1,16 @@
 import { Cascader } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useTenant } from '../tenant-provider';
 import {
-  LEVEL,
+  CHINA_MAP,
   LocaleAddressCascaderProps,
-  USAMAP,
+  USA_MAP,
   getCodesFromLabels,
   getLabelsFromCodes,
 } from './define';
 
 const LocaleAddressCascader = ({
-  tenant = 'xyd',
+  tenant,
   value,
   onChange,
   allowClear = false,
@@ -17,9 +18,12 @@ const LocaleAddressCascader = ({
 }: LocaleAddressCascaderProps) => {
   const [originValue, setOriginValue] = useState<string[]>([]);
 
+  let tenantName = useTenant().tenant.name;
+  tenantName = tenant ?? tenantName;
+
   useEffect(() => {
     if (value) {
-      let res = getCodesFromLabels(value, tenant);
+      let res = getCodesFromLabels(value, tenantName);
 
       if (!res.length && value.length) {
         // 切换域名不匹配时显示原值
@@ -34,12 +38,12 @@ const LocaleAddressCascader = ({
     <Cascader
       value={originValue}
       allowClear={allowClear}
-      options={tenant === 'xyd' ? LEVEL : USAMAP}
+      options={tenantName === 'xyd' ? CHINA_MAP : USA_MAP}
       fieldNames={{ label: 'name', value: 'code', children: 'children' }}
       placeholder={placeholder}
       onChange={(value = []) => {
         setOriginValue(value);
-        onChange?.(getLabelsFromCodes(value, tenant));
+        onChange?.(getLabelsFromCodes(value, tenantName));
       }}
     />
   );

@@ -8,7 +8,7 @@
 import { LocaleAddressCascader } from 'x-star-design';
 
 export default () => {
-  return <LocaleAddressCascader tenant={tenant.name} />;
+  return <LocaleAddressCascader tenant={'xyd'} />;
 };
 ```
 

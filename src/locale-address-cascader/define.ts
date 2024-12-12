@@ -1,7 +1,7 @@
-import level from 'province-city-china/dist/level.json';
-import USAMapData from './USA_Map.json';
+import ChinaMapData from 'province-city-china/dist/level.json';
+import type { TenantName } from '../tenant-provider';
+import USAMapData from './usa-map.json';
 
-type TenantName = 'xyd' | 'xcamp';
 export interface LocaleAddressCascaderProps {
   tenant?: TenantName;
   value?: string[];
@@ -27,8 +27,8 @@ const OTHER_AREA: OptionType[] = [
 const OTHER_AREA_USA: OptionType[] = [
   {
     children: [],
-    code: 'other',
-    name: 'other',
+    code: 'Other',
+    name: 'Other',
   },
 ];
 
@@ -39,8 +39,10 @@ const otherProvinces: Record<string, string> = {
   其他: '其他',
 };
 
-export const LEVEL: OptionType[] = (level as OptionType[]).concat(OTHER_AREA);
-export const USAMAP: OptionType[] = (USAMapData as OptionType[]).concat(
+export const CHINA_MAP: OptionType[] = (ChinaMapData as OptionType[]).concat(
+  OTHER_AREA,
+);
+export const USA_MAP: OptionType[] = (USAMapData as OptionType[]).concat(
   OTHER_AREA_USA,
 );
 
@@ -53,7 +55,7 @@ export const getLabelsFromCodes = (
   tenantName?: TenantName,
 ) => {
   const [province, cityOrArea, area] = codes;
-  const mapData = tenantName === 'xcamp' ? USAMAP : LEVEL;
+  const mapData = tenantName === 'xyd' ? CHINA_MAP : USA_MAP;
 
   const res: string[] = [];
   if (otherProvinces[province]) {
@@ -100,9 +102,9 @@ export const getCodesFromLabels = (
   const [province, city, area] = labels;
 
   const res: string[] = [];
-  const mapData = tenantName === 'xcamp' ? USAMAP : LEVEL;
+  const mapData = tenantName === 'xyd' ? CHINA_MAP : USA_MAP;
 
-  // 兼容香港/香港/香港版本
+  // 兼容香港/澳门/台湾版本
   if (otherProvinces[province]) {
     return [otherProvinces[province]];
   }

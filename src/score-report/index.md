@@ -11,7 +11,7 @@ import { ScoreReportProps } from './define';
 
 const ScoreReportDemo = ({ toggleLang }) => {
   const [searchParams] = useSearchParams();
-  const { locale: lang, format: t } = useLocale('ScoreReport');
+  const { format: t, locale } = useLocale('ScoreReport');
   const testData = {
     scoreMessage: [
       {
@@ -210,19 +210,19 @@ const ScoreReportDemo = ({ toggleLang }) => {
       fileName={testData.fileName}
       token={testData.token}
       isMobile={testData.isMobile}
-      tenant={lang === 'zh_CN' ? 'XYD' : 'XCAMP'}
+      tenant={locale === 'zh_CN' ? 'xyd' : 'xcamp'}
       toggleLang={toggleLang}
     />
   );
 };
 
 export default () => {
-  const [lang, setLang] = useState('zh_CN');
+  const [locale, setLocale] = useState('zh_CN');
   const toggleLang = () => {
-    setLang(lang === 'zh_CN' ? 'en_US' : 'zh_CN');
+    setLocale(locale === 'zh_CN' ? 'en_US' : 'zh_CN');
   };
   return (
-    <LocaleProvider locale={lang}>
+    <LocaleProvider locale={locale}>
       <ScoreReportDemo toggleLang={toggleLang} />
     </LocaleProvider>
   );

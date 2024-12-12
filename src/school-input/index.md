@@ -1,9 +1,9 @@
-# SchoolCascader
+# SchoolInput
 
 学校组件
 
 ```jsx
-import { SchoolCascader } from 'x-star-design';
+import { SchoolInput } from 'x-star-design';
 
 const schoolData = {
   primarySchools: [
@@ -111,7 +111,7 @@ export default () => {
   const tenant = 'xyd';
 
   return (
-    <SchoolCascader
+    <SchoolInput
       schoolData={schoolData}
       tenant={tenant}
       lang={lang}
@@ -125,4 +125,4 @@ export default () => {
 
 ## API
 
-<API id="SchoolCascader"></API>
+<API id="SchoolInput"></API>

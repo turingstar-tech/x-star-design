@@ -1,12 +1,9 @@
 import { EnvironmentOutlined } from '@ant-design/icons';
 import { AutoComplete, Divider, Input, Spin, Tooltip, Typography } from 'antd';
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  DropRenderText_En,
-  DropRenderText_Zh,
-  SchoolCascaderProps,
-  SchoolItem,
-} from './define';
+import { useLocale } from '../locales';
+import { useTenant } from '../tenant-provider';
+import type { SchoolInputProps, SchoolItem } from './define';
 
 const { Text } = Typography;
 
@@ -49,17 +46,24 @@ export const getOptions = (schoolData: SchoolItem[] | undefined) => {
   );
 };
 
-const SchoolCascader = ({
+const SchoolInput = ({
+  className,
+  style,
   tenant,
   value,
   placeholder,
   loading = false,
   onChange,
   onSearch,
-  lang = 'zh',
   schoolData = { middleSchools: [], primarySchools: [] },
-}: SchoolCascaderProps) => {
+}: SchoolInputProps) => {
   const [originValue, setOriginValue] = useState<string>();
+
+  const { format: t, locale } = useLocale('SchoolInput');
+
+  let tenantName = useTenant().tenant.name;
+  tenantName = tenant ?? tenantName;
+
   const onSchoolSearch = async (value: string) => {
     await onSearch?.(value);
     onChange?.(value);
@@ -69,17 +73,17 @@ const SchoolCascader = ({
   const groupOptions = useMemo(() => {
     return [
       {
-        label: lang === 'zh' ? '中学' : 'Middle School',
+        label: t('MiddleSchool'),
         title: 'middleSchools',
         options: getOptions(schoolData?.middleSchools),
       },
       {
-        label: lang === 'zh' ? '小学' : 'Primary School',
+        label: t('PrimarySchool'),
         title: 'primarySchools',
         options: getOptions(schoolData?.primarySchools),
       },
     ];
-  }, [schoolData, lang]);
+  }, [schoolData, locale]);
 
   useEffect(() => {
     if (value) {
@@ -89,8 +93,10 @@ const SchoolCascader = ({
 
   return (
     <>
-      {tenant === 'xyd' ? (
+      {tenantName === 'xyd' ? (
         <AutoComplete
+          className={className}
+          style={style}
           allowClear
           value={originValue}
           dropdownStyle={{ width: 500 }}
@@ -109,13 +115,15 @@ const SchoolCascader = ({
               {menu}
               <Divider style={{ margin: '8px 0' }} />
               <div style={{ marginLeft: 8, marginBottom: 4 }}>
-                *{lang === 'zh' ? DropRenderText_Zh : DropRenderText_En}
+                *{t('DropRenderText')}
               </div>
             </Spin>
           )}
         />
       ) : (
         <Input
+          className={className}
+          style={style}
           value={originValue}
           allowClear
           placeholder={placeholder}
@@ -129,4 +137,4 @@ const SchoolCascader = ({
   );
 };
 
-export default SchoolCascader;
+export default SchoolInput;

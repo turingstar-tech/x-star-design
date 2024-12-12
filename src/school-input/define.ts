@@ -1,5 +1,4 @@
-export const DropRenderText_Zh = '统计数据截至于2020年12月';
-export const DropRenderText_En = 'Statistical data as of December 2020';
+import type { TenantName } from '../tenant-provider';
 
 export interface SchoolItem {
   address: string;
@@ -11,18 +10,19 @@ export interface SchoolItem {
   type: string;
 }
 
-export interface ISchoolData {
+export interface SchoolData {
   middleSchools: SchoolItem[];
   primarySchools: SchoolItem[];
 }
 
-export interface SchoolCascaderProps {
-  tenant?: 'xyd' | 'xcamp';
+export interface SchoolInputProps {
+  className?: string;
+  style?: React.CSSProperties;
+  tenant?: TenantName;
   loading: boolean;
   placeholder?: string;
+  schoolData?: SchoolData;
   value?: string;
   onChange?: (value: string) => void;
   onSearch?: (value: string) => Promise<void>;
-  lang?: 'zh' | 'en';
-  schoolData?: ISchoolData;
 }

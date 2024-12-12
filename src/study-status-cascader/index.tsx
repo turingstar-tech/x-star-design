@@ -49,9 +49,9 @@ const StudyStatusCascader = ({
       defaultValue={originalValue}
       displayRender={displayRender}
       placeholder={placeholder}
-      onChange={(value = [], options) => {
+      onChange={(value = [], selectedOptions = []) => {
         setOriginalValue(value);
-        onChange?.(handleOptionsToLabels(options));
+        onChange?.(handleOptionsToLabels(selectedOptions));
       }}
     />
   );

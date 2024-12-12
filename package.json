@@ -64,11 +64,12 @@
     "ahooks": "^3.8.0",
     "classnames": "^2.3.2",
     "html2canvas": "^1.4.1",
+    "province-city-china": "^8.5.8",
     "qiankun": "^2.10.16",
     "randomcolor": "^0.6.2",
     "react-error-boundary": "^4.0.13",
     "react-window": "^1.8.9",
-    "x-star-utils": "^0.0.21"
+    "x-star-utils": "^0.0.23"
   },
   "devDependencies": {
     "@ant-design/icons": "^5.3.7",

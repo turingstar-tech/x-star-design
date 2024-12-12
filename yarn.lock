@@ -3283,6 +3283,11 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
+"@province-city-china/types@8.5.8":
+  version "8.5.8"
+  resolved "https://registry.npmmirror.com/@province-city-china/types/-/types-8.5.8.tgz#bc75b8a6f25652987adab3a518ece7a2cf96cf4d"
+  integrity sha512-KZ3NyM8HsaBVcn5BRhWaOeZRhqEvm18PfB6HfRDuZfwwWhJLoTxB81mTENrBlONr2g8fy/fSbjsh44gvOj+/Lw==
+
 "@rc-component/async-validator@^5.0.3":
   version "5.0.4"
   resolved "https://registry.npmmirror.com/@rc-component/async-validator/-/async-validator-5.0.4.tgz#5291ad92f00a14b6766fc81735c234277f83e948"
@@ -12740,6 +12745,13 @@ protoduck@^4.0.0:
   dependencies:
     genfun "^4.0.1"
 
+province-city-china@^8.5.8:
+  version "8.5.8"
+  resolved "https://registry.npmmirror.com/province-city-china/-/province-city-china-8.5.8.tgz#b1f28cfe917388e67684cfb64f7cf2a5c30ed44a"
+  integrity sha512-gUV5kSOWHVufemkq6lygb0ngNZ4snMcONmr3QzxHuj1MYOQPphiyjHplfmywcVGWdGQgim30RXia/mYB007eLg==
+  dependencies:
+    "@province-city-china/types" "8.5.8"
+
 prr@~1.0.1:
   version "1.0.1"
   resolved "https://registry.npmmirror.com/prr/-/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
@@ -15983,10 +15995,10 @@ x-path@^0.0.2:
   dependencies:
     path-extra "^1.0.2"
 
-x-star-utils@^0.0.21:
-  version "0.0.21"
-  resolved "https://registry.npmmirror.com/x-star-utils/-/x-star-utils-0.0.21.tgz#48468e08d891ce3df99c921be40ce18b3bdf40e6"
-  integrity sha512-52uaS79Cn8jesXAw3EQnJ7DCcPmeJoUWGYyFjWqvTa+4n9OdO01fq21dEiy/msjcZFqHJFsjduL3pgjpu/Jfdg==
+x-star-utils@^0.0.23:
+  version "0.0.23"
+  resolved "https://registry.npmmirror.com/x-star-utils/-/x-star-utils-0.0.23.tgz#99a3e9317aa069ae42dd8c412e60b33785151c96"
+  integrity sha512-1AnqqqRumsCNPIuLg81T7LzMfOb7TQXYTePfrCYRk3WF54GCxMHHRh4cLzEt0HHo436XRzcqQW1G82YjGmlTsw==
   dependencies:
     "@aws-sdk/client-s3" "^3.569.0"
     "@babel/runtime" "^7.24.1"

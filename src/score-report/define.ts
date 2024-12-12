@@ -1,4 +1,5 @@
 import type { TableProps } from 'antd';
+import type { TenantName } from '../tenant-provider';
 
 export interface ScoreType {
   requiredScore: number;
@@ -35,6 +36,6 @@ export interface ScoreReportProps {
   fileName: string; // 下载文件名
   token: string; // 成绩单编号
   isMobile: boolean; // 是否移动端
-  tenant: 'XYD' | 'XCAMP'; // 信友队 | xcamp
+  tenant?: TenantName; // 信友队 | xcamp
   toggleLang: () => void; // 外部传切换语言的函数
 }

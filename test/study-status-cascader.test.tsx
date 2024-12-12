@@ -2,7 +2,8 @@ import { describe, expect, jest, test } from '@jest/globals';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import StudyStatusCascader from '../src/study-status-cascader';
-const options = [
+
+const mockOptions = [
   {
     country: '中国',
     stage: [
@@ -177,6 +178,7 @@ const options = [
     ],
   },
 ];
+
 describe('StudyStatusCascader', () => {
   const mockOnChange = jest.fn();
   test('renders correctly with default props', () => {
@@ -190,16 +192,16 @@ describe('StudyStatusCascader', () => {
   test('opens cascader options on click', () => {
     render(
       <StudyStatusCascader
-        options={options}
-        onChange={mockOnChange}
+        options={mockOptions}
         placeholder={'请选择学业状态'}
+        onChange={mockOnChange}
       />,
     );
 
-    // 模拟点击级联选择器以打开选项
+    // 打开级联选择器
     fireEvent.mouseDown(screen.getByText('请选择学业状态'));
 
-    // 检查第一个选项是否在文档中
+    // 检查选项是否在文档中
     expect(screen.getByText('中国')).toBeInTheDocument();
     expect(screen.getByText('US')).toBeInTheDocument();
   });
@@ -207,19 +209,19 @@ describe('StudyStatusCascader', () => {
   test('selects an option and triggers onChange', () => {
     render(
       <StudyStatusCascader
-        options={options}
-        onChange={mockOnChange}
+        options={mockOptions}
         placeholder={'请选择学业状态'}
+        onChange={mockOnChange}
       />,
     );
 
     // 打开级联选择器
     fireEvent.mouseDown(screen.getByText('请选择学业状态'));
 
-    // 选择第一个选项
+    // 选择一个选项
     fireEvent.click(screen.getByText('中国'));
 
-    // 选择第一个子选项
+    // 选择一个子选项
     fireEvent.click(screen.getByText('学前'));
 
     // 检查 onChange 是否被调用
@@ -233,27 +235,27 @@ describe('StudyStatusCascader', () => {
   test('selects an option and triggers onChange with other keys', () => {
     render(
       <StudyStatusCascader
-        options={options}
-        onChange={mockOnChange}
+        options={mockOptions}
         placeholder={'请选择学业状态'}
         levelKeys={{
           level0: 'country',
           level1: 'stage',
           level2: 'session',
         }}
+        onChange={mockOnChange}
       />,
     );
 
     // 打开级联选择器
     fireEvent.mouseDown(screen.getByText('请选择学业状态'));
 
-    // 选择第一个选项
+    // 选择一个选项
     fireEvent.click(screen.getByText('中国'));
 
-    // 选择第一个子选项
+    // 选择一个子选项
     fireEvent.click(screen.getByText('小初'));
 
-    // 选择第一个子选项
+    // 选择一个子选项
     fireEvent.click(screen.getByText('一年级'));
 
     // 检查 onChange 是否被调用
@@ -265,15 +267,16 @@ describe('StudyStatusCascader', () => {
   });
 
   test('renders correctly with given value', () => {
-    render(
+    const { container } = render(
       <StudyStatusCascader
+        options={mockOptions}
+        placeholder={'请选择学业状态'}
         value={{
           countryName: '中国',
           sessionName: undefined,
           stageName: '学前',
         }}
-        options={options}
-        placeholder={'请选择学业状态'}
+        onChange={mockOnChange}
       />,
     );
 
@@ -284,5 +287,11 @@ describe('StudyStatusCascader', () => {
     // 检查值是否存在
     const valueElement = screen.getByText('学前');
     expect(valueElement).toBeInTheDocument();
+
+    // 点击清除按钮
+    fireEvent.mouseDown(container.querySelector('.ant-select-clear')!);
+
+    // 检查 onChange 是否被调用
+    expect(mockOnChange).toHaveBeenCalledWith({});
   });
 });

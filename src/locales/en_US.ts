@@ -192,4 +192,8 @@ export default {
     PrimarySchool: 'Primary School',
     DropRenderText: 'Statistical data as of December 2020',
   },
+  ZipCodeSearchInput: {
+    placeholder: 'Please enter the zip code',
+    area: 'Area',
+  },
 } as const;

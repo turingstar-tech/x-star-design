@@ -66,7 +66,13 @@ const StatusTag = ({
         color: required ? '#FF4D4F' : '#808080', //如果是选做题错误的时候显示灰色
         borderColor: required ? '#FFCCC7' : '',
         backgroundColor: required ? '#FFF2F0' : '',
-        icon: <img src={required ? wrongSVG : wrongOptionalSVG} alt="" />,
+        icon: (
+          <img
+            src={required ? wrongSVG : wrongOptionalSVG}
+            alt=""
+            data-testid={'wrong-status-icon'}
+          />
+        ),
       },
     ],
     [
@@ -108,13 +114,13 @@ const StatusTag = ({
             : statusCSSMap?.get(status)?.icon
           : statusCSSMap?.get(status)?.icon
         : children}
-      {required && (
+      {!required && (
         <img
-          data-testid={'required-icon'}
+          data-testid={'optional-icon'}
           src={diamondSVG}
-          className={classNames(`${prefix}-required`, {
-            [`${prefix}-circleRequired`]: shape === 'circle',
-            [`${prefix}-rectRequired`]: shape !== 'circle',
+          className={classNames(`${prefix}-optional`, {
+            [`${prefix}-circleOptional`]: shape === 'circle',
+            [`${prefix}-rectOptional`]: shape !== 'circle',
           })}
         />
       )}

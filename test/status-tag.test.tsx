@@ -3,8 +3,8 @@ import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import correctSVG from '../src/assets/status-tag/correct.svg';
+import wrongOptionalSVG from '../src/assets/status-tag/wrong-optional.svg';
 import StatusTag from '../src/status-tag';
-
 jest.useFakeTimers();
 
 describe('status tag', () => {
@@ -13,11 +13,17 @@ describe('status tag', () => {
       <StatusTag status="correct" shape={'rect'} required />,
     );
     const statusIcon = getByTestId('status-icon');
-    const requiredIcon = getByTestId('required-icon');
     expect(statusIcon).toHaveAttribute('src', correctSVG);
-    expect(requiredIcon).toBeInTheDocument();
   });
-
+  test('renders with wrong optional', () => {
+    const { getByTestId } = render(
+      <StatusTag status="wrong" shape={'rect'} required={false} />,
+    );
+    const statusIcon = getByTestId('wrong-status-icon');
+    const optionalIcon = getByTestId('optional-icon');
+    expect(statusIcon).toHaveAttribute('src', wrongOptionalSVG);
+    expect(optionalIcon).toBeInTheDocument();
+  });
   test('renders with correct CSS class and style', () => {
     const { getByTestId } = render(
       <StatusTag

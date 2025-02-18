@@ -16,18 +16,18 @@
     height: 1rem;
   }
 
-  .#{$prefix}-required {
+  .#{$prefix}-optional {
     position: absolute;
     width: 0.8rem;
     height: 0.8rem;
   }
 
-  .#{$prefix}-circleRequired {
+  .#{$prefix}-circleOptional {
     top: -3px;
     right: -3px;
   }
 
-  .#{$prefix}-rectRequired {
+  .#{$prefix}-rectOptional {
     top: -5px;
     right: -5px;
   }

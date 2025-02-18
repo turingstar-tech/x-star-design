@@ -11,31 +11,43 @@ export default () => {
       label: '答案正确',
       shape: 'rect',
       status: 'correct',
+      required: true,
     },
     {
       label: '答案错误',
       shape: 'rect',
       status: 'wrong',
+      required: true,
+    },
+    {
+      label: '答案错误',
+      shape: 'circle',
+      status: 'wrong',
+      required: false,
     },
     {
       label: '部分正确',
       shape: 'rect',
       status: 'halfCorrect',
+      required: false,
     },
     {
       label: '未作答',
       shape: 'rect',
       status: 'unfilled',
+      required: true,
     },
     {
       label: '未出结果',
       shape: 'rect',
       status: 'pending',
+      required: true,
     },
     {
       label: '已作答',
       shape: 'rect',
       status: 'filled',
+      required: true,
     },
   ];
   return (
@@ -46,7 +58,7 @@ export default () => {
             shape={v?.shape}
             status={v?.status}
             hover
-            required
+            required={v?.required}
             onClick={() => {
               console.log('click');
             }}

@@ -92,4 +92,25 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
   );
 };
 
+export const ZipCodeSearchContainer: React.FC<ZipCodeSearchInputProps> = (
+  props,
+) => {
+  const { value, onChange, ...otherProps } = props;
+  const [originValue, setOriginValue] = useState<string>();
+
+  useEffect(() => {
+    if (Array.isArray(value)) setOriginValue(value.join('/'));
+  }, [value]);
+
+  return (
+    <ZipCodeSearchInput
+      value={originValue as string}
+      onChange={(value, option) => {
+        onChange?.(value?.split('/'), option);
+      }}
+      {...otherProps}
+    />
+  );
+};
+
 export default ZipCodeSearchInput;

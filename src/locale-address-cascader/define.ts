@@ -1,4 +1,5 @@
 import ChinaMapData from 'province-city-china/dist/level.json';
+import { ZipCodeSearchInputProps } from 'x-star-design/zip-code-search-input/define';
 import type { TenantName } from '../tenant-provider';
 import USAMapData from './usa-map.json';
 
@@ -8,6 +9,7 @@ export interface LocaleAddressCascaderProps {
   onChange?: (value: string[]) => void;
   placeholder?: string;
   allowClear?: boolean;
+  zipCodeSearchInputProps?: ZipCodeSearchInputProps;
 }
 
 export interface OptionType {

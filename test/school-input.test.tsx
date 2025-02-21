@@ -73,4 +73,16 @@ describe('SchoolInput', () => {
 
     expect(mockOnChange).toHaveBeenCalledWith('中学A-区域A');
   });
+
+  test('default props', () => {
+    render(
+      <SchoolInput
+        tenant="xcamp"
+        placeholder="请选择学校"
+        value={'国际中学'}
+      />,
+    );
+
+    expect(screen.getByText('国际中学')).toBeInTheDocument();
+  });
 });

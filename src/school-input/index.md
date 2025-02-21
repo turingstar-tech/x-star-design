@@ -112,8 +112,9 @@ export default () => {
 
   return (
     <SchoolInput
-      schoolData={schoolData}
       tenant={tenant}
+      style={{ width: 500 }}
+      value={'国际中学'}
       lang={lang}
       onSearch={async (value) => {
         await getSchoolList({ name: value, limit: 50000 });

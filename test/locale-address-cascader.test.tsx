@@ -7,7 +7,7 @@ describe('LocaleAddressCascader', () => {
   const mockOnChange = jest.fn();
 
   test('renders correctly with initial props and handles changes', () => {
-    render(
+    const { rerender } = render(
       <LocaleAddressCascader
         tenant="xyd"
         placeholder="请选择地区"
@@ -32,6 +32,20 @@ describe('LocaleAddressCascader', () => {
 
     expect(screen.getByText('广东省 / 深圳市 / 宝安区')).toBeInTheDocument();
     expect(mockOnChange).toHaveBeenCalledWith(['广东省', '深圳市', '宝安区']);
+
+    rerender(
+      <LocaleAddressCascader
+        tenant="xyd"
+        placeholder="请选择地区"
+        value={['澳门特别行政区', '花地玛堂区']}
+        onChange={mockOnChange}
+      />,
+    );
+
+    // 打开级联选择器
+    fireEvent.mouseDown(screen.getByText('澳门特别行政区 / 花地玛堂区'));
+    fireEvent.click(screen.getByText('其他'));
+    expect(mockOnChange).toHaveBeenCalledWith(['其他']);
   });
 
   test('updates when value prop changes', () => {
@@ -72,11 +86,7 @@ describe('LocaleAddressCascader', () => {
 
     // Rerender with new value
     rerender(
-      <LocaleAddressCascader
-        tenant="xyd"
-        placeholder="请选择地区"
-        value={['香港']}
-      />,
+      <LocaleAddressCascader placeholder="请选择地区" value={['香港']} />,
     );
 
     // Verify that the component re-renders correctly with the new value
@@ -93,5 +103,61 @@ describe('LocaleAddressCascader', () => {
     );
 
     expect(screen.getByText('Washington / Seattle')).toBeInTheDocument();
+  });
+
+  test('Display original value when domain name does not match', () => {
+    render(
+      <LocaleAddressCascader
+        tenant="xcamp"
+        placeholder="Please select locale address"
+        value={['浙江省', '杭州市', '西湖区']}
+      />,
+    );
+
+    expect(screen.getByText('浙江省 / 杭州市 / 西湖区')).toBeInTheDocument();
+  });
+
+  test('allowClear test', () => {
+    const { container } = render(
+      <LocaleAddressCascader
+        allowClear
+        placeholder="Please select locale address"
+        value={['浙江省', '杭州市', '西湖区']}
+      />,
+    );
+
+    fireEvent.mouseOver(screen.getByRole('combobox'));
+
+    const clearButton = container.querySelector('.ant-select-clear');
+
+    expect(clearButton).toBeInTheDocument();
+
+    fireEvent.click(clearButton);
+    expect(screen.getByText('浙江省 / 杭州市 / 西湖区')).toBeInTheDocument();
+  });
+
+  test('renders correctly with initial props and handles changes2', () => {
+    render(
+      <LocaleAddressCascader
+        tenant="xcamp"
+        placeholder="Please select locale address"
+        value={['Washington', 'Seattle']}
+        onChange={mockOnChange}
+      />,
+    );
+
+    expect(screen.getByText('Washington / Seattle')).toBeInTheDocument();
+
+    // 打开级联选择器
+    fireEvent.mouseDown(screen.getByText('Washington / Seattle'));
+
+    // 选择一个选项
+    fireEvent.click(screen.getByText('Arkansas'));
+
+    // 选择一个子选项
+    fireEvent.click(screen.getByText('Fayetteville'));
+
+    expect(screen.getByText('Arkansas / Fayetteville')).toBeInTheDocument();
+    expect(mockOnChange).toHaveBeenCalledWith(['Arkansas', 'Fayetteville']);
   });
 });

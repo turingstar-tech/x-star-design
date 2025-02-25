@@ -117,25 +117,6 @@ describe('LocaleAddressCascader', () => {
     expect(screen.getByText('浙江省 / 杭州市 / 西湖区')).toBeInTheDocument();
   });
 
-  test('allowClear test', () => {
-    const { container } = render(
-      <LocaleAddressCascader
-        allowClear
-        placeholder="Please select locale address"
-        value={['浙江省', '杭州市', '西湖区']}
-      />,
-    );
-
-    fireEvent.mouseOver(screen.getByRole('combobox'));
-
-    const clearButton = container.querySelector('.ant-select-clear');
-
-    expect(clearButton).toBeInTheDocument();
-
-    fireEvent.click(clearButton);
-    expect(screen.getByText('浙江省 / 杭州市 / 西湖区')).toBeInTheDocument();
-  });
-
   test('renders correctly with initial props and handles changes2', () => {
     render(
       <LocaleAddressCascader

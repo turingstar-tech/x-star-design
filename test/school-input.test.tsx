@@ -23,6 +23,15 @@ const mockSchoolData = {
       location: '位置B',
       type: '中学',
     },
+    {
+      name: '中学C',
+      area: '区域C',
+      province: '市B',
+      city: '市B',
+      address: '地址B',
+      location: '位置B',
+      type: '中学',
+    },
   ],
   primarySchools: [
     {
@@ -53,7 +62,6 @@ describe('SchoolInput', () => {
   test('renders correctly with initial props', () => {
     render(
       <SchoolInput
-        tenant="xyd"
         placeholder="请选择学校"
         loading={false}
         schoolData={mockSchoolData}
@@ -75,14 +83,36 @@ describe('SchoolInput', () => {
   });
 
   test('default props', () => {
-    render(
+    const { getByTestId, rerender } = render(
       <SchoolInput
         tenant="xcamp"
         placeholder="请选择学校"
         value={'国际中学'}
       />,
     );
+    const input = getByTestId('input') as HTMLInputElement;
+    expect(input.value).toBe('国际中学');
 
-    expect(screen.getByText('国际中学')).toBeInTheDocument();
+    fireEvent.change(input, { target: { value: '小学A' } });
+    expect(input.value).toBe('小学A');
+
+    rerender(
+      <SchoolInput
+        placeholder="请选择学校"
+        value={'国际中学'}
+        onChange={mockOnChange}
+        onSearch={mockOnSearch}
+      />,
+    );
+
+    const autoComplete = getByTestId('autoComplete') as HTMLInputElement;
+
+    fireEvent.input(autoComplete, '小学A');
+    const input2 = screen.getByRole('combobox') as HTMLInputElement;
+    expect(input2.value).toBe('小学A');
+
+    fireEvent.change(input2, { target: { value: '小学B' } });
+
+    expect(mockOnSearch).toHaveBeenCalledWith('小学B');
   });
 });

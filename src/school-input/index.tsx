@@ -55,7 +55,7 @@ const SchoolInput = ({
   loading = false,
   onChange,
   onSearch,
-  schoolData = { middleSchools: [], primarySchools: [] },
+  schoolData,
 }: SchoolInputProps) => {
   const [originValue, setOriginValue] = useState<string>();
 
@@ -95,6 +95,7 @@ const SchoolInput = ({
     <>
       {tenantName === 'xyd' ? (
         <AutoComplete
+          data-testid="autoComplete"
           className={className}
           style={style}
           allowClear
@@ -122,6 +123,7 @@ const SchoolInput = ({
         />
       ) : (
         <Input
+          data-testid="input"
           className={className}
           style={style}
           value={originValue}

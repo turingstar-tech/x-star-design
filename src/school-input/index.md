@@ -108,7 +108,7 @@ const getSchoolList = async (params) => {
 
 export default () => {
   const lang = 'zh';
-  const tenant = 'xyd';
+  const tenant = 'xcamp';
 
   return (
     <SchoolInput

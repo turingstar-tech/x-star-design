@@ -1,5 +1,5 @@
-import { Empty, Select, SelectProps, Spin } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { AutoComplete, Empty, SelectProps, Spin } from 'antd';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   DebounceFunction,
   ZipCodeSearchInputProps,
@@ -64,15 +64,19 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
     }
   };
 
+  const debounceSearch = useCallback(debounce(handleSearch, debounceTimeout), [
+    debounceTimeout,
+  ]);
+
   return (
-    <Select
+    <AutoComplete
       showSearch
       value={originValue}
       placeholder={t('placeholder')}
       defaultActiveFirstOption={false}
       suffixIcon={null}
       filterOption={false}
-      onSearch={debounce(handleSearch, debounceTimeout)}
+      onSearch={debounceSearch}
       onChange={(value, option) => {
         setOriginValue(value);
         if (!value) setData([]);

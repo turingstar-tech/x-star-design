@@ -106,7 +106,7 @@ describe('LocaleAddressCascader', () => {
   });
 
   test('Display original value when domain name does not match', () => {
-    render(
+    const { rerender } = render(
       <LocaleAddressCascader
         tenant="xcamp"
         placeholder="Please select locale address"
@@ -115,6 +115,16 @@ describe('LocaleAddressCascader', () => {
     );
 
     expect(screen.getByText('浙江省 / 杭州市 / 西湖区')).toBeInTheDocument();
+
+    rerender(
+      <LocaleAddressCascader
+        tenant="xcamp"
+        placeholder="Please select locale address"
+        value={['河北省', '秦皇岛市', '海港区']}
+      />,
+    );
+
+    expect(screen.getByText('河北省 / 秦皇岛市 / 海港区')).toBeInTheDocument();
   });
 
   test('renders correctly with initial props and handles changes2', () => {

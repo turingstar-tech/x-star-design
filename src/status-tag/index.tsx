@@ -4,6 +4,7 @@ import correctSVG from '../assets/status-tag/correct.svg';
 import diamondSVG from '../assets/status-tag/diamond.svg';
 import filledSVG from '../assets/status-tag/filled.svg';
 import halfCorrectSVG from '../assets/status-tag/half-correct.svg';
+import wrongOptionalSVG from '../assets/status-tag/wrong-optional.svg';
 import wrongSVG from '../assets/status-tag/wrong.svg';
 import { prefix } from '../utils/global';
 import { StatusTagProps, StatusTagStyle, StatusTagType } from './define';
@@ -62,10 +63,16 @@ const StatusTag = ({
     [
       'wrong',
       {
-        color: '#FF4D4F',
-        borderColor: '#FFCCC7',
-        backgroundColor: '#FFF2F0',
-        icon: <img src={wrongSVG} alt="" />,
+        color: required ? '#FF4D4F' : '#808080', //如果是选做题错误的时候显示灰色
+        borderColor: required ? '#FFCCC7' : '',
+        backgroundColor: required ? '#FFF2F0' : '',
+        icon: (
+          <img
+            src={required ? wrongSVG : wrongOptionalSVG}
+            alt=""
+            data-testid={'wrong-status-icon'}
+          />
+        ),
       },
     ],
     [
@@ -107,13 +114,13 @@ const StatusTag = ({
             : statusCSSMap?.get(status)?.icon
           : statusCSSMap?.get(status)?.icon
         : children}
-      {required && (
+      {!required && (
         <img
-          data-testid={'required-icon'}
+          data-testid={'optional-icon'}
           src={diamondSVG}
-          className={classNames(`${prefix}-required`, {
-            [`${prefix}-circleRequired`]: shape === 'circle',
-            [`${prefix}-rectRequired`]: shape !== 'circle',
+          className={classNames(`${prefix}-optional`, {
+            [`${prefix}-circleOptional`]: shape === 'circle',
+            [`${prefix}-rectOptional`]: shape !== 'circle',
           })}
         />
       )}

@@ -19,7 +19,7 @@ export interface SchoolInputProps {
   className?: string;
   style?: React.CSSProperties;
   tenant?: TenantName;
-  loading: boolean;
+  loading?: boolean;
   placeholder?: string;
   schoolData?: SchoolData;
   value?: string;

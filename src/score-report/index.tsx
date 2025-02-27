@@ -18,6 +18,7 @@ import xcampLogo from '../assets/score-report/xcamp-logo.png';
 import xydLogo from '../assets/score-report/xyd-logo.png';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
+import { useTenant } from '../tenant-provider';
 import { prefix } from '../utils/global';
 import { ScoreReportProps } from './define';
 
@@ -36,8 +37,11 @@ const ScoreReport = ({
   tenant,
   toggleLang,
 }: ScoreReportProps) => {
-  const { locale: lang, format: t } = useLocale('ScoreReport');
+  const { format: t, locale } = useLocale('ScoreReport');
   const scoreReportdDOM = useRef<HTMLDivElement>(null);
+
+  let tenantName = useTenant().tenant.name;
+  tenantName = tenant ?? tenantName;
 
   useTitle(t('ScoreReportTitle'));
 
@@ -111,7 +115,7 @@ const ScoreReport = ({
                       <Title level={4}>{`No.${token}`}</Title>
                     </div>
                     <div>
-                      {tenant === 'XYD' ? (
+                      {tenantName === 'xyd' ? (
                         <img data-testid="xydLogo" src={xydLogo} alt="" />
                       ) : (
                         <img data-testid="xcampLogo" src={xcampLogo} alt="" />
@@ -129,7 +133,7 @@ const ScoreReport = ({
               ghost
               onClick={toggleLang}
             >
-              {lang === 'zh_CN' ? 'EN' : 'ZH'}
+              {locale === 'zh_CN' ? 'EN' : 'ZH'}
             </Button>
             <Tooltip title={t('DownloadDom')}>
               <Button

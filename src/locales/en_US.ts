@@ -187,4 +187,13 @@ export default {
     Example_Paper: 'Paper',
     Example_Time: 'Time',
   },
+  SchoolInput: {
+    MiddleSchool: 'Middle School',
+    PrimarySchool: 'Primary School',
+    DropRenderText: 'Statistical data as of December 2020',
+  },
+  ZipCodeSearchInput: {
+    placeholder: 'Please enter the zip code',
+    area: 'Area',
+  },
 } as const;

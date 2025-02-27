@@ -175,4 +175,13 @@ export default {
     Example_Paper: '试卷',
     Example_Time: '时间',
   },
+  SchoolInput: {
+    MiddleSchool: '中学',
+    PrimarySchool: '小学',
+    DropRenderText: '统计数据截至于2020年12月',
+  },
+  ZipCodeSearchInput: {
+    placeholder: '请输入邮政编码',
+    area: '所选地区',
+  },
 } as const;

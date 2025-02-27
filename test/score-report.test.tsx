@@ -77,7 +77,7 @@ describe('score report', () => {
           fileName=""
           token=""
           isMobile={false}
-          tenant="XYD"
+          tenant="xyd"
           toggleLang={() => {}}
         />
       </LocaleProvider>,
@@ -96,7 +96,7 @@ describe('score report', () => {
         fileName=""
         token=""
         isMobile
-        tenant="XCAMP"
+        tenant="xcamp"
         toggleLang={() => {}}
       />,
     );
@@ -113,7 +113,6 @@ describe('score report', () => {
         fileName=""
         token=""
         isMobile={false}
-        tenant="XYD"
         toggleLang={() => {}}
       />,
     );

@@ -1,5 +1,4 @@
 import { initGlobalState, loadMicroApp } from 'qiankun';
-import type { CSSProperties } from 'react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { randomString } from 'x-star-utils';
 import { useLocale } from '../locales';
@@ -7,7 +6,7 @@ import RainbowCat from '../rainbow-cat';
 
 export interface MicroAppProps {
   className?: string;
-  style?: CSSProperties;
+  style?: React.CSSProperties;
   name: string;
   entry: string;
   pathname: string;

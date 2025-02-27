@@ -41,6 +41,7 @@ export interface CodeMirrorWrapperProps {
   onChange?: (value: string) => void;
   readOnly?: boolean;
   [key: string]: unknown;
+  tabSize?: number;
 }
 
 const CodeMirrorWrapper = ({
@@ -50,6 +51,7 @@ const CodeMirrorWrapper = ({
   onChange,
   lang = LangId.CPP,
   readOnly = false,
+  tabSize = 2,
   ...props
 }: CodeMirrorWrapperProps) => {
   //自动提示增加自定义变量提示
@@ -137,6 +139,10 @@ const CodeMirrorWrapper = ({
       onChange={onChange}
       theme={themeMap[theme]}
       readOnly={readOnly}
+      basicSetup={{
+        tabSize,
+        indentOnInput: false,
+      }}
       {...props}
     />
   );

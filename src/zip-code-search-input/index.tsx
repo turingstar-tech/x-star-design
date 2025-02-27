@@ -96,10 +96,11 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
   );
 };
 
-export const ZipCodeSearchContainer: React.FC<ZipCodeSearchInputProps> = (
-  props,
-) => {
-  const { value, onChange, ...otherProps } = props;
+export const ZipCodeSearchContainer: React.FC<ZipCodeSearchInputProps> = ({
+  value,
+  onChange,
+  ...otherProps
+}) => {
   const [originValue, setOriginValue] = useState<string>();
 
   useEffect(() => {

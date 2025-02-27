@@ -4,6 +4,7 @@
 
 ```jsx
 import { ZipCodeSearchInput } from 'x-star-design';
+import { ZipCodeSearchContainer } from '../zip-code-search-input';
 import { Form, Button } from 'antd';
 import { useLocale } from '../locales';
 
@@ -13,6 +14,9 @@ export default () => {
     <Form layout="inline" onFinish={(values) => console.log(values, 'values')}>
       <Form.Item name={'city'} label={t('area')}>
         <ZipCodeSearchInput style={{ width: 200 }} />
+      </Form.Item>
+      <Form.Item name={'otherCity'} label={t('area')}>
+        <ZipCodeSearchContainer style={{ width: 200 }} />
       </Form.Item>
       <Form.Item label={null}>
         <Button type="primary" htmlType="submit">

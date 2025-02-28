@@ -54,12 +54,9 @@ export const USA_MAP: OptionType[] = (USAMapData as OptionType[]).concat(
  * 将code装为label
  * @param codes
  */
-export const getLabelsFromCodes = (
-  codes: string[],
-  tenantName?: TenantName,
-) => {
+export const getLabelsFromCodes = (codes: string[]) => {
   const [province, cityOrArea, area] = codes;
-  const mapData = tenantName === 'xyd' ? CHINA_MAP : USA_MAP;
+  const mapData = CHINA_MAP;
 
   const res: string[] = [];
   if (otherProvinces[province]) {
@@ -99,14 +96,11 @@ export const getLabelsFromCodes = (
  * 将label转为code
  * @param labels
  */
-export const getCodesFromLabels = (
-  labels: string[],
-  tenantName?: TenantName,
-): string[] => {
+export const getCodesFromLabels = (labels: string[]): string[] => {
   const [province, city, area] = labels;
 
   const res: string[] = [];
-  const mapData = tenantName === 'xyd' ? CHINA_MAP : USA_MAP;
+  const mapData = CHINA_MAP;
 
   // 兼容香港/澳门/台湾版本
   if (otherProvinces[province]) {

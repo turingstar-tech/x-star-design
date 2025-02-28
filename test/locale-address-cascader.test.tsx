@@ -106,11 +106,7 @@ describe('LocaleAddressCascader', () => {
     expect(screen.getByText('香港特别行政区')).toBeInTheDocument();
 
     rerender(
-      <LocaleAddressCascader
-        tenant="xyd"
-        placeholder="请选择地区"
-        value={['纽约']}
-      />,
+      <LocaleAddressCascader placeholder="请选择地区" value={['纽约']} />,
     );
 
     expect(screen.getByText('纽约')).toBeInTheDocument();

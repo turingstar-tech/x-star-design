@@ -164,6 +164,8 @@ export default {
     ResourceRestriction: 'Resource Restriction',
     ResourceRestrictionDesc:
       'Access to other course materials, Learning spaces, Premium Problem Bank, and forums is restricted.',
+    Config_Affects_Submission_Visibility:
+      'This configuration also affects the submission visibility of problems related to the learning space',
   },
   ScoreReport: {
     In_Game_Total_Score: 'Timed Score',

@@ -1,5 +1,5 @@
-import { Empty, Select, SelectProps, Spin } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { AutoComplete, Empty, SelectProps, Spin } from 'antd';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   DebounceFunction,
   ZipCodeSearchInputProps,
@@ -50,8 +50,8 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
         const city = res.places[0]['place name'];
         setData([
           {
-            label: `${state}/${city}`,
-            value: `${state}/${city}`,
+            label: `${state} / ${city}`,
+            value: `${state} / ${city}`,
           },
         ]);
       } else {
@@ -64,15 +64,19 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
     }
   };
 
+  const debounceSearch = useCallback(debounce(handleSearch, debounceTimeout), [
+    debounceTimeout,
+  ]);
+
   return (
-    <Select
+    <AutoComplete
       showSearch
       value={originValue}
       placeholder={t('placeholder')}
       defaultActiveFirstOption={false}
       suffixIcon={null}
       filterOption={false}
-      onSearch={debounce(handleSearch, debounceTimeout)}
+      onSearch={debounceSearch}
       onChange={(value, option) => {
         setOriginValue(value);
         if (!value) setData([]);
@@ -80,13 +84,39 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
       }}
       notFoundContent={
         loading ? (
-          <Spin size="small" style={{ width: '100%', margin: 'auto' }} />
+          <Spin
+            data-testid="zipDataLoading"
+            size="small"
+            style={{ width: '100%', margin: 'auto' }}
+          />
         ) : (
           <Empty />
         )
       }
       options={data}
       allowClear
+      {...otherProps}
+    />
+  );
+};
+
+export const ZipCodeSearchContainer: React.FC<ZipCodeSearchInputProps> = ({
+  value,
+  onChange,
+  ...otherProps
+}) => {
+  const [originValue, setOriginValue] = useState<string>();
+
+  useEffect(() => {
+    if (Array.isArray(value)) setOriginValue(value.join(' / '));
+  }, [value]);
+
+  return (
+    <ZipCodeSearchInput
+      value={originValue as string}
+      onChange={(value, option) => {
+        onChange?.(value?.split(' / '), option);
+      }}
       {...otherProps}
     />
   );

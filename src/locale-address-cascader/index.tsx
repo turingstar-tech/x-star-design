@@ -1,10 +1,10 @@
 import { Cascader } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useTenant } from '../tenant-provider';
+import { ZipCodeSearchContainer } from '../zip-code-search-input';
 import {
   CHINA_MAP,
   LocaleAddressCascaderProps,
-  USA_MAP,
   getCodesFromLabels,
   getLabelsFromCodes,
 } from './define';
@@ -15,6 +15,8 @@ const LocaleAddressCascader = ({
   onChange,
   allowClear = false,
   placeholder,
+  zipCodeSearchInputProps,
+  ...otherProps
 }: LocaleAddressCascaderProps) => {
   const [originValue, setOriginValue] = useState<string[]>([]);
 
@@ -22,8 +24,8 @@ const LocaleAddressCascader = ({
   tenantName = tenant ?? tenantName;
 
   useEffect(() => {
-    if (value) {
-      let res = getCodesFromLabels(value, tenantName);
+    if (value && tenantName === 'xyd') {
+      let res = getCodesFromLabels(value);
 
       if (!res.length && value.length) {
         // 切换域名不匹配时显示原值
@@ -35,17 +37,28 @@ const LocaleAddressCascader = ({
   }, [value]);
 
   return (
-    <Cascader
-      value={originValue}
-      allowClear={allowClear}
-      options={tenantName === 'xyd' ? CHINA_MAP : USA_MAP}
-      fieldNames={{ label: 'name', value: 'code', children: 'children' }}
-      placeholder={placeholder}
-      onChange={(value = []) => {
-        setOriginValue(value);
-        onChange?.(getLabelsFromCodes(value, tenantName));
-      }}
-    />
+    <>
+      {tenantName === 'xyd' ? (
+        <Cascader
+          value={originValue}
+          allowClear={allowClear}
+          options={CHINA_MAP}
+          fieldNames={{ label: 'name', value: 'code', children: 'children' }}
+          placeholder={placeholder}
+          onChange={(value = []) => {
+            setOriginValue(value);
+            onChange?.(getLabelsFromCodes(value));
+          }}
+          {...otherProps}
+        />
+      ) : (
+        <ZipCodeSearchContainer
+          value={value}
+          onChange={onChange}
+          {...zipCodeSearchInputProps}
+        />
+      )}
+    </>
   );
 };
 

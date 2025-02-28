@@ -33,6 +33,7 @@ const ProgramConfigItem = ({ type }: ProgramConfigItemProps) => {
         <Form.Item
           label={t('personalScoreVisibility')}
           name={'personalScoreVisibility'}
+          extra={t('Config_Affects_Submission_Visibility')}
         >
           <Radio.Group>
             <Radio

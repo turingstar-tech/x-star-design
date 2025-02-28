@@ -153,6 +153,8 @@ export default {
     RestrictionsDuringHomeworkExam: '作业/考试结束前限制',
     ResourceRestriction: '限制资源访问',
     ResourceRestrictionDesc: '限制访问其他课件、学习空间、精品题库、论坛',
+    Config_Affects_Submission_Visibility:
+      '该配置同时影响学生学习空间相关题目的提交可见性',
   },
   ScoreReport: {
     In_Game_Total_Score: '赛中总分',

@@ -6,7 +6,13 @@ import {
   jest,
   test,
 } from '@jest/globals';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import React from 'react';
 import ZipCodeSearchInput, {
   ZipCodeSearchContainer,
@@ -141,5 +147,23 @@ describe('ZipCodeSearchInput', () => {
       ['NY', 'New York'],
       expect.any(Object),
     );
+  });
+
+  test('should display loading spinner during API request', async () => {
+    const fetchPromise = new Promise<Response>(() => {});
+    jest
+      .spyOn(global, 'fetch')
+      .mockImplementation(() => fetchPromise as Promise<Response>);
+
+    render(<ZipCodeSearchContainer debounceTimeout={TEST_DEBOUNCE} />);
+
+    await act(async () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: '10001' },
+      });
+    });
+    await waitFor(() => {
+      expect(screen.getByTestId('zipDataLoading')).toBeInTheDocument();
+    });
   });
 });

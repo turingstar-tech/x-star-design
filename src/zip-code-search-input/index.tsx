@@ -84,7 +84,11 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
       }}
       notFoundContent={
         loading ? (
-          <Spin size="small" style={{ width: '100%', margin: 'auto' }} />
+          <Spin
+            data-testid="zipDataLoading"
+            size="small"
+            style={{ width: '100%', margin: 'auto' }}
+          />
         ) : (
           <Empty />
         )

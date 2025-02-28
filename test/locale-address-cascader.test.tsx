@@ -137,4 +137,18 @@ describe('LocaleAddressCascader', () => {
       screen.getByDisplayValue('Washington / Seattle'),
     ).toBeInTheDocument();
   });
+
+  test('click the clear icon', () => {
+    render(
+      <LocaleAddressCascader
+        tenant="xyd"
+        placeholder="请选择地区"
+        value={['浙江省', '杭州市', '西湖区']}
+        allowClear={true}
+      />,
+    );
+    const clear = document.querySelector('.ant-select-clear')!;
+    fireEvent.mouseDown(clear);
+    expect(screen.getByDisplayValue('')).toBeInTheDocument();
+  });
 });

@@ -173,7 +173,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
 
     const { rankListShowRealName, rankShowUserLabel } =
       initialValues?.rank || {};
-
+    /* eslint-disable indent */
     const formInitialValues = {
       contestTime:
         contestType === 'contest'
@@ -248,6 +248,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
             <Space
               direction="horizontal"
               size={5}
+              align="start"
               className={classNames(`${prefix}-ac-config-space`)}
               split={<Divider type="vertical" style={{ fontSize: 400 }} />}
             >

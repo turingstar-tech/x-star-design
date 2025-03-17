@@ -155,6 +155,9 @@ export default {
     ResourceRestrictionDesc: '限制访问其他课件、学习空间、精品题库、论坛',
     Config_Affects_Submission_Visibility:
       '该配置同时影响学生学习空间相关题目的提交可见性',
+    Time_Setting_Mode_Conversion: '时间设置模式转化',
+    Please_Enter_Correct_Time_Format: '请输入正确的时间格式',
+    Duration_Cannot_Be_Set_To_Zero: '持续时间不能设置为0',
   },
   ScoreReport: {
     In_Game_Total_Score: '赛中总分',
@@ -185,5 +188,11 @@ export default {
   ZipCodeSearchInput: {
     placeholder: '请输入邮政编码',
     area: '所选地区',
+  },
+  ContestDurationInput: {
+    Start_Time: '开始时间：',
+    Please_Enter_Start_Time: '请输入开始时间',
+    Input_Format: '输入格式：2025-03-12 12:00',
+    Duration: '持续时间：',
   },
 } as const;

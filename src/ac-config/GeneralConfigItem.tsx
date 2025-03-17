@@ -1,19 +1,25 @@
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { QuestionCircleOutlined, SwapOutlined } from '@ant-design/icons';
 import {
   Checkbox,
   Col,
   DatePicker,
+  Flex,
   Form,
   FormInstance,
   Radio,
   Row,
   Space,
   Tooltip,
+  message,
 } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
+import ContestDurationInput, { isValidDate } from '../contest-duration-input';
 import ContestTimeInput from '../contest-time-input';
 import { useLocale } from '../locales';
+import { useTenant } from '../tenant-provider';
+import { prefix } from '../utils/global';
 import TimingFormItem from './TimingFormItem';
+import { ContestTimeMode } from './define';
 const { RangePicker } = DatePicker;
 
 interface GeneralConfigItemProps {
@@ -29,26 +35,98 @@ const GeneralConfigItem = ({
 }: GeneralConfigItemProps) => {
   const FOREVER = 876000; // 100 年 = 876000 小时
   const { format: t } = useLocale('AcConfig');
-
+  const {
+    theme: { primaryColor },
+  } = useTenant();
   // 监听 submission 字段
   const submitType = Form.useWatch('submission', form);
-
+  const [contestTimeMode, setContestTimeMode] = useState<ContestTimeMode>(
+    ContestTimeMode.New,
+  );
   return (
     <div>
       <Form.Item
         name={'contestTime'}
-        label={contestType === 'contest' ? t('ExamTime') : t('HomeworkTime')}
-        rules={[{ required: true }]}
+        label={
+          contestType === 'contest' ? (
+            <Flex style={{ height: '100%' }} align="center" gap={5}>
+              {t('ExamTime')}
+              <Tooltip title={t('Time_Setting_Mode_Conversion')}>
+                <SwapOutlined
+                  className={`${prefix}-contest-time-swap`}
+                  style={{ color: primaryColor }}
+                  data-testid="contest-config-time-swap"
+                  onClick={() => {
+                    //如果是空值就可以切换
+                    if (form.getFieldValue(['contestTime']).length === 0) {
+                      setContestTimeMode(
+                        contestTimeMode === ContestTimeMode.New
+                          ? ContestTimeMode.Old
+                          : ContestTimeMode.New,
+                      );
+                      return;
+                    }
+                    //如果有值得看看他是不是符合正确的格式
+                    form
+                      .validateFields(['contestTime'])
+                      .then(() => {
+                        setContestTimeMode(
+                          contestTimeMode === ContestTimeMode.New
+                            ? ContestTimeMode.Old
+                            : ContestTimeMode.New,
+                        );
+                      })
+                      .catch(() => {
+                        message.error({
+                          key: 'error',
+                          content: t('Please_Enter_Correct_Time_Format'),
+                        });
+                      });
+                  }}
+                />
+              </Tooltip>
+            </Flex>
+          ) : (
+            t('HomeworkTime')
+          )
+        }
+        rules={[
+          { required: true },
+          {
+            validator(_, value) {
+              if (contestType === 'homework') return Promise.resolve();
+              const startTime = value?.[0];
+              const endTime = value?.[1];
+              //开始时间不合法
+              if (typeof startTime === 'string' && !isValidDate(startTime))
+                return Promise.reject(
+                  new Error(t('Please_Enter_Correct_Time_Format')),
+                );
+              //结束时间和开始时间一致证明持续时间没输入
+              else if (endTime && endTime.valueOf() === startTime?.valueOf())
+                return Promise.reject(
+                  new Error(t('Duration_Cannot_Be_Set_To_Zero')),
+                );
+              else return Promise.resolve();
+            },
+          },
+        ]}
         extra={
           contestType === 'contest' && <span>{t('Contest_Time_Tip')}</span>
         }
       >
         {contestType === 'contest' ? (
-          <RangePicker
-            showTime
-            format={'YYYY-MM-DD HH:mm'}
-            data-testid="contest-config-time-input"
-          />
+          <>
+            {contestTimeMode === ContestTimeMode.New ? (
+              <ContestDurationInput />
+            ) : (
+              <RangePicker
+                showTime
+                format={'YYYY-MM-DD HH:mm'}
+                data-testid="contest-config-time-input"
+              />
+            )}
+          </>
         ) : (
           <Radio.Group style={{ display: 'flex' }}>
             <Radio value={'limitTime'} data-testid="contestTime-limitTime">

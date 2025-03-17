@@ -15,13 +15,13 @@ export default () => {
         onFinish={(values) => console.log(values)}
         ref={ref}
         // type="simple"
-        contestType={'homework'}
+        contestType={'contest'}
         initialValues={{
-          type: 'homework',
-          // contest: {
-          //   startTime: 1715068020,
-          //   endTime: 1730965620,
-          // },
+          type: 'advanced',
+          contest: {
+            startTime: 1715065200,
+            endTime: 1715070600,
+          },
           homework: {
             limitTime: 420,
             noLimit: false,

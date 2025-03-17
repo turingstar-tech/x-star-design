@@ -166,6 +166,9 @@ export default {
       'Access to other course materials, Learning spaces, Premium Problem Bank, and forums is restricted.',
     Config_Affects_Submission_Visibility:
       'This configuration also affects the submission visibility of problems related to the learning space',
+    Time_Setting_Mode_Conversion: 'Time Setting Mode Conversion',
+    Please_Enter_Correct_Time_Format: 'Please Enter Correct Time Format',
+    Duration_Cannot_Be_Set_To_Zero: 'Duration Cannot Be Set To Zero',
   },
   ScoreReport: {
     In_Game_Total_Score: 'Timed Score',
@@ -197,5 +200,11 @@ export default {
   ZipCodeSearchInput: {
     placeholder: 'Please enter the zip code',
     area: 'Area',
+  },
+  ContestDurationInput: {
+    Start_Time: 'Start Time:',
+    Please_Enter_Start_Time: 'Please Enter Start Time',
+    Input_Format: 'Input Format: 2025-03-12 12:00',
+    Duration: 'Duration:',
   },
 } as const;

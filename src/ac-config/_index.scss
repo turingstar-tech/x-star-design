@@ -1,9 +1,19 @@
 .#{$prefix}-ac-config-space {
+  display: flex;
+
   & > :last-child {
     align-self: flex-start;
+  }
+
+  .x-star-design-space-item-split {
+    align-self: center;
   }
 }
 
 .#{$prefix}-ac-config-form {
   padding-right: 12px;
+}
+.#{$prefix}-contest-time-swap {
+  cursor: pointer;
+  font-size: 16px;
 }

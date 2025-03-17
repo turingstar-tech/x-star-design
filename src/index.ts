@@ -16,6 +16,7 @@ export { default as CodeMirrorWrapper } from './code-mirror-wrapper';
 export type { CodeMirrorWrapperProps } from './code-mirror-wrapper';
 export { LangId, Language, Theme } from './code-mirror-wrapper/define';
 export { default as ContactButton } from './contact-button';
+export { default as ContestDurationInput } from './contest-duration-input';
 export { default as ContestTimeInput } from './contest-time-input';
 export type { ContestTimeInputProps } from './contest-time-input';
 export { default as DomObserver } from './dom-observer';

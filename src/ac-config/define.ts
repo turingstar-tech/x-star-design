@@ -170,3 +170,7 @@ export enum ContestExamType {
   Homework = 'homework',
   Exam = 'contest',
 }
+export enum ContestTimeMode {
+  Old = 'old',
+  New = 'new',
+}

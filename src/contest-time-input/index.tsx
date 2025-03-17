@@ -1,8 +1,8 @@
 import { InputNumber } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocale } from '../locales';
 
-interface ContestTimeInputValue {
+export interface ContestTimeInputValue {
   limitHour?: number | null;
   limitMinute?: number | null;
 }
@@ -24,6 +24,10 @@ const ContestTimeInput = ({
 }: ContestTimeInputProps) => {
   const [innerValue, setInnerValue] = useState(value ?? defaultValue);
   const { format: t } = useLocale('ContestTimeInput');
+
+  useEffect(() => {
+    setInnerValue(value ?? defaultValue);
+  }, [value]);
 
   return (
     <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>

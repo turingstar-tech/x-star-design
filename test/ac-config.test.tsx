@@ -23,7 +23,7 @@ jest.useFakeTimers();
 describe('ac config', () => {
   test('render contest AcConfig', async () => {
     const ref = createRef<AcConfigHandle>();
-    const { getByText, getByLabelText, getByTestId } = render(
+    const { getByText, getByLabelText, getByTestId, getAllByTestId } = render(
       <AcConfig
         ref={ref}
         contestType={ContestExamType.Exam}
@@ -101,10 +101,14 @@ describe('ac config', () => {
     });
     expect(getByText('After contest start')).toBeInTheDocument();
     await act(async () => {
-      fireEvent.change(getByTestId('hour-input'), { target: { value: 1 } });
+      fireEvent.change(getAllByTestId('hour-input')[1], {
+        target: { value: 1 },
+      });
     });
     await act(async () => {
-      fireEvent.change(getByTestId('minute-input'), { target: { value: 20 } });
+      fireEvent.change(getAllByTestId('minute-input')[1], {
+        target: { value: 20 },
+      });
     });
     // disorder
     // fireEvent.change(getByTestId('disorder'), {
@@ -580,5 +584,114 @@ describe('ac config', () => {
       ref.current?.form.submit();
     });
     expect(onChange).toBeCalled();
+  });
+
+  test('exam time mode exchange', async () => {
+    const ref = createRef<AcConfigHandle>();
+    const onFinish = jest.fn();
+    const { getAllByTestId, getByTestId } = render(
+      <AcConfig
+        ref={ref}
+        contestType={ContestExamType.Exam}
+        onFinish={onFinish}
+      />,
+    );
+    const swapBtn = getByTestId('contest-config-time-swap');
+    await act(async () => {
+      fireEvent.click(swapBtn);
+    });
+    expect(getAllByTestId('contest-config-time-input')[0]).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(swapBtn);
+    });
+    expect(getByTestId('duration-start-time')).toBeInTheDocument();
+  });
+  test('exam time mode exchange with initial value', async () => {
+    const ref = createRef<AcConfigHandle>();
+    const onFinish = jest.fn();
+    const { getByTestId, getByText, getAllByTestId } = render(
+      <AcConfig
+        ref={ref}
+        contestType={ContestExamType.Exam}
+        onFinish={onFinish}
+        initialValues={
+          {
+            type: 'advanced',
+            program: {
+              lang: ['g++', 'gcc'],
+            },
+            general: {
+              gradeRelease: {
+                type: 'scheduled',
+                scheduled: {
+                  releaseTime: 1721899977,
+                },
+              },
+              paperRelease: {
+                type: 'scheduled',
+                scheduled: {
+                  releaseTime: 1721899977,
+                },
+              },
+              disorder: {
+                part: false,
+                program: false,
+                objective: false,
+                combinationInternal: false,
+                singleOption: false,
+                multipleOption: false,
+              },
+            },
+            contest: {
+              startTime: 1715070600,
+              endTime: 1721873321,
+            },
+          } as any
+        }
+      />,
+    );
+    const swapBtn = getByTestId('contest-config-time-swap');
+    const startInput = getByTestId('duration-start-time');
+
+    expect(startInput).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(swapBtn);
+    });
+    expect(startInput).not.toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(swapBtn);
+    });
+    expect(getByTestId('duration-start-time')).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.change(getByTestId('duration-start-time'), {
+        target: { value: 'abcd' },
+      });
+    });
+    await act(async () => {
+      fireEvent.click(swapBtn);
+    });
+    expect(getByText('Please Enter Correct Time Format')).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.change(getByTestId('duration-start-time'), {
+        target: { value: '2025-01-01 11:00' },
+      });
+    });
+    await act(async () => {
+      fireEvent.change(getAllByTestId('hour-input')[0], {
+        target: { value: '0' },
+      });
+    });
+    await act(async () => {
+      fireEvent.change(getAllByTestId('minute-input')[0], {
+        target: { value: '0' },
+      });
+    });
+    await act(async () => {
+      ref.current?.form.submit();
+    });
+    expect(onFinish).not.toBeCalled();
   });
 });

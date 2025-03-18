@@ -22,6 +22,7 @@ export interface AcConfigProps extends Omit<FormProps, 'children'> {
   contestType?: ContestExamType;
   initialValues?: Configuration;
   onFinish?: (values: Configuration) => void;
+  form?: FormInstance<any>;
 }
 
 export interface AcConfigHandle {
@@ -135,11 +136,13 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       type = 'advanced',
       contestType = ContestExamType.Homework,
       initialValues,
+      form: externalForm, // 接收外部传入的 form
       ...props
     },
     ref,
   ) => {
-    const [form] = Form.useForm();
+    const [internalForm] = Form.useForm();
+    const form = externalForm || internalForm; // 使用外部传入的 form，如果没有则使用内部创建的 form
     const { format: t, locale } = useLocale('AcConfig');
     const language = {
       zh_CN: 'zh',

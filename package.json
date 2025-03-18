@@ -1,6 +1,6 @@
 {
   "name": "x-star-design",
-  "version": "0.0.87",
+  "version": "0.0.88",
   "description": "A react component library developed by turingstar",
   "license": "MIT",
   "module": "dist/index.js",

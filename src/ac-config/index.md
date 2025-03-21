@@ -20,7 +20,7 @@ export default () => {
           type: 'advanced',
           contest: {
             startTime: 1715065200,
-            endTime: 1742543985,
+            endTime: 1742549520,
           },
           homework: {
             limitTime: 420,

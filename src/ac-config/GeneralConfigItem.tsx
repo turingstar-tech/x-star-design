@@ -114,7 +114,6 @@ const GeneralConfigItem = ({
           contestType === 'contest' && <span>{t('Contest_Time_Tip')}</span>
         }
       >
-        {console.log(form.getFieldValue('contestTime')?.[1]?.isBefore(dayjs()))}
         {contestType === 'contest' ? (
           <>
             {/* 比赛结束后禁用 */}

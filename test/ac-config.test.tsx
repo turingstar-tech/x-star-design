@@ -56,7 +56,7 @@ describe('ac config', () => {
             },
             contest: {
               startTime: 1721870123,
-              endTime: 1721873321,
+              endTime: 1842649520,
             },
             type: 'contest',
           } as any
@@ -214,7 +214,7 @@ describe('ac config', () => {
         },
         contest: {
           startTime: 1721870100,
-          endTime: 1721873280,
+          endTime: 1842649500,
         },
       }),
     );
@@ -453,6 +453,75 @@ describe('ac config', () => {
       'The scheduled time cannot exceed the homework/exam duration',
     );
   });
+  test('invalid config with validate 1 in Contest', async () => {
+    const ref = createRef<AcConfigHandle>();
+    const { getByText, getByTestId, getAllByTestId } = render(
+      <AcConfig
+        ref={ref}
+        contestType={ContestExamType.Exam}
+        initialValues={
+          {
+            type: 'advanced',
+            program: {
+              lang: ['g++', 'gcc'],
+            },
+            general: {
+              gradeRelease: {
+                type: 'scheduled',
+                scheduled: {
+                  releaseTime: 1721899977,
+                },
+              },
+              paperRelease: {
+                type: 'scheduled',
+                scheduled: {
+                  releaseTime: 1721899977,
+                },
+              },
+              disorder: {
+                part: false,
+                program: false,
+                objective: false,
+                combinationInternal: false,
+                singleOption: false,
+                multipleOption: false,
+              },
+            },
+            contest: {
+              startTime: 1915070600,
+              endTime: 1915070660,
+            },
+          } as any
+        }
+      />,
+    );
+    const swapBtn = getByTestId('contest-config-time-swap');
+    const startInput = getByTestId('duration-start-time');
+
+    expect(startInput).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(swapBtn);
+    });
+    await act(async () => {
+      fireEvent.click(getByText('Timed advance submission'));
+    });
+    await act(async () => {
+      fireEvent.change(getAllByTestId('hour-input')[0], {
+        target: { value: 1 },
+      });
+    });
+    await act(async () => {
+      fireEvent.change(getAllByTestId('minute-input')[0], {
+        target: { value: 30 },
+      });
+    });
+    await act(async () => {
+      ref.current?.form.submit();
+    });
+    expect(ref.current?.form.getFieldError('submissionLimitTime')[0]).toBe(
+      'The scheduled time cannot exceed the homework/exam duration',
+    );
+  });
   test('invalid config with validate 2', async () => {
     const ref = createRef<AcConfigHandle>();
     const { getByTestId, getAllByTestId } = render(
@@ -644,7 +713,7 @@ describe('ac config', () => {
             },
             contest: {
               startTime: 1715070600,
-              endTime: 1721873321,
+              endTime: 1842649520,
             },
           } as any
         }
@@ -694,4 +763,63 @@ describe('ac config', () => {
     });
     expect(onFinish).not.toBeCalled();
   });
+  //   test('the duration time of After Contest Start can not exceed the contest duration time', async () => {
+  //     const ref = createRef<AcConfigHandle>();
+  //     const onFinish = jest.fn();
+  //     const { getByTestId, getByText, getAllByTestId } = render(
+  //       <AcConfig
+  //         ref={ref}
+  //         contestType={ContestExamType.Exam}
+  //         onFinish={onFinish}
+  //         initialValues={
+  //           {
+  //             type: 'advanced',
+  //             program: {
+  //               lang: ['g++', 'gcc'],
+  //             },
+  //             general: {
+  //               gradeRelease: {
+  //                 type: 'scheduled',
+  //                 scheduled: {
+  //                   releaseTime: 1721899977,
+  //                 },
+  //               },
+  //               paperRelease: {
+  //                 type: 'scheduled',
+  //                 scheduled: {
+  //                   releaseTime: 1721899977,
+  //                 },
+  //               },
+  //               disorder: {
+  //                 part: false,
+  //                 program: false,
+  //                 objective: false,
+  //                 combinationInternal: false,
+  //                 singleOption: false,
+  //                 multipleOption: false,
+  //               },
+  //             },
+  //             contest: {
+  //               startTime: 1715070600,
+  //               endTime: 1742649520,
+  //             },
+  //           } as any
+  //         }
+  //       />,
+  //     );
+  //     await act(async () => {
+  //       fireEvent.click(getByText('Timed advance submission'));
+  //     });
+  //     await act(async () => {
+  //       fireEvent.change(getAllByTestId('hour-input')[1], {
+  //         target: { value: '100000' },
+  //       });
+  //     });
+  //     await act(async () => {
+  //       ref.current?.form.submit();
+  //     });
+  //     expect(ref.current?.form.getFieldError('submissionLimitTime')).toBe(
+  //       'Please enter Programming language',
+  //     );
+  //   })
 });

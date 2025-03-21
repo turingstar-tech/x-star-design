@@ -270,7 +270,11 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                     t('Programming_Problem_Configuration'),
                   )}
                 </h3>
-                <ProgramConfigItem type={type} />
+                <ProgramConfigItem
+                  type={type}
+                  form={form}
+                  contestType={contestType}
+                />
               </div>
             </Space>
           ) : (
@@ -280,7 +284,11 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                 contestType={contestType}
                 form={form}
               />
-              <ProgramConfigItem type={type} />
+              <ProgramConfigItem
+                type={type}
+                form={form}
+                contestType={contestType}
+              />
             </>
           )}
         </Form>

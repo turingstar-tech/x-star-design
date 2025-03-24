@@ -13,6 +13,7 @@ export interface ContestTimeInputProps {
   defaultValue?: ContestTimeInputValue;
   onChange?: (value: ContestTimeInputValue) => void;
   value?: ContestTimeInputValue;
+  disabled?: boolean;
 }
 
 const ContestTimeInput = ({
@@ -21,6 +22,7 @@ const ContestTimeInput = ({
   defaultValue,
   onChange,
   value,
+  disabled,
 }: ContestTimeInputProps) => {
   const [innerValue, setInnerValue] = useState(value ?? defaultValue);
   const { format: t } = useLocale('ContestTimeInput');
@@ -43,6 +45,7 @@ const ContestTimeInput = ({
           setInnerValue({ ...innerValue, limitHour: newValue });
           onChange?.({ ...innerValue, limitHour: newValue });
         }}
+        disabled={disabled}
       />
       <span>{t('Hour')}</span>
       <InputNumber
@@ -56,6 +59,7 @@ const ContestTimeInput = ({
           setInnerValue({ ...innerValue, limitMinute: newValue });
           onChange?.({ ...innerValue, limitMinute: newValue });
         }}
+        disabled={disabled}
       />
       <span>{t('Minute')}</span>
       {suffix}

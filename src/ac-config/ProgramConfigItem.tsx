@@ -6,9 +6,15 @@ import { langVL } from './define';
 
 interface ProgramConfigItemProps {
   type: 'advanced' | 'simple';
+  contestType?: 'contest' | 'homework';
+  isFinish?: boolean;
 }
 
-const ProgramConfigItem = ({ type }: ProgramConfigItemProps) => {
+const ProgramConfigItem = ({
+  type,
+  contestType,
+  isFinish,
+}: ProgramConfigItemProps) => {
   const { format: t } = useLocale('AcConfig');
 
   return (
@@ -24,6 +30,7 @@ const ProgramConfigItem = ({ type }: ProgramConfigItemProps) => {
             data-testid="lang-select"
             allowClear
             style={{ maxWidth: 350 }}
+            disabled={contestType === 'contest' && isFinish}
             options={Array.from(langVL, ([value, label]) => ({
               label,
               value,

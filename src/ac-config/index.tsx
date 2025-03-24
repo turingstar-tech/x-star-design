@@ -23,6 +23,7 @@ export interface AcConfigProps extends Omit<FormProps, 'children'> {
   initialValues?: Configuration;
   onFinish?: (values: Configuration) => void;
   form?: FormInstance<any>;
+  isFinish?: boolean;
 }
 
 export interface AcConfigHandle {
@@ -137,6 +138,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       contestType = ContestExamType.Homework,
       initialValues,
       form: externalForm, // 接收外部传入的 form
+      isFinish,
       ...props
     },
     ref,
@@ -261,6 +263,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                   type={type}
                   contestType={contestType}
                   form={form}
+                  isFinish={isFinish}
                 />
               </div>
               <div>
@@ -270,7 +273,11 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                     t('Programming_Problem_Configuration'),
                   )}
                 </h3>
-                <ProgramConfigItem type={type} />
+                <ProgramConfigItem
+                  type={type}
+                  contestType={contestType}
+                  isFinish={isFinish}
+                />
               </div>
             </Space>
           ) : (
@@ -279,8 +286,13 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                 type={type}
                 contestType={contestType}
                 form={form}
+                isFinish={isFinish}
               />
-              <ProgramConfigItem type={type} />
+              <ProgramConfigItem
+                type={type}
+                contestType={contestType}
+                isFinish={isFinish}
+              />
             </>
           )}
         </Form>

@@ -9,6 +9,7 @@ interface ContestDurationInputProps {
   onChange?: (
     value: [Dayjs | null | undefined | string, Dayjs | null | undefined],
   ) => void;
+  disabled?: boolean;
 }
 export const isValidDate = (value: string) =>
   /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(value);
@@ -16,6 +17,7 @@ export const isValidDate = (value: string) =>
 const ContestDurationInput = ({
   value,
   onChange,
+  disabled,
 }: ContestDurationInputProps) => {
   const { format: t } = useLocale('ContestDurationInput');
   const [startTime, setStartTime] = useState('');
@@ -83,13 +85,18 @@ const ContestDurationInput = ({
             value={startTime}
             onChange={handleStartTimeChange}
             data-testid="duration-start-time"
+            disabled={disabled}
           />
         </Flex>
       </Space>
       <div className={`${prefix}-contest-time-tip`}>{t('Input_Format')}</div>
       <Space>
         {t('Duration')}
-        <ContestTimeInput value={duration} onChange={handleDurationChange} />
+        <ContestTimeInput
+          value={duration}
+          onChange={handleDurationChange}
+          disabled={disabled}
+        />
       </Space>
     </Flex>
   );

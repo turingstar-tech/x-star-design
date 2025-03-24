@@ -26,12 +26,14 @@ interface GeneralConfigItemProps {
   type: 'advanced' | 'simple';
   contestType?: 'contest' | 'homework';
   form: FormInstance<any>;
+  isFinish?: boolean;
 }
 
 const GeneralConfigItem = ({
   type,
   contestType,
   form,
+  isFinish,
 }: GeneralConfigItemProps) => {
   const FOREVER = 876000; // 100 年 = 876000 小时
   const { format: t } = useLocale('AcConfig');
@@ -56,32 +58,30 @@ const GeneralConfigItem = ({
                   className={`${prefix}-contest-time-swap`}
                   style={{ color: primaryColor }}
                   data-testid="contest-config-time-swap"
-                  onClick={() => {
-                    //如果是空值就可以切换
-                    if (form.getFieldValue(['contestTime']).length === 0) {
-                      setContestTimeMode(
-                        contestTimeMode === ContestTimeMode.New
-                          ? ContestTimeMode.Old
-                          : ContestTimeMode.New,
-                      );
-                      return;
-                    }
-                    //如果有值得看看他是不是符合正确的格式
-                    form
-                      .validateFields(['contestTime'])
-                      .then(() => {
+                  onClick={async () => {
+                    try {
+                      //如果是空值就可以切换
+                      if (form.getFieldValue(['contestTime']).length === 0) {
                         setContestTimeMode(
                           contestTimeMode === ContestTimeMode.New
                             ? ContestTimeMode.Old
                             : ContestTimeMode.New,
                         );
-                      })
-                      .catch(() => {
-                        message.error({
-                          key: 'error',
-                          content: t('Please_Enter_Correct_Time_Format'),
-                        });
+                        return;
+                      }
+                      //如果有值得看看他是不是符合正确的格式
+                      await form.validateFields(['contestTime']);
+                      setContestTimeMode(
+                        contestTimeMode === ContestTimeMode.New
+                          ? ContestTimeMode.Old
+                          : ContestTimeMode.New,
+                      );
+                    } catch (error) {
+                      message.error({
+                        key: 'error',
+                        content: t('Please_Enter_Correct_Time_Format'),
                       });
+                    }
                   }}
                 />
               </Tooltip>
@@ -117,13 +117,15 @@ const GeneralConfigItem = ({
       >
         {contestType === 'contest' ? (
           <>
+            {/* 比赛结束后禁用 */}
             {contestTimeMode === ContestTimeMode.New ? (
-              <ContestDurationInput />
+              <ContestDurationInput disabled={isFinish} />
             ) : (
               <RangePicker
                 showTime
                 format={'YYYY-MM-DD HH:mm'}
                 data-testid="contest-config-time-input"
+                disabled={isFinish}
               />
             )}
           </>
@@ -261,7 +263,7 @@ const GeneralConfigItem = ({
         </Form.Item>
       </div>
       <Form.Item name={'submission'} label={t('HAND_IN_THE_PAPER_IN_ADVANCE')}>
-        <Radio.Group>
+        <Radio.Group disabled={contestType === 'contest' && isFinish}>
           <Radio value={'allowEarlySubmission'}>{t('ALLOW')}</Radio>
           <Radio value={'noEarlySubmission'}>{t('PROHIBIT')}</Radio>
           <Radio

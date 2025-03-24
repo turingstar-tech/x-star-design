@@ -12,73 +12,40 @@ export default () => {
   return (
     <>
       <AcConfig
-        onFinish={(values) => console.log(values)}
         ref={ref}
-        // type="simple"
         contestType={'contest'}
         initialValues={{
           type: 'advanced',
-          contest: {
-            startTime: 1715065200,
-            endTime: 1715070600,
-          },
-          homework: {
-            limitTime: 420,
-            noLimit: false,
+          program: {
+            lang: ['g++', 'gcc'],
           },
           general: {
             gradeRelease: {
-              type: 'afterExam',
-            },
-            rankListRelease: {
-              type: 'afterGradeRelease',
+              type: 'scheduled',
+              scheduled: {
+                releaseTime: 1721899977,
+              },
             },
             paperRelease: {
-              type: 'afterExam',
-            },
-            answerRelease: {
-              type: 'afterExam',
-            },
-            submission: {
-              type: 'timedSubmission',
-              submissionTimed: 60,
-            },
-            tipRelease: {
-              type: 'afterExam',
+              type: 'scheduled',
+              scheduled: {
+                releaseTime: 1721899977,
+              },
             },
             disorder: {
               part: false,
               program: false,
-              objective: true,
+              objective: false,
               combinationInternal: false,
               singleOption: false,
               multipleOption: false,
             },
           },
-          rank: {
-            rankListShowRealName: true,
-            rankShowUserLabel: false,
+          contest: {
+            startTime: 1915070600,
+            endTime: 1915070660,
           },
-          program: {
-            personalScoreVisibility: 'always',
-            rankingMethod: 'score',
-            highScoreProgramVisibility: 'never',
-            downloadDataEnable: true,
-            downloadDataCount: 10,
-            scoreTypeInMatch: 'maxScore',
-            lang: [
-              'gcc',
-              'g++',
-              'g++11',
-              'g++14',
-              'g++17',
-              'python2.7',
-              'python3.8',
-              'java8',
-              'fpc',
-            ],
-          },
-        }}
+        } as any}
       />
       <Button
         onClick={() => {

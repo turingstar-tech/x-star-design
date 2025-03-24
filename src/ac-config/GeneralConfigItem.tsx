@@ -12,7 +12,6 @@ import {
   Tooltip,
   message,
 } from 'antd';
-import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import ContestDurationInput, { isValidDate } from '../contest-duration-input';
 import ContestTimeInput from '../contest-time-input';
@@ -27,12 +26,14 @@ interface GeneralConfigItemProps {
   type: 'advanced' | 'simple';
   contestType?: 'contest' | 'homework';
   form: FormInstance<any>;
+  isFinish?: boolean;
 }
 
 const GeneralConfigItem = ({
   type,
   contestType,
   form,
+  isFinish,
 }: GeneralConfigItemProps) => {
   const FOREVER = 876000; // 100 年 = 876000 小时
   const { format: t } = useLocale('AcConfig');
@@ -118,19 +119,13 @@ const GeneralConfigItem = ({
           <>
             {/* 比赛结束后禁用 */}
             {contestTimeMode === ContestTimeMode.New ? (
-              <ContestDurationInput
-                disabled={form
-                  .getFieldValue('contestTime')?.[1]
-                  ?.isBefore(dayjs())}
-              />
+              <ContestDurationInput disabled={isFinish} />
             ) : (
               <RangePicker
                 showTime
                 format={'YYYY-MM-DD HH:mm'}
                 data-testid="contest-config-time-input"
-                disabled={form
-                  .getFieldValue('contestTime')?.[1]
-                  ?.isBefore(dayjs())}
+                disabled={isFinish}
               />
             )}
           </>
@@ -268,12 +263,7 @@ const GeneralConfigItem = ({
         </Form.Item>
       </div>
       <Form.Item name={'submission'} label={t('HAND_IN_THE_PAPER_IN_ADVANCE')}>
-        <Radio.Group
-          disabled={
-            contestType === 'contest' &&
-            form.getFieldValue('contestTime')?.[1]?.isBefore(dayjs())
-          }
-        >
+        <Radio.Group disabled={contestType === 'contest' && isFinish}>
           <Radio value={'allowEarlySubmission'}>{t('ALLOW')}</Radio>
           <Radio value={'noEarlySubmission'}>{t('PROHIBIT')}</Radio>
           <Radio

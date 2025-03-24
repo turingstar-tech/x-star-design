@@ -1,5 +1,4 @@
-import { Form, FormInstance, InputNumber, Radio, Select } from 'antd';
-import dayjs from 'dayjs';
+import { Form, InputNumber, Radio, Select } from 'antd';
 import React from 'react';
 import { useLocale } from '../locales';
 import TimingFormItem from './TimingFormItem';
@@ -7,14 +6,14 @@ import { langVL } from './define';
 
 interface ProgramConfigItemProps {
   type: 'advanced' | 'simple';
-  form: FormInstance<any>;
   contestType?: 'contest' | 'homework';
+  isFinish?: boolean;
 }
 
 const ProgramConfigItem = ({
   type,
-  form,
   contestType,
+  isFinish,
 }: ProgramConfigItemProps) => {
   const { format: t } = useLocale('AcConfig');
 
@@ -31,10 +30,7 @@ const ProgramConfigItem = ({
             data-testid="lang-select"
             allowClear
             style={{ maxWidth: 350 }}
-            disabled={
-              contestType === 'contest' &&
-              form.getFieldValue('contestTime')?.[1]?.isBefore(dayjs())
-            }
+            disabled={contestType === 'contest' && isFinish}
             options={Array.from(langVL, ([value, label]) => ({
               label,
               value,

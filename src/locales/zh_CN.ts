@@ -158,6 +158,9 @@ export default {
     Time_Setting_Mode_Conversion: '时间设置模式转化',
     Please_Enter_Correct_Time_Format: '请输入正确的时间格式',
     Duration_Cannot_Be_Set_To_Zero: '持续时间不能设置为0',
+    Show_Top_N_Submissions: '赛中仅显示前n项提交',
+    Show_Top_N_Submissions_Extra: '针对单题生效',
+    Top_N_Submissions: '前n项',
   },
   ScoreReport: {
     In_Game_Total_Score: '赛中总分',

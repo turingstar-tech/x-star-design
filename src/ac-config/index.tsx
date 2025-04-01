@@ -104,6 +104,8 @@ export const getConfigData = ({
       downloadDataCount: rawData.downloadDataCount,
       scoreTypeInMatch: rawData.scoreTypeInMatch,
       lang: rawData.lang,
+      showTopNSubmission: rawData.showTopNSubmission,
+      showTopNSubmissionCount: rawData.showTopNSubmissionCount,
     },
   };
   if (contestType === ContestExamType.Exam) {
@@ -174,6 +176,8 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       downloadDataCount,
       scoreTypeInMatch,
       lang,
+      showTopNSubmission,
+      showTopNSubmissionCount,
     } = initialValues?.program || {};
 
     const { rankListShowRealName, rankShowUserLabel } =
@@ -230,6 +234,8 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       downloadDataEnable,
       downloadDataCount,
       restriction: restriction?.type,
+      showTopNSubmission,
+      showTopNSubmissionCount,
     };
 
     useImperativeHandle(ref, () => ({

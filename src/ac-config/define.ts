@@ -59,6 +59,8 @@ export interface Configuration {
     downloadDataCount: number;
     scoreTypeInMatch: 'latestSubmit' | 'maxScore';
     lang: string[];
+    showTopNSubmission: boolean;
+    showTopNSubmissionCount: number;
   };
   homework?: {
     noLimit?: boolean;
@@ -118,6 +120,14 @@ export interface RawConfig {
     | 'java8'
     | 'fpc'
   )[];
+  /**
+   * 赛中仅显示前n项提交
+   */
+  showTopNSubmission: boolean;
+  /**
+   * 赛中仅显示前n项提交数量
+   */
+  showTopNSubmissionCount: number;
   /**
    * 学生排行榜真实姓名
    */

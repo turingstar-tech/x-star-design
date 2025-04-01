@@ -148,6 +148,46 @@ const ProgramConfigItem = ({
           );
         }}
       </Form.Item>
+      <Form.Item
+        label={t('Show_Top_N_Submissions')}
+        name={'showTopNSubmission'}
+        extra={t('Show_Top_N_Submissions_Extra')}
+      >
+        <Radio.Group>
+          <Radio value data-testid="showTopNSubmission-true">
+            {t('ALLOW')}
+          </Radio>
+          <Radio value={false} data-testid="showTopNSubmission-false">
+            {t('PROHIBIT')}
+          </Radio>
+        </Radio.Group>
+      </Form.Item>
+      <Form.Item
+        noStyle
+        shouldUpdate={(perValues, nextValues) => {
+          return (
+            perValues['showTopNSubmission'] !== nextValues['showTopNSubmission']
+          );
+        }}
+      >
+        {({ getFieldValue }) => {
+          const isVisible = getFieldValue('showTopNSubmission');
+          return (
+            isVisible && (
+              <Form.Item
+                label={t('Top_N_Submissions')}
+                name={'showTopNSubmissionCount'}
+              >
+                <InputNumber<number>
+                  min={0}
+                  max={100}
+                  data-testid="showTopNSubmission-input"
+                />
+              </Form.Item>
+            )
+          );
+        }}
+      </Form.Item>
     </>
   );
 };

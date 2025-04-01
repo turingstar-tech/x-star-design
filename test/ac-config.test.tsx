@@ -146,7 +146,17 @@ describe('ac config', () => {
         value: 10,
       },
     });
-
+    await act(async () => {
+      fireEvent.click(getByTestId('showTopNSubmission-true'));
+    });
+    await waitFor(() => {
+      expect(getByLabelText('Top N')).toBeInTheDocument();
+    });
+    fireEvent.change(getByTestId('showTopNSubmission-input'), {
+      target: {
+        value: 10,
+      },
+    });
     expect(
       JSON.stringify(
         getConfigData({
@@ -211,6 +221,8 @@ describe('ac config', () => {
           downloadDataCount: 10,
           scoreTypeInMatch: 'latestSubmit',
           lang: ['g++', 'gcc'],
+          showTopNSubmission: true,
+          showTopNSubmissionCount: 10,
         },
         contest: {
           startTime: 1721870100,

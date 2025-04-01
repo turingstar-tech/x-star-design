@@ -14,10 +14,13 @@ export default () => {
       <AcConfig
         ref={ref}
         contestType={'contest'}
+        onFinish={(values)=>{console.log(values)}}
         initialValues={{
           type: 'advanced',
           program: {
             lang: ['g++', 'gcc'],
+            showTopNSubmission: true,
+            showTopNSubmissionCount:10
           },
           general: {
             gradeRelease: {
@@ -51,7 +54,6 @@ export default () => {
         onClick={() => {
           if (ref.current) {
             const { form } = ref.current;
-            console.log(form);
             form.submit();
           }
         }}

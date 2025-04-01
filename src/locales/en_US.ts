@@ -169,6 +169,9 @@ export default {
     Time_Setting_Mode_Conversion: 'Time Setting Mode Conversion',
     Please_Enter_Correct_Time_Format: 'Please Enter Correct Time Format',
     Duration_Cannot_Be_Set_To_Zero: 'Duration Cannot Be Set To Zero',
+    Show_Top_N_Submissions: 'Top N Submissions Display',
+    Show_Top_N_Submissions_Extra: 'For single problem',
+    Top_N_Submissions: 'Top N',
   },
   ScoreReport: {
     In_Game_Total_Score: 'Timed Score',

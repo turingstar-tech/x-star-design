@@ -210,4 +210,31 @@ export default {
     Input_Format: 'Input Format: 2025-03-12 12:00',
     Duration: 'Duration:',
   },
+  ConfigTemplate: {
+    OI: 'OI',
+    XCPC: 'XCPC',
+    IOI: 'IOI',
+    Homework_Mode_1: 'Homework Mode 1',
+    Homework_Mode_2: 'Homework Mode 2',
+    Score_Rank: 'Rank by score',
+    AC_Rank: 'Rank by AC number',
+    Penalty_Rank: 'Same score, rank by penalty',
+    Show_Submission_Result: 'Show submission result in contest',
+    Rank_List_Visible: 'Rank list always valid',
+    No_Homework_Time_Limit: 'No homework time limit',
+    Submit_By_Highest_Score: 'Submit by highest score',
+    Personal_Score_Visibility: 'Personal score always visible',
+    Tip_Visibility: 'Tip always visible',
+    Cover_successfully: 'Cover successfully',
+    Current_Homework_Mode_Hint:
+      'Current is homework mode and the configuration does not match, are you sure to cover it?',
+    Current_Contest_Mode_Hint:
+      'Current is contest mode and the configuration does not match, are you sure to cover it?',
+    Current_Operation_Hint:
+      'Current operation will cover the original configuration, are you sure?',
+    Homework_Time_Limit_120_Minutes: 'Homework time limit 120 minutes',
+    Same_Score_First_AC: 'Same score, rank by first AC time',
+    No_Submission_Result_In_Contest: 'No submission result in contest',
+    Submit_By_Last_Submission: 'Submit by last submission',
+  },
 } as const;

@@ -4,7 +4,8 @@ export type ConfigStatus =
   | 'afterExam'
   | 'afterApproval'
   | 'scheduled'
-  | 'afterGradeRelease';
+  | 'afterGradeRelease'
+  | 'always';
 
 export type SubmissionConfigStatus =
   | 'noEarlySubmission'

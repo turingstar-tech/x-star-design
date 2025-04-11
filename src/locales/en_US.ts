@@ -172,6 +172,8 @@ export default {
     Show_Top_N_Submissions: 'Top N Submissions Display',
     Show_Top_N_Submissions_Extra: 'For single problem',
     Top_N_Submissions: 'Top N',
+    After_Contest_Start: 'Display after N mins of contest start',
+    After_Contest_Start_N: 'N mins of contest start',
   },
   ScoreReport: {
     In_Game_Total_Score: 'Timed Score',

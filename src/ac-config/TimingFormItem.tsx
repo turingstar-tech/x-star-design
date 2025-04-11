@@ -1,5 +1,6 @@
 import { DatePicker, Form } from 'antd';
 import React from 'react';
+import ContestTimeInput from '../contest-time-input';
 import { useLocale } from '../locales';
 
 interface TimingFormItemIProps {
@@ -13,7 +14,7 @@ const TimingFormItem: React.FC<TimingFormItemIProps> = ({
   name,
   label,
 }) => {
-  const { locale } = useLocale('AcConfig');
+  const { locale, format: t } = useLocale('AcConfig');
   const lang = {
     zh_CN: 'zh',
     en_US: 'en',
@@ -39,19 +40,29 @@ const TimingFormItem: React.FC<TimingFormItemIProps> = ({
     >
       {({ getFieldValue }) => {
         // 成绩发布定时发布时显示
-        const isVisible = getFieldValue(field) === 'scheduled';
-
+        const isVisible =
+          getFieldValue(field) === 'scheduled' ||
+          getFieldValue(field) === 'started';
+        const isStarted = getFieldValue(field) === 'started';
         return (
           <>
             {isVisible && (
-              <Form.Item name={name} label={label} rules={[{ required: true }]}>
-                <DatePicker
-                  showTime={{
-                    use12Hours: lang === 'en',
-                    format: showTimeFormat,
-                  }}
-                  format={dateFormat}
-                />
+              <Form.Item
+                name={name}
+                label={isStarted ? t('After_Contest_Start_N') : label}
+                rules={[{ required: true }]}
+              >
+                {isStarted ? (
+                  <ContestTimeInput />
+                ) : (
+                  <DatePicker
+                    showTime={{
+                      use12Hours: lang === 'en',
+                      format: showTimeFormat,
+                    }}
+                    format={dateFormat}
+                  />
+                )}
               </Form.Item>
             )}
           </>

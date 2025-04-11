@@ -4,6 +4,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { getDescription } from 'x-star-utils';
 import ConfigProviderWrapper from '../config-provider-wrapper';
+import { ContestTimeInputValue } from '../contest-time-input';
 import { useLocale } from '../locales';
 import { prefix } from '../utils/global';
 import GeneralConfigItem from './GeneralConfigItem';
@@ -44,12 +45,19 @@ export const getConfigData = ({
     timeType: keyof RawConfig,
   ) => {
     return {
+      /* eslint-disable indent */
       [release]: {
         type: status,
         scheduled: {
           releaseTime:
             status === 'scheduled'
               ? (rawData?.[timeType] as Dayjs).second(0).unix().valueOf()
+              : status === 'started'
+              ? ((rawData?.[timeType] as ContestTimeInputValue).limitHour ||
+                  0) *
+                  60 +
+                ((rawData?.[timeType] as ContestTimeInputValue).limitMinute ||
+                  0)
               : undefined,
         },
       },
@@ -212,9 +220,17 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         paperRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
       ),
       answerRelease: answerRelease?.type,
-      answerTime: dayjs.unix(
-        answerRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-      ),
+      answerTime:
+        answerRelease?.type === 'started'
+          ? {
+              limitHour: Math.floor(
+                (answerRelease?.scheduled?.releaseTime || 0) / 60,
+              ),
+              limitMinute: (answerRelease?.scheduled?.releaseTime || 0) % 60,
+            }
+          : dayjs.unix(
+              answerRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+            ),
       rankListShowRealName,
       rankShowUserLabel,
       submission: submission?.type,
@@ -225,9 +241,17 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       lang,
       personalScoreVisibility,
       tipRelease: tipRelease?.type,
-      tipTime: dayjs.unix(
-        tipRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-      ),
+      tipTime:
+        tipRelease?.type === 'started'
+          ? {
+              limitHour: Math.floor(
+                (tipRelease?.scheduled?.releaseTime || 0) / 60,
+              ),
+              limitMinute: (tipRelease?.scheduled?.releaseTime || 0) % 60,
+            }
+          : dayjs.unix(
+              tipRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+            ),
       scoreTypeInMatch,
       rankingMethod,
       highScoreProgramVisibility,

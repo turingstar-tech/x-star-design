@@ -66,6 +66,7 @@ const ProgramConfigItem = ({
             </Radio>
             <Radio value={'scheduled'}>{t('TIMED_DISPLAY')}</Radio>
             <Radio value={'always'}>{t('Always_Visible')}</Radio>
+            <Radio value={'started'}>{t('After_Contest_Start')}</Radio>
           </Radio.Group>
         </Form.Item>
         <TimingFormItem

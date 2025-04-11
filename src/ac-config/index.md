@@ -29,6 +29,18 @@ export default () => {
                 releaseTime: 1721899977,
               },
             },
+            answerRelease: {
+              type: 'started',
+              scheduled: {
+                releaseTime: 125,
+              },
+            },
+            tipRelease: {
+              type: 'started',
+              scheduled: {
+                releaseTime: 140,
+              },
+            },
             paperRelease: {
               type: 'scheduled',
               scheduled: {

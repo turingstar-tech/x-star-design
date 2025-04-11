@@ -775,63 +775,219 @@ describe('ac config', () => {
     });
     expect(onFinish).not.toBeCalled();
   });
-  //   test('the duration time of After Contest Start can not exceed the contest duration time', async () => {
-  //     const ref = createRef<AcConfigHandle>();
-  //     const onFinish = jest.fn();
-  //     const { getByTestId, getByText, getAllByTestId } = render(
-  //       <AcConfig
-  //         ref={ref}
-  //         contestType={ContestExamType.Exam}
-  //         onFinish={onFinish}
-  //         initialValues={
-  //           {
-  //             type: 'advanced',
-  //             program: {
-  //               lang: ['g++', 'gcc'],
-  //             },
-  //             general: {
-  //               gradeRelease: {
-  //                 type: 'scheduled',
-  //                 scheduled: {
-  //                   releaseTime: 1721899977,
-  //                 },
-  //               },
-  //               paperRelease: {
-  //                 type: 'scheduled',
-  //                 scheduled: {
-  //                   releaseTime: 1721899977,
-  //                 },
-  //               },
-  //               disorder: {
-  //                 part: false,
-  //                 program: false,
-  //                 objective: false,
-  //                 combinationInternal: false,
-  //                 singleOption: false,
-  //                 multipleOption: false,
-  //               },
-  //             },
-  //             contest: {
-  //               startTime: 1715070600,
-  //               endTime: 1742649520,
-  //             },
-  //           } as any
-  //         }
-  //       />,
-  //     );
-  //     await act(async () => {
-  //       fireEvent.click(getByText('Timed advance submission'));
-  //     });
-  //     await act(async () => {
-  //       fireEvent.change(getAllByTestId('hour-input')[1], {
-  //         target: { value: '100000' },
-  //       });
-  //     });
-  //     await act(async () => {
-  //       ref.current?.form.submit();
-  //     });
-  //     expect(ref.current?.form.getFieldError('submissionLimitTime')).toBe(
-  //       'Please enter Programming language',
-  //     );
-  //   })
+
+  test('answer/hint release after contest started n mins', async () => {
+    const ref = createRef<AcConfigHandle>();
+    const onFinish = jest.fn();
+    const { getAllByTestId } = render(
+      <AcConfig
+        ref={ref}
+        contestType={ContestExamType.Exam}
+        onFinish={onFinish}
+        initialValues={
+          {
+            type: 'advanced',
+            contest: {
+              startTime: 1721870100,
+              endTime: 1842649500,
+            },
+            program: {
+              lang: ['g++', 'gcc'],
+            },
+            general: {
+              answerRelease: {
+                type: 'started',
+                scheduled: {
+                  releaseTime: 0,
+                },
+              },
+              tipRelease: {
+                type: 'started',
+                scheduled: {
+                  releaseTime: 0,
+                },
+              },
+            },
+          } as any
+        }
+      />,
+    );
+    expect(getAllByTestId('hour-input')[1]).toHaveValue('0');
+    expect(getAllByTestId('minute-input')[1]).toHaveValue('0');
+    expect(getAllByTestId('hour-input')[2]).toHaveValue('0');
+    expect(getAllByTestId('minute-input')[2]).toHaveValue('0');
+
+    fireEvent.change(getAllByTestId('hour-input')[1], {
+      target: { value: 2 },
+    });
+    fireEvent.change(getAllByTestId('minute-input')[1], {
+      target: { value: 5 },
+    });
+    fireEvent.change(getAllByTestId('hour-input')[2], {
+      target: { value: 2 },
+    });
+    fireEvent.change(getAllByTestId('minute-input')[2], {
+      target: { value: 20 },
+    });
+
+    await act(async () => {
+      ref.current?.form.submit();
+    });
+
+    expect(onFinish).toHaveBeenCalledWith({
+      contest: {
+        startTime: 1721870100,
+        endTime: 1842649500,
+      },
+      general: {
+        disorder: {
+          combinationInternal: false,
+          multipleOption: false,
+          objective: false,
+          part: false,
+          program: false,
+          singleOption: false,
+        },
+        gradeRelease: {
+          scheduled: {
+            releaseTime: undefined,
+          },
+          type: undefined,
+        },
+        paperRelease: {
+          scheduled: {
+            releaseTime: undefined,
+          },
+          type: undefined,
+        },
+        rankListRelease: {
+          scheduled: {
+            releaseTime: undefined,
+          },
+          type: undefined,
+        },
+        restriction: {
+          type: undefined,
+        },
+        submission: {
+          scheduled: {},
+          submissionTimed: 0,
+          type: undefined,
+        },
+        answerRelease: {
+          scheduled: {
+            releaseTime: 125,
+          },
+          type: 'started',
+        },
+        tipRelease: {
+          scheduled: {
+            releaseTime: 140,
+          },
+          type: 'started',
+        },
+      },
+      program: {
+        downloadDataCount: undefined,
+        downloadDataEnable: undefined,
+        highScoreProgramVisibility: undefined,
+        lang: ['g++', 'gcc'],
+        personalScoreVisibility: undefined,
+        rankingMethod: undefined,
+        scoreTypeInMatch: undefined,
+        showTopNSubmission: undefined,
+        showTopNSubmissionCount: undefined,
+      },
+      rank: {
+        rankListShowRealName: undefined,
+        rankShowUserLabel: undefined,
+      },
+    });
+
+    fireEvent.change(getAllByTestId('hour-input')[1], {
+      target: { value: 0 },
+    });
+    fireEvent.change(getAllByTestId('minute-input')[1], {
+      target: { value: 0 },
+    });
+    fireEvent.change(getAllByTestId('hour-input')[2], {
+      target: { value: 0 },
+    });
+    fireEvent.change(getAllByTestId('minute-input')[2], {
+      target: { value: 0 },
+    });
+    await act(async () => {
+      ref.current?.form.submit();
+    });
+
+    expect(onFinish).toHaveBeenCalledWith({
+      contest: {
+        startTime: 1721870100,
+        endTime: 1842649500,
+      },
+      general: {
+        disorder: {
+          combinationInternal: false,
+          multipleOption: false,
+          objective: false,
+          part: false,
+          program: false,
+          singleOption: false,
+        },
+        gradeRelease: {
+          scheduled: {
+            releaseTime: undefined,
+          },
+          type: undefined,
+        },
+        paperRelease: {
+          scheduled: {
+            releaseTime: undefined,
+          },
+          type: undefined,
+        },
+        rankListRelease: {
+          scheduled: {
+            releaseTime: undefined,
+          },
+          type: undefined,
+        },
+        restriction: {
+          type: undefined,
+        },
+        submission: {
+          scheduled: {},
+          submissionTimed: 0,
+          type: undefined,
+        },
+        answerRelease: {
+          scheduled: {
+            releaseTime: 0,
+          },
+          type: 'started',
+        },
+        tipRelease: {
+          scheduled: {
+            releaseTime: 0,
+          },
+          type: 'started',
+        },
+      },
+      program: {
+        downloadDataCount: undefined,
+        downloadDataEnable: undefined,
+        highScoreProgramVisibility: undefined,
+        lang: ['g++', 'gcc'],
+        personalScoreVisibility: undefined,
+        rankingMethod: undefined,
+        scoreTypeInMatch: undefined,
+        showTopNSubmission: undefined,
+        showTopNSubmissionCount: undefined,
+      },
+      rank: {
+        rankListShowRealName: undefined,
+        rankShowUserLabel: undefined,
+      },
+    });
+  });
 });

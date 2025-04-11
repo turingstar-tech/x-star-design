@@ -161,6 +161,8 @@ export default {
     Show_Top_N_Submissions: '赛中仅显示前n项提交',
     Show_Top_N_Submissions_Extra: '针对单题生效',
     Top_N_Submissions: '前n项',
+    After_Contest_Start: '比赛开始后N分钟后显示',
+    After_Contest_Start_N: '比赛开始N分钟',
   },
   ScoreReport: {
     In_Game_Total_Score: '赛中总分',

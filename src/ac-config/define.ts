@@ -1,11 +1,13 @@
 import { Dayjs } from 'dayjs';
+import { ContestTimeInputValue } from '../contest-time-input';
 
 export type ConfigStatus =
   | 'afterExam'
   | 'afterApproval'
   | 'scheduled'
   | 'afterGradeRelease'
-  | 'always';
+  | 'always'
+  | 'started';
 
 export type SubmissionConfigStatus =
   | 'noEarlySubmission'
@@ -79,7 +81,7 @@ export interface RawConfig {
   gradeTime: Dayjs;
   rankListTime: Dayjs;
   paperTime: Dayjs;
-  answerTime: Dayjs;
+  answerTime: Dayjs | ContestTimeInputValue;
   gradeRelease: GeneralConfigStatus<'Grade'>['type'];
   rankListRelease: GeneralConfigStatus<'Ranklist'>['type'];
   paperRelease: GeneralConfigStatus['type'];

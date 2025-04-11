@@ -234,6 +234,7 @@ const GeneralConfigItem = ({
             {t('DISPLAY_AFTER_TEACHER_CONFIRMATION')}
           </Radio>
           <Radio value={'scheduled'}>{t('TIMED_DISPLAY')}</Radio>
+          <Radio value={'started'}>{t('After_Contest_Start')}</Radio>
         </Radio.Group>
       </Form.Item>
       <TimingFormItem

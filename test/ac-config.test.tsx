@@ -876,13 +876,13 @@ describe('ac config', () => {
         },
         answerRelease: {
           scheduled: {
-            releaseTime: 125,
+            releaseTime: 7500,
           },
           type: 'started',
         },
         tipRelease: {
           scheduled: {
-            releaseTime: 140,
+            releaseTime: 8400,
           },
           type: 'started',
         },

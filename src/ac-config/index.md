@@ -32,13 +32,13 @@ export default () => {
             answerRelease: {
               type: 'started',
               scheduled: {
-                releaseTime: 125,
+                releaseTime: 7500,
               },
             },
             tipRelease: {
               type: 'started',
               scheduled: {
-                releaseTime: 140,
+                releaseTime: 8400,
               },
             },
             paperRelease: {

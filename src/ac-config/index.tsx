@@ -55,9 +55,10 @@ export const getConfigData = ({
               : status === 'started'
               ? ((rawData?.[timeType] as ContestTimeInputValue).limitHour ||
                   0) *
-                  60 +
+                  3600 +
                 ((rawData?.[timeType] as ContestTimeInputValue).limitMinute ||
-                  0)
+                  0) *
+                  60
               : undefined,
         },
       },
@@ -224,9 +225,10 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         answerRelease?.type === 'started'
           ? {
               limitHour: Math.floor(
-                (answerRelease?.scheduled?.releaseTime || 0) / 60,
+                (answerRelease?.scheduled?.releaseTime || 0) / 3600,
               ),
-              limitMinute: (answerRelease?.scheduled?.releaseTime || 0) % 60,
+              limitMinute:
+                ((answerRelease?.scheduled?.releaseTime || 0) % 3600) / 60,
             }
           : dayjs.unix(
               answerRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
@@ -245,9 +247,10 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         tipRelease?.type === 'started'
           ? {
               limitHour: Math.floor(
-                (tipRelease?.scheduled?.releaseTime || 0) / 60,
+                (tipRelease?.scheduled?.releaseTime || 0) / 3600,
               ),
-              limitMinute: (tipRelease?.scheduled?.releaseTime || 0) % 60,
+              limitMinute:
+                ((tipRelease?.scheduled?.releaseTime || 0) % 3600) / 60,
             }
           : dayjs.unix(
               tipRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,

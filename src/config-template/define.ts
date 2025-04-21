@@ -42,6 +42,7 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
       limitHour: 0,
       limitMinute: 0,
     },
+    dualEvaluation: false,
   },
   XCPC: {
     gradeTime: dayjs(),
@@ -82,6 +83,7 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
       limitHour: 0,
       limitMinute: 0,
     },
+    dualEvaluation: false,
   },
   IOI: {
     gradeTime: dayjs().add(1, 'day'),
@@ -122,6 +124,7 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
       limitHour: 0,
       limitMinute: 0,
     },
+    dualEvaluation: false,
   },
   HOMEWORK1: {
     contestTime: 'noLimit',
@@ -157,6 +160,7 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
       limitHour: 0,
       limitMinute: 0,
     },
+    dualEvaluation: false,
   },
   HOMEWORK2: {
     contestTime: 'limitTime',
@@ -192,5 +196,6 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
       limitHour: 2,
       limitMinute: 0,
     },
+    dualEvaluation: false,
   },
 };

@@ -174,6 +174,13 @@ export default {
     Top_N_Submissions: 'Top N',
     After_Contest_Start: 'Display after N mins of contest start',
     After_Contest_Start_N: 'N mins of contest start',
+    Dual_Track_Judgement: 'Dual Track Judgement',
+    Dual_Track_Judgement_Extra:
+      'Enable automatic prohibition of error data download',
+    Enable: 'Enable',
+    Disable: 'Disable',
+    Dual_Track_Judgement_Tooltip:
+      'During the contest, use the pre-inspection test point, and then switch to the complete test point after the contest to re-judge and overwrite the last submission',
   },
   ScoreReport: {
     In_Game_Total_Score: 'Timed Score',

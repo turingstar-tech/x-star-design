@@ -163,6 +163,12 @@ export default {
     Top_N_Submissions: '前n项',
     After_Contest_Start: '比赛开始后N分钟后显示',
     After_Contest_Start_N: '比赛开始N分钟',
+    Dual_Track_Judgement: '双轨评测',
+    Dual_Track_Judgement_Extra: '开启后自动禁止下载错误数据',
+    Enable: '开启',
+    Disable: '关闭',
+    Dual_Track_Judgement_Tooltip:
+      '赛中使用预检评测点，赛后自动切换完整评测点重新评测并覆盖最后一次提交',
   },
   ScoreReport: {
     In_Game_Total_Score: '赛中总分',

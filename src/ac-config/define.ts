@@ -64,6 +64,7 @@ export interface Configuration {
     lang: string[];
     showTopNSubmission: boolean;
     showTopNSubmissionCount: number;
+    dualEvaluation: boolean;
   };
   homework?: {
     noLimit?: boolean;
@@ -131,6 +132,10 @@ export interface RawConfig {
    * 赛中仅显示前n项提交数量
    */
   showTopNSubmissionCount: number;
+  /**
+   * 双轨评测
+   */
+  dualEvaluation: boolean;
   /**
    * 学生排行榜真实姓名
    */

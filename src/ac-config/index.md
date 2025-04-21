@@ -20,7 +20,9 @@ export default () => {
           program: {
             lang: ['g++', 'gcc'],
             showTopNSubmission: true,
-            showTopNSubmissionCount:10
+            showTopNSubmissionCount:10,
+            dualEvaluation:false
+
           },
           general: {
             gradeRelease: {

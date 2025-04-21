@@ -115,6 +115,7 @@ export const getConfigData = ({
       lang: rawData.lang,
       showTopNSubmission: rawData.showTopNSubmission,
       showTopNSubmissionCount: rawData.showTopNSubmissionCount,
+      dualEvaluation: rawData.dualEvaluation,
     },
   };
   if (contestType === ContestExamType.Exam) {

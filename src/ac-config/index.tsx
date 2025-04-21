@@ -188,6 +188,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       lang,
       showTopNSubmission,
       showTopNSubmissionCount,
+      dualEvaluation,
     } = initialValues?.program || {};
 
     const { rankListShowRealName, rankShowUserLabel } =
@@ -264,6 +265,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       restriction: restriction?.type,
       showTopNSubmission,
       showTopNSubmissionCount,
+      dualEvaluation,
     };
 
     useImperativeHandle(ref, () => ({

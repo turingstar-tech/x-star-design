@@ -217,6 +217,7 @@ const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
           form.submit();
           setIsModalVisible(false);
         }}
+        destroyOnClose
         onCancel={() => setIsModalVisible(false)}
       >
         <Space>
@@ -228,7 +229,9 @@ const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
             }}
           >
             <Radio value={'full'}>{t('Full_Test_Point')}</Radio>
-            <Radio value={'precheck'}>{t('Precheck_Test_Point')}</Radio>
+            <Radio value={'precheck'} data-testid="precheck-test-point">
+              {t('Precheck_Test_Point')}
+            </Radio>
           </Radio.Group>
         </Space>
       </Modal>

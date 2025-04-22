@@ -24,6 +24,7 @@ describe('visual data config', () => {
     const { getByText, getByLabelText } = render(
       <VisualDataConfig onConfirm={onConfirmMock} />,
     );
+
     //通用的数据配置
     fireEvent.change(getByLabelText('Time Limit(MS)'), {
       target: { value: 2000 },
@@ -66,7 +67,22 @@ describe('visual data config', () => {
     fireEvent.change(getByLabelText('Score'), {
       target: { value: 10 },
     });
-    fireEvent.click(getByText('Confirm and import'));
+    // 首先测试取消操作
+    await act(async () => {
+      fireEvent.click(getByText('Confirm and import'));
+    });
+    expect(getByText('Import To:')).toBeInTheDocument(); // 确认模态框已打开
+
+    // 测试取消按钮
+    await act(async () => {
+      fireEvent.click(getByText('Cancel'));
+    });
+    expect(onConfirmMock).not.toHaveBeenCalled();
+
+    await act(async () => {
+      fireEvent.click(getByText('Confirm and import'));
+    });
+    fireEvent.click(getByText('OK'));
     await waitFor(() => {
       expect(onConfirmMock).toHaveBeenCalledWith(
         JSON.stringify({
@@ -97,6 +113,7 @@ describe('visual data config', () => {
             input: ['interactive.lib'],
           },
         }),
+        'full',
       );
     });
   });
@@ -192,6 +209,10 @@ describe('visual data config', () => {
     await act(async () => {
       fireEvent.click(getByText('Confirm and import'));
     });
+    await act(async () => {
+      fireEvent.click(getByTestId('precheck-test-point'));
+      fireEvent.click(getByText('OK'));
+    });
     expect(onConfirmMock).toHaveBeenCalledWith(
       JSON.stringify({
         timeLimit: 2000,
@@ -222,6 +243,7 @@ describe('visual data config', () => {
           input: ['interactive.lib'],
         },
       }),
+      'precheck',
     );
     //新增N个子任务
     const inputNumber = getByTestId('batchAddInput');
@@ -242,7 +264,7 @@ describe('visual data config', () => {
 
   test('renders with extremely situation', async () => {
     const onConfirmMock = jest.fn();
-    const { getByText, getByLabelText } = render(
+    const { getByText, getByLabelText, getAllByText } = render(
       <VisualDataConfig onConfirm={onConfirmMock} />,
     );
     fireEvent.change(getByLabelText('Time Limit(MS)'), {
@@ -265,7 +287,10 @@ describe('visual data config', () => {
       target: { value: 0 },
     });
     await act(async () => {
-      fireEvent.click(getByText('Confirm and import'));
+      fireEvent.click(getAllByText('Confirm and import')[0]);
+    });
+    await act(async () => {
+      fireEvent.click(getByText('OK'));
     });
     expect(onConfirmMock).toHaveBeenCalledWith(
       JSON.stringify({
@@ -282,6 +307,7 @@ describe('visual data config', () => {
           { from: 'data#.out', to: 'ans' },
         ],
       }),
+      'full',
     );
     //测试子任务的分数和总分数都没有的情况
     fireEvent.change(getByLabelText('Score of Each Case/Subtask'), {
@@ -289,6 +315,9 @@ describe('visual data config', () => {
     });
     await act(async () => {
       fireEvent.click(getByText('Confirm and import'));
+    });
+    await act(async () => {
+      fireEvent.click(getByText('OK'));
     });
     expect(onConfirmMock).toHaveBeenCalledWith(
       JSON.stringify({
@@ -304,6 +333,7 @@ describe('visual data config', () => {
           { from: 'data#.out', to: 'ans' },
         ],
       }),
+      'full',
     );
   });
 });

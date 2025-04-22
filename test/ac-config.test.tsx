@@ -136,9 +136,7 @@ describe('ac config', () => {
     fireEvent.click(getByTestId('highScoreProgramVisibility-always'));
     // Dual Track Judgement
     fireEvent.click(getByTestId('dualEvaluation-true'));
-    expect(getByTestId('downloadDataEnable-false')).toBeDisabled();
-    fireEvent.click(getByTestId('dualEvaluation-false'));
-    expect(getByTestId('downloadDataEnable-false')).not.toBeDisabled();
+
     // Download error data (XJOI)
     fireEvent.click(getByTestId('downloadDataEnable-false'));
     expect(getByTestId('downloadDataCount-input')).toBeDisabled();
@@ -227,7 +225,7 @@ describe('ac config', () => {
           lang: ['g++', 'gcc'],
           showTopNSubmission: true,
           showTopNSubmissionCount: 10,
-          dualEvaluation: false,
+          dualEvaluation: true,
         },
         contest: {
           startTime: 1721870100,

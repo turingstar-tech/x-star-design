@@ -5,10 +5,12 @@ import {
   Form,
   Input,
   InputNumber,
+  Modal,
   Radio,
   Row,
+  Space,
 } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
 import { prefix } from '../utils/global';
@@ -17,12 +19,16 @@ import SubTaskConfig from './SubTaskConfig';
 import { ConfigItem, SubTaskItem, compactObj } from './define';
 
 export interface VisualDataConfigProps {
-  onConfirm: (value: string) => void;
+  onConfirm: (value: string, importType: 'full' | 'precheck') => void;
 }
 
 const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
   const [form] = Form.useForm();
   const { format: t } = useLocale('VisualDataConfig');
+  // 导入类型 完整评测点 预检评测点
+  const [importType, setImportType] = useState<'full' | 'precheck'>('full');
+  // 是否显示导入弹窗
+  const [isModalVisible, setIsModalVisible] = useState(false);
   useEffect(() => {
     form.setFieldsValue({
       timeLimit: 1000,
@@ -77,7 +83,7 @@ const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
         onFinish={async (values) => {
           const config = configTranslate(values);
           const res = compactObj(config); // 删除空对象
-          onConfirm(JSON.stringify(res));
+          onConfirm(JSON.stringify(res), importType);
         }}
         className={`${prefix}-visualForm`}
       >
@@ -198,11 +204,34 @@ const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
         </Form.Item>
         <Divider />
         <Form.Item>
-          <Button type={'primary'} htmlType="submit">
+          <Button type={'primary'} onClick={() => setIsModalVisible(true)}>
             {t('Confirm_Import')}
           </Button>
         </Form.Item>
       </Form>
+
+      <Modal
+        title={t('Confirm_Import')}
+        open={isModalVisible}
+        onOk={() => {
+          form.submit();
+          setIsModalVisible(false);
+        }}
+        onCancel={() => setIsModalVisible(false)}
+      >
+        <Space>
+          <div>{t('Import_To')}</div>
+          <Radio.Group
+            value={importType}
+            onChange={(e) => {
+              setImportType(e.target.value);
+            }}
+          >
+            <Radio value={'full'}>{t('Full_Test_Point')}</Radio>
+            <Radio value={'precheck'}>{t('Precheck_Test_Point')}</Radio>
+          </Radio.Group>
+        </Space>
+      </Modal>
     </ConfigProviderWrapper>
   );
 };

@@ -17,18 +17,6 @@ const ProgramConfigItem = ({
   isFinish,
 }: ProgramConfigItemProps) => {
   const { format: t } = useLocale('AcConfig');
-  const form = Form.useFormInstance();
-
-  // 监听双轨评测选项变化
-  const handleDualEvaluationChange = (e: any) => {
-    const dualEvaluationEnabled = e.target.value;
-    // 如果开启了双轨评测，自动禁止下载错误数据
-    if (dualEvaluationEnabled) {
-      form.setFieldsValue({
-        downloadDataEnable: false,
-      });
-    }
-  };
 
   return (
     <>
@@ -124,126 +112,109 @@ const ProgramConfigItem = ({
         </Form.Item>
       </div>
 
-      <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) => {
-          return prevValues.dualEvaluation !== currentValues.dualEvaluation;
-        }}
-      >
-        {({ getFieldValue }) => {
-          // 获取双轨评测的当前值
-          const dualEvaluationEnabled = getFieldValue('dualEvaluation');
-
-          return (
-            <>
-              <Form.Item
-                label={t('downloadDataEnable')}
-                name={'downloadDataEnable'}
-              >
-                <Radio.Group disabled={dualEvaluationEnabled === true}>
-                  <Radio value data-testid="downloadDataEnable-true">
-                    {t('ALLOW')}
-                  </Radio>
-                  <Radio value={false} data-testid="downloadDataEnable-false">
-                    {t('PROHIBIT')}
-                  </Radio>
-                </Radio.Group>
-              </Form.Item>
-
-              <Form.Item
-                noStyle
-                shouldUpdate={(perValues, nextValues) => {
-                  return (
-                    perValues['downloadDataEnable'] !==
-                    nextValues['downloadDataEnable']
-                  );
-                }}
-              >
-                {({ getFieldValue }) => {
-                  return (
-                    <Form.Item
-                      label={t('NumberDownloadsAllowed')}
-                      name={'downloadDataCount'}
-                    >
-                      <InputNumber<number>
-                        min={0}
-                        max={100}
-                        data-testid="downloadDataCount-input"
-                        disabled={!getFieldValue('downloadDataEnable')}
-                        // formatter={(value) => parseInt(value?.toString()).toString() || '0'}
-                        // parser={(val) => {
-                        //   return parseInt(val);
-                        // }}
-                      />
-                    </Form.Item>
-                  );
-                }}
-              </Form.Item>
-            </>
-          );
-        }}
-      </Form.Item>
-      <Form.Item
-        label={t('Show_Top_N_Submissions')}
-        name={'showTopNSubmission'}
-        extra={t('Show_Top_N_Submissions_Extra')}
-      >
+      <Form.Item label={t('downloadDataEnable')} name={'downloadDataEnable'}>
         <Radio.Group>
-          <Radio value data-testid="showTopNSubmission-true">
+          <Radio value data-testid="downloadDataEnable-true">
             {t('ALLOW')}
           </Radio>
-          <Radio value={false} data-testid="showTopNSubmission-false">
+          <Radio value={false} data-testid="downloadDataEnable-false">
             {t('PROHIBIT')}
           </Radio>
         </Radio.Group>
       </Form.Item>
+
       <Form.Item
         noStyle
         shouldUpdate={(perValues, nextValues) => {
           return (
-            perValues['showTopNSubmission'] !== nextValues['showTopNSubmission']
+            perValues['downloadDataEnable'] !== nextValues['downloadDataEnable']
           );
         }}
       >
         {({ getFieldValue }) => {
-          const isVisible = getFieldValue('showTopNSubmission');
           return (
-            isVisible && (
-              <Form.Item
-                label={t('Top_N_Submissions')}
-                name={'showTopNSubmissionCount'}
-              >
-                <InputNumber<number>
-                  min={0}
-                  max={100}
-                  data-testid="showTopNSubmission-input"
-                />
-              </Form.Item>
-            )
+            <Form.Item
+              label={t('NumberDownloadsAllowed')}
+              name={'downloadDataCount'}
+            >
+              <InputNumber<number>
+                min={0}
+                max={100}
+                data-testid="downloadDataCount-input"
+                disabled={!getFieldValue('downloadDataEnable')}
+                // formatter={(value) => parseInt(value?.toString()).toString() || '0'}
+                // parser={(val) => {
+                //   return parseInt(val);
+                // }}
+              />
+            </Form.Item>
           );
         }}
       </Form.Item>
-      <Form.Item
-        label={
-          <Flex align="center" gap={2}>
-            <div>{t('Dual_Track_Judgement')}</div>
-            <Tooltip title={t('Dual_Track_Judgement_Tooltip')}>
-              <InfoCircleOutlined />
-            </Tooltip>
-          </Flex>
-        }
-        name={'dualEvaluation'}
-        extra={t('Dual_Track_Judgement_Extra')}
-      >
-        <Radio.Group onChange={handleDualEvaluationChange}>
-          <Radio value={true} data-testid="dualEvaluation-true">
-            {t('Enable')}
-          </Radio>
-          <Radio value={false} data-testid="dualEvaluation-false">
-            {t('Disable')}
-          </Radio>
-        </Radio.Group>
-      </Form.Item>
+      <div style={{ display: type === 'advanced' ? 'block' : 'none' }}>
+        <Form.Item
+          label={t('Show_Top_N_Submissions')}
+          name={'showTopNSubmission'}
+          extra={t('Show_Top_N_Submissions_Extra')}
+        >
+          <Radio.Group>
+            <Radio value data-testid="showTopNSubmission-true">
+              {t('ALLOW')}
+            </Radio>
+            <Radio value={false} data-testid="showTopNSubmission-false">
+              {t('PROHIBIT')}
+            </Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item
+          noStyle
+          shouldUpdate={(perValues, nextValues) => {
+            return (
+              perValues['showTopNSubmission'] !==
+              nextValues['showTopNSubmission']
+            );
+          }}
+        >
+          {({ getFieldValue }) => {
+            const isVisible = getFieldValue('showTopNSubmission');
+            return (
+              isVisible && (
+                <Form.Item
+                  label={t('Top_N_Submissions')}
+                  name={'showTopNSubmissionCount'}
+                >
+                  <InputNumber<number>
+                    min={0}
+                    max={100}
+                    data-testid="showTopNSubmission-input"
+                  />
+                </Form.Item>
+              )
+            );
+          }}
+        </Form.Item>
+        <Form.Item
+          label={
+            <Flex align="center" gap={2}>
+              <div>{t('Dual_Track_Judgement')}</div>
+              <Tooltip title={t('Dual_Track_Judgement_Tooltip')}>
+                <InfoCircleOutlined />
+              </Tooltip>
+            </Flex>
+          }
+          name={'dualEvaluation'}
+          extra={t('Dual_Track_Judgement_Extra')}
+        >
+          <Radio.Group>
+            <Radio value={true} data-testid="dualEvaluation-true">
+              {t('Enable')}
+            </Radio>
+            <Radio value={false} data-testid="dualEvaluation-false">
+              {t('Disable')}
+            </Radio>
+          </Radio.Group>
+        </Form.Item>
+      </div>
     </>
   );
 };

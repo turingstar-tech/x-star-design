@@ -34,6 +34,9 @@ export default {
     TIME: '时间',
     SCORE: '得分',
     BATCH_ADD: '批量添加',
+    Import_To: '导入至：',
+    Full_Test_Point: '完整评测点',
+    Precheck_Test_Point: '预检评测点',
   },
   TranslateButton: {
     CURRENT_LANG: '当前语言：',

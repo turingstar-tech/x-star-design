@@ -11,7 +11,12 @@ export default () => {
 
   return (
     <>
-      <VisualDataConfig onConfirm={(value) => setConfig(value)} />
+      <VisualDataConfig
+        onConfirm={(value, importType) => {
+          setConfig(value);
+          console.log(value, importType);
+        }}
+      />
       <div>{config}</div>
     </>
   );

@@ -37,6 +37,9 @@ export default {
     TIME: 'Time',
     SCORE: 'Score',
     BATCH_ADD: 'Batch Add',
+    Import_To: 'Import To:',
+    Full_Test_Point: 'Full Test Point',
+    Precheck_Test_Point: 'Precheck Test Point',
   },
   TranslateButton: {
     CURRENT_LANG: 'Current Language:',

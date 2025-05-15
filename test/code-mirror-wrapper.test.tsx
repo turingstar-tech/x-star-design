@@ -54,4 +54,24 @@ describe('code mirror wrapper', () => {
     rerender(<CodeMirrorWrapper lang={LangId.PLAIN} />);
     expect(editor.dataset.language).toBe(undefined);
   });
+  test('lsp server url test', () => {
+    // 临时禁止 console.error
+    console.error = jest.fn();
+
+    const lspServerUrl = {
+      cpp: 'ws://localhost:3000',
+      py: 'ws://localhost:3001',
+    } as const;
+
+    // 测试C++的LSP服务器配置
+    render(<CodeMirrorWrapper lspServerUrl={lspServerUrl} />);
+
+    // 测试Python的LSP服务器配置
+    render(<CodeMirrorWrapper lang={LangId.PY3} lspServerUrl={lspServerUrl} />);
+
+    // 这里主要是确保组件能正确渲染，不会因为LSP配置而崩溃
+    // 实际LSP行为可能难以在单元测试中验证
+    const editor = screen.getAllByRole('textbox');
+    expect(editor).toHaveLength(2);
+  });
 });

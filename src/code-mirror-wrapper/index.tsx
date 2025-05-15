@@ -169,21 +169,19 @@ const CodeMirrorWrapper = ({
   }, [lang, lspServerUrl]);
 
   return (
-    <div className={classNames(`${prefix}-codeMirror-container`)}>
-      <CodeMirror
-        className={classNames(className, `${prefix}-codeMirror`)}
-        value={value}
-        extensions={langConfigMap}
-        onChange={onChange}
-        theme={themeMap[theme]}
-        readOnly={readOnly}
-        basicSetup={{
-          tabSize,
-          indentOnInput: false,
-        }}
-        {...props}
-      />
-    </div>
+    <CodeMirror
+      className={classNames(className, `${prefix}-codeMirror`)}
+      value={value}
+      extensions={langConfigMap}
+      onChange={onChange}
+      theme={themeMap[theme]}
+      readOnly={readOnly}
+      basicSetup={{
+        tabSize,
+        indentOnInput: false,
+      }}
+      {...props}
+    />
   );
 };
 

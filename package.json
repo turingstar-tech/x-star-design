@@ -69,7 +69,7 @@
     "@uiw/codemirror-theme-okaidia": "^4.21.9",
     "@uiw/codemirror-theme-vscode": "^4.21.9",
     "@uiw/react-codemirror": "^4.21.9",
-    "ahooks": "^3.8.0",
+    "ahooks": "3.8.0",
     "classnames": "^2.5.1",
     "codemirror-languageserver": "1.12.1",
     "html2canvas": "^1.4.1",

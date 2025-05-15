@@ -19,7 +19,7 @@ enum LangId {
   PLAIN = 'plain',
 }
 export default () => {
-  const [submitLang, setSubmitLang] = useState(LangId.CPP14);
+  const [submitLang, setSubmitLang] = useState(LangId.PY3);
   return (
     <>
       <Select
@@ -42,6 +42,10 @@ export default () => {
         lang={submitLang}
         theme={Theme.VSCODE}
         style={{ height: 500 }}
+        lspServerUrl={{
+          cpp:'wss://lsp.test.turingstar.com.cn/clangd',
+          py:'wss://lsp.test.turingstar.com.cn/pyright'
+        }}
       />
     </>
   );

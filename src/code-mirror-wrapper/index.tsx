@@ -6,6 +6,7 @@ import { syntaxTree } from '@codemirror/language';
 import { Diagnostic, linter } from '@codemirror/lint';
 import CodeMirror from '@uiw/react-codemirror';
 import classNames from 'classnames';
+import { languageServer } from 'codemirror-languageserver';
 import React, { useCallback, useMemo } from 'react';
 import { prefix } from '../utils/global';
 import {
@@ -15,7 +16,6 @@ import {
   langCompleteOptionsMap,
   themeMap,
 } from './define';
-
 export interface CodeMirrorWrapperProps {
   className?: string;
   value?: string;
@@ -42,6 +42,10 @@ export interface CodeMirrorWrapperProps {
   readOnly?: boolean;
   [key: string]: unknown;
   tabSize?: number;
+  lspServerUrl?: {
+    cpp?: `ws://${string}` | `wss://${string}`;
+    py?: `ws://${string}` | `wss://${string}`;
+  };
 }
 
 const CodeMirrorWrapper = ({
@@ -52,9 +56,9 @@ const CodeMirrorWrapper = ({
   lang = LangId.CPP,
   readOnly = false,
   tabSize = 2,
+  lspServerUrl,
   ...props
 }: CodeMirrorWrapperProps) => {
-  //自动提示增加自定义变量提示
   const langCompletions = (context: CompletionContext, lang: Language) => {
     const options = [...langCompleteOptionsMap[lang]];
     syntaxTree(context.state)
@@ -94,6 +98,7 @@ const CodeMirrorWrapper = ({
       }),
     [],
   );
+
   const langConfigMap = useMemo(() => {
     switch (lang) {
       case LangId.CPP:
@@ -104,19 +109,51 @@ const CodeMirrorWrapper = ({
       case LangId.FPC:
         return [
           cpp(),
-          autocompletion({
-            override: [(context) => langCompletions(context, Language.CPP)],
-          }),
-          regexpLinter(),
+          ...(lspServerUrl?.cpp
+            ? [
+                languageServer({
+                  serverUri: lspServerUrl.cpp,
+                  rootUri: 'file:///virtual',
+                  workspaceFolders: [
+                    { name: 'editor', uri: 'file:///virtual' },
+                  ],
+                  documentUri: 'file:///virtual/document.cpp',
+                  languageId: 'cpp',
+                }),
+              ]
+            : [
+                autocompletion({
+                  override: [
+                    (context) => langCompletions(context, Language.CPP),
+                  ],
+                }),
+                regexpLinter(),
+              ]),
         ];
       case LangId.PY2:
       case LangId.PY3:
         return [
           python(),
-          autocompletion({
-            override: [(context) => langCompletions(context, Language.PYTHON)],
-          }),
-          regexpLinter(),
+          ...(lspServerUrl?.py
+            ? [
+                languageServer({
+                  serverUri: lspServerUrl.py,
+                  rootUri: 'file:///virtual',
+                  workspaceFolders: [
+                    { name: 'editor', uri: 'file:///virtual' },
+                  ],
+                  documentUri: 'file:///virtual/document.py',
+                  languageId: 'python',
+                }),
+              ]
+            : [
+                autocompletion({
+                  override: [
+                    (context) => langCompletions(context, Language.PYTHON),
+                  ],
+                }),
+                regexpLinter(),
+              ]),
         ];
       case LangId.JAVA:
         return [
@@ -129,7 +166,7 @@ const CodeMirrorWrapper = ({
       default:
         return [];
     }
-  }, [lang]);
+  }, [lang, lspServerUrl]);
 
   return (
     <CodeMirror

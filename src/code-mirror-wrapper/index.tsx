@@ -4,6 +4,7 @@ import { java } from '@codemirror/lang-java';
 import { python } from '@codemirror/lang-python';
 import { syntaxTree } from '@codemirror/language';
 import { Diagnostic, linter } from '@codemirror/lint';
+import { Extension } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { languageServer } from '@marimo-team/codemirror-languageserver';
 import CodeMirror from '@uiw/react-codemirror';
@@ -115,6 +116,7 @@ const CodeMirrorWrapper = ({
   );
 
   const langConfigMap = useMemo(() => {
+    let extensions: Extension[] = [];
     switch (lang) {
       case LangId.CPP:
       case LangId.CPP11:
@@ -122,60 +124,44 @@ const CodeMirrorWrapper = ({
       case LangId.CPP17:
       case LangId.GCC:
       case LangId.FPC:
-        return [
-          cpp(),
-          ...(lspServerUrl?.cpp
-            ? [
-                languageServer({
-                  serverUri: lspServerUrl.cpp,
-                  rootUri: lspConfig?.rootUri || 'file:///virtual',
-                  workspaceFolders: lspConfig?.workspaceFolders || [
-                    { name: 'editor', uri: 'file:///virtual' },
-                  ],
-                  documentUri:
-                    lspConfig?.documentUri || 'file:///virtual/document.cpp',
-                  languageId: 'cpp',
-                  allowHTMLContent: true,
-                  hoverEnabled: false,
-                }),
-              ]
-            : [
-                autocompletion({
-                  override: [
-                    (context) => langCompletions(context, Language.CPP),
-                  ],
-                }),
-                regexpLinter(),
-              ]),
-        ];
+        extensions = [cpp()];
+        if (lspServerUrl?.cpp) {
+          extensions.push(
+            languageServer({
+              serverUri: lspServerUrl.cpp,
+              rootUri: lspConfig?.rootUri || 'file:///virtual',
+              workspaceFolders: lspConfig?.workspaceFolders || [
+                { name: 'editor', uri: 'file:///virtual' },
+              ],
+              documentUri:
+                lspConfig?.documentUri || 'file:///virtual/document.cpp',
+              languageId: 'cpp',
+              allowHTMLContent: true,
+              hoverEnabled: false,
+            }),
+          );
+        }
+        return extensions;
       case LangId.PY2:
       case LangId.PY3:
-        return [
-          python(),
-          ...(lspServerUrl?.py
-            ? [
-                languageServer({
-                  serverUri: lspServerUrl.py,
-                  rootUri: lspConfig?.rootUri || 'file:///virtual',
-                  workspaceFolders: lspConfig?.workspaceFolders || [
-                    { name: 'editor', uri: 'file:///virtual' },
-                  ],
-                  documentUri:
-                    lspConfig?.documentUri || 'file:///virtual/document.py',
-                  languageId: 'python',
-                  allowHTMLContent: true,
-                  hoverEnabled: false,
-                }),
-              ]
-            : [
-                autocompletion({
-                  override: [
-                    (context) => langCompletions(context, Language.PYTHON),
-                  ],
-                }),
-                regexpLinter(),
-              ]),
-        ];
+        extensions = [python()];
+        if (lspServerUrl?.py) {
+          extensions.push(
+            languageServer({
+              serverUri: lspServerUrl.py,
+              rootUri: lspConfig?.rootUri || 'file:///virtual',
+              workspaceFolders: lspConfig?.workspaceFolders || [
+                { name: 'editor', uri: 'file:///virtual' },
+              ],
+              documentUri:
+                lspConfig?.documentUri || 'file:///virtual/document.py',
+              languageId: 'python',
+              allowHTMLContent: true,
+              hoverEnabled: false,
+            }),
+          );
+        }
+        return extensions;
       case LangId.JAVA:
         return [
           java(),

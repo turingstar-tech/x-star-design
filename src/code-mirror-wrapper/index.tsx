@@ -140,6 +140,13 @@ const CodeMirrorWrapper = ({
               hoverEnabled: false,
             }),
           );
+        } else {
+          extensions.push(
+            autocompletion({
+              override: [(context) => langCompletions(context, Language.CPP)],
+            }),
+            regexpLinter(),
+          );
         }
         return extensions;
       case LangId.PY2:
@@ -158,6 +165,14 @@ const CodeMirrorWrapper = ({
               languageId: 'python',
               allowHTMLContent: true,
               hoverEnabled: false,
+            }),
+          );
+        } else {
+          extensions.push(
+            autocompletion({
+              override: [
+                (context) => langCompletions(context, Language.PYTHON),
+              ],
             }),
           );
         }

@@ -174,6 +174,7 @@ const CodeMirrorWrapper = ({
                 (context) => langCompletions(context, Language.PYTHON),
               ],
             }),
+            regexpLinter(),
           );
         }
         return extensions;

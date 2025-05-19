@@ -5,9 +5,10 @@ import { python } from '@codemirror/lang-python';
 import { syntaxTree } from '@codemirror/language';
 import { Diagnostic, linter } from '@codemirror/lint';
 import { Extension } from '@codemirror/state';
+import { EditorView } from '@codemirror/view';
+import { languageServer } from '@marimo-team/codemirror-languageserver';
 import CodeMirror from '@uiw/react-codemirror';
 import classNames from 'classnames';
-import { languageServer } from 'codemirror-languageserver';
 import React, { useCallback, useMemo } from 'react';
 import { prefix } from '../utils/global';
 import {
@@ -47,6 +48,11 @@ export interface CodeMirrorWrapperProps {
     cpp?: `ws://${string}` | `wss://${string}`;
     py?: `ws://${string}` | `wss://${string}`;
   };
+  lspConfig?: {
+    rootUri?: string;
+    workspaceFolders?: { name: string; uri: string }[];
+    documentUri?: string;
+  };
 }
 
 const CodeMirrorWrapper = ({
@@ -58,8 +64,17 @@ const CodeMirrorWrapper = ({
   readOnly = false,
   tabSize = 2,
   lspServerUrl,
+  lspConfig,
   ...props
 }: CodeMirrorWrapperProps) => {
+  // 添加全局样式来隐藏文档提示气泡
+  const hideTooltip = EditorView.baseTheme({
+    '.cm-tooltip-autocomplete': {
+      '& .cm-completionInfo': {
+        display: 'none !important',
+      },
+    },
+  });
   const langCompletions = (context: CompletionContext, lang: Language) => {
     const options = [...langCompleteOptionsMap[lang]];
     syntaxTree(context.state)
@@ -102,7 +117,6 @@ const CodeMirrorWrapper = ({
 
   const langConfigMap = useMemo(() => {
     let extensions: Extension[] = [];
-
     switch (lang) {
       case LangId.CPP:
       case LangId.CPP11:
@@ -115,10 +129,15 @@ const CodeMirrorWrapper = ({
           extensions.push(
             languageServer({
               serverUri: lspServerUrl.cpp,
-              rootUri: 'file:///virtual',
-              workspaceFolders: [{ name: 'editor', uri: 'file:///virtual' }],
-              documentUri: 'file:///virtual/document.cpp',
+              rootUri: lspConfig?.rootUri || 'file:///virtual',
+              workspaceFolders: lspConfig?.workspaceFolders || [
+                { name: 'editor', uri: 'file:///virtual' },
+              ],
+              documentUri:
+                lspConfig?.documentUri || 'file:///virtual/document.cpp',
               languageId: 'cpp',
+              allowHTMLContent: true,
+              hoverEnabled: false,
             }),
           );
         } else {
@@ -129,7 +148,7 @@ const CodeMirrorWrapper = ({
             regexpLinter(),
           );
         }
-        break;
+        return extensions;
       case LangId.PY2:
       case LangId.PY3:
         extensions = [python()];
@@ -137,10 +156,15 @@ const CodeMirrorWrapper = ({
           extensions.push(
             languageServer({
               serverUri: lspServerUrl.py,
-              rootUri: 'file:///virtual',
-              workspaceFolders: [{ name: 'editor', uri: 'file:///virtual' }],
-              documentUri: 'file:///virtual/document.py',
+              rootUri: lspConfig?.rootUri || 'file:///virtual',
+              workspaceFolders: lspConfig?.workspaceFolders || [
+                { name: 'editor', uri: 'file:///virtual' },
+              ],
+              documentUri:
+                lspConfig?.documentUri || 'file:///virtual/document.py',
               languageId: 'python',
+              allowHTMLContent: true,
+              hoverEnabled: false,
             }),
           );
         } else {
@@ -153,28 +177,25 @@ const CodeMirrorWrapper = ({
             regexpLinter(),
           );
         }
-        break;
+        return extensions;
       case LangId.JAVA:
-        extensions = [
+        return [
           java(),
           autocompletion({
             override: [(context) => langCompletions(context, Language.JAVA)],
           }),
           regexpLinter(),
         ];
-        break;
       default:
         return [];
     }
-
-    return extensions;
-  }, [lang, lspServerUrl, regexpLinter]);
+  }, [lang, lspServerUrl, lspConfig]);
 
   return (
     <CodeMirror
       className={classNames(className, `${prefix}-codeMirror`)}
       value={value}
-      extensions={langConfigMap}
+      extensions={[hideTooltip, ...langConfigMap]}
       onChange={onChange}
       theme={themeMap[theme]}
       readOnly={readOnly}

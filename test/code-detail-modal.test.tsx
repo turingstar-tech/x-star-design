@@ -18,6 +18,16 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
   };
 }) as typeof window.matchMedia;
 
+jest.mock(
+  '@marimo-team/codemirror-languageserver',
+  () => ({
+    languageServer: jest.fn(() => {
+      // 返回一个空扩展，不执行实际的 WebSocket 连接
+      return { extension: [] };
+    }),
+  }),
+  { virtual: true },
+);
 describe('code detail modal', () => {
   test('renders code detail correctly', () => {
     const codeData = {

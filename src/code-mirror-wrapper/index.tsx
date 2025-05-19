@@ -4,9 +4,10 @@ import { java } from '@codemirror/lang-java';
 import { python } from '@codemirror/lang-python';
 import { syntaxTree } from '@codemirror/language';
 import { Diagnostic, linter } from '@codemirror/lint';
+import { EditorView } from '@codemirror/view';
+import { languageServer } from '@marimo-team/codemirror-languageserver';
 import CodeMirror from '@uiw/react-codemirror';
 import classNames from 'classnames';
-import { languageServer } from 'codemirror-languageserver';
 import React, { useCallback, useMemo } from 'react';
 import { prefix } from '../utils/global';
 import {
@@ -46,6 +47,11 @@ export interface CodeMirrorWrapperProps {
     cpp?: `ws://${string}` | `wss://${string}`;
     py?: `ws://${string}` | `wss://${string}`;
   };
+  lspConfig?: {
+    rootUri?: string;
+    workspaceFolders?: { name: string; uri: string }[];
+    documentUri?: string;
+  };
 }
 
 const CodeMirrorWrapper = ({
@@ -57,8 +63,17 @@ const CodeMirrorWrapper = ({
   readOnly = false,
   tabSize = 2,
   lspServerUrl,
+  lspConfig,
   ...props
 }: CodeMirrorWrapperProps) => {
+  // 添加全局样式来隐藏文档提示气泡
+  const hideTooltip = EditorView.baseTheme({
+    '.cm-tooltip-autocomplete': {
+      '& .cm-completionInfo': {
+        display: 'none !important',
+      },
+    },
+  });
   const langCompletions = (context: CompletionContext, lang: Language) => {
     const options = [...langCompleteOptionsMap[lang]];
     syntaxTree(context.state)
@@ -113,12 +128,15 @@ const CodeMirrorWrapper = ({
             ? [
                 languageServer({
                   serverUri: lspServerUrl.cpp,
-                  rootUri: 'file:///virtual',
-                  workspaceFolders: [
+                  rootUri: lspConfig?.rootUri || 'file:///virtual',
+                  workspaceFolders: lspConfig?.workspaceFolders || [
                     { name: 'editor', uri: 'file:///virtual' },
                   ],
-                  documentUri: 'file:///virtual/document.cpp',
+                  documentUri:
+                    lspConfig?.documentUri || 'file:///virtual/document.cpp',
                   languageId: 'cpp',
+                  allowHTMLContent: true,
+                  hoverEnabled: false,
                 }),
               ]
             : [
@@ -138,12 +156,15 @@ const CodeMirrorWrapper = ({
             ? [
                 languageServer({
                   serverUri: lspServerUrl.py,
-                  rootUri: 'file:///virtual',
-                  workspaceFolders: [
+                  rootUri: lspConfig?.rootUri || 'file:///virtual',
+                  workspaceFolders: lspConfig?.workspaceFolders || [
                     { name: 'editor', uri: 'file:///virtual' },
                   ],
-                  documentUri: 'file:///virtual/document.py',
+                  documentUri:
+                    lspConfig?.documentUri || 'file:///virtual/document.py',
                   languageId: 'python',
+                  allowHTMLContent: true,
+                  hoverEnabled: false,
                 }),
               ]
             : [
@@ -166,13 +187,13 @@ const CodeMirrorWrapper = ({
       default:
         return [];
     }
-  }, [lang, lspServerUrl]);
+  }, [lang, lspServerUrl, lspConfig]);
 
   return (
     <CodeMirror
       className={classNames(className, `${prefix}-codeMirror`)}
       value={value}
-      extensions={langConfigMap}
+      extensions={[hideTooltip, ...langConfigMap]}
       onChange={onChange}
       theme={themeMap[theme]}
       readOnly={readOnly}

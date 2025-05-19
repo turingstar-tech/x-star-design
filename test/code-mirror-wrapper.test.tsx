@@ -13,12 +13,16 @@ Range.prototype.getClientRects = () => ({
 });
 
 // 在测试前模拟 WebSocket 和 languageServer
-jest.mock('codemirror-languageserver', () => ({
-  languageServer: jest.fn(() => {
-    // 返回一个空扩展，不执行实际的 WebSocket 连接
-    return { extension: [] };
+jest.mock(
+  '@marimo-team/codemirror-languageserver',
+  () => ({
+    languageServer: jest.fn(() => {
+      // 返回一个空扩展，不执行实际的 WebSocket 连接
+      return { extension: [] };
+    }),
   }),
-}));
+  { virtual: true },
+);
 
 describe('code mirror wrapper', () => {
   test('renders editor and changes value', () => {

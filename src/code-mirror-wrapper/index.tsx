@@ -189,7 +189,7 @@ const CodeMirrorWrapper = ({
       default:
         return [];
     }
-  }, [lang, lspServerUrl, lspConfig]);
+  }, []);
 
   return (
     <CodeMirror

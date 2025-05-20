@@ -74,6 +74,10 @@ const CodeMirrorWrapper = ({
         display: 'none !important',
       },
     },
+    // 确保不影响其他类型的提示，如错误提示
+    '.cm-tooltip-lint': {
+      display: 'block',
+    },
   });
   const langCompletions = (context: CompletionContext, lang: Language) => {
     const options = [...langCompleteOptionsMap[lang]];

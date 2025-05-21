@@ -52,6 +52,7 @@ export interface CodeMirrorWrapperProps {
     rootUri?: string;
     workspaceFolders?: { name: string; uri: string }[];
     documentUri?: string;
+    token?: string;
   };
 }
 
@@ -130,9 +131,14 @@ const CodeMirrorWrapper = ({
       case LangId.FPC:
         extensions = [cpp()];
         if (lspServerUrl?.cpp) {
+          const serverUrl = lspConfig?.token
+            ? `${lspServerUrl.cpp}${
+                lspServerUrl.cpp.includes('?') ? '&' : '?'
+              }token=${lspConfig.token}`
+            : lspServerUrl.cpp;
           extensions.push(
             languageServer({
-              serverUri: lspServerUrl.cpp,
+              serverUri: serverUrl as `ws://${string}` | `wss://${string}`,
               rootUri: lspConfig?.rootUri || 'file:///virtual',
               workspaceFolders: lspConfig?.workspaceFolders || [
                 { name: 'editor', uri: 'file:///virtual' },
@@ -157,9 +163,14 @@ const CodeMirrorWrapper = ({
       case LangId.PY3:
         extensions = [python()];
         if (lspServerUrl?.py) {
+          const serverUrl = lspConfig?.token
+            ? `${lspServerUrl.py}${
+                lspServerUrl.py.includes('?') ? '&' : '?'
+              }token=${lspConfig.token}`
+            : lspServerUrl.py;
           extensions.push(
             languageServer({
-              serverUri: lspServerUrl.py,
+              serverUri: serverUrl as `ws://${string}` | `wss://${string}`,
               rootUri: lspConfig?.rootUri || 'file:///virtual',
               workspaceFolders: lspConfig?.workspaceFolders || [
                 { name: 'editor', uri: 'file:///virtual' },
@@ -193,7 +204,7 @@ const CodeMirrorWrapper = ({
       default:
         return [];
     }
-  }, []);
+  }, [lang]);
 
   return (
     <CodeMirror

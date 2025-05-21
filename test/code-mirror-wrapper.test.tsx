@@ -74,15 +74,73 @@ describe('code mirror wrapper', () => {
 
     // 测试C++的LSP服务器配置
     const { unmount: unmountCpp } = render(
-      <CodeMirrorWrapper lspServerUrl={lspServerUrl} />,
+      <CodeMirrorWrapper
+        lspServerUrl={lspServerUrl}
+        lang={LangId.CPP11}
+        lspConfig={{ token: '123123' }}
+      />,
     );
     unmountCpp(); // 立即卸载以避免连接保持打开状态
 
     // 测试Python的LSP服务器配置
     const { unmount: unmountPy } = render(
-      <CodeMirrorWrapper lang={LangId.PY3} lspServerUrl={lspServerUrl} />,
+      <CodeMirrorWrapper
+        lang={LangId.PY3}
+        lspServerUrl={lspServerUrl}
+        lspConfig={{ token: '123' }}
+      />,
     );
     unmountPy(); // 立即卸载以避免连接保持打开状态
+
+    // 测试URL中已包含问号的情况 - C++
+    const lspServerUrlWithQueryCpp = {
+      cpp: 'ws://localhost:3000?debug=true',
+      py: 'ws://localhost:3001',
+    } as const;
+
+    const { unmount: unmountCppWithQuery } = render(
+      <CodeMirrorWrapper
+        lspServerUrl={lspServerUrlWithQueryCpp}
+        lang={LangId.CPP11}
+        lspConfig={{ token: '123123' }}
+      />,
+    );
+    unmountCppWithQuery();
+
+    // 测试URL中已包含问号的情况 - Python
+    const lspServerUrlWithQueryPy = {
+      cpp: 'ws://localhost:3000',
+      py: 'ws://localhost:3001?debug=true',
+    } as const;
+
+    const { unmount: unmountPyWithQuery } = render(
+      <CodeMirrorWrapper
+        lang={LangId.PY3}
+        lspServerUrl={lspServerUrlWithQueryPy}
+        lspConfig={{ token: '123' }}
+      />,
+    );
+    unmountPyWithQuery();
+
+    // 测试不提供token的情况 - C++
+    const { unmount: unmountCppNoToken } = render(
+      <CodeMirrorWrapper
+        lspServerUrl={lspServerUrl}
+        lang={LangId.CPP11}
+        lspConfig={{ rootUri: 'file:///test' }}
+      />,
+    );
+    unmountCppNoToken();
+
+    // 测试不提供token的情况 - Python
+    const { unmount: unmountPyNoToken } = render(
+      <CodeMirrorWrapper
+        lang={LangId.PY3}
+        lspServerUrl={lspServerUrl}
+        lspConfig={{ rootUri: 'file:///test' }}
+      />,
+    );
+    unmountPyNoToken();
 
     // 这里我们分别渲染并测试，以确保每个组件都能正确处理
     const { unmount: unmountFinal } = render(<CodeMirrorWrapper />);

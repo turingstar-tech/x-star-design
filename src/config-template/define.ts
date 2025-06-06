@@ -1,7 +1,13 @@
 import dayjs from 'dayjs';
 import { RawConfig } from '../ac-config/define';
 
-export type ContestType = 'OI' | 'XCPC' | 'IOI' | 'HOMEWORK1' | 'HOMEWORK2';
+export type ContestType =
+  | 'OI'
+  | 'XCPC'
+  | 'IOI'
+  | 'HOMEWORK1'
+  | 'HOMEWORK2'
+  | 'XCAMP_HOMEWORK';
 export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
   OI: {
     gradeTime: dayjs(),
@@ -194,6 +200,52 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
     },
     limitTime: {
       limitHour: 2,
+      limitMinute: 0,
+    },
+    dualEvaluation: false,
+  },
+  XCAMP_HOMEWORK: {
+    contestTime: 'noLimit',
+    gradeTime: dayjs(),
+    rankListTime: dayjs(),
+    paperTime: dayjs(),
+    answerTime: dayjs(),
+    tipTime: dayjs(),
+    gradeRelease: 'afterExam',
+    rankListRelease: 'afterGradeRelease',
+    paperRelease: 'afterExam',
+    answerRelease: 'afterExam',
+    tipRelease: 'always',
+    submission: 'allowEarlySubmission',
+    restriction: 'never',
+    disorder: [],
+    personalScoreVisibility: 'always',
+    rankingMethod: 'score',
+    highScoreProgramVisibility: 'never',
+    downloadDataEnable: true,
+    downloadDataCount: 15,
+    scoreTypeInMatch: 'maxScore',
+    lang: [
+      'gcc',
+      'g++',
+      'g++11',
+      'g++14',
+      'g++17',
+      'python2.7',
+      'python3.8',
+      'java8',
+      'fpc',
+    ],
+    showTopNSubmission: false,
+    showTopNSubmissionCount: 0,
+    rankListShowRealName: false,
+    rankShowUserLabel: false,
+    submissionLimitTime: {
+      limitHour: 0,
+      limitMinute: 0,
+    },
+    limitTime: {
+      limitHour: 0,
       limitMinute: 0,
     },
     dualEvaluation: false,

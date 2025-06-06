@@ -234,5 +234,8 @@ export default {
     Same_Score_First_AC: '同分按首次AC时间排名',
     No_Submission_Result_In_Contest: '比赛中不显示提交结果',
     Submit_By_Last_Submission: '提交按最后一次提交时间计分',
+    XCAMP_HOMEWORK: 'X-Camp作业模式',
+    Download_Count_15: '下载错误数据(XJOI)15次',
+    Rank_List_Not_Show_Real_Name: '排行榜不显示真实姓名',
   },
 } as const;

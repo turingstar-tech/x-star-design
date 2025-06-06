@@ -32,6 +32,10 @@ const ConfigTemplate = ({ onSelect }: ConfigTemplateProps) => {
       type: 'HOMEWORK2',
       title: t('Homework_Mode_2'),
     },
+    {
+      type: 'XCAMP_HOMEWORK',
+      title: t('XCAMP_HOMEWORK'),
+    },
   ];
   const templateConfig: Record<
     string,
@@ -85,6 +89,15 @@ const ConfigTemplate = ({ onSelect }: ConfigTemplateProps) => {
         { text: t('Submit_By_Highest_Score'), icon: '►' },
         { text: t('Personal_Score_Visibility'), icon: '►' },
         { text: t('Tip_Visibility'), icon: '►' },
+      ],
+    },
+    XCAMP_HOMEWORK: {
+      title: t('XCAMP_HOMEWORK'),
+      features: [
+        { text: t('No_Homework_Time_Limit'), icon: '►' },
+        { text: t('Submit_By_Highest_Score'), icon: '►' },
+        { text: t('Rank_List_Not_Show_Real_Name'), icon: '►' },
+        { text: t('Download_Count_15'), icon: '►' },
       ],
     },
   };

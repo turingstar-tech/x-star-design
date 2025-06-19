@@ -5,7 +5,10 @@ import React, { useMemo } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 
 export interface UserAvatarProps extends AvatarProps {
-  user: { realName?: string; userName?: string } | null | undefined;
+  user:
+    | { realName?: string; userName?: string; avatar?: string }
+    | null
+    | undefined;
   tooltipProps?: TooltipProps;
 }
 
@@ -18,16 +21,23 @@ const UserAvatar = ({
   const name =
     [user?.realName, user?.userName].filter(Boolean).join(' | ') || 'Unknown';
 
-  const background = useMemo(
-    () => randomColor({ luminosity: 'bright', seed: name, format: 'rgb' }),
-    [name],
-  );
+  const background = useMemo(() => {
+    if (user?.avatar) {
+      return undefined;
+    }
+    return randomColor({
+      luminosity: 'bright',
+      seed: name,
+      format: 'rgb',
+    });
+  }, [name, user]);
 
   return (
     <ConfigProviderWrapper>
       <Tooltip title={user?.realName || 'Unknown'} {...tooltipProps}>
         <Avatar
           data-testid="userAvatar"
+          src={user?.avatar || undefined}
           style={{ background, ...style }}
           {...props}
         >

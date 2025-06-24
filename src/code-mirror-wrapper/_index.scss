@@ -10,6 +10,21 @@
     line-height: 150%;
   }
 
+  .cm-content {
+    font-family: JBMono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      'Liberation Mono', 'Courier New';
+  }
+
+  .cm-line {
+    font-family: JBMono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      'Liberation Mono', 'Courier New';
+  }
+
+  .cm-scroller {
+    font-family: JBMono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      'Liberation Mono', 'Courier New';
+  }
+
   .cm-focused {
     outline: unset;
   }

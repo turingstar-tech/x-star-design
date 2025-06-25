@@ -732,4 +732,70 @@ describe('ZipCodeSearchInput', () => {
 
     expect(mockOnChange).toHaveBeenCalledWith(['SingleValue'], {});
   });
+
+  test('should replace input value with API result when blur happens before API response', async () => {
+    const mockOnChange = jest.fn();
+
+    // 创建一个延迟的 Promise 来模拟慢速 API 响应
+    let resolveFetch: (value: any) => void;
+    const fetchPromise = new Promise((resolve) => {
+      resolveFetch = resolve;
+    });
+
+    (global.fetch as jest.Mock).mockImplementationOnce(() => fetchPromise);
+
+    render(
+      <ZipCodeSearchInput
+        onChange={mockOnChange}
+        debounceTimeout={TEST_DEBOUNCE}
+      />,
+    );
+
+    const input = screen.getByRole('combobox');
+
+    // 1. 用户输入邮政编码
+    await act(async () => {
+      fireEvent.change(input, { target: { value: '10000' } });
+      jest.advanceTimersByTime(TEST_DEBOUNCE);
+    });
+
+    // 2. 用户立即失去焦点（在API响应之前）
+    fireEvent.blur(input);
+
+    // 3. 此时 blurRef.current 应该被设置为 true
+    // 4. 模拟API响应返回数据
+    await act(async () => {
+      resolveFetch!({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            places: [
+              {
+                state: 'New York',
+                'place name': 'New York City',
+              },
+            ],
+          }),
+      });
+    });
+
+    // 5. 等待数据加载完成，此时应该触发 useEffect 中的 onChange
+    // 将输入框的值从 '10000' 替换为 'New York / New York City'
+    await waitFor(() => {
+      const calls = mockOnChange.mock.calls;
+      expect(
+        calls.some(([value]) => value === 'New York / New York City'),
+      ).toBe(true);
+    });
+
+    // 6. 验证输入框的显示值也被更新了
+    await waitFor(
+      () => {
+        expect(screen.getByDisplayValue('10000')).toBeInTheDocument();
+      },
+      {
+        timeout: 2000,
+      },
+    );
+  });
 });

@@ -17,9 +17,10 @@ enum LangId {
   PY3 = 'python3.8',
   JAVA = 'java8',
   PLAIN = 'plain',
+  HTML = 'html'
 }
 export default () => {
-  const [submitLang, setSubmitLang] = useState(LangId.CPP11);
+  const [submitLang, setSubmitLang] = useState(LangId.CPP14);
   return (
     <>
       <Select
@@ -35,6 +36,10 @@ export default () => {
           {
             value: LangId.CPP14,
             label: 'C++14',
+          },
+          {
+            value: LangId.HTML,
+            label: 'HTML',
           },
         ]}
       />

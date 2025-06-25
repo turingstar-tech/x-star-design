@@ -1,5 +1,6 @@
 import { CompletionContext, autocompletion } from '@codemirror/autocomplete';
 import { cpp } from '@codemirror/lang-cpp';
+import { html } from '@codemirror/lang-html';
 import { java } from '@codemirror/lang-java';
 import { python } from '@codemirror/lang-python';
 import { syntaxTree } from '@codemirror/language';
@@ -36,6 +37,7 @@ export interface CodeMirrorWrapperProps {
   PY2 = 'python2.7',
   PY3 = 'python3.8',
   JAVA = 'java8',
+  HTML = 'html',
   PLAIN = 'plain',
   @default LangId.CPP
    */
@@ -201,6 +203,8 @@ const CodeMirrorWrapper = ({
           }),
           regexpLinter(),
         ];
+      case LangId.HTML:
+        return [html(), regexpLinter()];
       default:
         return [];
     }

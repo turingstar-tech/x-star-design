@@ -65,6 +65,10 @@ describe('code mirror wrapper', () => {
 
     rerender(<CodeMirrorWrapper lang={LangId.PLAIN} />);
     expect(editor.dataset.language).toBe(undefined);
+
+    // HTML 识别
+    rerender(<CodeMirrorWrapper lang={LangId.HTML} />);
+    expect(editor.dataset.language).toBe('html');
   });
   test('lsp server url test', () => {
     const lspServerUrl = {

@@ -8,6 +8,7 @@ export enum LangId {
   PY2 = 'python2.7',
   PY3 = 'python3.8',
   JAVA = 'java8',
+  HTML = 'html',
   PLAIN = 'plain',
 }
 import { bbedit } from '@uiw/codemirror-theme-bbedit';
@@ -237,6 +238,7 @@ export const javaCompleteOptions = [
   { label: 'Character.isDigit', type: 'function' },
   { label: 'Character.isWhitespace', type: 'function' },
 ];
+
 /**
  * 语言关键词提示对应表
  */

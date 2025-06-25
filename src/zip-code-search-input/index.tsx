@@ -1,5 +1,5 @@
 import { AutoComplete, Empty, SelectProps, Spin } from 'antd';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   DebounceFunction,
   ZipCodeSearchInputProps,
@@ -29,6 +29,8 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
   const [originValue, setOriginValue] = useState<string>();
   const [loading, setLoading] = useState(false);
 
+  const blurRef = useRef<boolean>(false);
+
   useEffect(() => {
     if (value) {
       setOriginValue(value);
@@ -52,6 +54,7 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
           {
             label: `${state} / ${city}`,
             value: `${state} / ${city}`,
+            code: newValue,
           },
         ]);
       } else {
@@ -68,6 +71,17 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
     debounceTimeout,
   ]);
 
+  useEffect(() => {
+    if (
+      data?.length &&
+      data?.filter((item) => item.code === originValue).length > 0 &&
+      blurRef.current
+    ) {
+      const option = data?.filter((item) => item.code === originValue)[0];
+      onChange?.(option?.value, option);
+    }
+  }, [data]);
+
   return (
     <AutoComplete
       showSearch
@@ -77,6 +91,20 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
       suffixIcon={null}
       filterOption={false}
       onSearch={debounceSearch}
+      onFocus={() => {
+        blurRef.current = false;
+      }}
+      onBlur={() => {
+        if (
+          data?.length &&
+          data?.filter((item) => item.code === originValue).length > 0
+        ) {
+          const option = data?.filter((item) => item.code === originValue)[0];
+          onChange?.(option?.value, option);
+        } else {
+          blurRef.current = true;
+        }
+      }}
       onChange={(value, option) => {
         setOriginValue(value);
         if (!value) setData([]);

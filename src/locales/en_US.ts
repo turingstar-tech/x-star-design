@@ -251,5 +251,6 @@ export default {
     XCAMP_HOMEWORK: 'X-Camp Homework Mode',
     Download_Count_15: 'Download error data (XJOI) 15 times',
     Rank_List_Not_Show_Real_Name: 'Ranklist not show real name',
+    ReviseCount: 'Revise Count',
   },
 } as const;

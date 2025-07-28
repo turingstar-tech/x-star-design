@@ -49,6 +49,7 @@ export interface Configuration {
     tipRelease: GeneralConfigStatus;
     disorder: DisorderConfigStatus;
     restriction: restrictionStatus;
+    revisalCount: number;
   };
   rank: {
     rankListShowRealName: boolean;
@@ -92,6 +93,7 @@ export interface RawConfig {
   submission: SubmissionConfigStatus;
   restriction: restrictionStatus['type'];
   disorder: Array<keyof DisorderConfigStatus>;
+  revisalCount: number;
   /**
    * 个人分数可见性
    */

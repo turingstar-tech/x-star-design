@@ -237,5 +237,6 @@ export default {
     XCAMP_HOMEWORK: 'X-Camp作业模式',
     Download_Count_15: '下载错误数据(XJOI)15次',
     Rank_List_Not_Show_Real_Name: '排行榜不显示真实姓名',
+    ReviseCount: '订正次数',
   },
 } as const;

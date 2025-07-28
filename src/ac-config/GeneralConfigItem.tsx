@@ -6,6 +6,7 @@ import {
   Flex,
   Form,
   FormInstance,
+  InputNumber,
   Radio,
   Row,
   Space,
@@ -27,6 +28,7 @@ interface GeneralConfigItemProps {
   contestType?: 'contest' | 'homework';
   form: FormInstance<any>;
   isFinish?: boolean;
+  showReviseCount?: boolean;
 }
 
 const GeneralConfigItem = ({
@@ -34,6 +36,7 @@ const GeneralConfigItem = ({
   contestType,
   form,
   isFinish,
+  showReviseCount = false,
 }: GeneralConfigItemProps) => {
   const FOREVER = 876000; // 100 年 = 876000 小时
   const { format: t } = useLocale('AcConfig');
@@ -371,6 +374,11 @@ const GeneralConfigItem = ({
           </Radio>
         </Radio.Group>
       </Form.Item>
+      {showReviseCount && (
+        <Form.Item name={'revisalCount'} label={t('ReviseCount')}>
+          <InputNumber min={0} max={100} />
+        </Form.Item>
+      )}
     </div>
   );
 };

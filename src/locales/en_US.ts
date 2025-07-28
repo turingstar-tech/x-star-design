@@ -184,6 +184,7 @@ export default {
     Disable: 'Disable',
     Dual_Track_Judgement_Tooltip:
       'During the contest, use the pre-inspection test point, and then switch to the complete test point after the contest to re-judge and overwrite the last submission',
+    ReviseCount: 'Revise Count',
   },
   ScoreReport: {
     In_Game_Total_Score: 'Timed Score',
@@ -251,6 +252,5 @@ export default {
     XCAMP_HOMEWORK: 'X-Camp Homework Mode',
     Download_Count_15: 'Download error data (XJOI) 15 times',
     Rank_List_Not_Show_Real_Name: 'Ranklist not show real name',
-    ReviseCount: 'Revise Count',
   },
 } as const;

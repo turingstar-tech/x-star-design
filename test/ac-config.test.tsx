@@ -27,6 +27,7 @@ describe('ac config', () => {
       <AcConfig
         ref={ref}
         contestType={ContestExamType.Exam}
+        showReviseCount
         initialValues={
           {
             program: {

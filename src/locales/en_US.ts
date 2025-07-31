@@ -184,6 +184,7 @@ export default {
     Disable: 'Disable',
     Dual_Track_Judgement_Tooltip:
       'During the contest, use the pre-inspection test point, and then switch to the complete test point after the contest to re-judge and overwrite the last submission',
+    ReviseCount: 'Revise Count',
   },
   ScoreReport: {
     In_Game_Total_Score: 'Timed Score',

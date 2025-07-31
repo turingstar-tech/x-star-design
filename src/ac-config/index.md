@@ -15,6 +15,7 @@ export default () => {
         ref={ref}
         contestType={'contest'}
         onFinish={(values)=>{console.log(values)}}
+        showReviseCount={true}
         initialValues={{
           type: 'advanced',
           program: {
@@ -57,6 +58,7 @@ export default () => {
               singleOption: false,
               multipleOption: false,
             },
+            revisalCount: 5
           },
           contest: {
             startTime: 1915070600,

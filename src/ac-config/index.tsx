@@ -25,10 +25,12 @@ export interface AcConfigProps extends Omit<FormProps, 'children'> {
   onFinish?: (values: Configuration) => void;
   form?: FormInstance<any>;
   isFinish?: boolean;
+  showReviseCount?: boolean;
 }
 
 export interface AcConfigHandle {
   form: FormInstance<any>;
+  getFormInitialValues: (config: Configuration) => any;
 }
 
 export const getConfigData = ({
@@ -100,6 +102,7 @@ export const getConfigData = ({
       restriction: {
         type: rawData.restriction,
       },
+      revisalCount: rawData.revisalCount,
     },
     rank: {
       rankListShowRealName: rawData.rankListShowRealName,
@@ -151,6 +154,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       initialValues,
       form: externalForm, // 接收外部传入的 form
       isFinish,
+      showReviseCount,
       ...props
     },
     ref,
@@ -163,113 +167,116 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       en_US: 'en',
     }[locale] as 'zh' | 'en';
 
-    const { noLimit, limitTime } = initialValues?.homework || {
-      limitTime: 0,
-      noLimit: false,
-    };
-    const {
-      gradeRelease,
-      rankListRelease,
-      paperRelease,
-      answerRelease,
-      submission,
-      tipRelease,
-      disorder,
-      restriction,
-    } = initialValues?.general || {};
+    const getFormInitialValues = (config: Configuration | undefined) => {
+      const {
+        gradeRelease,
+        rankListRelease,
+        paperRelease,
+        answerRelease,
+        submission,
+        tipRelease,
+        disorder,
+        restriction,
+        revisalCount,
+      } = config?.general || {};
+      const { noLimit, limitTime } = config?.homework || {
+        limitTime: 0,
+        noLimit: false,
+      };
+      const {
+        personalScoreVisibility,
+        rankingMethod,
+        highScoreProgramVisibility,
+        downloadDataEnable,
+        downloadDataCount,
+        scoreTypeInMatch,
+        lang,
+        showTopNSubmission,
+        showTopNSubmissionCount,
+        dualEvaluation,
+      } = config?.program || {};
+      const { rankListShowRealName, rankShowUserLabel } = config?.rank || {};
 
-    const {
-      personalScoreVisibility,
-      rankingMethod,
-      highScoreProgramVisibility,
-      downloadDataEnable,
-      downloadDataCount,
-      scoreTypeInMatch,
-      lang,
-      showTopNSubmission,
-      showTopNSubmissionCount,
-      dualEvaluation,
-    } = initialValues?.program || {};
-
-    const { rankListShowRealName, rankShowUserLabel } =
-      initialValues?.rank || {};
-    /* eslint-disable indent */
-    const formInitialValues = {
-      contestTime:
-        contestType === 'contest'
-          ? [initialValues?.contest?.startTime, initialValues?.contest?.endTime]
-              .filter((i) => i !== undefined)
-              .map((item) => dayjs(item * 1000))
-          : noLimit
-          ? 'noLimit'
-          : 'limitTime',
-      limitTime: {
-        limitHour: noLimit ? 0 : Math.floor((limitTime || 0) / 3600),
-        limitMinute: Math.floor(((limitTime || 0) % 3600) / 60),
-      },
-      gradeRelease: gradeRelease?.type,
-      gradeTime: dayjs.unix(
-        gradeRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-      ),
-      disorder: Object.keys(disorder || {}).filter(
-        (key) => disorder?.[key as keyof typeof disorder] === true,
-      ),
-      rankListRelease: rankListRelease?.type,
-      rankListTime: dayjs.unix(
-        rankListRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-      ),
-      paperRelease: paperRelease?.type,
-      paperTime: dayjs.unix(
-        paperRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-      ),
-      answerRelease: answerRelease?.type,
-      answerTime:
-        answerRelease?.type === 'started'
-          ? {
-              limitHour: Math.floor(
-                (answerRelease?.scheduled?.releaseTime || 0) / 3600,
+      return {
+        contestTime:
+          contestType === 'contest'
+            ? ([config?.contest?.startTime, config?.contest?.endTime]
+                .filter((i) => i !== undefined)
+                .map((item) => dayjs(item * 1000)) as [Dayjs, Dayjs])
+            : noLimit
+            ? 'noLimit'
+            : 'limitTime',
+        limitTime: {
+          limitHour: noLimit ? 0 : Math.floor((limitTime || 0) / 3600),
+          limitMinute: Math.floor(((limitTime || 0) % 3600) / 60),
+        },
+        gradeRelease: gradeRelease?.type,
+        gradeTime: dayjs.unix(
+          gradeRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+        ),
+        disorder: Object.keys(disorder || {}).filter(
+          (key) => disorder?.[key as keyof typeof disorder] === true,
+        ),
+        rankListRelease: rankListRelease?.type,
+        rankListTime: dayjs.unix(
+          rankListRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+        ),
+        paperRelease: paperRelease?.type,
+        paperTime: dayjs.unix(
+          paperRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
+        ),
+        answerRelease: answerRelease?.type,
+        answerTime:
+          answerRelease?.type === 'started'
+            ? {
+                limitHour: Math.floor(
+                  (answerRelease?.scheduled?.releaseTime || 0) / 3600,
+                ),
+                limitMinute:
+                  ((answerRelease?.scheduled?.releaseTime || 0) % 3600) / 60,
+              }
+            : dayjs.unix(
+                answerRelease?.scheduled?.releaseTime ||
+                  dayjs().valueOf() / 1000,
               ),
-              limitMinute:
-                ((answerRelease?.scheduled?.releaseTime || 0) % 3600) / 60,
-            }
-          : dayjs.unix(
-              answerRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-            ),
-      rankListShowRealName,
-      rankShowUserLabel,
-      submission: submission?.type,
-      submissionLimitTime: {
-        limitHour: Math.floor((submission?.submissionTimed || 0) / 60),
-        limitMinute: (submission?.submissionTimed || 0) % 60,
-      },
-      lang,
-      personalScoreVisibility,
-      tipRelease: tipRelease?.type,
-      tipTime:
-        tipRelease?.type === 'started'
-          ? {
-              limitHour: Math.floor(
-                (tipRelease?.scheduled?.releaseTime || 0) / 3600,
+        rankListShowRealName,
+        rankShowUserLabel,
+        submission: submission?.type,
+        submissionLimitTime: {
+          limitHour: Math.floor((submission?.submissionTimed || 0) / 60),
+          limitMinute: (submission?.submissionTimed || 0) % 60,
+        },
+        lang,
+        personalScoreVisibility,
+        tipRelease: tipRelease?.type,
+        tipTime:
+          tipRelease?.type === 'started'
+            ? {
+                limitHour: Math.floor(
+                  (tipRelease?.scheduled?.releaseTime || 0) / 3600,
+                ),
+                limitMinute:
+                  ((tipRelease?.scheduled?.releaseTime || 0) % 3600) / 60,
+              }
+            : dayjs.unix(
+                tipRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
               ),
-              limitMinute:
-                ((tipRelease?.scheduled?.releaseTime || 0) % 3600) / 60,
-            }
-          : dayjs.unix(
-              tipRelease?.scheduled?.releaseTime || dayjs().valueOf() / 1000,
-            ),
-      scoreTypeInMatch,
-      rankingMethod,
-      highScoreProgramVisibility,
-      downloadDataEnable,
-      downloadDataCount,
-      restriction: restriction?.type,
-      showTopNSubmission,
-      showTopNSubmissionCount,
-      dualEvaluation,
+        scoreTypeInMatch,
+        rankingMethod,
+        highScoreProgramVisibility,
+        downloadDataEnable,
+        downloadDataCount,
+        restriction: restriction?.type,
+        showTopNSubmission,
+        showTopNSubmissionCount,
+        dualEvaluation,
+        revisalCount,
+      };
     };
 
     useImperativeHandle(ref, () => ({
       form,
+      getFormInitialValues,
     }));
 
     return (
@@ -279,7 +286,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
           className={classNames(`${prefix}-ac-config-form`, props?.className)}
           form={form}
           labelAlign="right"
-          initialValues={formInitialValues}
+          initialValues={getFormInitialValues(initialValues)}
           onFinish={(val: any) => {
             const configData = getConfigData({ rawData: val, contestType });
             props?.onFinish?.(configData);
@@ -300,6 +307,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                   contestType={contestType}
                   form={form}
                   isFinish={isFinish}
+                  showReviseCount={showReviseCount}
                 />
               </div>
               <div>

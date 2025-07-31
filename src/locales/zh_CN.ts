@@ -172,6 +172,7 @@ export default {
     Disable: '关闭',
     Dual_Track_Judgement_Tooltip:
       '赛中使用预检评测点，赛后自动切换完整评测点重新评测并覆盖最后一次提交',
+    ReviseCount: '订正次数',
   },
   ScoreReport: {
     In_Game_Total_Score: '赛中总分',

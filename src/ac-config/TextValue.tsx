@@ -1,3 +1,4 @@
+import { Dayjs } from 'dayjs';
 import React from 'react';
 import { useLocale } from '../locales';
 
@@ -34,8 +35,8 @@ const TextValue = ({ value, name }: { value?: any; name: string }) => {
       },
     },
     tipTime: {
-      method: (value: number) => {
-        return value;
+      method: (value: Dayjs) => {
+        return value.format('YYYY-MM-DD HH:mm');
       },
       map: {},
     },

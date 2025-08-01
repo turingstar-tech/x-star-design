@@ -92,51 +92,67 @@ const ProgramConfigItem = ({
           isRevise={isRevise}
         />
         <Form.Item label={t('RankingValue')} name={'scoreTypeInMatch'}>
-          <Radio.Group>
-            <Radio
-              value={'latestSubmit'}
-              data-testid="scoreTypeInMatch-latestSubmit"
-            >
-              {t('LatestSubmit')}
-            </Radio>
-            <Radio value={'maxScore'}>{t('maxScore')}</Radio>
-          </Radio.Group>
+          {!isRevise ? (
+            <Radio.Group>
+              <Radio
+                value={'latestSubmit'}
+                data-testid="scoreTypeInMatch-latestSubmit"
+              >
+                {t('LatestSubmit')}
+              </Radio>
+              <Radio value={'maxScore'}>{t('maxScore')}</Radio>
+            </Radio.Group>
+          ) : (
+            <TextValue name="scoreTypeInMatch" />
+          )}
         </Form.Item>
 
         <Form.Item label={t('rankingMethod')} name={'rankingMethod'}>
-          <Radio.Group>
-            <Radio value={'score'} data-testid="rankingMethod-score">
-              {t('Sort_By_Score')}
-            </Radio>
-            <Radio value={'acNumber'}>{t('Sort_By_AC_Count')}</Radio>
-          </Radio.Group>
+          {!isRevise ? (
+            <Radio.Group>
+              <Radio value={'score'} data-testid="rankingMethod-score">
+                {t('Sort_By_Score')}
+              </Radio>
+              <Radio value={'acNumber'}>{t('Sort_By_AC_Count')}</Radio>
+            </Radio.Group>
+          ) : (
+            <TextValue name="rankingMethod" />
+          )}
         </Form.Item>
         <Form.Item
           label={t('highScoreProgramVisibility')}
           name={'highScoreProgramVisibility'}
         >
-          <Radio.Group>
-            <Radio
-              value={'always'}
-              data-testid="highScoreProgramVisibility-always"
-            >
-              {t('always')}
-            </Radio>
-            <Radio value={'never'}>{t('never')}</Radio>
-            <Radio value={'afterExam'}>{t('afterExam')}</Radio>
-          </Radio.Group>
+          {!isRevise ? (
+            <Radio.Group>
+              <Radio
+                value={'always'}
+                data-testid="highScoreProgramVisibility-always"
+              >
+                {t('always')}
+              </Radio>
+              <Radio value={'never'}>{t('never')}</Radio>
+              <Radio value={'afterExam'}>{t('afterExam')}</Radio>
+            </Radio.Group>
+          ) : (
+            <TextValue name="highScoreProgramVisibility" />
+          )}
         </Form.Item>
       </div>
 
       <Form.Item label={t('downloadDataEnable')} name={'downloadDataEnable'}>
-        <Radio.Group>
-          <Radio value data-testid="downloadDataEnable-true">
-            {t('ALLOW')}
-          </Radio>
-          <Radio value={false} data-testid="downloadDataEnable-false">
-            {t('PROHIBIT')}
-          </Radio>
-        </Radio.Group>
+        {!isRevise ? (
+          <Radio.Group>
+            <Radio value data-testid="downloadDataEnable-true">
+              {t('ALLOW')}
+            </Radio>
+            <Radio value={false} data-testid="downloadDataEnable-false">
+              {t('PROHIBIT')}
+            </Radio>
+          </Radio.Group>
+        ) : (
+          <TextValue name="downloadDataEnable" />
+        )}
       </Form.Item>
 
       <Form.Item
@@ -173,14 +189,18 @@ const ProgramConfigItem = ({
           name={'showTopNSubmission'}
           extra={t('Show_Top_N_Submissions_Extra')}
         >
-          <Radio.Group>
-            <Radio value data-testid="showTopNSubmission-true">
-              {t('ALLOW')}
-            </Radio>
-            <Radio value={false} data-testid="showTopNSubmission-false">
-              {t('PROHIBIT')}
-            </Radio>
-          </Radio.Group>
+          {!isRevise ? (
+            <Radio.Group>
+              <Radio value data-testid="showTopNSubmission-true">
+                {t('ALLOW')}
+              </Radio>
+              <Radio value={false} data-testid="showTopNSubmission-false">
+                {t('PROHIBIT')}
+              </Radio>
+            </Radio.Group>
+          ) : (
+            <TextValue name="showTopNSubmission" />
+          )}
         </Form.Item>
         <Form.Item
           noStyle
@@ -225,14 +245,18 @@ const ProgramConfigItem = ({
           name={'dualEvaluation'}
           extra={t('Dual_Track_Judgement_Extra')}
         >
-          <Radio.Group>
-            <Radio value={true} data-testid="dualEvaluation-true">
-              {t('Enable')}
-            </Radio>
-            <Radio value={false} data-testid="dualEvaluation-false">
-              {t('Disable')}
-            </Radio>
-          </Radio.Group>
+          {!isRevise ? (
+            <Radio.Group>
+              <Radio value={true} data-testid="dualEvaluation-true">
+                {t('Enable')}
+              </Radio>
+              <Radio value={false} data-testid="dualEvaluation-false">
+                {t('Disable')}
+              </Radio>
+            </Radio.Group>
+          ) : (
+            <TextValue name="dualEvaluation" />
+          )}
         </Form.Item>
       </div>
     </>

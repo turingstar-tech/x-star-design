@@ -108,8 +108,8 @@ const TextValue = ({ value, name }: { value?: any; name: string }) => {
   }
 
   const mapResult =
-    currentItem.map?.[value.toString() as keyof typeof currentItem.map];
-  return <div>{mapResult !== undefined ? mapResult : value.toString()}</div>;
+    currentItem.map?.[value?.toString() as keyof typeof currentItem.map];
+  return <div>{mapResult !== undefined ? mapResult : value?.toString()}</div>;
 };
 
 export default TextValue;

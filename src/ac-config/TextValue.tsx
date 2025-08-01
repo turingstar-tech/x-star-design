@@ -40,6 +40,61 @@ const TextValue = ({ value, name }: { value?: any; name: string }) => {
       },
       map: {},
     },
+    scoreTypeInMatch: {
+      method: () => void 0,
+      map: {
+        latestSubmit: t('LatestSubmit'),
+        maxScore: t('maxScore'),
+      },
+    },
+    rankingMethod: {
+      method: () => void 0,
+      map: {
+        score: t('Sort_By_Score'),
+        acNumber: t('Sort_By_AC_Count'),
+      },
+    },
+    highScoreProgramVisibility: {
+      method: () => void 0,
+      map: {
+        always: t('always'),
+        never: t('never'),
+        afterExam: t('afterExam'),
+      },
+    },
+    downloadDataEnable: {
+      method: () => void 0,
+      map: {
+        true: t('ALLOW'),
+        false: t('PROHIBIT'),
+      },
+    },
+    downloadDataCount: {
+      method: (value: number) => {
+        return value;
+      },
+      map: {},
+    },
+    showTopNSubmission: {
+      method: () => void 0,
+      map: {
+        true: t('ALLOW'),
+        false: t('PROHIBIT'),
+      },
+    },
+    showTopNSubmissionCount: {
+      method: (value: number) => {
+        return value;
+      },
+      map: {},
+    },
+    dualEvaluation: {
+      method: () => void 0,
+      map: {
+        true: t('Enable'),
+        false: t('Disable'),
+      },
+    },
   };
   const currentItem = methodMap[name as keyof typeof methodMap];
 
@@ -52,8 +107,9 @@ const TextValue = ({ value, name }: { value?: any; name: string }) => {
     return <div>{methodResult}</div>;
   }
 
-  const mapResult = currentItem.map?.[value as keyof typeof currentItem.map];
-  return <div>{mapResult !== undefined ? mapResult : value}</div>;
+  const mapResult =
+    currentItem.map?.[value.toString() as keyof typeof currentItem.map];
+  return <div>{mapResult !== undefined ? mapResult : value.toString()}</div>;
 };
 
 export default TextValue;

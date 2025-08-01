@@ -153,16 +153,16 @@ const ProgramConfigItem = ({
               label={t('NumberDownloadsAllowed')}
               name={'downloadDataCount'}
             >
-              <InputNumber<number>
-                min={0}
-                max={100}
-                data-testid="downloadDataCount-input"
-                disabled={!getFieldValue('downloadDataEnable')}
-                // formatter={(value) => parseInt(value?.toString()).toString() || '0'}
-                // parser={(val) => {
-                //   return parseInt(val);
-                // }}
-              />
+              {!isRevise ? (
+                <InputNumber<number>
+                  min={0}
+                  max={100}
+                  data-testid="downloadDataCount-input"
+                  disabled={!getFieldValue('downloadDataEnable')}
+                />
+              ) : (
+                <TextValue name="downloadDataCount" />
+              )}
             </Form.Item>
           );
         }}
@@ -199,11 +199,15 @@ const ProgramConfigItem = ({
                   label={t('Top_N_Submissions')}
                   name={'showTopNSubmissionCount'}
                 >
-                  <InputNumber<number>
-                    min={0}
-                    max={100}
-                    data-testid="showTopNSubmission-input"
-                  />
+                  {!isRevise ? (
+                    <InputNumber<number>
+                      min={0}
+                      max={100}
+                      data-testid="showTopNSubmission-input"
+                    />
+                  ) : (
+                    <TextValue name="showTopNSubmissionCount" />
+                  )}
                 </Form.Item>
               )
             );

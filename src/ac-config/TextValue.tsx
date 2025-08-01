@@ -25,10 +25,19 @@ const TextValue = ({ value, name }: { value?: any; name: string }) => {
     tipRelease: {
       method: () => void 0,
       map: {
-        always: t('always'),
-        never: t('never'),
-        afterExam: t('afterExam'),
+        afterExam: t('DISPLAY_AFTER_TEACHER_CONFIRMATION_01'),
+        afterGradeRelease: t('DISPLAY_AFTER_TEACHER_CONFIRMATION_02'),
+        afterApproval: t('DISPLAY_AFTER_TEACHER_CONFIRMATION'),
+        scheduled: t('TIMED_DISPLAY'),
+        always: t('Always_Visible'),
+        started: t('After_Contest_Start'),
       },
+    },
+    tipTime: {
+      method: (value: number) => {
+        return value;
+      },
+      map: {},
     },
   };
   const currentItem = methodMap[name as keyof typeof methodMap];

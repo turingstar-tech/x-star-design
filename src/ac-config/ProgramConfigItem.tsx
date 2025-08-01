@@ -89,6 +89,7 @@ const ProgramConfigItem = ({
           field={'tipRelease'}
           name={'tipTime'}
           label={t('TIPS_DISPLAY_TIME')}
+          isRevise={isRevise}
         />
         <Form.Item label={t('RankingValue')} name={'scoreTypeInMatch'}>
           <Radio.Group>

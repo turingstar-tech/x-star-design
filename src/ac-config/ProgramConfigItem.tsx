@@ -2,6 +2,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import { Flex, Form, InputNumber, Radio, Select, Tooltip } from 'antd';
 import React from 'react';
 import { useLocale } from '../locales';
+import TextValue from './TextValue';
 import TimingFormItem from './TimingFormItem';
 import { langVL } from './define';
 
@@ -9,12 +10,14 @@ interface ProgramConfigItemProps {
   type: 'advanced' | 'simple';
   contestType?: 'contest' | 'homework';
   isFinish?: boolean;
+  isRevise?: boolean;
 }
 
 const ProgramConfigItem = ({
   type,
   contestType,
   isFinish,
+  isRevise = false,
 }: ProgramConfigItemProps) => {
   const { format: t } = useLocale('AcConfig');
 
@@ -26,49 +29,61 @@ const ProgramConfigItem = ({
           name={'lang'}
           rules={[{ required: true }]}
         >
-          <Select
-            mode="multiple"
-            data-testid="lang-select"
-            allowClear
-            style={{ maxWidth: 350 }}
-            disabled={contestType === 'contest' && isFinish}
-            options={Array.from(langVL, ([value, label]) => ({
-              label,
-              value,
-            }))}
-          />
+          {!isRevise ? (
+            <Select
+              mode="multiple"
+              data-testid="lang-select"
+              allowClear
+              style={{ maxWidth: 350 }}
+              disabled={contestType === 'contest' && isFinish}
+              options={Array.from(langVL, ([value, label]) => ({
+                label,
+                value,
+              }))}
+            />
+          ) : (
+            <TextValue name="lang" />
+          )}
         </Form.Item>
         <Form.Item
           label={t('personalScoreVisibility')}
           name={'personalScoreVisibility'}
           extra={t('Config_Affects_Submission_Visibility')}
         >
-          <Radio.Group>
-            <Radio
-              value={'always'}
-              data-testid="personalScoreVisibility-always"
-            >
-              {t('always')}
-            </Radio>
-            <Radio value={'never'}>{t('never')}</Radio>
-            <Radio value={'afterExam'}>{t('afterExam')}</Radio>
-          </Radio.Group>
+          {!isRevise ? (
+            <Radio.Group>
+              <Radio
+                value={'always'}
+                data-testid="personalScoreVisibility-always"
+              >
+                {t('always')}
+              </Radio>
+              <Radio value={'never'}>{t('never')}</Radio>
+              <Radio value={'afterExam'}>{t('afterExam')}</Radio>
+            </Radio.Group>
+          ) : (
+            <TextValue name="personalScoreVisibility" />
+          )}
         </Form.Item>
         <Form.Item name={'tipRelease'} label={t('TIPS_DISPLAY')}>
-          <Radio.Group>
-            <Radio value={'afterExam'} data-testid="tipRelease-afterExam">
-              {t('DISPLAY_AFTER_TEACHER_CONFIRMATION_01')}
-            </Radio>
-            <Radio value={'afterGradeRelease'}>
-              {t('DISPLAY_AFTER_TEACHER_CONFIRMATION_02')}
-            </Radio>
-            <Radio value={'afterApproval'}>
-              {t('DISPLAY_AFTER_TEACHER_CONFIRMATION')}
-            </Radio>
-            <Radio value={'scheduled'}>{t('TIMED_DISPLAY')}</Radio>
-            <Radio value={'always'}>{t('Always_Visible')}</Radio>
-            <Radio value={'started'}>{t('After_Contest_Start')}</Radio>
-          </Radio.Group>
+          {!isRevise ? (
+            <Radio.Group>
+              <Radio value={'afterExam'} data-testid="tipRelease-afterExam">
+                {t('DISPLAY_AFTER_TEACHER_CONFIRMATION_01')}
+              </Radio>
+              <Radio value={'afterGradeRelease'}>
+                {t('DISPLAY_AFTER_TEACHER_CONFIRMATION_02')}
+              </Radio>
+              <Radio value={'afterApproval'}>
+                {t('DISPLAY_AFTER_TEACHER_CONFIRMATION')}
+              </Radio>
+              <Radio value={'scheduled'}>{t('TIMED_DISPLAY')}</Radio>
+              <Radio value={'always'}>{t('Always_Visible')}</Radio>
+              <Radio value={'started'}>{t('After_Contest_Start')}</Radio>
+            </Radio.Group>
+          ) : (
+            <TextValue name="tipRelease" />
+          )}
         </Form.Item>
         <TimingFormItem
           field={'tipRelease'}

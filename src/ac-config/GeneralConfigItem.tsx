@@ -28,7 +28,7 @@ interface GeneralConfigItemProps {
   contestType?: 'contest' | 'homework';
   form: FormInstance<any>;
   isFinish?: boolean;
-  showReviseCount?: boolean;
+  isRevise?: boolean;
 }
 
 const GeneralConfigItem = ({
@@ -36,7 +36,7 @@ const GeneralConfigItem = ({
   contestType,
   form,
   isFinish,
-  showReviseCount = false,
+  isRevise = false,
 }: GeneralConfigItemProps) => {
   const FOREVER = 876000; // 100 年 = 876000 小时
   const { format: t } = useLocale('AcConfig');
@@ -374,7 +374,7 @@ const GeneralConfigItem = ({
           </Radio>
         </Radio.Group>
       </Form.Item>
-      {showReviseCount && (
+      {isRevise && (
         <Form.Item name={'revisalCount'} label={t('ReviseCount')}>
           <InputNumber min={0} max={100} />
         </Form.Item>

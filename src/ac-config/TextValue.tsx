@@ -98,10 +98,6 @@ const TextValue = ({ value, name }: { value?: any; name: string }) => {
   };
   const currentItem = methodMap[name as keyof typeof methodMap];
 
-  if (!currentItem) {
-    return <div>{value}</div>;
-  }
-
   const methodResult = currentItem.method?.(value);
   if (methodResult !== undefined && methodResult !== null) {
     return <div>{methodResult}</div>;

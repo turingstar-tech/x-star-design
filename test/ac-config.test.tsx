@@ -993,4 +993,52 @@ describe('ac config', () => {
       },
     });
   });
+
+  test('AcConfig isRevise=true 时渲染修订相关内容', async () => {
+    const ref = createRef<AcConfigHandle>();
+    const { getByText } = render(
+      <AcConfig
+        ref={ref}
+        contestType={ContestExamType.Homework}
+        isRevise={true}
+        initialValues={
+          {
+            program: {
+              lang: ['g++', 'gcc'],
+              showTopNSubmissionCount: 10,
+              showTopNSubmission: true,
+            },
+            general: {
+              gradeRelease: {
+                type: 'scheduled',
+                scheduled: { releaseTime: 1721899977 },
+              },
+              paperRelease: {
+                type: 'scheduled',
+                scheduled: { releaseTime: 1721899977 },
+              },
+              disorder: {
+                part: false,
+                program: false,
+                objective: false,
+                combinationInternal: false,
+                singleOption: false,
+                multipleOption: false,
+              },
+              tipRelease: {
+                type: 'scheduled',
+                scheduled: { releaseTime: 1721899977 },
+              },
+            },
+            homework: { limitTime: undefined, noLimit: true },
+            type: 'homework',
+          } as any
+        }
+      />,
+    );
+    // 假设修订模式下会出现“修订次数”字样
+    expect(getByText('Revise Count')).toBeInTheDocument();
+    // 你也可以断言某些按钮是否可用/不可用
+    // expect(getByTestId('revise-button')).not.toBeDisabled();
+  });
 });

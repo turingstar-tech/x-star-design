@@ -25,7 +25,7 @@ export interface AcConfigProps extends Omit<FormProps, 'children'> {
   onFinish?: (values: Configuration) => void;
   form?: FormInstance<any>;
   isFinish?: boolean;
-  showReviseCount?: boolean;
+  isRevise?: boolean;
 }
 
 export interface AcConfigHandle {
@@ -154,7 +154,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       initialValues,
       form: externalForm, // 接收外部传入的 form
       isFinish,
-      showReviseCount,
+      isRevise = false,
       ...props
     },
     ref,
@@ -307,7 +307,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                   contestType={contestType}
                   form={form}
                   isFinish={isFinish}
-                  showReviseCount={showReviseCount}
+                  isRevise={isRevise}
                 />
               </div>
               <div>
@@ -321,6 +321,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                   type={type}
                   contestType={contestType}
                   isFinish={isFinish}
+                  isRevise={isRevise}
                 />
               </div>
             </Space>
@@ -336,6 +337,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                 type={type}
                 contestType={contestType}
                 isFinish={isFinish}
+                isRevise={isRevise}
               />
             </>
           )}

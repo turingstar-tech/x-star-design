@@ -2,17 +2,20 @@ import { DatePicker, Form } from 'antd';
 import React from 'react';
 import ContestTimeInput from '../contest-time-input';
 import { useLocale } from '../locales';
+import TextValue from './TextValue';
 
 interface TimingFormItemIProps {
   field: string;
   name: string;
   label: string;
+  isRevise?: boolean;
 }
 
 const TimingFormItem: React.FC<TimingFormItemIProps> = ({
   field,
   name,
   label,
+  isRevise,
 }) => {
   const { locale, format: t } = useLocale('AcConfig');
   const lang = {
@@ -52,16 +55,20 @@ const TimingFormItem: React.FC<TimingFormItemIProps> = ({
                 label={isStarted ? t('After_Contest_Start_N') : label}
                 rules={[{ required: true }]}
               >
-                {isStarted ? (
-                  <ContestTimeInput />
+                {!isRevise ? (
+                  isStarted ? (
+                    <ContestTimeInput />
+                  ) : (
+                    <DatePicker
+                      showTime={{
+                        use12Hours: lang === 'en',
+                        format: showTimeFormat,
+                      }}
+                      format={dateFormat}
+                    />
+                  )
                 ) : (
-                  <DatePicker
-                    showTime={{
-                      use12Hours: lang === 'en',
-                      format: showTimeFormat,
-                    }}
-                    format={dateFormat}
-                  />
+                  <TextValue name={name} />
                 )}
               </Form.Item>
             )}

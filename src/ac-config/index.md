@@ -14,40 +14,37 @@ export default () => {
       <AcConfig
         ref={ref}
         contestType={'contest'}
-        onFinish={(values)=>{console.log(values)}}
-        showReviseCount={true}
+        onFinish={(values) => {
+          console.log(values);
+        }}
+        isRevise={true}
         initialValues={{
-          type: 'advanced',
-          program: {
-            lang: ['g++', 'gcc'],
-            showTopNSubmission: true,
-            showTopNSubmissionCount:10,
-            dualEvaluation:false
-
+          type: 'homework',
+          homework: {
+            limitTime: 3153600000,
+            noLimit: true,
           },
           general: {
             gradeRelease: {
-              type: 'scheduled',
-              scheduled: {
-                releaseTime: 1721899977,
-              },
+              type: 'afterExam',
             },
-            answerRelease: {
-              type: 'started',
-              scheduled: {
-                releaseTime: 7500,
-              },
-            },
-            tipRelease: {
-              type: 'started',
-              scheduled: {
-                releaseTime: 8400,
-              },
+            rankListRelease: {
+              type: 'afterGradeRelease',
             },
             paperRelease: {
+              type: 'afterExam',
+            },
+            answerRelease: {
+              type: 'afterExam',
+            },
+            submission: {
+              type: 'allowEarlySubmission',
+              submissionTimed: 0,
+            },
+            tipRelease: {
               type: 'scheduled',
               scheduled: {
-                releaseTime: 1721899977,
+                releaseTime: 1754018220,
               },
             },
             disorder: {
@@ -58,13 +55,38 @@ export default () => {
               singleOption: false,
               multipleOption: false,
             },
-            revisalCount: 5
+            restriction: {
+              type: 'never',
+            },
+            revisalCount: 0,
           },
-          contest: {
-            startTime: 1915070600,
-            endTime: 1915070660,
+          rank: {
+            rankListShowRealName: true,
+            rankShowUserLabel: false,
           },
-        } as any}
+          program: {
+            personalScoreVisibility: 'always',
+            rankingMethod: 'score',
+            highScoreProgramVisibility: 'never',
+            downloadDataEnable: true,
+            downloadDataCount: 10,
+            scoreTypeInMatch: 'maxScore',
+            lang: [
+              'gcc',
+              'g++',
+              'g++11',
+              'g++14',
+              'g++17',
+              'python2.7',
+              'python3.8',
+              'java8',
+              'fpc',
+            ],
+            showTopNSubmission: false,
+            showTopNSubmissionCount: 0,
+            dualEvaluation: false,
+          },
+        }}
       />
       <Button
         onClick={() => {

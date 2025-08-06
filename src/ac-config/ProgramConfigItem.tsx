@@ -17,7 +17,7 @@ const ProgramConfigItem = ({
   type,
   contestType,
   isFinish,
-  isRevise = false,
+  isRevise,
 }: ProgramConfigItemProps) => {
   const { format: t } = useLocale('AcConfig');
 

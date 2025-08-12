@@ -103,6 +103,7 @@ export const getConfigData = ({
         type: rawData.restriction,
       },
       revisalCount: rawData.revisalCount,
+      enableRevisal: rawData.enableRevisal,
     },
     rank: {
       rankListShowRealName: rawData.rankListShowRealName,
@@ -178,6 +179,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         disorder,
         restriction,
         revisalCount,
+        enableRevisal,
       } = config?.general || {};
       const { noLimit, limitTime } = config?.homework || {
         limitTime: 0,
@@ -271,6 +273,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         showTopNSubmissionCount,
         dualEvaluation,
         revisalCount,
+        enableRevisal,
       };
     };
 
@@ -308,6 +311,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                   form={form}
                   isFinish={isFinish}
                   isRevise={isRevise}
+                  enableRevisal={initialValues?.general?.enableRevisal}
                 />
               </div>
               <div>

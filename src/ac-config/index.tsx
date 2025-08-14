@@ -167,6 +167,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       zh_CN: 'zh',
       en_US: 'en',
     }[locale] as 'zh' | 'en';
+    const enableRevisal = Form.useWatch('enableRevisal', form);
 
     const getFormInitialValues = (config: Configuration | undefined) => {
       const {
@@ -311,7 +312,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                   form={form}
                   isFinish={isFinish}
                   isRevise={isRevise}
-                  enableRevisal={initialValues?.general?.enableRevisal}
+                  enableRevisal={enableRevisal}
                 />
               </div>
               <div>

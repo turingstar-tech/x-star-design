@@ -50,7 +50,6 @@ export interface Configuration {
     disorder: DisorderConfigStatus;
     restriction: restrictionStatus;
     revisalCount: number;
-    enableRevisal: boolean;
   };
   rank: {
     rankListShowRealName: boolean;
@@ -95,7 +94,6 @@ export interface RawConfig {
   restriction: restrictionStatus['type'];
   disorder: Array<keyof DisorderConfigStatus>;
   revisalCount: number;
-  enableRevisal: boolean;
   /**
    * 个人分数可见性
    */

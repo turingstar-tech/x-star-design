@@ -43,3 +43,32 @@ export const compactObj = (obj: any) => {
   }
   return obj;
 };
+
+export interface InitialConfigType {
+  timeLimit?: number;
+  memoryLimit?: number;
+  points?: number;
+  subtasks?: Array<{
+    timeLimit?: number;
+    memoryLimit?: number;
+    points?: number;
+    dependences?: string[];
+    cases?: string[];
+  }>;
+  aliases?: Array<{
+    from?: string;
+    to?: string;
+  }>;
+  check?: {
+    target?: string;
+    input?: string;
+    output?: string;
+  };
+  run?: {
+    readable?: string;
+    writable?: string;
+  };
+  build?: {
+    input?: string[];
+  };
+}

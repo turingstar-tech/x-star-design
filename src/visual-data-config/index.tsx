@@ -5,45 +5,80 @@ import {
   Form,
   Input,
   InputNumber,
-  Modal,
   Radio,
   Row,
-  Space,
 } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
 import { prefix } from '../utils/global';
 import SingleDataConfig from './SingleDataConfig';
 import SubTaskConfig from './SubTaskConfig';
-import { ConfigItem, SubTaskItem, compactObj } from './define';
+import {
+  ConfigItem,
+  InitialConfigType,
+  SubTaskItem,
+  compactObj,
+} from './define';
 
 export interface VisualDataConfigProps {
-  onConfirm: (value: string, importType: 'full' | 'precheck') => void;
+  onConfirm: (value: string) => void;
+  initialConfig?: InitialConfigType; // configTranslate 返回的配置数据，用于初始化表单
+  isSubtask?: boolean;
 }
 
-const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
+const VisualDataConfig = ({
+  onConfirm,
+  initialConfig,
+  isSubtask = false,
+}: VisualDataConfigProps) => {
   const [form] = Form.useForm();
   const { format: t } = useLocale('VisualDataConfig');
-  // 导入类型 完整评测点 预检评测点
-  const [importType, setImportType] = useState<'full' | 'precheck'>('full');
-  // 是否显示导入弹窗
-  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  // 反向转换函数：将 configTranslate 的输出格式转换回表单数据格式
+  const configReverse = (config: InitialConfigType): ConfigItem => {
+    const subtasks = config?.subtasks || [];
+    const aliases = config?.aliases || [];
+    const inputAlias = aliases.find((alias) => alias.to === 'in');
+    const outputAlias = aliases.find((alias) => alias.to === 'ans');
+
+    const formData: ConfigItem = {
+      timeLimit: config?.timeLimit || 0,
+      memoryLimit: config?.memoryLimit || 0,
+      points: config?.points || 0,
+      checkTarget: config?.check?.target || '',
+      inputFormat: inputAlias?.from || '',
+      outputFormat: outputAlias?.from || '',
+      fileInputFormat: config?.check?.input || config?.run?.readable || '',
+      fileOutputFormat: config?.check?.output || config?.run?.writable || '',
+      buildInput: config?.build?.input ? config.build.input.join(',') : '',
+      judgeWay: isSubtask ? 'subtask' : 'single',
+    };
+
+    // 转换子任务数据
+    const transformedSubtasks: SubTaskItem[] = subtasks.map((task) => ({
+      timeLimit: task?.timeLimit || 0,
+      memoryLimit: task?.memoryLimit || 0,
+      points: task?.points || 0,
+      cases: task?.cases ? task.cases.join(',') : '',
+      dependences: task?.dependences ? task.dependences.join(',') : '',
+    }));
+
+    if (isSubtask) {
+      formData.subtaskData = transformedSubtasks;
+    } else {
+      formData.singleData = transformedSubtasks;
+    }
+
+    return formData;
+  };
   useEffect(() => {
-    form.setFieldsValue({
-      timeLimit: 1000,
-      memoryLimit: 262144,
-      points: 10,
-      singleData: [
-        {
-          points: 10,
-          cases: '1',
-        },
-      ],
-      inputFormat: 'data#.in',
-      outputFormat: 'data#.out',
-    });
-  }, []);
+    if (initialConfig) {
+      // 如果有初始化配置，使用反向转换后的数据
+      const formData = configReverse(initialConfig);
+      form.setFieldsValue(formData);
+    }
+  }, [initialConfig]);
 
   const configTranslate = (values: ConfigItem) => {
     const subTasks =
@@ -83,12 +118,12 @@ const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
         onFinish={async (values) => {
           const config = configTranslate(values);
           const res = compactObj(config); // 删除空对象
-          onConfirm(JSON.stringify(res), importType);
+          onConfirm(JSON.stringify(res));
         }}
         className={`${prefix}-visualForm`}
       >
         <Row justify="start" gutter={[16, 0]} className={`${prefix}-row`}>
-          <Col span={6}>
+          <Col>
             <Form.Item
               name="timeLimit"
               label={t('Time_MS')}
@@ -97,7 +132,7 @@ const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
               <InputNumber />
             </Form.Item>
           </Col>
-          <Col span={6}>
+          <Col>
             <Form.Item
               name="memoryLimit"
               label={t('Space_MS')}
@@ -124,7 +159,7 @@ const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
               <Input style={{ width: 200 }} />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col>
             <Form.Item
               name="inputFormat"
               label={t('Input_Format')}
@@ -133,7 +168,7 @@ const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
               <Input />
             </Form.Item>
           </Col>
-          <Col span={9}>
+          <Col>
             <Form.Item
               name="outputFormat"
               label={t('Output_Format')}
@@ -149,13 +184,13 @@ const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
               {t('Input_Output_Format_Tip')}
             </div>
           </Col>
-          <Col span={8}>
+          <Col>
             <Form.Item name="fileInputFormat" label={t('File_Input_Format')}>
               <Input />
             </Form.Item>
           </Col>
 
-          <Col span={8}>
+          <Col>
             <Form.Item name="fileOutputFormat" label={t('File_Output_Format')}>
               <Input />
             </Form.Item>
@@ -165,7 +200,7 @@ const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
               {t('File_Input_Output_Format_Tip')}
             </div>
           </Col>
-          <Col span={12}>
+          <Col>
             <Form.Item
               name="buildInput"
               label={t('Interactive_Library')}
@@ -204,37 +239,11 @@ const VisualDataConfig = ({ onConfirm }: VisualDataConfigProps) => {
         </Form.Item>
         <Divider />
         <Form.Item>
-          <Button type={'primary'} onClick={() => setIsModalVisible(true)}>
+          <Button type={'primary'} onClick={() => form.submit()}>
             {t('Confirm_Import')}
           </Button>
         </Form.Item>
       </Form>
-
-      <Modal
-        title={t('Confirm_Import')}
-        open={isModalVisible}
-        onOk={() => {
-          form.submit();
-          setIsModalVisible(false);
-        }}
-        destroyOnClose
-        onCancel={() => setIsModalVisible(false)}
-      >
-        <Space>
-          <div>{t('Import_To')}</div>
-          <Radio.Group
-            value={importType}
-            onChange={(e) => {
-              setImportType(e.target.value);
-            }}
-          >
-            <Radio value={'full'}>{t('Full_Test_Point')}</Radio>
-            <Radio value={'precheck'} data-testid="precheck-test-point">
-              {t('Precheck_Test_Point')}
-            </Radio>
-          </Radio.Group>
-        </Space>
-      </Modal>
     </ConfigProviderWrapper>
   );
 };

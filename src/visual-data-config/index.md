@@ -12,10 +12,11 @@ export default () => {
   return (
     <>
       <VisualDataConfig
-        onConfirm={(value, importType) => {
+        onConfirm={(value) => {
           setConfig(value);
-          console.log(value, importType);
+          console.log(value);
         }}
+        initialConfig={{}}
       />
       <div>{config}</div>
     </>

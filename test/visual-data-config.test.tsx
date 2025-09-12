@@ -16,13 +16,34 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
   };
 }) as typeof window.matchMedia;
 
+const initialConfig = {
+  timeLimit: 1000,
+  memoryLimit: 262144,
+  points: 10,
+  subtasks: [
+    {
+      timeLimit: 1000,
+      memoryLimit: 262144,
+      points: 10,
+      cases: ['1'],
+      dependences: [],
+    },
+  ],
+  aliases: [
+    { from: 'data#.in', to: 'in' },
+    { from: 'data#.out', to: 'ans' },
+  ],
+};
 jest.useFakeTimers();
 
 describe('visual data config', () => {
   test('renders width single data', async () => {
     const onConfirmMock = jest.fn();
     const { getByText, getByLabelText } = render(
-      <VisualDataConfig onConfirm={onConfirmMock} />,
+      <VisualDataConfig
+        onConfirm={onConfirmMock}
+        initialConfig={initialConfig}
+      />,
     );
 
     //通用的数据配置
@@ -67,22 +88,11 @@ describe('visual data config', () => {
     fireEvent.change(getByLabelText('Score'), {
       target: { value: 10 },
     });
-    // 首先测试取消操作
-    await act(async () => {
-      fireEvent.click(getByText('Confirm and import'));
-    });
-    expect(getByText('Import To:')).toBeInTheDocument(); // 确认模态框已打开
-
-    // 测试取消按钮
-    await act(async () => {
-      fireEvent.click(getByText('Cancel'));
-    });
-    expect(onConfirmMock).not.toHaveBeenCalled();
 
     await act(async () => {
       fireEvent.click(getByText('Confirm and import'));
     });
-    fireEvent.click(getByText('OK'));
+
     await waitFor(() => {
       expect(onConfirmMock).toHaveBeenCalledWith(
         JSON.stringify({
@@ -113,14 +123,15 @@ describe('visual data config', () => {
             input: ['interactive.lib'],
           },
         }),
-        'full',
       );
     });
   });
 
   test('renders width single data and test add&remove', async () => {
     const { getByText, getAllByLabelText, getAllByTestId, getByTestId } =
-      render(<VisualDataConfig onConfirm={() => {}} />);
+      render(
+        <VisualDataConfig onConfirm={() => {}} initialConfig={initialConfig} />,
+      );
     //新增一个测试点
     const addBtn = getByText('Add a new test point');
     fireEvent.click(addBtn);
@@ -149,7 +160,12 @@ describe('visual data config', () => {
       getAllByLabelText,
       getAllByTestId,
       getByTestId,
-    } = render(<VisualDataConfig onConfirm={onConfirmMock} />);
+    } = render(
+      <VisualDataConfig
+        onConfirm={onConfirmMock}
+        initialConfig={initialConfig}
+      />,
+    );
     //通用的数据配置
     fireEvent.change(getByLabelText('Time Limit(MS)'), {
       target: { value: 2000 },
@@ -209,10 +225,6 @@ describe('visual data config', () => {
     await act(async () => {
       fireEvent.click(getByText('Confirm and import'));
     });
-    await act(async () => {
-      fireEvent.click(getByTestId('precheck-test-point'));
-      fireEvent.click(getByText('OK'));
-    });
     expect(onConfirmMock).toHaveBeenCalledWith(
       JSON.stringify({
         timeLimit: 2000,
@@ -243,7 +255,6 @@ describe('visual data config', () => {
           input: ['interactive.lib'],
         },
       }),
-      'precheck',
     );
     //新增N个子任务
     const inputNumber = getByTestId('batchAddInput');
@@ -265,7 +276,10 @@ describe('visual data config', () => {
   test('renders with extremely situation', async () => {
     const onConfirmMock = jest.fn();
     const { getByText, getByLabelText, getAllByText } = render(
-      <VisualDataConfig onConfirm={onConfirmMock} />,
+      <VisualDataConfig
+        onConfirm={onConfirmMock}
+        initialConfig={initialConfig}
+      />,
     );
     fireEvent.change(getByLabelText('Time Limit(MS)'), {
       target: { value: 2000 },
@@ -289,15 +303,14 @@ describe('visual data config', () => {
     await act(async () => {
       fireEvent.click(getAllByText('Confirm and import')[0]);
     });
-    await act(async () => {
-      fireEvent.click(getByText('OK'));
-    });
     expect(onConfirmMock).toHaveBeenCalledWith(
       JSON.stringify({
         timeLimit: 2000,
         memoryLimit: 524288,
         subtasks: [
           {
+            timeLimit: 1000,
+            memoryLimit: 262144,
             points: 20,
             cases: ['1'],
           },
@@ -307,7 +320,6 @@ describe('visual data config', () => {
           { from: 'data#.out', to: 'ans' },
         ],
       }),
-      'full',
     );
     //测试子任务的分数和总分数都没有的情况
     fireEvent.change(getByLabelText('Score of Each Case/Subtask'), {
@@ -316,15 +328,16 @@ describe('visual data config', () => {
     await act(async () => {
       fireEvent.click(getByText('Confirm and import'));
     });
-    await act(async () => {
-      fireEvent.click(getByText('OK'));
-    });
+
     expect(onConfirmMock).toHaveBeenCalledWith(
       JSON.stringify({
         timeLimit: 2000,
         memoryLimit: 524288,
         subtasks: [
           {
+            timeLimit: 1000,
+            memoryLimit: 262144,
+            points: 20,
             cases: ['1'],
           },
         ],
@@ -333,7 +346,134 @@ describe('visual data config', () => {
           { from: 'data#.out', to: 'ans' },
         ],
       }),
-      'full',
     );
+  });
+
+  test('renders with no initialConfig', async () => {
+    const onConfirmMock = jest.fn();
+    const { getByText } = render(
+      <VisualDataConfig onConfirm={onConfirmMock} />,
+    );
+    //验证结果
+    await act(async () => {
+      fireEvent.click(getByText('Confirm and import'));
+    });
+    expect(onConfirmMock).not.toHaveBeenCalled();
+  });
+
+  test('renders with empty object initialConfig', async () => {
+    const onConfirmMock = jest.fn();
+    const { getByText, rerender } = render(
+      <VisualDataConfig onConfirm={onConfirmMock} initialConfig={{}} />,
+    );
+    //验证结果
+    await act(async () => {
+      fireEvent.click(getByText('Confirm and import'));
+    });
+    expect(onConfirmMock).not.toHaveBeenCalled();
+
+    rerender(
+      <VisualDataConfig
+        onConfirm={onConfirmMock}
+        initialConfig={{
+          timeLimit: 1000,
+          memoryLimit: 262144,
+          points: 10,
+          subtasks: [
+            {
+              timeLimit: 1000,
+              memoryLimit: 262144,
+              points: 10,
+              cases: ['1'],
+              dependences: [],
+            },
+            {
+              timeLimit: 1000,
+              memoryLimit: 262144,
+              points: 10,
+              cases: ['2'],
+              dependences: [],
+            },
+          ],
+          aliases: [
+            { from: 'data#.in', to: 'in' },
+            { from: 'data#.out', to: 'ans' },
+          ],
+          build: {
+            input: ['interactive.lib'],
+          },
+        }}
+      />,
+    );
+
+    //验证结果
+    await act(async () => {
+      fireEvent.click(getByText('Confirm and import'));
+    });
+    expect(onConfirmMock).toHaveBeenCalledWith(
+      JSON.stringify({
+        timeLimit: 1000,
+        memoryLimit: 262144,
+        subtasks: [
+          {
+            timeLimit: 1000,
+            memoryLimit: 262144,
+            points: 10,
+            cases: ['1'],
+          },
+          {
+            timeLimit: 1000,
+            memoryLimit: 262144,
+            points: 10,
+            cases: ['2'],
+          },
+        ],
+        aliases: [
+          {
+            from: 'data#.in',
+            to: 'in',
+          },
+          {
+            from: 'data#.out',
+            to: 'ans',
+          },
+        ],
+        build: {
+          input: ['interactive.lib'],
+        },
+      }),
+    );
+  });
+
+  test('renders with isSubtask', async () => {
+    const onConfirmMock = jest.fn();
+    const { getByText } = render(
+      <VisualDataConfig
+        onConfirm={onConfirmMock}
+        isSubtask={true}
+        initialConfig={{
+          timeLimit: 1000,
+          memoryLimit: 262144,
+          points: 10,
+          subtasks: [
+            {
+              timeLimit: 0,
+              memoryLimit: 0,
+              points: 0,
+            },
+          ],
+          aliases: [
+            { from: 'data#.in', to: 'in' },
+            { from: 'data#.out', to: 'ans' },
+          ],
+        }}
+      />,
+    );
+    //验证结果
+    await act(async () => {
+      fireEvent.click(getByText('Confirm and import'));
+    });
+
+    expect(onConfirmMock).not.toHaveBeenCalled();
   });
 });

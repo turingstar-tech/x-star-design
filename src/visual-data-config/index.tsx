@@ -51,7 +51,11 @@ const VisualDataConfig = ({
       outputFormat: outputAlias?.from || '',
       fileInputFormat: config?.check?.input || config?.run?.readable || '',
       fileOutputFormat: config?.check?.output || config?.run?.writable || '',
-      buildInput: config?.build?.input ? config.build.input.join(',') : '',
+      buildInput: config?.build?.input
+        ? config.build.input instanceof Array
+          ? config.build.input.join(',')
+          : config.build.input
+        : '',
       judgeWay: isSubtask ? 'subtask' : 'single',
     };
 
@@ -60,8 +64,16 @@ const VisualDataConfig = ({
       timeLimit: task?.timeLimit || 0,
       memoryLimit: task?.memoryLimit || 0,
       points: task?.points || 0,
-      cases: task?.cases ? task.cases.join(',') : '',
-      dependences: task?.dependences ? task.dependences.join(',') : '',
+      cases: task?.cases
+        ? task.cases instanceof Array
+          ? task.cases.join(',')
+          : task.cases
+        : '',
+      dependences: task?.dependences
+        ? task.dependences instanceof Array
+          ? task.dependences.join(',')
+          : task.dependences
+        : '',
     }));
 
     if (isSubtask) {

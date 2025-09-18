@@ -16,7 +16,28 @@ export default () => {
           setConfig(value);
           console.log(value);
         }}
-        initialConfig={{}}
+        initialConfig={{
+          timeLimit: 1000,
+          memoryLimit: 262144,
+          points: 10,
+          subtasks: [
+            {
+              timeLimit: 1000,
+              memoryLimit: 262144,
+              points: 10,
+              cases: '1',
+              dependences: '1',
+            },
+          ],
+          aliases: [
+            { from: 'data#.in', to: 'in' },
+            { from: 'data#.out', to: 'ans' },
+          ],
+          build: {
+            input: ['123', '456'],
+          },
+        }}
+        isSubtask
       />
       <div>{config}</div>
     </>

@@ -52,8 +52,8 @@ export interface InitialConfigType {
     timeLimit?: number;
     memoryLimit?: number;
     points?: number;
-    dependences?: string[];
-    cases?: string[];
+    dependences?: string[] | string;
+    cases?: string[] | string;
   }>;
   aliases?: Array<{
     from?: string;
@@ -69,6 +69,6 @@ export interface InitialConfigType {
     writable?: string;
   };
   build?: {
-    input?: string[];
+    input?: string[] | string;
   };
 }

@@ -51,7 +51,7 @@ const GeneralConfigItem = ({
     ContestTimeMode.New,
   );
   return (
-    <div>
+    <>
       <Form.Item
         name={'contestTime'}
         label={
@@ -376,18 +376,19 @@ const GeneralConfigItem = ({
           </Radio>
         </Radio.Group>
       </Form.Item>
+
+      {isRevise && (
+        <Form.Item name={'revisalCount'} label={t('ReviseCount')}>
+          <InputNumber min={0} max={100} />
+        </Form.Item>
+      )}
       <Form.Item name={'enableRevisal'} label={t('EnableRevisal')}>
         <Radio.Group disabled={enableRevisal}>
           <Radio value>{t('Enable')}</Radio>
           <Radio value={false}>{t('Disable')}</Radio>
         </Radio.Group>
       </Form.Item>
-      {isRevise && (
-        <Form.Item name={'revisalCount'} label={t('ReviseCount')}>
-          <InputNumber min={0} max={100} />
-        </Form.Item>
-      )}
-    </div>
+    </>
   );
 };
 

@@ -103,7 +103,7 @@ export const getConfigData = ({
         type: rawData.restriction,
       },
       revisalCount: rawData.revisalCount,
-      // enableRevisal: rawData.enableRevisal,
+      enableRevisal: rawData.enableRevisal,
     },
     rank: {
       rankListShowRealName: rawData.rankListShowRealName,
@@ -168,7 +168,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       en_US: 'en',
     }[locale] as 'zh' | 'en';
     // const enableRevisal = Form.useWatch('enableRevisal', form);
-
+    const enableRevisal = initialValues?.general.enableRevisal;
     const getFormInitialValues = (config: Configuration | undefined) => {
       const {
         gradeRelease,
@@ -180,7 +180,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         disorder,
         restriction,
         revisalCount,
-        // enableRevisal,
+        enableRevisal,
       } = config?.general || {};
       const { noLimit, limitTime } = config?.homework || {
         limitTime: 0,
@@ -274,7 +274,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         showTopNSubmissionCount,
         dualEvaluation,
         revisalCount,
-        // enableRevisal,
+        enableRevisal,
       };
     };
 
@@ -312,7 +312,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                   form={form}
                   isFinish={isFinish}
                   isRevise={isRevise}
-                  // enableRevisal={enableRevisal}
+                  enableRevisal={enableRevisal}
                 />
               </div>
               <div>
@@ -337,6 +337,8 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                 contestType={contestType}
                 form={form}
                 isFinish={isFinish}
+                isRevise={isRevise}
+                enableRevisal={enableRevisal}
               />
               <ProgramConfigItem
                 type={type}

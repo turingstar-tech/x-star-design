@@ -103,7 +103,7 @@ export const getConfigData = ({
         type: rawData.restriction,
       },
       revisalCount: rawData.revisalCount,
-      // enableRevisal: rawData.enableRevisal,
+      enableRevisal: rawData.enableRevisal,
     },
     rank: {
       rankListShowRealName: rawData.rankListShowRealName,
@@ -167,7 +167,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
       zh_CN: 'zh',
       en_US: 'en',
     }[locale] as 'zh' | 'en';
-    // const enableRevisal = Form.useWatch('enableRevisal', form);
+    const enableRevisal = Form.useWatch('enableRevisal', form);
 
     const getFormInitialValues = (config: Configuration | undefined) => {
       const {
@@ -180,7 +180,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         disorder,
         restriction,
         revisalCount,
-        // enableRevisal,
+        enableRevisal,
       } = config?.general || {};
       const { noLimit, limitTime } = config?.homework || {
         limitTime: 0,
@@ -274,7 +274,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         showTopNSubmissionCount,
         dualEvaluation,
         revisalCount,
-        // enableRevisal,
+        enableRevisal,
       };
     };
 
@@ -312,7 +312,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                   form={form}
                   isFinish={isFinish}
                   isRevise={isRevise}
-                  // enableRevisal={enableRevisal}
+                  enableRevisal={enableRevisal}
                 />
               </div>
               <div>

@@ -29,6 +29,7 @@ interface GeneralConfigItemProps {
   form: FormInstance<any>;
   isFinish?: boolean;
   isRevise?: boolean;
+  enableRevisal?: boolean;
 }
 
 const GeneralConfigItem = ({
@@ -37,6 +38,7 @@ const GeneralConfigItem = ({
   form,
   isFinish,
   isRevise = false,
+  enableRevisal,
 }: GeneralConfigItemProps) => {
   const FOREVER = 876000; // 100 年 = 876000 小时
   const { format: t } = useLocale('AcConfig');
@@ -374,12 +376,12 @@ const GeneralConfigItem = ({
           </Radio>
         </Radio.Group>
       </Form.Item>
-      {/* <Form.Item name={'enableRevisal'} label={t('EnableRevisal')}>
+      <Form.Item name={'enableRevisal'} label={t('EnableRevisal')}>
         <Radio.Group disabled={enableRevisal}>
           <Radio value>{t('Enable')}</Radio>
           <Radio value={false}>{t('Disable')}</Radio>
         </Radio.Group>
-      </Form.Item> */}
+      </Form.Item>
       {isRevise && (
         <Form.Item name={'revisalCount'} label={t('ReviseCount')}>
           <InputNumber min={0} max={100} />

@@ -37,7 +37,7 @@ const GeneralConfigItem = ({
   contestType,
   form,
   isFinish,
-  isRevise = false,
+  isRevise,
   enableRevisal,
 }: GeneralConfigItemProps) => {
   const FOREVER = 876000; // 100 年 = 876000 小时

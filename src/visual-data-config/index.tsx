@@ -57,8 +57,8 @@ const VisualDataConfig = ({
 
     // 转换子任务数据
     const transformedSubtasks: SubTaskItem[] = subtasks.map((task) => ({
-      timeLimit: task?.timeLimit || 0,
-      memoryLimit: task?.memoryLimit || 0,
+      timeLimit: task?.timeLimit || config?.timeLimit || 0,
+      memoryLimit: task?.memoryLimit || config?.memoryLimit || 0,
       points: task?.points || 0,
       cases: task?.cases ? task.cases.join(',') : '',
       dependences: task?.dependences ? task.dependences.join(',') : '',

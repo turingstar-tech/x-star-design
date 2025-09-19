@@ -452,8 +452,8 @@ describe('visual data config', () => {
         onConfirm={onConfirmMock}
         isSubtask={true}
         initialConfig={{
-          timeLimit: 1000,
-          memoryLimit: 262144,
+          timeLimit: 0,
+          memoryLimit: 0,
           points: 10,
           subtasks: [
             {

@@ -311,7 +311,6 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                   contestType={contestType}
                   form={form}
                   isFinish={isFinish}
-                  isRevise={isRevise}
                   enableRevisal={enableRevisal}
                 />
               </div>
@@ -337,7 +336,6 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
                 contestType={contestType}
                 form={form}
                 isFinish={isFinish}
-                isRevise={isRevise}
                 enableRevisal={enableRevisal}
               />
               <ProgramConfigItem

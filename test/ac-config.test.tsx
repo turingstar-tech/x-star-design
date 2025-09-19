@@ -1047,7 +1047,7 @@ describe('ac config', () => {
     const { queryByText } = render(
       <AcConfig
         ref={ref}
-        contestType={ContestExamType.Homework}
+        contestType={ContestExamType.Exam}
         isRevise={false}
         initialValues={
           {

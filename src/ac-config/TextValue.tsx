@@ -1,6 +1,7 @@
 import { Dayjs } from 'dayjs';
 import React from 'react';
 import { useLocale } from '../locales';
+import { langVL } from './define';
 
 const TextValue = ({ value, name }: { value?: any; name: string }) => {
   const { format: t } = useLocale('AcConfig');
@@ -9,7 +10,7 @@ const TextValue = ({ value, name }: { value?: any; name: string }) => {
       method: (value: string[]) => {
         return value
           .map((item: any) => {
-            return item;
+            return langVL.get(item);
           })
           .join('、');
       },

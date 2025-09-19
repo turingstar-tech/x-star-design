@@ -382,12 +382,14 @@ const GeneralConfigItem = ({
           <InputNumber min={0} max={100} />
         </Form.Item>
       )}
-      <Form.Item name={'enableRevisal'} label={t('EnableRevisal')}>
-        <Radio.Group disabled={enableRevisal}>
-          <Radio value>{t('Enable')}</Radio>
-          <Radio value={false}>{t('Disable')}</Radio>
-        </Radio.Group>
-      </Form.Item>
+      {contestType === 'homework' && (
+        <Form.Item name={'enableRevisal'} label={t('EnableRevisal')}>
+          <Radio.Group disabled={enableRevisal}>
+            <Radio value>{t('Enable')}</Radio>
+            <Radio value={false}>{t('Disable')}</Radio>
+          </Radio.Group>
+        </Form.Item>
+      )}
     </>
   );
 };

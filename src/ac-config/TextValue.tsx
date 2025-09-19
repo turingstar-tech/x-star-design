@@ -10,7 +10,7 @@ const TextValue = ({ value, name }: { value?: any; name: string }) => {
       method: (value: string[]) => {
         return value
           .map((item: any) => {
-            return langVL[item as keyof typeof langVL];
+            return langVL.get(item);
           })
           .join('、');
       },

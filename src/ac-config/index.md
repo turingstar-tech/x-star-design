@@ -68,8 +68,8 @@ export default () => {
             personalScoreVisibility: 'always',
             rankingMethod: 'score',
             highScoreProgramVisibility: 'never',
-            downloadDataEnable: true,
-            downloadDataCount: 10,
+            // downloadDataEnable: true,
+            // downloadDataCount: 10,
             scoreTypeInMatch: 'maxScore',
             lang: [
               'gcc',

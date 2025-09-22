@@ -138,16 +138,16 @@ describe('ac config', () => {
     fireEvent.click(getByTestId('dualEvaluation-true'));
 
     // Download error data (XJOI)
-    fireEvent.click(getByTestId('downloadDataEnable-false'));
-    expect(getByTestId('downloadDataCount-input')).toBeDisabled();
-    fireEvent.click(getByTestId('downloadDataEnable-true'));
-    expect(getByTestId('downloadDataCount-input')).not.toBeDisabled();
+    // fireEvent.click(getByTestId('downloadDataEnable-false'));
+    // expect(getByTestId('downloadDataCount-input')).toBeDisabled();
+    // fireEvent.click(getByTestId('downloadDataEnable-true'));
+    // expect(getByTestId('downloadDataCount-input')).not.toBeDisabled();
 
-    fireEvent.change(getByTestId('downloadDataCount-input'), {
-      target: {
-        value: 10,
-      },
-    });
+    // fireEvent.change(getByTestId('downloadDataCount-input'), {
+    //   target: {
+    //     value: 10,
+    //   },
+    // });
     await act(async () => {
       fireEvent.click(getByTestId('showTopNSubmission-true'));
     });
@@ -219,8 +219,8 @@ describe('ac config', () => {
           personalScoreVisibility: 'always',
           rankingMethod: 'score',
           highScoreProgramVisibility: 'always',
-          downloadDataEnable: true,
-          downloadDataCount: 10,
+          // downloadDataEnable: true,
+          // downloadDataCount: 10,
           scoreTypeInMatch: 'latestSubmit',
           lang: ['g++', 'gcc'],
           showTopNSubmission: true,
@@ -341,19 +341,19 @@ describe('ac config', () => {
     fireEvent.click(getByTestId('highScoreProgramVisibility-always'));
 
     // Download error data (XJOI)
-    fireEvent.click(getByTestId('downloadDataEnable-false'));
-    expect(getByTestId('downloadDataCount-input')).toBeDisabled();
-    fireEvent.click(getByTestId('downloadDataEnable-true'));
-    expect(getByTestId('downloadDataCount-input')).not.toBeDisabled();
+    // fireEvent.click(getByTestId('downloadDataEnable-false'));
+    // expect(getByTestId('downloadDataCount-input')).toBeDisabled();
+    // fireEvent.click(getByTestId('downloadDataEnable-true'));
+    // expect(getByTestId('downloadDataCount-input')).not.toBeDisabled();
 
     // restriction
-    fireEvent.click(getByText('No Restrictions'));
+    // fireEvent.click(getByText('No Restrictions'));
 
-    fireEvent.change(getByTestId('downloadDataCount-input'), {
-      target: {
-        value: 10,
-      },
-    });
+    // fireEvent.change(getByTestId('downloadDataCount-input'), {
+    //   target: {
+    //     value: 10,
+    //   },
+    // });
     expect(
       JSON.stringify(
         getConfigData({
@@ -414,8 +414,8 @@ describe('ac config', () => {
           personalScoreVisibility: 'always',
           rankingMethod: 'score',
           highScoreProgramVisibility: 'always',
-          downloadDataEnable: true,
-          downloadDataCount: 10,
+          // downloadDataEnable: true,
+          // downloadDataCount: 10,
           scoreTypeInMatch: 'latestSubmit',
           lang: ['g++', 'gcc'],
         },
@@ -891,8 +891,8 @@ describe('ac config', () => {
         },
       },
       program: {
-        downloadDataCount: undefined,
-        downloadDataEnable: undefined,
+        // downloadDataCount: undefined,
+        // downloadDataEnable: undefined,
         highScoreProgramVisibility: undefined,
         lang: ['g++', 'gcc'],
         personalScoreVisibility: undefined,
@@ -977,8 +977,8 @@ describe('ac config', () => {
         },
       },
       program: {
-        downloadDataCount: undefined,
-        downloadDataEnable: undefined,
+        // downloadDataCount: undefined,
+        // downloadDataEnable: undefined,
         highScoreProgramVisibility: undefined,
         lang: ['g++', 'gcc'],
         personalScoreVisibility: undefined,

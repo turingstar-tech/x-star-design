@@ -60,8 +60,8 @@ export interface Configuration {
     highScoreProgramVisibility: ProgramConfigStatus;
     personalScoreVisibility: ProgramConfigStatus;
     rankingMethod: 'score' | 'acNumber';
-    downloadDataEnable: boolean;
-    downloadDataCount: number;
+    // downloadDataEnable: boolean;
+    // downloadDataCount: number;
     scoreTypeInMatch: 'latestSubmit' | 'maxScore';
     lang: string[];
     showTopNSubmission: boolean;
@@ -111,11 +111,11 @@ export interface RawConfig {
   /**
    * XJOI 比赛是否允许下载错误数据
    */
-  downloadDataEnable: boolean;
+  // downloadDataEnable: boolean;
   /**
    * 允许下载次数
    */
-  downloadDataCount: number;
+  // downloadDataCount: number;
   scoreTypeInMatch: 'latestSubmit' | 'maxScore';
   lang: (
     | 'gcc'

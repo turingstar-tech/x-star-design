@@ -347,7 +347,7 @@ describe('ac config', () => {
     // expect(getByTestId('downloadDataCount-input')).not.toBeDisabled();
 
     // restriction
-    // fireEvent.click(getByText('No Restrictions'));
+    fireEvent.click(getByText('No Restrictions'));
 
     // fireEvent.change(getByTestId('downloadDataCount-input'), {
     //   target: {

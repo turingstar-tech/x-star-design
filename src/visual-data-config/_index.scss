@@ -8,6 +8,11 @@
       margin: -20px 0 16px;
     }
 
+    // 当有验证错误时为提示信息添加额外间距的样式类
+    .#{$prefix}-explainItem.#{$prefix}-input-output-tip.#{$prefix}-with-error-spacing {
+      margin-top: 8px;
+    }
+
     .#{$prefix}-form-item-extra {
       clear: both;
       color: #00000073;

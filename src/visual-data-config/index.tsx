@@ -8,7 +8,7 @@ import {
   Radio,
   Row,
 } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ConfigProviderWrapper from '../config-provider-wrapper';
 import { useLocale } from '../locales';
 import { prefix } from '../utils/global';
@@ -34,6 +34,7 @@ const VisualDataConfig = ({
 }: VisualDataConfigProps) => {
   const [form] = Form.useForm();
   const { format: t } = useLocale('VisualDataConfig');
+  const [hasFormatErrors, setHasFormatErrors] = useState(false);
 
   // 反向转换函数：将 configTranslate 的输出格式转换回表单数据格式
   const configReverse = (config: InitialConfigType): ConfigItem => {
@@ -80,6 +81,13 @@ const VisualDataConfig = ({
     }
   }, [initialConfig]);
 
+  // 监听表单字段变化，检查是否有格式字段错误
+  const handleFieldsChange = () => {
+    const errors = form.getFieldsError(['inputFormat', 'outputFormat']);
+    const hasErrors = errors.some((field) => field.errors.length > 0);
+    setHasFormatErrors(hasErrors);
+  };
+
   const configTranslate = (values: ConfigItem) => {
     const subTasks =
       values?.judgeWay === 'single' ? values?.singleData : values?.subtaskData;
@@ -120,6 +128,7 @@ const VisualDataConfig = ({
           const res = compactObj(config); // 删除空对象
           onConfirm(JSON.stringify(res));
         }}
+        onFieldsChange={handleFieldsChange}
         className={`${prefix}-visualForm`}
       >
         <Row justify="start" gutter={[16, 0]} className={`${prefix}-row`}>
@@ -179,7 +188,9 @@ const VisualDataConfig = ({
           </Col>
           <Col span={24}>
             <div
-              className={`${prefix}-form-item-extra ${`${prefix}-explainItem`}`}
+              className={`${prefix}-form-item-extra ${prefix}-explainItem ${prefix}-input-output-tip${
+                hasFormatErrors ? ` ${prefix}-with-error-spacing` : ''
+              }`}
             >
               {t('Input_Output_Format_Tip')}
             </div>

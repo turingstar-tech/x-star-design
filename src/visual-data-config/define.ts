@@ -18,6 +18,7 @@ export interface SubTaskItem {
   memoryLimit: number;
   points: number;
   dependences?: string;
+  rule?: string;
 }
 // 删除空对象 删除'', null, undefined
 export const isEmpty = (obj: object) => {
@@ -52,8 +53,9 @@ export interface InitialConfigType {
     timeLimit?: number;
     memoryLimit?: number;
     points?: number;
-    dependences?: string[];
-    cases?: string[];
+    dependences?: string[] | string;
+    cases?: string[] | string;
+    rule?: string;
   }>;
   aliases?: Array<{
     from?: string;
@@ -61,14 +63,12 @@ export interface InitialConfigType {
   }>;
   check?: {
     target?: string;
-    input?: string;
-    output?: string;
   };
   run?: {
     readable?: string;
     writable?: string;
   };
   build?: {
-    input?: string[];
+    input?: string[] | string;
   };
 }

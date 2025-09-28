@@ -38,10 +38,10 @@ const VisualDataConfig = ({
 
   // 反向转换函数：将 configTranslate 的输出格式转换回表单数据格式
   const configReverse = (config: InitialConfigType): ConfigItem => {
-    const subtasks = config?.subtasks || [];
-    const aliases = config?.aliases || [];
-    const inputAlias = aliases.find((alias) => alias.to === 'in');
-    const outputAlias = aliases.find((alias) => alias.to === 'ans');
+    const subtasks = config?.subtasks instanceof Array ? config?.subtasks : [];
+    const aliases = config?.aliases instanceof Array ? config?.aliases : [];
+    const inputAlias = aliases?.[0];
+    const outputAlias = aliases?.[1];
 
     const formData: ConfigItem = {
       timeLimit: config?.timeLimit || 0,
@@ -50,19 +50,32 @@ const VisualDataConfig = ({
       checkTarget: config?.check?.target || '',
       inputFormat: inputAlias?.from || '',
       outputFormat: outputAlias?.from || '',
-      fileInputFormat: config?.check?.input || config?.run?.readable || '',
-      fileOutputFormat: config?.check?.output || config?.run?.writable || '',
-      buildInput: config?.build?.input ? config.build.input.join(',') : '',
+      fileInputFormat: config?.run?.readable || '',
+      fileOutputFormat: config?.run?.writable || '',
+      buildInput: config?.build?.input
+        ? config?.build?.input instanceof Array
+          ? config?.build?.input?.join(',')
+          : config?.build?.input
+        : '',
       judgeWay: isSubtask ? 'subtask' : 'single',
     };
 
     // 转换子任务数据
-    const transformedSubtasks: SubTaskItem[] = subtasks.map((task) => ({
+    const transformedSubtasks: SubTaskItem[] = subtasks?.map((task) => ({
       timeLimit: task?.timeLimit || config?.timeLimit || 0,
       memoryLimit: task?.memoryLimit || config?.memoryLimit || 0,
       points: task?.points || 0,
-      cases: task?.cases ? task.cases.join(',') : '',
-      dependences: task?.dependences ? task.dependences.join(',') : '',
+      cases: task?.cases
+        ? task.cases instanceof Array
+          ? task.cases.join(',')
+          : task.cases
+        : '',
+      dependences: task?.dependences
+        ? task.dependences instanceof Array
+          ? task.dependences.join(',')
+          : task.dependences
+        : '',
+      rule: task?.rule || '',
     }));
 
     if (isSubtask) {
@@ -100,6 +113,7 @@ const VisualDataConfig = ({
         points: item?.points || values?.points || undefined,
         dependences: item?.dependences?.split(','),
         cases: item?.cases?.split(','),
+        rule: item?.rule || '',
       })),
       aliases: [
         { from: values?.inputFormat, to: 'in' },

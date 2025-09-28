@@ -33,6 +33,9 @@ const initialConfig = {
     { from: 'data#.in', to: 'in' },
     { from: 'data#.out', to: 'ans' },
   ],
+  build: {
+    input: ['interactive.lib'],
+  },
 };
 jest.useFakeTimers();
 
@@ -319,6 +322,9 @@ describe('visual data config', () => {
           { from: 'data#.in', to: 'in' },
           { from: 'data#.out', to: 'ans' },
         ],
+        build: {
+          input: ['interactive.lib'],
+        },
       }),
     );
     //测试子任务的分数和总分数都没有的情况
@@ -345,6 +351,9 @@ describe('visual data config', () => {
           { from: 'data#.in', to: 'in' },
           { from: 'data#.out', to: 'ans' },
         ],
+        build: {
+          input: ['interactive.lib'],
+        },
       }),
     );
   });
@@ -391,8 +400,8 @@ describe('visual data config', () => {
               timeLimit: 1000,
               memoryLimit: 262144,
               points: 10,
-              cases: ['2'],
-              dependences: [],
+              cases: '2',
+              dependences: '1',
             },
           ],
           aliases: [
@@ -400,7 +409,7 @@ describe('visual data config', () => {
             { from: 'data#.out', to: 'ans' },
           ],
           build: {
-            input: ['interactive.lib'],
+            input: 'interactive.lib',
           },
         }}
       />,
@@ -425,6 +434,7 @@ describe('visual data config', () => {
             timeLimit: 1000,
             memoryLimit: 262144,
             points: 10,
+            dependences: ['1'],
             cases: ['2'],
           },
         ],

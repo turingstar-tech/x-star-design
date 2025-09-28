@@ -88,6 +88,7 @@ const SubTaskConfig = () => {
                           { label: 'sum', value: 'sum' },
                           { label: 'min', value: 'min' },
                         ]}
+                        allowClear
                       />
                     </Form.Item>
                   </Col>

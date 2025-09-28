@@ -1,5 +1,14 @@
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, InputNumber, Row, Space } from 'antd';
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Row,
+  Select,
+  Space,
+} from 'antd';
 import React, { useState } from 'react';
 import { useLocale } from '../locales';
 import { prefix } from '../utils/global';
@@ -65,6 +74,22 @@ const SubTaskConfig = () => {
                       name={[field.name, 'dependences']}
                     >
                       <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col>
+                    <Form.Item
+                      {...field}
+                      label={t('Subtask_Score_Rule')}
+                      name={[field.name, 'rule']}
+                    >
+                      <Select
+                        style={{ width: 120 }}
+                        options={[
+                          { label: 'sum', value: 'sum' },
+                          { label: 'min', value: 'min' },
+                        ]}
+                        allowClear
+                      />
                     </Form.Item>
                   </Col>
                   <MinusCircleOutlined

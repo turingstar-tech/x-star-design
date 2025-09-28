@@ -37,6 +37,7 @@ export default {
     Import_To: '导入至：',
     Full_Test_Point: '完整评测点',
     Precheck_Test_Point: '预检评测点',
+    Subtask_Score_Rule: '子任务算分规则',
   },
   TranslateButton: {
     CURRENT_LANG: '当前语言：',

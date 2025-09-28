@@ -40,6 +40,7 @@ export default {
     Import_To: 'Import To:',
     Full_Test_Point: 'Full Test Point',
     Precheck_Test_Point: 'Precheck Test Point',
+    Subtask_Score_Rule: 'Subtask Score Rule',
   },
   TranslateButton: {
     CURRENT_LANG: 'Current Language:',

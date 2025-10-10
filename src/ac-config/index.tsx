@@ -102,8 +102,7 @@ export const getConfigData = ({
       restriction: {
         type: rawData.restriction,
       },
-      revisalCount:
-        rawData.revisalCount !== undefined ? rawData.revisalCount : 5,
+      revisalCount: rawData.revisalCount,
       enableRevisal: rawData.enableRevisal,
     },
     rank: {

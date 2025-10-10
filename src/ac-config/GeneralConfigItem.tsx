@@ -383,8 +383,16 @@ const GeneralConfigItem = ({
         </Form.Item>
       )}
       {contestType === 'homework' && (
-        <Form.Item name={'revisalCount'} label={t('ReviseCount')}>
-          <InputNumber min={0} max={100} />
+        <Form.Item noStyle dependencies={['enableRevisal']}>
+          {({ getFieldValue }) => {
+            return (
+              getFieldValue('enableRevisal') && (
+                <Form.Item name={'revisalCount'} label={t('ReviseCount')}>
+                  <InputNumber min={0} max={100} />
+                </Form.Item>
+              )
+            );
+          }}
         </Form.Item>
       )}
     </>

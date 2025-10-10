@@ -13,7 +13,7 @@ export default () => {
     <>
       <AcConfig
         ref={ref}
-        contestType={'contest'}
+        contestType={'homework'}
         onFinish={(values) => {
           console.log(values);
         }}
@@ -59,6 +59,7 @@ export default () => {
               type: 'never',
             },
             revisalCount: 0,
+            enableRevisal: false,
           },
           rank: {
             rankListShowRealName: true,

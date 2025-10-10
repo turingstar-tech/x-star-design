@@ -996,7 +996,7 @@ describe('ac config', () => {
 
   test('AcConfig isRevise=true 时渲染修订相关内容', async () => {
     const ref = createRef<AcConfigHandle>();
-    const { getByText } = render(
+    const { getByText, getByTestId } = render(
       <AcConfig
         ref={ref}
         contestType={ContestExamType.Homework}
@@ -1036,7 +1036,11 @@ describe('ac config', () => {
         }
       />,
     );
+    const enableRevisalBtn = getByTestId('enableRevisal_Enable');
     // 假设修订模式下会出现“修订次数”字样
+    await act(async () => {
+      fireEvent.click(enableRevisalBtn);
+    });
     expect(getByText('Revise Count')).toBeInTheDocument();
     // 你也可以断言某些按钮是否可用/不可用
     // expect(getByTestId('revise-button')).not.toBeDisabled();

@@ -377,14 +377,24 @@ const GeneralConfigItem = ({
       {contestType === 'homework' && (
         <Form.Item name={'enableRevisal'} label={t('EnableRevisal')}>
           <Radio.Group disabled={enableRevisal}>
-            <Radio value>{t('Enable')}</Radio>
+            <Radio value data-testid="enableRevisal_Enable">
+              {t('Enable')}
+            </Radio>
             <Radio value={false}>{t('Disable')}</Radio>
           </Radio.Group>
         </Form.Item>
       )}
       {contestType === 'homework' && (
-        <Form.Item name={'revisalCount'} label={t('ReviseCount')}>
-          <InputNumber min={0} max={100} />
+        <Form.Item noStyle dependencies={['enableRevisal']}>
+          {({ getFieldValue }) => {
+            return (
+              getFieldValue('enableRevisal') && (
+                <Form.Item name={'revisalCount'} label={t('ReviseCount')}>
+                  <InputNumber min={0} max={100} />
+                </Form.Item>
+              )
+            );
+          }}
         </Form.Item>
       )}
     </>

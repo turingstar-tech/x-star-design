@@ -1093,4 +1093,88 @@ describe('ac config', () => {
     // 你也可以断言某些按钮是否可用/不可用
     // expect(getByTestId('revise-button')).not.toBeDisabled();
   });
+
+  test('TimingFormItem 组件类型切换时的值兼容性处理', async () => {
+    const ref = createRef<AcConfigHandle>();
+    const { getAllByTestId, getAllByText } = render(
+      <AcConfig
+        ref={ref}
+        contestType={ContestExamType.Homework}
+        isRevise={false}
+        initialValues={
+          {
+            program: {
+              lang: ['g++', 'gcc'],
+              showTopNSubmissionCount: 10,
+              showTopNSubmission: true,
+            },
+            general: {
+              disorder: {
+                part: false,
+                program: false,
+                objective: false,
+                combinationInternal: false,
+                singleOption: false,
+                multipleOption: false,
+              },
+            },
+            contest: {
+              startTime: 1721870123,
+              endTime: 1842649520,
+            },
+            type: 'contest',
+          } as any
+        }
+      />,
+    );
+
+    // 1. 先点击 "After_Contest_Start" 选项
+    await act(async () => {
+      fireEvent.click(getAllByText('Display after N mins of contest start')[0]);
+    });
+
+    // 2. 输入分钟数
+    await act(async () => {
+      fireEvent.change(getAllByTestId('hour-input')[1], {
+        target: { value: 1 },
+      });
+    });
+    await act(async () => {
+      fireEvent.change(getAllByTestId('minute-input')[1], {
+        target: { value: 30 },
+      });
+    });
+
+    // 验证值已经设置
+    expect(getAllByTestId('hour-input')[1]).toHaveValue('1');
+    expect(getAllByTestId('minute-input')[1]).toHaveValue('30');
+
+    // 3. 切换到 "TIMED_DISPLAY" 选项 - 这应该不会导致错误
+    await act(async () => {
+      fireEvent.click(getAllByText('Timed display')[0]);
+    });
+
+    // 验证没有抛出 "date.isValid is not a function" 错误
+    // 如果有错误，测试会失败
+
+    // 4. 再切换回 "After_Contest_Start"
+    await act(async () => {
+      fireEvent.click(getAllByText('Display after N mins of contest start')[0]);
+    });
+
+    // 验证可以重新输入值
+    await act(async () => {
+      fireEvent.change(getAllByTestId('hour-input')[1], {
+        target: { value: 2 },
+      });
+    });
+    await act(async () => {
+      fireEvent.change(getAllByTestId('minute-input')[1], {
+        target: { value: 15 },
+      });
+    });
+
+    expect(getAllByTestId('hour-input')[1]).toHaveValue('2');
+    expect(getAllByTestId('minute-input')[1]).toHaveValue('15');
+  });
 });

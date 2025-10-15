@@ -18,6 +18,7 @@ const TimingFormItem: React.FC<TimingFormItemIProps> = ({
   isRevise,
 }) => {
   const { locale, format: t } = useLocale('AcConfig');
+
   const lang = {
     zh_CN: 'zh',
     en_US: 'en',
@@ -47,6 +48,7 @@ const TimingFormItem: React.FC<TimingFormItemIProps> = ({
           getFieldValue(field) === 'scheduled' ||
           getFieldValue(field) === 'started';
         const isStarted = getFieldValue(field) === 'started';
+
         return (
           <>
             {isVisible && (
@@ -54,6 +56,33 @@ const TimingFormItem: React.FC<TimingFormItemIProps> = ({
                 name={name}
                 label={isStarted ? t('After_Contest_Start_N') : label}
                 rules={[{ required: true }]}
+                getValueFromEvent={(value) => {
+                  // 确保返回正确的值类型
+                  return value;
+                }}
+                getValueProps={(value) => {
+                  // 对于 DatePicker，如果值不是有效的日期对象，则返回 undefined
+                  if (!isStarted) {
+                    // DatePicker 模式：确保值是 dayjs 对象或 undefined
+                    if (
+                      value &&
+                      typeof value === 'object' &&
+                      ('limitHour' in value || 'limitMinute' in value)
+                    ) {
+                      return { value: undefined };
+                    }
+                  } else {
+                    // ContestTimeInput 模式：确保值是 ContestTimeInputValue 对象或 undefined
+                    if (
+                      value &&
+                      typeof value === 'object' &&
+                      !('limitHour' in value || 'limitMinute' in value)
+                    ) {
+                      return { value: undefined };
+                    }
+                  }
+                  return { value };
+                }}
               >
                 {!isRevise ? (
                   isStarted ? (

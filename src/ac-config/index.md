@@ -17,7 +17,6 @@ export default () => {
         onFinish={(values) => {
           console.log(values);
         }}
-        isRevise={true}
         initialValues={{
           type: 'homework',
           homework: {
@@ -69,8 +68,8 @@ export default () => {
             personalScoreVisibility: 'always',
             rankingMethod: 'score',
             highScoreProgramVisibility: 'never',
-            // downloadDataEnable: true,
-            // downloadDataCount: 10,
+            downloadDataEnable: true,
+            downloadDataCount: 2,
             scoreTypeInMatch: 'maxScore',
             lang: [
               'gcc',

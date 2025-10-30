@@ -158,7 +158,10 @@ export default {
     Sort_By_AC_Count: 'Sort by acCount',
     highScoreProgramVisibility: 'High Score Program Visibility',
     downloadDataEnable: 'Download error data (XJOI)',
-    NumberDownloadsAllowed: 'Number of downloads allowed',
+    NumberDownloadsAllowed:
+      'Allow N pairs of input and output samples per problem',
+    NumberDownloadsAllowed_Extra:
+      'Only for problems that allow downloading error data',
     General_Configuration: 'General Configuration',
     Programming_Problem_Configuration: 'Programming ProblemConfiguration',
     practice_end_restore_order:

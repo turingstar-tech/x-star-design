@@ -63,19 +63,19 @@ const TextValue = ({ value, name }: { value?: any; name: string }) => {
         afterExam: t('afterExam'),
       },
     },
-    // downloadDataEnable: {
-    //   method: () => void 0,
-    //   map: {
-    //     true: t('ALLOW'),
-    //     false: t('PROHIBIT'),
-    //   },
-    // },
-    // downloadDataCount: {
-    //   method: (value: number) => {
-    //     return value;
-    //   },
-    //   map: {},
-    // },
+    downloadDataEnable: {
+      method: () => void 0,
+      map: {
+        true: t('ALLOW'),
+        false: t('PROHIBIT'),
+      },
+    },
+    downloadDataCount: {
+      method: (value: number) => {
+        return value;
+      },
+      map: {},
+    },
     showTopNSubmission: {
       method: () => void 0,
       map: {

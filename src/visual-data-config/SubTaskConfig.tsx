@@ -34,6 +34,20 @@ const SubTaskConfig = () => {
                       {...field}
                       label={t('TIME')}
                       name={[field.name, 'timeLimit']}
+                      rules={[
+                        {
+                          validator: (_, value) => {
+                            if (value && value < 500) {
+                              return Promise.reject(
+                                new Error(
+                                  t('Time_Limit_Cannot_Be_Less_Than_500_MS'),
+                                ),
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
+                      ]}
                     >
                       <InputNumber />
                     </Form.Item>
@@ -43,6 +57,22 @@ const SubTaskConfig = () => {
                       {...field}
                       label={t('Space')}
                       name={[field.name, 'memoryLimit']}
+                      rules={[
+                        {
+                          validator: (_, value) => {
+                            if (value && value < 131072) {
+                              return Promise.reject(
+                                new Error(
+                                  t(
+                                    'Space_Limit_Cannot_Be_Less_Than_131072_KB',
+                                  ),
+                                ),
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
+                      ]}
                     >
                       <InputNumber />
                     </Form.Item>

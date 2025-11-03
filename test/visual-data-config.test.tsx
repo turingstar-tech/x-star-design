@@ -86,7 +86,7 @@ describe('visual data config', () => {
       target: { value: 1000 },
     });
     fireEvent.change(getByLabelText('Space'), {
-      target: { value: 1024 },
+      target: { value: 1024000 },
     });
     fireEvent.change(getByLabelText('Score'), {
       target: { value: 10 },
@@ -104,7 +104,7 @@ describe('visual data config', () => {
           subtasks: [
             {
               timeLimit: 1000,
-              memoryLimit: 1024,
+              memoryLimit: 1024000,
               points: 10,
               cases: ['1'],
             },
@@ -213,7 +213,7 @@ describe('visual data config', () => {
       target: { value: 1000 },
     });
     fireEvent.change(getByLabelText('Space'), {
-      target: { value: 1024 },
+      target: { value: 1024000 },
     });
     fireEvent.change(getByLabelText('Score'), {
       target: { value: 10 },
@@ -235,7 +235,7 @@ describe('visual data config', () => {
         subtasks: [
           {
             timeLimit: 1000,
-            memoryLimit: 1024,
+            memoryLimit: 1024000,
             points: 10,
             dependences: ['1'],
             cases: ['1-5'],
@@ -484,6 +484,49 @@ describe('visual data config', () => {
       fireEvent.click(getByText('Confirm and import'));
     });
 
+    expect(onConfirmMock).not.toHaveBeenCalled();
+  });
+  test('renders with time limit and memory limit', async () => {
+    const onConfirmMock = jest.fn();
+    const { getByText, getByLabelText } = render(
+      <VisualDataConfig
+        onConfirm={onConfirmMock}
+        initialConfig={initialConfig}
+      />,
+    );
+    fireEvent.change(getByLabelText('Time Limit(MS)'), {
+      target: { value: 499 },
+    });
+    fireEvent.change(getByLabelText('Memory Limit(KB)'), {
+      target: { value: 130999 },
+    });
+    fireEvent.change(getByLabelText('Time'), {
+      target: { value: 499 },
+    });
+    fireEvent.change(getByLabelText('Space'), {
+      target: { value: 130999 },
+    });
+    //验证结果
+    await act(async () => {
+      fireEvent.click(getByText('Confirm and import'));
+    });
+    expect(onConfirmMock).not.toHaveBeenCalled();
+
+    await act(async () => {
+      // 模拟更改表单项的值
+      fireEvent.click(getByText('SubTask'));
+    });
+    const addBtn = getByText('Add new subtask');
+    fireEvent.click(addBtn);
+    fireEvent.change(getByLabelText('Time'), {
+      target: { value: 499 },
+    });
+    fireEvent.change(getByLabelText('Space'), {
+      target: { value: 130999 },
+    });
+    await act(async () => {
+      fireEvent.click(getByText('Confirm and import'));
+    });
     expect(onConfirmMock).not.toHaveBeenCalled();
   });
 });

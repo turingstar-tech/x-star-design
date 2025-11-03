@@ -38,6 +38,8 @@ export default {
     Full_Test_Point: '完整评测点',
     Precheck_Test_Point: '预检评测点',
     Subtask_Score_Rule: '子任务算分规则',
+    Time_Limit_Cannot_Be_Less_Than_500_MS: '时间限制不能小于500毫秒',
+    Space_Limit_Cannot_Be_Less_Than_131072_KB: '空间限制不能小于131072字节',
   },
   TranslateButton: {
     CURRENT_LANG: '当前语言：',

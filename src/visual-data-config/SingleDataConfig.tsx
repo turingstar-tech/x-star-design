@@ -36,7 +36,6 @@ const SingleDataConfig = () => {
                     label={t('TIME')}
                     name={[field.name, 'timeLimit']}
                     rules={[
-                      { required: true },
                       {
                         validator: (_, value) => {
                           if (value && value < 500) {

@@ -16,7 +16,6 @@ export default () => {
           setConfig(value);
           console.log(value);
         }}
-        isSubtask
         initialConfig={{
           timeLimit: 1000,
           memoryLimit: 261244,

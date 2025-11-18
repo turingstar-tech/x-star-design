@@ -140,7 +140,7 @@ const ProgramConfigItem = ({
         </Form.Item>
       </div>
 
-      {/* <Form.Item label={t('downloadDataEnable')} name={'downloadDataEnable'}>
+      <Form.Item label={t('downloadDataEnable')} name={'downloadDataEnable'}>
         {!isRevise ? (
           <Radio.Group>
             <Radio value data-testid="downloadDataEnable-true">
@@ -153,9 +153,9 @@ const ProgramConfigItem = ({
         ) : (
           <TextValue name="downloadDataEnable" />
         )}
-      </Form.Item> */}
+      </Form.Item>
 
-      {/* <Form.Item
+      <Form.Item
         noStyle
         shouldUpdate={(perValues, nextValues) => {
           return (
@@ -168,11 +168,12 @@ const ProgramConfigItem = ({
             <Form.Item
               label={t('NumberDownloadsAllowed')}
               name={'downloadDataCount'}
+              extra={t('NumberDownloadsAllowed_Extra')}
             >
               {!isRevise ? (
                 <InputNumber<number>
-                  min={0}
-                  max={100}
+                  min={1}
+                  max={2}
                   data-testid="downloadDataCount-input"
                   disabled={!getFieldValue('downloadDataEnable')}
                 />
@@ -182,7 +183,7 @@ const ProgramConfigItem = ({
             </Form.Item>
           );
         }}
-      </Form.Item> */}
+      </Form.Item>
       <div style={{ display: type === 'advanced' ? 'block' : 'none' }}>
         <Form.Item
           label={t('Show_Top_N_Submissions')}

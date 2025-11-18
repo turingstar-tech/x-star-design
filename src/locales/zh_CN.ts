@@ -151,7 +151,8 @@ export default {
     Sort_By_AC_Count: '按照AC数排序',
     highScoreProgramVisibility: '高分代码可见度',
     downloadDataEnable: '下载错误数据(XJOI)',
-    NumberDownloadsAllowed: '允许下载次数',
+    NumberDownloadsAllowed: '每题允许下载N对输入输出样例',
+    NumberDownloadsAllowed_Extra: '仅对允许下载错误样例的题目生效',
     General_Configuration: '通用配置',
     Programming_Problem_Configuration: '编程题配置',
     practice_end_restore_order: '练习结束后自动恢复顺序',
@@ -240,7 +241,7 @@ export default {
     No_Submission_Result_In_Contest: '比赛中不显示提交结果',
     Submit_By_Last_Submission: '提交按最后一次提交时间计分',
     XCAMP_HOMEWORK: 'X-Camp作业模式',
-    Download_Count_15: '下载错误数据(XJOI)15次',
+    Download_Count_15: '下载错误数据(XJOI)2对',
     Rank_List_Not_Show_Real_Name: '排行榜不显示真实姓名',
   },
 } as const;

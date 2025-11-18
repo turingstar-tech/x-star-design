@@ -97,7 +97,7 @@ const ConfigTemplate = ({ onSelect }: ConfigTemplateProps) => {
         { text: t('No_Homework_Time_Limit'), icon: '►' },
         { text: t('Submit_By_Highest_Score'), icon: '►' },
         { text: t('Rank_List_Not_Show_Real_Name'), icon: '►' },
-        // { text: t('Download_Count_15'), icon: '►' },
+        { text: t('Download_Count_15'), icon: '►' },
       ],
     },
   };

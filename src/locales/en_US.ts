@@ -162,7 +162,10 @@ export default {
     Sort_By_AC_Count: 'Sort by acCount',
     highScoreProgramVisibility: 'High Score Program Visibility',
     downloadDataEnable: 'Download error data (XJOI)',
-    NumberDownloadsAllowed: 'Number of downloads allowed',
+    NumberDownloadsAllowed:
+      'Allow N pairs of input and output samples per problem',
+    NumberDownloadsAllowed_Extra:
+      'Only for problems that allow downloading error data',
     General_Configuration: 'General Configuration',
     Programming_Problem_Configuration: 'Programming ProblemConfiguration',
     practice_end_restore_order:
@@ -256,7 +259,7 @@ export default {
     No_Submission_Result_In_Contest: 'No submission result in contest',
     Submit_By_Last_Submission: 'Submit by last submission',
     XCAMP_HOMEWORK: 'X-Camp Homework Mode',
-    Download_Count_15: 'Download error data (XJOI) 15 times',
+    Download_Count_15: 'Download error data (XJOI) 2 pairs',
     Rank_List_Not_Show_Real_Name: 'Ranklist not show real name',
   },
 } as const;

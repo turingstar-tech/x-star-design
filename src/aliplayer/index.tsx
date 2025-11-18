@@ -165,7 +165,7 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
       let el: HTMLElement | null = document.querySelector(
         `#${id} .prism-big-play-btn`,
       );
-      if (el) {
+      if (el && config?.autoplay === false) {
         // 初始化：确保显示（针对加密视频初始化隐藏问题）
         (el as HTMLElement).style.display = 'block';
       }

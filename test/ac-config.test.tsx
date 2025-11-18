@@ -891,7 +891,7 @@ describe('ac config', () => {
         },
       },
       program: {
-        downloadDataCount: undefined,
+        downloadDataCount: 0,
         downloadDataEnable: undefined,
         highScoreProgramVisibility: undefined,
         lang: ['g++', 'gcc'],
@@ -977,7 +977,7 @@ describe('ac config', () => {
         },
       },
       program: {
-        downloadDataCount: undefined,
+        downloadDataCount: 0,
         downloadDataEnable: undefined,
         highScoreProgramVisibility: undefined,
         lang: ['g++', 'gcc'],

@@ -259,7 +259,7 @@ export default {
     No_Submission_Result_In_Contest: 'No submission result in contest',
     Submit_By_Last_Submission: 'Submit by last submission',
     XCAMP_HOMEWORK: 'X-Camp Homework Mode',
-    Download_Count_15: 'Download error data (XJOI) 15 times',
+    Download_Count_15: 'Download error data (XJOI) 2 pairs',
     Rank_List_Not_Show_Real_Name: 'Ranklist not show real name',
   },
 } as const;

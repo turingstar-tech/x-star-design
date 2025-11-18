@@ -67,6 +67,15 @@ class MockAliplayer implements AliplayerInstance {
     }
     this.handlers[event].push(handler);
   }
+
+  off(event: string, handler: () => void) {
+    if (this.handlers[event]) {
+      const index = this.handlers[event].indexOf(handler);
+      if (index > -1) {
+        this.handlers[event].splice(index, 1);
+      }
+    }
+  }
 }
 
 describe('aliplayer', () => {

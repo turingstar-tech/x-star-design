@@ -114,7 +114,9 @@ export const getConfigData = ({
       rankingMethod: rawData.rankingMethod,
       highScoreProgramVisibility: rawData.highScoreProgramVisibility,
       downloadDataEnable: rawData.downloadDataEnable,
-      downloadDataCount: rawData.downloadDataCount,
+      downloadDataCount: rawData.downloadDataEnable
+        ? rawData.downloadDataCount
+        : 0,
       scoreTypeInMatch: rawData.scoreTypeInMatch,
       lang: rawData.lang,
       showTopNSubmission: rawData.showTopNSubmission,

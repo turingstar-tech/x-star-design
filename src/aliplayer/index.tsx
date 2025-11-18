@@ -28,6 +28,7 @@ export interface AliplayerInstance {
   getStatus: () => string;
   dispose: () => void;
   on: (event: string, handler: () => void) => void;
+  off: (event: string, handler: () => void) => void;
 }
 
 /**
@@ -173,6 +174,19 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
           onCreate,
         ) as AliplayerInstance;
         aliplayerManager.add(player.current);
+
+        // 获取按钮元素（建议在 ready 后操作）
+        const handleShowPlayBtn = () => {
+          let el: HTMLElement | null = document.querySelector(
+            `#${id} .prism-big-play-btn`,
+          );
+          if (el) {
+            // 初始化：确保显示（针对加密视频初始化隐藏问题）
+            (el as HTMLElement).style.display = 'block';
+          }
+        };
+
+        player.current?.on('ready', handleShowPlayBtn);
       } else if (retry > 0) {
         // 轮询获取 Aliplayer 类
         timer = window.setTimeout(() => tryCreate(retry - 1), 100);
@@ -184,6 +198,7 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
       window.clearTimeout(timer);
       if (player.current) {
         aliplayerManager.remove(player.current);
+        player.current?.off('ready', handleShowPlayBtn);
         player.current = undefined;
       }
     };

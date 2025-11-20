@@ -164,6 +164,10 @@ const ProgramConfigItem = ({
         }}
       >
         {({ getFieldValue }) => {
+          const downloadDataEnable = getFieldValue('downloadDataEnable');
+          if (!downloadDataEnable) {
+            return null;
+          }
           return (
             <Form.Item
               label={t('NumberDownloadsAllowed')}
@@ -175,7 +179,7 @@ const ProgramConfigItem = ({
                   min={1}
                   max={2}
                   data-testid="downloadDataCount-input"
-                  disabled={!getFieldValue('downloadDataEnable')}
+                  disabled={!downloadDataEnable}
                 />
               ) : (
                 <TextValue name="downloadDataCount" />

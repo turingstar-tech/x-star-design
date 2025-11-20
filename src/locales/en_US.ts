@@ -161,7 +161,7 @@ export default {
     Sort_By_Score: 'Sort by score',
     Sort_By_AC_Count: 'Sort by acCount',
     highScoreProgramVisibility: 'High Score Program Visibility',
-    downloadDataEnable: 'Download error data (XJOI)',
+    downloadDataEnable: 'Download error data',
     NumberDownloadsAllowed:
       'Allow N pairs of input and output samples per problem',
     NumberDownloadsAllowed_Extra:

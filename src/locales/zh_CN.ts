@@ -150,7 +150,7 @@ export default {
     Sort_By_Score: '按照分数排序',
     Sort_By_AC_Count: '按照AC数排序',
     highScoreProgramVisibility: '高分代码可见度',
-    downloadDataEnable: '下载错误数据(XJOI)',
+    downloadDataEnable: '下载错误样例',
     NumberDownloadsAllowed: '每题允许下载N对输入输出样例',
     NumberDownloadsAllowed_Extra: '仅对允许下载错误样例的题目生效',
     General_Configuration: '通用配置',

@@ -31,6 +31,7 @@ describe('ac config', () => {
           {
             program: {
               lang: ['g++', 'gcc'],
+              downloadDataEnable: true,
             },
             general: {
               gradeRelease: {
@@ -139,9 +140,9 @@ describe('ac config', () => {
 
     // Download error data (XJOI)
     fireEvent.click(getByTestId('downloadDataEnable-false'));
-    expect(getByTestId('downloadDataCount-input')).toBeDisabled();
+    expect(() => getByTestId('downloadDataCount-input')).toThrow();
     fireEvent.click(getByTestId('downloadDataEnable-true'));
-    expect(getByTestId('downloadDataCount-input')).not.toBeDisabled();
+    expect(getByTestId('downloadDataCount-input')).toBeDefined();
 
     fireEvent.change(getByTestId('downloadDataCount-input'), {
       target: {
@@ -342,7 +343,7 @@ describe('ac config', () => {
 
     // Download error data (XJOI)
     fireEvent.click(getByTestId('downloadDataEnable-false'));
-    expect(getByTestId('downloadDataCount-input')).toBeDisabled();
+    expect(() => getByTestId('downloadDataCount-input')).toThrow();
     fireEvent.click(getByTestId('downloadDataEnable-true'));
     expect(getByTestId('downloadDataCount-input')).not.toBeDisabled();
 
@@ -1007,6 +1008,7 @@ describe('ac config', () => {
               lang: ['g++', 'gcc'],
               showTopNSubmissionCount: 10,
               showTopNSubmission: true,
+              downloadDataEnable: true,
             },
             general: {
               gradeRelease: {

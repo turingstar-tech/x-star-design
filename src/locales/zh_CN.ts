@@ -178,6 +178,7 @@ export default {
       '赛中使用预检评测点，赛后自动切换完整评测点重新评测并覆盖最后一次提交',
     ReviseCount: '订正次数',
     EnableRevisal: '开启订正',
+    'Data.Countdown_Tip': '请输入1或2',
   },
   ScoreReport: {
     In_Game_Total_Score: '赛中总分',

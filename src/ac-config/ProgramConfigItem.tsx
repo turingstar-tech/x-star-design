@@ -173,6 +173,16 @@ const ProgramConfigItem = ({
               label={t('NumberDownloadsAllowed')}
               name={'downloadDataCount'}
               extra={t('NumberDownloadsAllowed_Extra')}
+              rules={[
+                {
+                  validator: (rule, value, callback) => {
+                    if (value < 1 || value > 2) {
+                      callback(t('Data.Countdown_Tip'));
+                    }
+                    callback();
+                  },
+                },
+              ]}
             >
               {!isRevise ? (
                 <InputNumber<number>

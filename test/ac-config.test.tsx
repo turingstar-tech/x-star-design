@@ -1179,4 +1179,57 @@ describe('ac config', () => {
     expect(getAllByTestId('hour-input')[1]).toHaveValue('2');
     expect(getAllByTestId('minute-input')[1]).toHaveValue('15');
   });
+
+  test('downloadDataCount validation', async () => {
+    const ref = createRef<AcConfigHandle>();
+    const onFinish = jest.fn();
+    render(
+      <AcConfig
+        ref={ref}
+        contestType={ContestExamType.Exam}
+        onFinish={onFinish}
+        initialValues={
+          {
+            program: {
+              lang: ['g++', 'gcc'],
+              downloadDataEnable: true,
+              downloadDataCount: 0,
+            },
+            general: {
+              gradeRelease: {
+                type: 'scheduled',
+                scheduled: {
+                  releaseTime: 1721899977,
+                },
+              },
+              paperRelease: {
+                type: 'scheduled',
+                scheduled: {
+                  releaseTime: 1721899977,
+                },
+              },
+              disorder: {
+                part: false,
+                program: false,
+                objective: false,
+                combinationInternal: false,
+                singleOption: false,
+                multipleOption: false,
+              },
+            },
+            contest: {
+              startTime: 1721870123,
+              endTime: 1842649520,
+            },
+            type: 'contest',
+          } as any
+        }
+      />,
+    );
+
+    await act(async () => {
+      ref.current?.form.submit();
+    });
+    expect(onFinish).toHaveBeenCalledTimes(0);
+  });
 });

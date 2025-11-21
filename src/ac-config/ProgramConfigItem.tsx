@@ -178,6 +178,7 @@ const ProgramConfigItem = ({
                 <InputNumber<number>
                   min={1}
                   max={2}
+                  precision={0}
                   data-testid="downloadDataCount-input"
                   disabled={!downloadDataEnable}
                 />

@@ -56,6 +56,9 @@ export interface CodeMirrorWrapperProps {
     documentUri?: string;
     token?: string;
   };
+  editorConfig?: {
+    lineWrapping?: boolean;
+  };
 }
 
 const CodeMirrorWrapper = ({
@@ -63,6 +66,7 @@ const CodeMirrorWrapper = ({
   value,
   theme = Theme.LIGHT,
   onChange,
+  editorConfig,
   lang = LangId.CPP,
   readOnly = false,
   tabSize = 2,
@@ -210,11 +214,19 @@ const CodeMirrorWrapper = ({
     }
   }, [lang]);
 
+  const propsExtensions = useMemo(() => {
+    const extensions: Extension[] = [];
+    if (editorConfig?.lineWrapping) {
+      extensions.push(EditorView.lineWrapping);
+    }
+    return extensions;
+  }, [editorConfig]);
+
   return (
     <CodeMirror
       className={classNames(className, `${prefix}-codeMirror`)}
       value={value}
-      extensions={[hideTooltip, ...langConfigMap]}
+      extensions={[hideTooltip, ...langConfigMap, ...propsExtensions]}
       onChange={onChange}
       theme={themeMap[theme]}
       readOnly={readOnly}

@@ -152,4 +152,52 @@ describe('code mirror wrapper', () => {
     expect(editor).toBeInTheDocument();
     unmountFinal();
   });
+
+  test('editorConfig lineWrapping test', () => {
+    // 测试不传 editorConfig 的情况（默认行为）
+    const { rerender } = render(<CodeMirrorWrapper value="test code" />);
+    let editor = screen.getByRole('textbox');
+    expect(editor).toBeInTheDocument();
+
+    // 测试传入 editorConfig 但 lineWrapping 为 false
+    rerender(
+      <CodeMirrorWrapper
+        value="test code"
+        editorConfig={{ lineWrapping: false }}
+      />,
+    );
+    editor = screen.getByRole('textbox');
+    expect(editor).toBeInTheDocument();
+
+    // 测试传入 editorConfig 且 lineWrapping 为 true
+    rerender(
+      <CodeMirrorWrapper
+        value="This is a very long line that should wrap when lineWrapping is enabled"
+        editorConfig={{ lineWrapping: true }}
+      />,
+    );
+    editor = screen.getByRole('textbox');
+    expect(editor).toBeInTheDocument();
+
+    // 验证内容是否正确渲染
+    expect(editor.textContent).toContain(
+      'This is a very long line that should wrap when lineWrapping is enabled',
+    );
+
+    // 测试从 lineWrapping: true 切换回 lineWrapping: false
+    rerender(
+      <CodeMirrorWrapper
+        value="test code after toggle"
+        editorConfig={{ lineWrapping: false }}
+      />,
+    );
+    editor = screen.getByRole('textbox');
+    expect(editor).toBeInTheDocument();
+    expect(editor.textContent).toContain('test code after toggle');
+
+    // 测试传入空的 editorConfig 对象
+    rerender(<CodeMirrorWrapper value="test" editorConfig={{}} />);
+    editor = screen.getByRole('textbox');
+    expect(editor).toBeInTheDocument();
+  });
 });

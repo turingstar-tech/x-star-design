@@ -249,6 +249,7 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
       limitMinute: 0,
     },
     dualEvaluation: false,
-    enableRevisal: false,
+    revisalCount: 5,
+    enableRevisal: true,
   },
 };

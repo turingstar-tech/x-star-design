@@ -223,7 +223,7 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
     rankingMethod: 'score',
     highScoreProgramVisibility: 'never',
     downloadDataEnable: true,
-    downloadDataCount: 2,
+    downloadDataCount: 5,
     scoreTypeInMatch: 'maxScore',
     lang: [
       'gcc',

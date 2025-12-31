@@ -4,6 +4,7 @@ import React, { createRef } from 'react';
 import type { AcConfigHandle } from '../src/ac-config';
 import AcConfig, { getConfigData } from '../src/ac-config';
 import { ContestExamType } from '../src/ac-config/define';
+import { TenantProvider } from '../src/tenant-provider';
 
 window.matchMedia = jest.fn().mockImplementation((query) => {
   return {
@@ -66,7 +67,9 @@ describe('ac config', () => {
     );
 
     // Score Release
-    fireEvent.click(getByText('Release after the exam'));
+    await act(async () => {
+      fireEvent.click(getByText('Release after the exam'));
+    });
     await act(async () => {
       fireEvent.click(getByTestId('gradeRelease-scheduled'));
     });
@@ -77,7 +80,9 @@ describe('ac config', () => {
     //   { value: 1721870628 },
     // );
     // Ranklist Visible
-    fireEvent.click(getByTestId('rankListRelease-afterGradeRelease'));
+    await act(async () => {
+      fireEvent.click(getByTestId('rankListRelease-afterGradeRelease'));
+    });
     //After-contest paper visibility
     await act(async () => {
       fireEvent.click(getByTestId('paperRelease-scheduled'));
@@ -91,11 +96,17 @@ describe('ac config', () => {
     //   { value: 1721870628 },
     // );
     // Answer/Solution Display
-    fireEvent.click(getByTestId('answerRelease-afterExam'));
+    await act(async () => {
+      fireEvent.click(getByTestId('answerRelease-afterExam'));
+    });
     // Student Ranklist displays real names
-    fireEvent.click(getByTestId('rankListShowRealName-allow'));
+    await act(async () => {
+      fireEvent.click(getByTestId('rankListShowRealName-allow'));
+    });
     // Student Ranklist displays user labels
-    fireEvent.click(getByTestId('rankShowUserLabel-prohibit'));
+    await act(async () => {
+      fireEvent.click(getByTestId('rankShowUserLabel-prohibit'));
+    });
     // Hand in the paper in advance
     await act(async () => {
       fireEvent.click(getByTestId('submission-timedSubmission'));
@@ -115,39 +126,61 @@ describe('ac config', () => {
     // fireEvent.change(getByTestId('disorder'), {
     //   value: ['part', 'program', 'objective', 'combinationInternal', 'singleOption', 'multipleOption']
     // })
-    fireEvent.click(getByText('Part Order'));
-    fireEvent.click(getByText('Programming Question Order'));
+    await act(async () => {
+      fireEvent.click(getByText('Part Order'));
+    });
+    await act(async () => {
+      fireEvent.click(getByText('Programming Question Order'));
+    });
 
     // Programing Language
     // fireEvent.click(getByTestId('lang-select'))
 
     // Personal Score Visibility
-    fireEvent.click(getByTestId('personalScoreVisibility-always'));
+    await act(async () => {
+      fireEvent.click(getByTestId('personalScoreVisibility-always'));
+    });
 
     // TIPS Display
-    fireEvent.click(getByTestId('tipRelease-afterExam'));
+    await act(async () => {
+      fireEvent.click(getByTestId('tipRelease-afterExam'));
+    });
 
     // Problem Submission Result
-    fireEvent.click(getByTestId('scoreTypeInMatch-latestSubmit'));
+    await act(async () => {
+      fireEvent.click(getByTestId('scoreTypeInMatch-latestSubmit'));
+    });
 
     // Ranking Rules
-    fireEvent.click(getByTestId('rankingMethod-score'));
+    await act(async () => {
+      fireEvent.click(getByTestId('rankingMethod-score'));
+    });
 
     // High Score Program Visibility
-    fireEvent.click(getByTestId('highScoreProgramVisibility-always'));
+    await act(async () => {
+      fireEvent.click(getByTestId('highScoreProgramVisibility-always'));
+    });
     // Dual Track Judgement
-    fireEvent.click(getByTestId('dualEvaluation-true'));
+    await act(async () => {
+      fireEvent.click(getByTestId('dualEvaluation-true'));
+    });
 
     // Download error data (XJOI)
-    fireEvent.click(getByTestId('downloadDataEnable-false'));
+    await act(async () => {
+      fireEvent.click(getByTestId('downloadDataEnable-false'));
+    });
     expect(() => getByTestId('downloadDataCount-input')).toThrow();
-    fireEvent.click(getByTestId('downloadDataEnable-true'));
+    await act(async () => {
+      fireEvent.click(getByTestId('downloadDataEnable-true'));
+    });
     expect(getByTestId('downloadDataCount-input')).toBeDefined();
 
-    fireEvent.change(getByTestId('downloadDataCount-input'), {
-      target: {
-        value: 1,
-      },
+    await act(async () => {
+      fireEvent.change(getByTestId('downloadDataCount-input'), {
+        target: {
+          value: 1,
+        },
+      });
     });
     await act(async () => {
       fireEvent.click(getByTestId('showTopNSubmission-true'));
@@ -155,10 +188,12 @@ describe('ac config', () => {
     await waitFor(() => {
       expect(getByLabelText('Top N')).toBeInTheDocument();
     });
-    fireEvent.change(getByTestId('showTopNSubmission-input'), {
-      target: {
-        value: 10,
-      },
+    await act(async () => {
+      fireEvent.change(getByTestId('showTopNSubmission-input'), {
+        target: {
+          value: 10,
+        },
+      });
     });
     expect(
       JSON.stringify(
@@ -280,7 +315,9 @@ describe('ac config', () => {
     );
 
     // Score Release
-    fireEvent.click(getByText('Release after the exam'));
+    await act(async () => {
+      fireEvent.click(getByText('Release after the exam'));
+    });
     await act(async () => {
       fireEvent.click(getByTestId('gradeRelease-scheduled'));
     });
@@ -289,7 +326,9 @@ describe('ac config', () => {
     });
 
     // Ranklist Visible
-    fireEvent.click(getByTestId('rankListRelease-afterGradeRelease'));
+    await act(async () => {
+      fireEvent.click(getByTestId('rankListRelease-afterGradeRelease'));
+    });
     //After-contest paper visibility
     await act(async () => {
       fireEvent.click(getByTestId('paperRelease-scheduled'));
@@ -301,11 +340,17 @@ describe('ac config', () => {
     });
 
     // Answer/Solution Display
-    fireEvent.click(getByTestId('answerRelease-afterExam'));
+    await act(async () => {
+      fireEvent.click(getByTestId('answerRelease-afterExam'));
+    });
     // Student Ranklist displays real names
-    fireEvent.click(getByTestId('rankListShowRealName-allow'));
+    await act(async () => {
+      fireEvent.click(getByTestId('rankListShowRealName-allow'));
+    });
     // Student Ranklist displays user labels
-    fireEvent.click(getByTestId('rankShowUserLabel-prohibit'));
+    await act(async () => {
+      fireEvent.click(getByTestId('rankShowUserLabel-prohibit'));
+    });
 
     // Hand in the paper in advance
     // await act(async () => {
@@ -320,40 +365,62 @@ describe('ac config', () => {
     // });
 
     // disorder
-    fireEvent.click(getByText('Part Order'));
-    fireEvent.click(getByText('Programming Question Order'));
+    await act(async () => {
+      fireEvent.click(getByText('Part Order'));
+    });
+    await act(async () => {
+      fireEvent.click(getByText('Programming Question Order'));
+    });
 
     // Programing Language
     // fireEvent.click(getByTestId('lang-select'))
 
     // Personal Score Visibility
-    fireEvent.click(getByTestId('personalScoreVisibility-always'));
+    await act(async () => {
+      fireEvent.click(getByTestId('personalScoreVisibility-always'));
+    });
 
     // TIPS Display
-    fireEvent.click(getByTestId('tipRelease-afterExam'));
+    await act(async () => {
+      fireEvent.click(getByTestId('tipRelease-afterExam'));
+    });
 
     // Problem Submission Result
-    fireEvent.click(getByTestId('scoreTypeInMatch-latestSubmit'));
+    await act(async () => {
+      fireEvent.click(getByTestId('scoreTypeInMatch-latestSubmit'));
+    });
 
     // Ranking Rules
-    fireEvent.click(getByTestId('rankingMethod-score'));
+    await act(async () => {
+      fireEvent.click(getByTestId('rankingMethod-score'));
+    });
 
     // High Score Program Visibility
-    fireEvent.click(getByTestId('highScoreProgramVisibility-always'));
+    await act(async () => {
+      fireEvent.click(getByTestId('highScoreProgramVisibility-always'));
+    });
 
     // Download error data (XJOI)
-    fireEvent.click(getByTestId('downloadDataEnable-false'));
+    await act(async () => {
+      fireEvent.click(getByTestId('downloadDataEnable-false'));
+    });
     expect(() => getByTestId('downloadDataCount-input')).toThrow();
-    fireEvent.click(getByTestId('downloadDataEnable-true'));
+    await act(async () => {
+      fireEvent.click(getByTestId('downloadDataEnable-true'));
+    });
     expect(getByTestId('downloadDataCount-input')).not.toBeDisabled();
 
     // restriction
-    fireEvent.click(getByText('No Restrictions'));
+    await act(async () => {
+      fireEvent.click(getByText('No Restrictions'));
+    });
 
-    fireEvent.change(getByTestId('downloadDataCount-input'), {
-      target: {
-        value: 1,
-      },
+    await act(async () => {
+      fireEvent.change(getByTestId('downloadDataCount-input'), {
+        target: {
+          value: 1,
+        },
+      });
     });
     expect(
       JSON.stringify(
@@ -821,17 +888,25 @@ describe('ac config', () => {
     expect(getAllByTestId('hour-input')[2]).toHaveValue('0');
     expect(getAllByTestId('minute-input')[2]).toHaveValue('0');
 
-    fireEvent.change(getAllByTestId('hour-input')[1], {
-      target: { value: 2 },
+    await act(async () => {
+      fireEvent.change(getAllByTestId('hour-input')[1], {
+        target: { value: 2 },
+      });
     });
-    fireEvent.change(getAllByTestId('minute-input')[1], {
-      target: { value: 5 },
+    await act(async () => {
+      fireEvent.change(getAllByTestId('minute-input')[1], {
+        target: { value: 5 },
+      });
     });
-    fireEvent.change(getAllByTestId('hour-input')[2], {
-      target: { value: 2 },
+    await act(async () => {
+      fireEvent.change(getAllByTestId('hour-input')[2], {
+        target: { value: 2 },
+      });
     });
-    fireEvent.change(getAllByTestId('minute-input')[2], {
-      target: { value: 20 },
+    await act(async () => {
+      fireEvent.change(getAllByTestId('minute-input')[2], {
+        target: { value: 20 },
+      });
     });
 
     await act(async () => {
@@ -908,17 +983,25 @@ describe('ac config', () => {
       },
     });
 
-    fireEvent.change(getAllByTestId('hour-input')[1], {
-      target: { value: 0 },
+    await act(async () => {
+      fireEvent.change(getAllByTestId('hour-input')[1], {
+        target: { value: 0 },
+      });
     });
-    fireEvent.change(getAllByTestId('minute-input')[1], {
-      target: { value: 0 },
+    await act(async () => {
+      fireEvent.change(getAllByTestId('minute-input')[1], {
+        target: { value: 0 },
+      });
     });
-    fireEvent.change(getAllByTestId('hour-input')[2], {
-      target: { value: 0 },
+    await act(async () => {
+      fireEvent.change(getAllByTestId('hour-input')[2], {
+        target: { value: 0 },
+      });
     });
-    fireEvent.change(getAllByTestId('minute-input')[2], {
-      target: { value: 0 },
+    await act(async () => {
+      fireEvent.change(getAllByTestId('minute-input')[2], {
+        target: { value: 0 },
+      });
     });
     await act(async () => {
       ref.current?.form.submit();
@@ -1231,5 +1314,71 @@ describe('ac config', () => {
       ref.current?.form.submit();
     });
     expect(onFinish).toHaveBeenCalledTimes(0);
+  });
+
+  test('downloadDataCount validation for xcamp tenant', async () => {
+    // 在渲染组件之前先设置xcamp租户环境
+    const locationSpy = jest
+      .spyOn(window, 'location', 'get')
+      .mockReturnValue({ hostname: 'learn.x-camp.org' } as Location);
+
+    const ref = createRef<AcConfigHandle>();
+    const onFinish = jest.fn();
+    render(
+      <TenantProvider
+        tenants={{ xyd: { name: 'xyd' }, xcamp: { name: 'xcamp' } }}
+      >
+        <AcConfig
+          ref={ref}
+          contestType={ContestExamType.Exam}
+          onFinish={onFinish}
+          initialValues={
+            {
+              program: {
+                lang: ['g++', 'gcc'],
+                downloadDataEnable: true,
+                downloadDataCount: 6,
+              },
+              general: {
+                gradeRelease: {
+                  type: 'scheduled',
+                  scheduled: {
+                    releaseTime: 1721899977,
+                  },
+                },
+                paperRelease: {
+                  type: 'scheduled',
+                  scheduled: {
+                    releaseTime: 1721899977,
+                  },
+                },
+                disorder: {
+                  part: false,
+                  program: false,
+                  objective: false,
+                  combinationInternal: false,
+                  singleOption: false,
+                  multipleOption: false,
+                },
+              },
+              contest: {
+                startTime: 1721870123,
+                endTime: 1842649520,
+              },
+              type: 'contest',
+            } as any
+          }
+        />
+      </TenantProvider>,
+    );
+
+    await act(async () => {
+      ref.current?.form.submit();
+    });
+
+    expect(onFinish).toHaveBeenCalledTimes(0);
+
+    // 清理mock
+    locationSpy.mockRestore();
   });
 });

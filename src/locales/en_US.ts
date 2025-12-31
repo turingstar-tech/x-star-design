@@ -194,7 +194,8 @@ export default {
       'During the contest, use the pre-inspection test point, and then switch to the complete test point after the contest to re-judge and overwrite the last submission',
     ReviseCount: 'Revise Count',
     EnableRevisal: 'Enable Revisal',
-    'Data.Countdown_Tip': 'Please enter 1 or 2',
+    'Data.Countdown_Tip_Xyd': 'Please enter 1-2',
+    'Data.Countdown_Tip_XCamp': 'Please enter 1-5',
   },
   ScoreReport: {
     In_Game_Total_Score: 'Timed Score',

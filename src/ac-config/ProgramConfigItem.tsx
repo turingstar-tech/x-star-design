@@ -2,6 +2,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import { Flex, Form, InputNumber, Radio, Select, Tooltip } from 'antd';
 import React from 'react';
 import { useLocale } from '../locales';
+import { useTenant } from '../tenant-provider';
 import TextValue from './TextValue';
 import TimingFormItem from './TimingFormItem';
 import { langVL } from './define';
@@ -20,7 +21,7 @@ const ProgramConfigItem = ({
   isRevise,
 }: ProgramConfigItemProps) => {
   const { format: t } = useLocale('AcConfig');
-
+  const { tenant } = useTenant();
   return (
     <>
       <div style={{ display: type === 'advanced' ? 'block' : 'none' }}>
@@ -175,11 +176,20 @@ const ProgramConfigItem = ({
               extra={t('NumberDownloadsAllowed_Extra')}
               rules={[
                 {
-                  validator: (rule, value, callback) => {
-                    if (value < 1 || value > 2) {
-                      callback(t('Data.Countdown_Tip'));
+                  validator: (rule, value) => {
+                    if (tenant.name === 'xyd' && (value < 1 || value > 2)) {
+                      return Promise.reject(
+                        new Error(t('Data.Countdown_Tip_Xyd')),
+                      );
+                    } else if (
+                      tenant.name === 'xcamp' &&
+                      (value < 1 || value > 5)
+                    ) {
+                      return Promise.reject(
+                        new Error(t('Data.Countdown_Tip_XCamp')),
+                      );
                     }
-                    callback();
+                    return Promise.resolve();
                   },
                 },
               ]}
@@ -187,7 +197,7 @@ const ProgramConfigItem = ({
               {!isRevise ? (
                 <InputNumber<number>
                   min={1}
-                  max={2}
+                  max={tenant.name === 'xyd' ? 2 : 5}
                   precision={0}
                   data-testid="downloadDataCount-input"
                   disabled={!downloadDataEnable}

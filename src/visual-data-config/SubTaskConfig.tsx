@@ -60,12 +60,10 @@ const SubTaskConfig = () => {
                       rules={[
                         {
                           validator: (_, value) => {
-                            if (value && value < 131072) {
+                            if (value && value < 10240) {
                               return Promise.reject(
                                 new Error(
-                                  t(
-                                    'Space_Limit_Cannot_Be_Less_Than_131072_KB',
-                                  ),
+                                  t('Space_Limit_Cannot_Be_Less_Than_10240_KB'),
                                 ),
                               );
                             }

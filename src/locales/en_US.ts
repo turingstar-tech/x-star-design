@@ -43,8 +43,8 @@ export default {
     Subtask_Score_Rule: 'Subtask Score Rule',
     Time_Limit_Cannot_Be_Less_Than_500_MS:
       'Time limit cannot be less than 500ms',
-    Space_Limit_Cannot_Be_Less_Than_131072_KB:
-      'Space limit cannot be less than 131072KB',
+    Space_Limit_Cannot_Be_Less_Than_10240_KB:
+      'Space limit cannot be less than 10240KB',
   },
   TranslateButton: {
     CURRENT_LANG: 'Current Language:',

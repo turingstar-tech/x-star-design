@@ -9,10 +9,11 @@ jest.mock('qiankun', () => ({
   loadMicroApp: (
     app: any,
     configuration: any,
-    { beforeLoad, beforeMount }: any,
+    { beforeLoad, beforeMount, afterMount }: any,
   ) => {
     setTimeout(beforeLoad, 1000);
     setTimeout(beforeMount, 3000);
+    setTimeout(afterMount, 5000);
     return { unmount: () => {} };
   },
 

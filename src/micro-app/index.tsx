@@ -13,6 +13,7 @@ export interface MicroAppProps {
   microProps?: Record<string, unknown>;
   fallback?: React.ReactNode;
   suspense?: React.ReactNode;
+  afterMount?: () => void;
 }
 
 const MicroApp = ({
@@ -24,6 +25,7 @@ const MicroApp = ({
   microProps,
   fallback,
   suspense,
+  afterMount,
 }: MicroAppProps) => {
   const microAppId = useMemo(() => `microapp-${randomString(8)}`, []);
   const [loading, setLoading] = useState(false);
@@ -42,6 +44,7 @@ const MicroApp = ({
       {
         beforeLoad: async () => setLoading(true),
         beforeMount: async () => setLoading(false),
+        afterMount: async () => afterMount?.(),
       },
     );
     return () => {

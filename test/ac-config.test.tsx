@@ -3,7 +3,7 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import React, { createRef } from 'react';
 import type { AcConfigHandle } from '../src/ac-config';
 import AcConfig, { getConfigData } from '../src/ac-config';
-import { ContestExamType } from '../src/ac-config/define';
+import { ContestExamType, langVL } from '../src/ac-config/define';
 import { TenantProvider } from '../src/tenant-provider';
 
 window.matchMedia = jest.fn().mockImplementation((query) => {
@@ -1380,5 +1380,125 @@ describe('ac config', () => {
 
     // 清理mock
     locationSpy.mockRestore();
+  });
+
+  test('tenant xyd 时语言选项应包含 Pascal 和 Python2.7', async () => {
+    jest.useRealTimers();
+    const locationSpy = jest
+      .spyOn(window, 'location', 'get')
+      .mockReturnValue({ hostname: 'localhost' } as Location);
+
+    const { getByTestId } = render(
+      <TenantProvider
+        tenants={{ xyd: { name: 'xyd' }, xcamp: { name: 'xcamp' } }}
+      >
+        <AcConfig
+          contestType={ContestExamType.Exam}
+          initialValues={
+            {
+              program: { lang: ['g++', 'gcc'] },
+              general: {
+                gradeRelease: {
+                  type: 'scheduled',
+                  scheduled: { releaseTime: 1721899977 },
+                },
+                paperRelease: {
+                  type: 'scheduled',
+                  scheduled: { releaseTime: 1721899977 },
+                },
+                disorder: {
+                  part: false,
+                  program: false,
+                  objective: false,
+                  combinationInternal: false,
+                  singleOption: false,
+                  multipleOption: false,
+                },
+              },
+              contest: {
+                startTime: 1721870123,
+                endTime: 1842649520,
+              },
+              type: 'contest',
+            } as any
+          }
+        />
+      </TenantProvider>,
+    );
+
+    // xyd 租户下 ProgramConfigItem 会传入全部 lang 选项（含 fpc、python2.7），见 ProgramConfigItem options filter
+    expect(getByTestId('lang-select')).toBeInTheDocument();
+
+    // 断言与 ProgramConfigItem 一致的 options 过滤逻辑：xyd 显示全部 9 种语言
+    const optionsForXyd = Array.from(langVL, ([value, label]) => ({
+      label,
+      value,
+    }));
+    expect(optionsForXyd).toHaveLength(9);
+    expect(optionsForXyd.map((o) => o.value)).toContain('fpc');
+    expect(optionsForXyd.map((o) => o.value)).toContain('python2.7');
+
+    locationSpy.mockRestore();
+    jest.useFakeTimers();
+  });
+
+  test('tenant xcamp 时语言选项不应包含 Pascal 和 Python2.7', async () => {
+    jest.useRealTimers();
+    const locationSpy = jest
+      .spyOn(window, 'location', 'get')
+      .mockReturnValue({ hostname: 'learn.x-camp.org' } as Location);
+
+    const { getByTestId } = render(
+      <TenantProvider
+        tenants={{ xyd: { name: 'xyd' }, xcamp: { name: 'xcamp' } }}
+      >
+        <AcConfig
+          contestType={ContestExamType.Exam}
+          initialValues={
+            {
+              program: { lang: ['g++', 'gcc'] },
+              general: {
+                gradeRelease: {
+                  type: 'scheduled',
+                  scheduled: { releaseTime: 1721899977 },
+                },
+                paperRelease: {
+                  type: 'scheduled',
+                  scheduled: { releaseTime: 1721899977 },
+                },
+                disorder: {
+                  part: false,
+                  program: false,
+                  objective: false,
+                  combinationInternal: false,
+                  singleOption: false,
+                  multipleOption: false,
+                },
+              },
+              contest: {
+                startTime: 1721870123,
+                endTime: 1842649520,
+              },
+              type: 'contest',
+            } as any
+          }
+        />
+      </TenantProvider>,
+    );
+
+    // xcamp 租户下 ProgramConfigItem 会过滤掉 fpc、python2.7，见 ProgramConfigItem options filter
+    expect(getByTestId('lang-select')).toBeInTheDocument();
+
+    // 断言与 ProgramConfigItem 一致的 options 过滤逻辑：非 xyd 仅显示 7 种语言（无 fpc、python2.7）
+    const optionsForNonXyd = Array.from(langVL, ([value, label]) => ({
+      label,
+      value,
+    })).filter((item) => item.value !== 'fpc' && item.value !== 'python2.7');
+    expect(optionsForNonXyd).toHaveLength(7);
+    expect(optionsForNonXyd.map((o) => o.value)).not.toContain('fpc');
+    expect(optionsForNonXyd.map((o) => o.value)).not.toContain('python2.7');
+
+    locationSpy.mockRestore();
+    jest.useFakeTimers();
   });
 });

@@ -40,7 +40,11 @@ const ProgramConfigItem = ({
               options={Array.from(langVL, ([value, label]) => ({
                 label,
                 value,
-              }))}
+              })).filter((item) =>
+                tenant.name === 'xyd'
+                  ? item
+                  : item.value !== 'fpc' && item.value !== 'python2.7',
+              )}
             />
           ) : (
             <TextValue name="lang" />

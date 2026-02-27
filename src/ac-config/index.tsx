@@ -144,6 +144,8 @@ export const getConfigData = ({
           : (rawData?.limitTime?.limitHour * 3600 || 0) +
             (rawData?.limitTime?.limitMinute * 60 || 0),
       noLimit: rawData.contestTime === 'noLimit',
+      enableAutoSubmit: rawData.enableAutoSubmit,
+      autoSubmitTime: rawData?.autoSubmitTime?.second(0).unix().valueOf(),
     };
   }
   return updateConfig;
@@ -184,10 +186,13 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         revisalCount,
         enableRevisal,
       } = config?.general || {};
-      const { noLimit, limitTime } = config?.homework || {
-        limitTime: 0,
-        noLimit: false,
-      };
+      const { noLimit, limitTime, enableAutoSubmit, autoSubmitTime } =
+        config?.homework || {
+          limitTime: 0,
+          noLimit: false,
+          enableAutoSubmit: false,
+          autoSubmitTime: 0,
+        };
       const {
         personalScoreVisibility,
         rankingMethod,
@@ -277,6 +282,8 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         dualEvaluation,
         revisalCount,
         enableRevisal,
+        enableAutoSubmit,
+        autoSubmitTime: autoSubmitTime ? dayjs.unix(autoSubmitTime) : undefined,
       };
     };
 

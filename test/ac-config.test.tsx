@@ -111,7 +111,7 @@ describe('ac config', () => {
     await act(async () => {
       fireEvent.click(getByTestId('submission-timedSubmission'));
     });
-    expect(getByText('After contest start')).toBeInTheDocument();
+    expect(getByText('Allow advance submission time')).toBeInTheDocument();
     await act(async () => {
       fireEvent.change(getAllByTestId('hour-input')[1], {
         target: { value: 1 },
@@ -122,6 +122,7 @@ describe('ac config', () => {
         target: { value: 20 },
       });
     });
+
     // disorder
     // fireEvent.change(getByTestId('disorder'), {
     //   value: ['part', 'program', 'objective', 'combinationInternal', 'singleOption', 'multipleOption']
@@ -307,6 +308,8 @@ describe('ac config', () => {
             homework: {
               limitTime: undefined,
               noLimit: true,
+              enableAutoSubmit: true,
+              autoSubmitTime: 1772157878,
             },
             type: 'homework',
           } as any
@@ -490,6 +493,8 @@ describe('ac config', () => {
         homework: {
           limitTime: undefined,
           noLimit: true,
+          enableAutoSubmit: true,
+          autoSubmitTime: 1772157840,
         },
       }),
     );

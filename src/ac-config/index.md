@@ -22,6 +22,8 @@ export default () => {
           homework: {
             limitTime: 3153600000,
             noLimit: true,
+            enableAutoSubmit: true,
+            autoSubmitTime: 1772157878,
           },
           general: {
             gradeRelease: {

@@ -136,10 +136,10 @@ export default {
     RankShowUserLabel: 'Student Ranklist displays user labels',
     HAND_IN_THE_PAPER_IN_ADVANCE: 'Hand in the paper in advance',
     ALLOW_SETTIMEOUT_SUBMI: 'Timed advance submission',
-    AFTER_CONTEST_START: 'After contest start',
+    AFTER_CONTEST_START: 'Allow advance submission time',
     TimedSubmissionError:
       'The scheduled time cannot exceed the homework/exam duration',
-    ALLOW_SUBMIT: 'allow submission',
+    ALLOW_SUBMIT: 'Allow submission',
     PartOrder: 'Part Order',
     RandomOrder: 'Random Order',
     ProgrammingOrder: 'Programming Question Order',
@@ -196,6 +196,10 @@ export default {
     EnableRevisal: 'Enable Revisal',
     'Data.Countdown_Tip_Xyd': 'Please enter 1-2',
     'Data.Countdown_Tip_XCamp': 'Please enter 1-5',
+    After_Contest_Start_Prefix: 'After contest start',
+    AutoSubmit_Enable: 'Automatic Submission',
+    AutoSubmit_Time: 'Auto Submission Time',
+    AutoSubmit_Force_All_Desc: 'Force submission for all students',
   },
   ScoreReport: {
     In_Game_Total_Score: 'Timed Score',

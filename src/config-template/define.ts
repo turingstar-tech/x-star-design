@@ -49,6 +49,8 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
       limitMinute: 0,
     },
     dualEvaluation: false,
+    enableAutoSubmit: false,
+    autoSubmitTime: undefined,
   },
   XCPC: {
     gradeTime: dayjs(),
@@ -90,6 +92,8 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
       limitMinute: 0,
     },
     dualEvaluation: false,
+    enableAutoSubmit: false,
+    autoSubmitTime: undefined,
   },
   IOI: {
     gradeTime: dayjs().add(1, 'day'),
@@ -131,6 +135,8 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
       limitMinute: 0,
     },
     dualEvaluation: false,
+    enableAutoSubmit: false,
+    autoSubmitTime: undefined,
   },
   HOMEWORK1: {
     contestTime: 'noLimit',
@@ -167,6 +173,8 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
       limitMinute: 0,
     },
     dualEvaluation: false,
+    enableAutoSubmit: false,
+    autoSubmitTime: undefined,
   },
   HOMEWORK2: {
     contestTime: 'limitTime',
@@ -203,6 +211,8 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
       limitMinute: 0,
     },
     dualEvaluation: false,
+    enableAutoSubmit: false,
+    autoSubmitTime: undefined,
   },
   XCAMP_HOMEWORK: {
     contestTime: 'noLimit',
@@ -251,5 +261,7 @@ export const CONTEST_TEMPLATES: Record<ContestType, Partial<RawConfig>> = {
     dualEvaluation: false,
     revisalCount: 5,
     enableRevisal: true,
+    enableAutoSubmit: false,
+    autoSubmitTime: undefined,
   },
 };

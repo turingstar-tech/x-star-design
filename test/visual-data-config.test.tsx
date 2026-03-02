@@ -498,13 +498,13 @@ describe('visual data config', () => {
       target: { value: 499 },
     });
     fireEvent.change(getByLabelText('Memory Limit(KB)'), {
-      target: { value: 130999 },
+      target: { value: 10000 },
     });
     fireEvent.change(getByLabelText('Time'), {
       target: { value: 499 },
     });
     fireEvent.change(getByLabelText('Space'), {
-      target: { value: 130999 },
+      target: { value: 10000 },
     });
     //验证结果
     await act(async () => {
@@ -522,7 +522,7 @@ describe('visual data config', () => {
       target: { value: 499 },
     });
     fireEvent.change(getByLabelText('Space'), {
-      target: { value: 130999 },
+      target: { value: 10000 },
     });
     await act(async () => {
       fireEvent.click(getByText('Confirm and import'));

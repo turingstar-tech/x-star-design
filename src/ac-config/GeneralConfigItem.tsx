@@ -13,6 +13,7 @@ import {
   Tooltip,
   message,
 } from 'antd';
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import ContestDurationInput, { isValidDate } from '../contest-duration-input';
 import ContestTimeInput from '../contest-time-input';
@@ -348,14 +349,25 @@ const GeneralConfigItem = ({
                 getFieldValue('enableAutoSubmit') && (
                   <Form.Item label={t('AutoSubmit_Time')}>
                     <Space wrap>
-                      <Form.Item name={'autoSubmitTime'} noStyle>
+                      <Form.Item
+                        name={'autoSubmitTime'}
+                        noStyle
+                        rules={[{ required: true }]}
+                      >
                         <DatePicker
                           showTime={{
                             use12Hours: lang === 'en',
                             format: showTimeFormat,
                           }}
-                          data-testid="autoSubmitTime"
                           format={dateFormat}
+                          disabledDate={(current) => {
+                            const now = dayjs();
+                            const threeMonthsLater = now.add(3, 'month');
+                            return (
+                              current.isBefore(now, 'day') ||
+                              current.isAfter(threeMonthsLater, 'day')
+                            );
+                          }}
                         />
                       </Form.Item>
                       <span>{t('AutoSubmit_Force_All_Desc')}</span>

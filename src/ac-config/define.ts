@@ -71,6 +71,8 @@ export interface Configuration {
   homework?: {
     noLimit?: boolean;
     limitTime?: number;
+    enableAutoSubmit?: boolean;
+    autoSubmitTime?: number;
   };
   contest?: {
     startTime?: number;
@@ -96,6 +98,8 @@ export interface RawConfig {
   disorder: Array<keyof DisorderConfigStatus>;
   revisalCount: number;
   enableRevisal: boolean;
+  enableAutoSubmit: boolean;
+  autoSubmitTime: Dayjs;
   /**
    * 个人分数可见性
    */

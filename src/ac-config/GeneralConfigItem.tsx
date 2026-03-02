@@ -13,6 +13,7 @@ import {
   Tooltip,
   message,
 } from 'antd';
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import ContestDurationInput, { isValidDate } from '../contest-duration-input';
 import ContestTimeInput from '../contest-time-input';
@@ -39,7 +40,7 @@ const GeneralConfigItem = ({
   enableRevisal,
 }: GeneralConfigItemProps) => {
   const FOREVER = 876000; // 100 年 = 876000 小时
-  const { format: t } = useLocale('AcConfig');
+  const { format: t, locale } = useLocale('AcConfig');
   const {
     theme: { primaryColor },
   } = useTenant();
@@ -48,6 +49,18 @@ const GeneralConfigItem = ({
   const [contestTimeMode, setContestTimeMode] = useState<ContestTimeMode>(
     ContestTimeMode.New,
   );
+  const lang = {
+    zh_CN: 'zh',
+    en_US: 'en',
+  }[locale];
+  const showTimeFormat = {
+    zh_CN: 'HH:mm',
+    en_US: 'h:mm A',
+  }[locale];
+  const dateFormat = {
+    zh_CN: 'YYYY-MM-DD HH:mm',
+    en_US: 'YYYY-MM-DD h:mm A',
+  }[locale];
   return (
     <>
       <Form.Item
@@ -313,10 +326,61 @@ const GeneralConfigItem = ({
               }),
             ]}
           >
-            <ContestTimeInput suffix={t('ALLOW_SUBMIT')} />
+            <ContestTimeInput
+              suffix={t('ALLOW_SUBMIT')}
+              prefix={t('After_Contest_Start_Prefix')}
+            />
           </Form.Item>
         </Form.Item>
       )}
+      {contestType === 'homework' && (
+        <>
+          <Form.Item name={'enableAutoSubmit'} label={t('AutoSubmit_Enable')}>
+            <Radio.Group>
+              <Radio value={false}>{t('Disable')}</Radio>
+              <Radio value data-testid="enableAutoSubmit-enable">
+                {t('Enable')}
+              </Radio>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item noStyle dependencies={['enableAutoSubmit']}>
+            {({ getFieldValue }) => {
+              return (
+                getFieldValue('enableAutoSubmit') && (
+                  <Form.Item label={t('AutoSubmit_Time')}>
+                    <Space wrap>
+                      <Form.Item
+                        name={'autoSubmitTime'}
+                        noStyle
+                        rules={[{ required: true }]}
+                      >
+                        <DatePicker
+                          showTime={{
+                            use12Hours: lang === 'en',
+                            format: showTimeFormat,
+                          }}
+                          data-testid="autoSubmitTime-input"
+                          format={dateFormat}
+                          disabledDate={(current) => {
+                            const now = dayjs();
+                            const threeMonthsLater = now.add(3, 'month');
+                            return (
+                              current.isBefore(now, 'day') ||
+                              current.isAfter(threeMonthsLater, 'day')
+                            );
+                          }}
+                        />
+                      </Form.Item>
+                      <span>{t('AutoSubmit_Force_All_Desc')}</span>
+                    </Space>
+                  </Form.Item>
+                )
+              );
+            }}
+          </Form.Item>
+        </>
+      )}
+
       <Form.Item name={'disorder'} label={t('RandomOrder')}>
         <Checkbox.Group>
           <Row gutter={[8, 2]}>

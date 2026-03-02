@@ -1,5 +1,6 @@
 import { describe, expect, jest, test } from '@jest/globals';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import dayjs from 'dayjs';
 import React, { createRef } from 'react';
 import type { AcConfigHandle } from '../src/ac-config';
 import AcConfig, { getConfigData } from '../src/ac-config';
@@ -316,7 +317,6 @@ describe('ac config', () => {
         }
       />,
     );
-
     // Score Release
     await act(async () => {
       fireEvent.click(getByText('Release after the exam'));
@@ -425,6 +425,49 @@ describe('ac config', () => {
         },
       });
     });
+
+    // Test autoSubmitTime DatePicker disabledDate function
+    const datePickerInput = getByTestId('autoSubmitTime-input');
+    expect(datePickerInput).toBeInTheDocument();
+
+    // 打开日期选择器
+    await act(async () => {
+      fireEvent.click(datePickerInput);
+    });
+
+    // 等待日期选择面板出现
+    await waitFor(() => {
+      expect(
+        document.querySelector('.x-star-design-picker-dropdown'),
+      ).toBeInTheDocument();
+    });
+
+    // 测试 disabledDate 逻辑 - 覆盖 isBefore 分支
+    const now = dayjs();
+    const yesterday = now.subtract(1, 'day');
+
+    // 过去的日期应该被禁用 (测试 isBefore 分支)
+    const yesterdayDateStr = yesterday.format('YYYY-MM-DD');
+    const yesterdayCell = document.querySelector(
+      `.x-star-design-picker-cell[title="${yesterdayDateStr}"]`,
+    );
+    // 断言过去日期被禁用
+    expect(yesterdayCell).toBeTruthy();
+    expect(
+      yesterdayCell?.classList.contains('x-star-design-picker-cell-disabled'),
+    ).toBe(true);
+
+    // 今天不应该被禁用
+    const todayDateStr = now.format('YYYY-MM-DD');
+    const todayCell = document.querySelector(
+      `.x-star-design-picker-cell[title="${todayDateStr}"]`,
+    );
+    // 断言今天不被禁用
+    expect(todayCell).toBeTruthy();
+    expect(
+      todayCell?.classList.contains('x-star-design-picker-cell-disabled'),
+    ).toBe(false);
+
     expect(
       JSON.stringify(
         getConfigData({

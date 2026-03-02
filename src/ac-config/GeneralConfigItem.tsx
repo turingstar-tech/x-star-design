@@ -359,6 +359,7 @@ const GeneralConfigItem = ({
                             use12Hours: lang === 'en',
                             format: showTimeFormat,
                           }}
+                          data-testid="autoSubmitTime-input"
                           format={dateFormat}
                           disabledDate={(current) => {
                             const now = dayjs();

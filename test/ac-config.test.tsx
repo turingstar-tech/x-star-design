@@ -162,10 +162,10 @@ describe('ac config', () => {
     await act(async () => {
       fireEvent.click(getByTestId('highScoreProgramVisibility-always'));
     });
-    // Dual Track Judgement
-    await act(async () => {
-      fireEvent.click(getByTestId('dualEvaluation-true'));
-    });
+    // // Dual Track Judgement
+    // await act(async () => {
+    //   fireEvent.click(getByTestId('dualEvaluation-true'));
+    // });
 
     // Download error data (XJOI)
     await act(async () => {
@@ -263,7 +263,7 @@ describe('ac config', () => {
           lang: ['g++', 'gcc'],
           showTopNSubmission: true,
           showTopNSubmissionCount: 10,
-          dualEvaluation: true,
+          //dualEvaluation: true,
         },
         contest: {
           startTime: 1721870100,

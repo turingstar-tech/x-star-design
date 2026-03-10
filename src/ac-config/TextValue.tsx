@@ -89,13 +89,13 @@ const TextValue = ({ value, name }: { value?: any; name: string }) => {
       },
       map: {},
     },
-    dualEvaluation: {
-      method: () => void 0,
-      map: {
-        true: t('Enable'),
-        false: t('Disable'),
-      },
-    },
+    // dualEvaluation: {
+    //   method: () => void 0,
+    //   map: {
+    //     true: t('Enable'),
+    //     false: t('Disable'),
+    //   },
+    // },
   };
   const currentItem = methodMap[name as keyof typeof methodMap];
 

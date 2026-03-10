@@ -121,7 +121,7 @@ export const getConfigData = ({
       lang: rawData.lang,
       showTopNSubmission: rawData.showTopNSubmission,
       showTopNSubmissionCount: rawData.showTopNSubmissionCount,
-      dualEvaluation: rawData.dualEvaluation,
+      // dualEvaluation: rawData.dualEvaluation,
     },
   };
   if (contestType === ContestExamType.Exam) {
@@ -203,7 +203,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         lang,
         showTopNSubmission,
         showTopNSubmissionCount,
-        dualEvaluation,
+        // dualEvaluation,
       } = config?.program || {};
       const { rankListShowRealName, rankShowUserLabel } = config?.rank || {};
 
@@ -279,7 +279,7 @@ const AcConfig = forwardRef<AcConfigHandle, AcConfigProps>(
         restriction: restriction?.type,
         showTopNSubmission,
         showTopNSubmissionCount,
-        dualEvaluation,
+        // dualEvaluation,
         revisalCount,
         enableRevisal,
         enableAutoSubmit,

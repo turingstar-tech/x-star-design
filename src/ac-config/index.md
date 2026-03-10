@@ -86,7 +86,6 @@ export default () => {
             ],
             showTopNSubmission: false,
             showTopNSubmissionCount: 0,
-            dualEvaluation: false,
           },
         }}
       />

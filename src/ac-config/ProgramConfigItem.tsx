@@ -1,5 +1,4 @@
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { Flex, Form, InputNumber, Radio, Select, Tooltip } from 'antd';
+import { Form, InputNumber, Radio, Select } from 'antd';
 import React from 'react';
 import { useLocale } from '../locales';
 import { useTenant } from '../tenant-provider';
@@ -263,7 +262,7 @@ const ProgramConfigItem = ({
             );
           }}
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label={
             <Flex align="center" gap={2}>
               <div>{t('Dual_Track_Judgement')}</div>
@@ -287,7 +286,7 @@ const ProgramConfigItem = ({
           ) : (
             <TextValue name="dualEvaluation" />
           )}
-        </Form.Item>
+        </Form.Item> */}
       </div>
     </>
   );

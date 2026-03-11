@@ -37,6 +37,12 @@ export interface AliplayerInstance {
 export class AliplayerManager {
   private players: AliplayerInstance[] = [];
   private activePlayer: AliplayerInstance | undefined;
+  /**
+   * 只有触发过 ready 事件的播放器才可以安全地调用 pause()。
+   * 在 ready 之前调用 pause() 会导致 x-star-design 内部抛出
+   * "please invoke this method after ready event"。
+   */
+  private readyPlayers = new Set<AliplayerInstance>();
 
   constructor() {
     window.addEventListener('keydown', (e) => {
@@ -105,6 +111,8 @@ export class AliplayerManager {
         this.setActivePlayer(player);
       }
       player.on('play', () => this.setActivePlayer(player));
+      // 记录 ready 状态，只有 ready 后才可以安全调用 pause()
+      player.on('ready', () => this.readyPlayers.add(player));
     }
   }
 
@@ -112,6 +120,7 @@ export class AliplayerManager {
     const index = this.players.indexOf(player);
     if (index !== -1) {
       this.players.splice(index, 1);
+      this.readyPlayers.delete(player);
       if (this.activePlayer === player) {
         this.setActivePlayer(this.players[0]);
       }
@@ -121,7 +130,11 @@ export class AliplayerManager {
 
   private setActivePlayer(player?: AliplayerInstance) {
     if (this.activePlayer !== player) {
-      this.activePlayer?.pause();
+      // 只有已就绪的播放器才能安全调用 pause()，避免触发
+      // "please invoke this method after ready event" 错误
+      if (this.activePlayer && this.readyPlayers.has(this.activePlayer)) {
+        this.activePlayer.pause();
+      }
       this.activePlayer = player;
     }
   }
@@ -162,20 +175,18 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
 
     // 获取按钮元素（建议在 ready 后操作）
     const handleShowPlayBtn = () => {
-      let el: HTMLElement | null = document.querySelector(
+      const el: HTMLElement | null = document.querySelector(
         `#${id} .prism-big-play-btn`,
       );
       if (el && config?.autoplay === false) {
-        // 初始化：确保显示（针对加密视频初始化隐藏问题）
-        (el as HTMLElement).style.display = 'block';
+        el.style.display = 'block';
       }
     };
 
     const tryCreate = (retry: number) => {
-      const { Aliplayer } = window as any;
-      if (Aliplayer) {
-        // 创建 Aliplayer 实例
-        player.current = new Aliplayer(
+      const { Aliplayer: AliplayerSDK } = window as any;
+      if (AliplayerSDK) {
+        player.current = new AliplayerSDK(
           {
             preventRecord: true,
             encryptType: 1,
@@ -186,7 +197,6 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
           onCreate,
         ) as AliplayerInstance;
         aliplayerManager.add(player.current);
-
         player.current?.on('ready', handleShowPlayBtn);
       } else if (retry > 0) {
         // 轮询获取 Aliplayer 类

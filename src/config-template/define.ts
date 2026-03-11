@@ -4,14 +4,14 @@ import { TenantName } from '../tenant-provider';
 /**
  * 计算自动提交时间
  * @param courseEndTime 开课结束时间
- * @returns 开课结束时间 + 14天，取当天0点
+ * @returns 开课结束时间 + 14天，取当天最后一刻（23:59:59.999）
  * @example
  * const endTime = dayjs('2026-03-10 18:00:00');
  * const autoSubmitTime = calculateAutoSubmitTime(endTime);
- * // 返回: dayjs('2026-03-24 00:00:00')
+ * // 返回: dayjs('2026-03-24 23:59:59.999')
  */
 export const calculateAutoSubmitTime = (courseEndTime: Dayjs): Dayjs => {
-  return courseEndTime.add(14, 'day').startOf('day');
+  return courseEndTime.add(14, 'day').endOf('day').millisecond(0);
 };
 // 基础竞赛类型（公用模板）
 export type BaseContestType = 'OI' | 'XCPC' | 'IOI';

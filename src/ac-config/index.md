@@ -22,7 +22,7 @@ export default () => {
           homework: {
             limitTime: 3153600000,
             noLimit: true,
-            enableAutoSubmit: true,
+            enableAutoSubmit: false,
             autoSubmitTime: 1772157878,
           },
           general: {

@@ -371,7 +371,8 @@ describe('aliplayer', () => {
     fireEvent.keyDown(document, { key: ' ' });
     expect(player?.getStatus()).toBe('pause');
 
-    // 恢复原始的 activeElement
+    // 删除实例级别的 mock，使原型上的 getter 重新生效
+    delete (document as any).activeElement;
     if (originalActiveElement) {
       Object.defineProperty(
         Document.prototype,
@@ -400,11 +401,15 @@ describe('aliplayer', () => {
     aliplayerManager.add(player2);
     expect(aliplayerManager.getPlayers()).toHaveLength(2);
 
+    // player1 未触发 ready，player2 播放时 player1 不会被 pause
     player2.play();
-    expect(player1.getStatus()).toBe('pause');
+    expect(player1.getStatus()).toBe('loading');
     expect(player2.getStatus()).toBe('playing');
 
-    // 只能有一个播放器在播放
+    // 触发 player2 的 ready 事件，使其进入 readyPlayers
+    (player2 as any).handlers['ready']?.forEach((h: () => void) => h());
+
+    // player2 已 ready，player1 播放时 player2 会被 pause
     player1.play();
     expect(player1.getStatus()).toBe('playing');
     expect(player2.getStatus()).toBe('pause');
@@ -419,6 +424,134 @@ describe('aliplayer', () => {
 
     aliplayerManager.remove(player2);
     expect(aliplayerManager.getPlayers()).toHaveLength(1);
+  });
+
+  test('does not pause player that has not fired ready event when switching active player', () => {
+    const config = {
+      vid: '8ee5dc4052ae71eea5625017f1f80102',
+      playauth: 'eyJTZWN1cml0eVRva2VuIjoiQ0FJU2',
+    };
+    const player1 = new MockAliplayer(config);
+    const player2 = new MockAliplayer(config);
+    const manager = new AliplayerManager();
+
+    manager.add(player1);
+    manager.add(player2);
+
+    // player1 未触发 ready，切换时不应被 pause
+    player2.play();
+    expect(player1.getStatus()).toBe('loading');
+    expect(player2.getStatus()).toBe('playing');
+  });
+
+  test('pauses ready player when switching active player', () => {
+    const config = {
+      vid: '8ee5dc4052ae71eea5625017f1f80102',
+      playauth: 'eyJTZWN1cml0eVRva2VuIjoiQ0FJU2',
+    };
+    const player1 = new MockAliplayer(config);
+    const player2 = new MockAliplayer(config);
+    const manager = new AliplayerManager();
+
+    manager.add(player1);
+    manager.add(player2);
+
+    // 触发 player1 的 ready 事件
+    (player1 as any).handlers['ready']?.forEach((h: () => void) => h());
+
+    // player1 已 ready，player2 播放时 player1 应被 pause
+    player2.play();
+    expect(player1.getStatus()).toBe('pause');
+    expect(player2.getStatus()).toBe('playing');
+  });
+
+  test('clears player from readyPlayers when removed from manager', () => {
+    const config = {
+      vid: '8ee5dc4052ae71eea5625017f1f80102',
+      playauth: 'eyJTZWN1cml0eVRva2VuIjoiQ0FJU2',
+    };
+    const player1 = new MockAliplayer(config);
+    const player2 = new MockAliplayer(config);
+    const player3 = new MockAliplayer(config);
+    const manager = new AliplayerManager();
+
+    manager.add(player1);
+    manager.add(player2);
+
+    // 触发 player1 的 ready 事件
+    (player1 as any).handlers['ready']?.forEach((h: () => void) => h());
+
+    // player2 播放，player1 被 pause
+    player2.play();
+    expect(player1.getStatus()).toBe('pause');
+
+    // 移除 player2，player1 成为活跃播放器
+    manager.remove(player2);
+
+    // 重新添加 player2，触发其 ready 事件
+    manager.add(player2);
+    (player2 as any).handlers['ready']?.forEach((h: () => void) => h());
+
+    // 添加 player3 并触发其 ready
+    manager.add(player3);
+
+    // player2 重新播放，player1 已 ready，应被 pause
+    player1.play(); // player1 先成为活跃
+    player2.play(); // player2 播放，player1 应被 pause
+    expect(player2.getStatus()).toBe('playing');
+    expect(player1.getStatus()).toBe('pause');
+
+    // 移除 player2，readyPlayers 中应不再包含 player2
+    manager.remove(player2);
+
+    // player3 播放，player1 已 ready 应被 pause，player2 已被移除不受影响
+    player1.play();
+    player3.play();
+    expect(player3.getStatus()).toBe('playing');
+    expect(player1.getStatus()).toBe('pause');
+  });
+
+  test('retries creating player when SDK is not immediately available', () => {
+    delete (global.window as any).Aliplayer;
+
+    const config = {
+      vid: '8ee5dc4052ae71eea5625017f1f80102',
+      playauth: 'eyJTZWN1cml0eVRva2VuIjoiQ0FJU2',
+    };
+    const onCreate = jest.fn();
+    render(<Aliplayer config={config} onCreate={onCreate} />);
+
+    // SDK 尚未加载，播放器未创建
+    jest.advanceTimersByTime(500);
+    expect(onCreate).not.toHaveBeenCalled();
+
+    // 模拟 SDK 延迟加载
+    (global.window as any).Aliplayer = MockAliplayer;
+
+    // 重试定时器触发，播放器应被创建
+    jest.advanceTimersByTime(100);
+    expect(onCreate).toHaveBeenCalledTimes(1);
+  });
+
+  test('does not decrease volume below 0', () => {
+    (global.window as any).Aliplayer = MockAliplayer;
+    const config = {
+      vid: '8ee5dc4052ae71eea5625017f1f80102',
+      playauth: 'eyJTZWN1cml0eVRva2VuIjoiQ0FJU2',
+    };
+    let player: AliplayerInstance | undefined;
+    const { container } = render(
+      <Aliplayer config={config} onCreate={(p) => (player = p)} />,
+    );
+
+    jest.runAllTimers();
+
+    player?.setVolume(0.05);
+
+    // 连续降低音量，不应低于 0
+    fireEvent.keyDown(container, { key: 'ArrowDown' });
+    fireEvent.keyDown(container, { key: 'ArrowDown' });
+    expect(player?.getVolume()).toBe(0);
   });
 
   test('handles active player when removing current active player', () => {

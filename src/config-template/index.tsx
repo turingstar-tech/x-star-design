@@ -1,42 +1,81 @@
 import { Card, Col, message, Popconfirm, Row, Space, Typography } from 'antd';
-import React from 'react';
+import dayjs from 'dayjs';
+import React, { useMemo } from 'react';
 import { RawConfig } from '../ac-config/define';
 import { useLocale } from '../locales';
+import { useTenant } from '../tenant-provider';
 import { prefix } from '../utils/global';
-import { CONTEST_TEMPLATES, ContestType } from './define';
+import { ContestType, getTemplatesByTenant } from './define';
+
 const { Text } = Typography;
 
 interface ConfigTemplateProps {
   onSelect?: (config: Partial<RawConfig>, configType: ContestType) => void;
+  courseEndTime?: number;
 }
-const ConfigTemplate = ({ onSelect }: ConfigTemplateProps) => {
+const ConfigTemplate = ({ onSelect, courseEndTime }: ConfigTemplateProps) => {
   const { format: t } = useLocale('ConfigTemplate');
-  const template: { type: ContestType; title: string }[] = [
-    {
-      type: 'OI',
-      title: t('OI'),
-    },
-    {
-      type: 'XCPC',
-      title: t('XCPC'),
-    },
-    {
-      type: 'IOI',
-      title: t('IOI'),
-    },
-    {
-      type: 'HOMEWORK1',
-      title: t('Homework_Mode_1'),
-    },
-    {
-      type: 'HOMEWORK2',
-      title: t('Homework_Mode_2'),
-    },
-    {
-      type: 'XCAMP_HOMEWORK',
-      title: t('XCAMP_HOMEWORK'),
-    },
-  ];
+  const { tenant } = useTenant();
+
+  // 根据租户获取对应的模板配置
+  const TEMPLATES = useMemo(
+    () =>
+      getTemplatesByTenant(
+        tenant.name,
+        courseEndTime ? dayjs.unix(courseEndTime) : undefined,
+      ),
+    [tenant.name, courseEndTime],
+  );
+
+  // 根据租户动态生成模板列表
+  const template = useMemo<{ type: ContestType; title: string }[]>(() => {
+    const baseTemplates: { type: ContestType; title: string }[] = [
+      {
+        type: 'OI',
+        title: t('OI'),
+      },
+      {
+        type: 'XCPC',
+        title: t('XCPC'),
+      },
+      {
+        type: 'IOI',
+        title: t('IOI'),
+      },
+    ];
+
+    // 根据租户添加特定模板
+    if (tenant.name === 'xcamp') {
+      return [
+        ...baseTemplates,
+        {
+          type: 'XCAMP_HOMEWORK',
+          title: t('XCAMP_HOMEWORK'),
+        },
+        {
+          type: 'XCAMP_FINAL_NO_LIMIT',
+          title: t('XCAMP_FINAL_NO_LIMIT'),
+        },
+        {
+          type: 'XCAMP_FINAL_LIMIT',
+          title: t('XCAMP_FINAL_LIMIT'),
+        },
+      ];
+    } else {
+      return [
+        ...baseTemplates,
+        {
+          type: 'HOMEWORK1',
+          title: t('Homework_Mode_1'),
+        },
+        {
+          type: 'HOMEWORK2',
+          title: t('Homework_Mode_2'),
+        },
+      ];
+    }
+  }, [tenant.name, t]);
+
   const templateConfig: Record<
     string,
     {
@@ -100,6 +139,24 @@ const ConfigTemplate = ({ onSelect }: ConfigTemplateProps) => {
         { text: t('Download_Count_15'), icon: '►' },
       ],
     },
+    XCAMP_FINAL_NO_LIMIT: {
+      title: t('XCAMP_FINAL_NO_LIMIT'),
+      features: [
+        { text: t('XCAMP_FINAL_NO_LIMIT_TIME'), icon: '►' },
+        { text: t('XCAMP_FINAL_NO_LIMIT_NO_EARLY_SUBMISSION'), icon: '►' },
+        { text: t('XCAMP_FINAL_NO_LIMIT_AUTO_SUBMISSION'), icon: '►' },
+        { text: t('XCAMP_FINAL_NO_LIMIT_AUTO_SUBMISSION_TIME'), icon: '►' },
+      ],
+    },
+    XCAMP_FINAL_LIMIT: {
+      title: t('XCAMP_FINAL_LIMIT'),
+      features: [
+        { text: t('XCAMP_FINAL_LIMIT_TIME'), icon: '►' },
+        { text: t('XCAMP_FINAL_NO_LIMIT_NO_EARLY_SUBMISSION'), icon: '►' },
+        { text: t('XCAMP_FINAL_NO_LIMIT_AUTO_SUBMISSION'), icon: '►' },
+        { text: t('XCAMP_FINAL_NO_LIMIT_AUTO_SUBMISSION_TIME'), icon: '►' },
+      ],
+    },
   };
   return (
     <Row gutter={[16, 16]}>
@@ -109,7 +166,7 @@ const ConfigTemplate = ({ onSelect }: ConfigTemplateProps) => {
             title={t('Current_Operation_Hint')}
             data-testid="popconfirm"
             onConfirm={() => {
-              onSelect?.(CONTEST_TEMPLATES[item.type], item.type);
+              onSelect?.(TEMPLATES[item.type], item.type);
               message.success({
                 key: 'success',
                 content: t('Cover_successfully'),

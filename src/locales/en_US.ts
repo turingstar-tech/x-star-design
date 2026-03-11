@@ -264,8 +264,16 @@ export default {
     Same_Score_First_AC: 'Same score, rank by first AC time',
     No_Submission_Result_In_Contest: 'No submission result in contest',
     Submit_By_Last_Submission: 'Submit by last submission',
-    XCAMP_HOMEWORK: 'X-Camp Homework Mode',
+    XCAMP_HOMEWORK: 'Homework Mode',
+    XCAMP_FINAL_NO_LIMIT: 'Final Exam (No Time Limit)',
     Download_Count_15: 'Download error data (XJOI) 2 pairs',
     Rank_List_Not_Show_Real_Name: 'Ranklist not show real name',
+    XCAMP_FINAL_LIMIT: 'Final Exam (Time Limit)',
+    XCAMP_FINAL_NO_LIMIT_TIME: 'Homework time limit 14 days',
+    XCAMP_FINAL_NO_LIMIT_NO_EARLY_SUBMISSION: 'No early submission',
+    XCAMP_FINAL_NO_LIMIT_AUTO_SUBMISSION: 'Automatic submission enabled',
+    XCAMP_FINAL_NO_LIMIT_AUTO_SUBMISSION_TIME:
+      'Automatic submission after 14 days',
+    XCAMP_FINAL_LIMIT_TIME: 'Homework time limit 4 hours',
   },
 } as const;

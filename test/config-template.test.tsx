@@ -1,8 +1,14 @@
 import { describe, expect, jest, test } from '@jest/globals';
 import { act, fireEvent, render } from '@testing-library/react';
+import dayjs from 'dayjs';
 import React from 'react';
 import ConfigTemplate from '../src/config-template';
-import { CONTEST_TEMPLATES, ContestType } from '../src/config-template/define';
+import {
+  CONTEST_TEMPLATES,
+  ContestType,
+  XCAMP_CONTEST_TEMPLATES,
+} from '../src/config-template/define';
+import { TenantProvider } from '../src/tenant-provider';
 window.matchMedia = jest.fn().mockImplementation((query) => {
   return {
     matches: false,
@@ -53,5 +59,66 @@ describe('ConfigTemplate', () => {
       CONTEST_TEMPLATES.OI,
       'OI' as ContestType,
     );
+  });
+
+  test('xcamp template cards correctly', () => {
+    const locationSpy = jest
+      .spyOn(window, 'location', 'get')
+      .mockReturnValue({ hostname: 'learn.x-camp.org' } as Location);
+    const { getAllByText, getByText } = render(
+      <TenantProvider
+        tenants={{ xyd: { name: 'xyd' }, xcamp: { name: 'xcamp' } }}
+      >
+        <ConfigTemplate />
+      </TenantProvider>,
+    );
+    expect(getAllByText('OI').length).toBeGreaterThan(0);
+    expect(getAllByText('XCPC').length).toBeGreaterThan(0);
+    expect(getAllByText('IOI').length).toBeGreaterThan(0);
+    expect(getByText('XCAMP_HOMEWORK')).toBeInTheDocument();
+    expect(getByText('XCAMP_FINAL_NO_LIMIT')).toBeInTheDocument();
+    expect(getByText('XCAMP_FINAL_LIMIT')).toBeInTheDocument();
+
+    locationSpy.mockRestore();
+  });
+
+  test('xcamp confirm template selection should call onSelect callback', async () => {
+    const onSelectMock = jest.fn();
+    const locationSpy = jest
+      .spyOn(window, 'location', 'get')
+      .mockReturnValue({ hostname: 'learn.x-camp.org' } as Location);
+    const { getAllByTestId, getByText } = render(
+      <TenantProvider
+        tenants={{ xyd: { name: 'xyd' }, xcamp: { name: 'xcamp' } }}
+      >
+        <ConfigTemplate onSelect={onSelectMock} courseEndTime={1773135489} />,
+      </TenantProvider>,
+    );
+
+    // 1. 先点击卡片来显示Popconfirm
+    const cards = getAllByTestId('templateCard');
+    fireEvent.click(cards[4]); // 点击第一个卡片(OI)
+
+    // 2. 然后找到并点击Popconfirm中的确认按钮
+    const okButton = getByText(
+      'Current operation will cover the original configuration, are you sure?',
+    )
+      .closest('.ant-popconfirm')
+      ?.querySelector('.ant-btn-primary') as HTMLButtonElement;
+
+    await act(async () => {
+      fireEvent.click(okButton);
+    });
+
+    // 验证onSelect被调用，并且传入了正确的参数
+    expect(onSelectMock).toHaveBeenCalledWith(
+      {
+        ...XCAMP_CONTEST_TEMPLATES.XCAMP_FINAL_NO_LIMIT,
+        autoSubmitTime: dayjs.unix(1774281600),
+      },
+      'XCAMP_FINAL_NO_LIMIT',
+    );
+
+    locationSpy.mockRestore();
   });
 });

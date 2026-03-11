@@ -18,6 +18,8 @@
     border-radius: 4px;
     color: #1990fe;
     background-color: #e6f4ff;
+    white-space: wrap;
+    word-break: break-all;
   }
 
   .#{$prefix}-title {

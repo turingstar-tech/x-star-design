@@ -152,7 +152,7 @@ const ConfigTemplate = ({ onSelect, courseEndTime }: ConfigTemplateProps) => {
       title: t('XCAMP_FINAL_LIMIT'),
       features: [
         { text: t('XCAMP_FINAL_LIMIT_TIME'), icon: '►' },
-        { text: t('XCAMP_FINAL_NO_LIMIT_NO_EARLY_SUBMISSION'), icon: '►' },
+        { text: t('XCAMP_FINAL_NO_LIMIT_ALLOW_EARLY_SUBMISSION'), icon: '►' },
         { text: t('XCAMP_FINAL_NO_LIMIT_AUTO_SUBMISSION'), icon: '►' },
         { text: t('XCAMP_FINAL_NO_LIMIT_AUTO_SUBMISSION_TIME'), icon: '►' },
       ],

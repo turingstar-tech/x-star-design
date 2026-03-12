@@ -269,11 +269,12 @@ export default {
     Download_Count_15: 'Download error data (XJOI) 2 pairs',
     Rank_List_Not_Show_Real_Name: 'Ranklist not show real name',
     XCAMP_FINAL_LIMIT: 'Final Exam (Time Limit)',
-    XCAMP_FINAL_NO_LIMIT_TIME: 'Homework time limit 14 days',
+    XCAMP_FINAL_NO_LIMIT_TIME: 'Homework time unlimited',
     XCAMP_FINAL_NO_LIMIT_NO_EARLY_SUBMISSION: 'No early submission',
+    XCAMP_FINAL_NO_LIMIT_ALLOW_EARLY_SUBMISSION: 'Allow early submission',
     XCAMP_FINAL_NO_LIMIT_AUTO_SUBMISSION: 'Automatic submission enabled',
     XCAMP_FINAL_NO_LIMIT_AUTO_SUBMISSION_TIME:
-      'Automatic submission after 14 days',
-    XCAMP_FINAL_LIMIT_TIME: 'Homework time limit 4 hours',
+      'Automatic submission after 21 days',
+    XCAMP_FINAL_LIMIT_TIME: 'Homework time limit 3 hours',
   },
 } as const;

@@ -23,7 +23,14 @@ const debounce = <T extends (...args: any[]) => any>(
 };
 
 const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
-  const { value, onChange, debounceTimeout = 1000, ...otherProps } = props;
+  const {
+    value,
+    onChange,
+    debounceTimeout = 1000,
+    onSearchStart,
+    onSearchEnd,
+    ...otherProps
+  } = props;
   const { format: t } = useLocale('ZipCodeSearchInput');
   const [data, setData] = useState<SelectProps['options']>([]);
   const [originValue, setOriginValue] = useState<string>();
@@ -38,25 +45,28 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
   }, [value]);
 
   const handleSearch = async (newValue: string) => {
+    let result: SelectProps['options'] = [];
     try {
       if (!newValue) return setData([]);
       setLoading(true);
+      onSearchStart?.(newValue);
       const response = await fetch(`https://api.zippopotam.us/us/${newValue}`);
       if (response.ok) {
         const res = await response.json();
         if (!res?.places) {
           setData([]);
-          return setLoading(false);
+          return;
         }
         const state = res.places[0]['state'];
         const city = res.places[0]['place name'];
-        setData([
+        result = [
           {
             label: `${state} / ${city}`,
             value: `${state} / ${city}`,
             code: newValue,
           },
-        ]);
+        ];
+        setData(result);
       } else {
         setData([]);
       }
@@ -64,6 +74,7 @@ const ZipCodeSearchInput: React.FC<ZipCodeSearchInputProps> = (props) => {
       setData([]);
     } finally {
       setLoading(false);
+      onSearchEnd?.(newValue, result);
     }
   };
 

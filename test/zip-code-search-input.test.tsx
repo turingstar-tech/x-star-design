@@ -733,6 +733,153 @@ describe('ZipCodeSearchInput', () => {
     expect(mockOnChange).toHaveBeenCalledWith(['SingleValue'], {});
   });
 
+  test('should call onSearchStart when search begins', async () => {
+    const mockOnSearchStart = jest.fn();
+    render(
+      <ZipCodeSearchInput
+        onSearchStart={mockOnSearchStart}
+        debounceTimeout={TEST_DEBOUNCE}
+      />,
+    );
+
+    await act(async () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: '10001' },
+      });
+      jest.advanceTimersByTime(TEST_DEBOUNCE);
+    });
+
+    await waitFor(() => {
+      expect(mockOnSearchStart).toHaveBeenCalledTimes(1);
+      expect(mockOnSearchStart).toHaveBeenCalledWith('10001');
+    });
+  });
+
+  test('should not call onSearchStart when search value is empty', async () => {
+    const mockOnSearchStart = jest.fn();
+    render(
+      <ZipCodeSearchInput
+        onSearchStart={mockOnSearchStart}
+        debounceTimeout={TEST_DEBOUNCE}
+      />,
+    );
+
+    await act(async () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: '' },
+      });
+      jest.advanceTimersByTime(TEST_DEBOUNCE);
+    });
+
+    expect(mockOnSearchStart).not.toHaveBeenCalled();
+  });
+
+  test('should call onSearchEnd with results when API returns data', async () => {
+    const mockOnSearchEnd = jest.fn();
+    render(
+      <ZipCodeSearchInput
+        onSearchEnd={mockOnSearchEnd}
+        debounceTimeout={TEST_DEBOUNCE}
+      />,
+    );
+
+    await act(async () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: '10001' },
+      });
+      jest.advanceTimersByTime(TEST_DEBOUNCE);
+    });
+
+    await waitFor(() => {
+      expect(mockOnSearchEnd).toHaveBeenCalledWith('10001', [
+        {
+          label: 'New York / New York City',
+          value: 'New York / New York City',
+          code: '10001',
+        },
+      ]);
+    });
+  });
+
+  test('should call onSearchEnd with empty array when API returns no data', async () => {
+    (global.fetch as jest.Mock).mockImplementationOnce(() =>
+      Promise.resolve({ ok: false }),
+    );
+    const mockOnSearchEnd = jest.fn();
+    render(
+      <ZipCodeSearchInput
+        onSearchEnd={mockOnSearchEnd}
+        debounceTimeout={TEST_DEBOUNCE}
+      />,
+    );
+
+    await act(async () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: '00000' },
+      });
+      jest.advanceTimersByTime(TEST_DEBOUNCE);
+    });
+
+    await waitFor(() => {
+      expect(mockOnSearchEnd).toHaveBeenCalledWith('00000', []);
+    });
+  });
+
+  test('should call onSearchEnd with empty array when API response has no places', async () => {
+    (global.fetch as jest.Mock).mockImplementationOnce(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({}),
+      }),
+    );
+    const mockOnSearchEnd = jest.fn();
+    render(
+      <ZipCodeSearchInput
+        onSearchEnd={mockOnSearchEnd}
+        debounceTimeout={TEST_DEBOUNCE}
+      />,
+    );
+
+    await act(async () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: '10001' },
+      });
+      jest.advanceTimersByTime(TEST_DEBOUNCE);
+    });
+
+    await waitFor(() => {
+      expect(mockOnSearchEnd).toHaveBeenCalledWith('10001', []);
+    });
+  });
+
+  test('should call both onSearchStart and onSearchEnd in correct order', async () => {
+    const callOrder: string[] = [];
+    const mockOnSearchStart = jest.fn(() => callOrder.push('start'));
+    const mockOnSearchEnd = jest.fn(() => callOrder.push('end'));
+
+    render(
+      <ZipCodeSearchInput
+        onSearchStart={mockOnSearchStart}
+        onSearchEnd={mockOnSearchEnd}
+        debounceTimeout={TEST_DEBOUNCE}
+      />,
+    );
+
+    await act(async () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: '10001' },
+      });
+      jest.advanceTimersByTime(TEST_DEBOUNCE);
+    });
+
+    await waitFor(() => {
+      expect(mockOnSearchStart).toHaveBeenCalledTimes(1);
+      expect(mockOnSearchEnd).toHaveBeenCalledTimes(1);
+      expect(callOrder[0]).toBe('start');
+      expect(callOrder[1]).toBe('end');
+    });
+  });
+
   test('should replace input value with API result when blur happens before API response', async () => {
     const mockOnChange = jest.fn();
 

@@ -114,7 +114,7 @@ describe('ConfigTemplate', () => {
     expect(onSelectMock).toHaveBeenCalledWith(
       {
         ...XCAMP_CONTEST_TEMPLATES.XCAMP_FINAL_NO_LIMIT,
-        autoSubmitTime: dayjs.unix(1774367999),
+        autoSubmitTime: dayjs.unix(1774972799),
       },
       'XCAMP_FINAL_NO_LIMIT',
     );

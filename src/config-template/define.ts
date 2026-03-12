@@ -11,7 +11,7 @@ import { TenantName } from '../tenant-provider';
  * // 返回: dayjs('2026-03-24 23:59:59.999')
  */
 export const calculateAutoSubmitTime = (courseEndTime: Dayjs): Dayjs => {
-  return courseEndTime.add(14, 'day').endOf('day').millisecond(0);
+  return courseEndTime.add(21, 'day').endOf('day').millisecond(0);
 };
 // 基础竞赛类型（公用模板）
 export type BaseContestType = 'OI' | 'XCPC' | 'IOI';
@@ -290,9 +290,9 @@ export const XCAMP_CONTEST_TEMPLATES: Record<
     autoSubmitTime: undefined,
   },
   XCAMP_FINAL_NO_LIMIT: {
-    contestTime: 'limitTime',
+    contestTime: 'noLimit',
     limitTime: {
-      limitHour: 336,
+      limitHour: 0,
       limitMinute: 0,
     },
     gradeTime: dayjs(),
@@ -331,7 +331,7 @@ export const XCAMP_CONTEST_TEMPLATES: Record<
   XCAMP_FINAL_LIMIT: {
     contestTime: 'limitTime',
     limitTime: {
-      limitHour: 4,
+      limitHour: 3,
       limitMinute: 0,
     },
     gradeTime: dayjs(),
@@ -344,7 +344,7 @@ export const XCAMP_CONTEST_TEMPLATES: Record<
     paperRelease: 'afterExam',
     answerRelease: 'afterExam',
     tipRelease: 'always',
-    submission: 'noEarlySubmission',
+    submission: 'allowEarlySubmission',
     restriction: 'never',
     disorder: [],
     personalScoreVisibility: 'always',

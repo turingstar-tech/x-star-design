@@ -275,6 +275,7 @@ describe('ac config', () => {
 
   test('render homework AcConfig', async () => {
     const ref = createRef<AcConfigHandle>();
+    const autoSubmitTime = dayjs().unix();
     const { getByText, getByLabelText, getByTestId } = render(
       <AcConfig
         ref={ref}
@@ -310,7 +311,7 @@ describe('ac config', () => {
               limitTime: undefined,
               noLimit: true,
               enableAutoSubmit: true,
-              autoSubmitTime: 1772157878,
+              autoSubmitTime,
             },
             type: 'homework',
           } as any
@@ -537,7 +538,7 @@ describe('ac config', () => {
           limitTime: undefined,
           noLimit: true,
           enableAutoSubmit: true,
-          autoSubmitTime: 1772157840,
+          autoSubmitTime: dayjs.unix(autoSubmitTime).second(0).unix().valueOf(),
         },
       }),
     );

@@ -157,7 +157,7 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
       link.id = 'aliplayer-css';
       link.rel = 'stylesheet';
       link.href =
-        'https://g.alicdn.com/apsara-media-box/imp-web-player/2.37.8/skins/default/aliplayer-min.css';
+        'https://g.alicdn.com/apsara-media-box/imp-web-player/2.25.0/skins/default/aliplayer-min.css';
       document.head.append(link);
     }
     if (!document.getElementById('aliplayer-js')) {
@@ -165,7 +165,7 @@ const Aliplayer = ({ config, onCreate }: AliplayerProps) => {
       script.id = 'aliplayer-js';
       script.type = 'text/javascript';
       script.src =
-        'https://g.alicdn.com/apsara-media-box/imp-web-player/2.37.8/aliplayer-h5-min.js';
+        'https://g.alicdn.com/apsara-media-box/imp-web-player/2.25.0/aliplayer-h5-min.js';
       document.head.append(script);
     }
   }, []);

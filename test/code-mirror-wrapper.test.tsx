@@ -1,7 +1,12 @@
+import { indentUnit } from '@codemirror/language';
+import { EditorState } from '@codemirror/state';
+import { EditorView } from '@codemirror/view';
 import { describe, expect, jest, test } from '@jest/globals';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import CodeMirrorWrapper from '../src/code-mirror-wrapper';
+import CodeMirrorWrapper, {
+  insertNewlineByBrace,
+} from '../src/code-mirror-wrapper';
 import { LangId } from '../src/code-mirror-wrapper/define';
 
 jest.useFakeTimers();
@@ -25,6 +30,70 @@ jest.mock(
 );
 
 describe('code mirror wrapper', () => {
+  const runBraceEnter = (doc: string, cursor = doc.length) => {
+    let state = EditorState.create({
+      doc,
+      selection: { anchor: cursor },
+      extensions: [indentUnit.of('  ')],
+    });
+
+    insertNewlineByBrace({
+      state,
+      dispatch: (transaction) => {
+        state = transaction.state;
+      },
+    });
+
+    return {
+      cursor: state.selection.main.head,
+      doc: state.doc.toString(),
+    };
+  };
+
+  test('does not add indentation without an opening brace', () => {
+    expect(runBraceEnter('if (condition)').doc).toBe('if (condition)\n');
+  });
+
+  test('keeps the current indentation on ordinary lines', () => {
+    expect(runBraceEnter('  value++;').doc).toBe('  value++;\n  ');
+  });
+
+  test('adds one indentation level after an opening brace', () => {
+    expect(runBraceEnter('if (condition) {').doc).toBe('if (condition) {\n  ');
+  });
+
+  test('puts paired closing brace on an aligned new line', () => {
+    const result = runBraceEnter('  if (condition) {}', 18);
+
+    expect(result.doc).toBe('  if (condition) {\n    \n  }');
+    expect(result.cursor).toBe('  if (condition) {\n    '.length);
+  });
+
+  test.each([LangId.CPP, LangId.JAVA])(
+    'uses brace-based Enter behavior for %s',
+    (lang) => {
+      render(<CodeMirrorWrapper lang={lang} value="if (condition)" />);
+      const editor = screen.getByRole('textbox');
+      const view = EditorView.findFromDOM(editor);
+
+      view?.dispatch({ selection: { anchor: view.state.doc.length } });
+      fireEvent.keyDown(editor, { code: 'Enter', key: 'Enter' });
+
+      expect(view?.state.doc.toString()).toBe('if (condition)\n');
+    },
+  );
+
+  test('keeps Python default colon indentation', () => {
+    render(<CodeMirrorWrapper lang={LangId.PY3} value="if True:" />);
+    const editor = screen.getByRole('textbox');
+    const view = EditorView.findFromDOM(editor);
+
+    view?.dispatch({ selection: { anchor: view.state.doc.length } });
+    fireEvent.keyDown(editor, { code: 'Enter', key: 'Enter' });
+
+    expect(view?.state.doc.toString()).toBe('if True:\n  ');
+  });
+
   test('renders editor and changes value', () => {
     const onChange = jest.fn();
     render(<CodeMirrorWrapper onChange={onChange} />);

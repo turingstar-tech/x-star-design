@@ -3,10 +3,15 @@ import { cpp } from '@codemirror/lang-cpp';
 import { html } from '@codemirror/lang-html';
 import { java } from '@codemirror/lang-java';
 import { python } from '@codemirror/lang-python';
-import { syntaxTree } from '@codemirror/language';
+import { indentUnit, syntaxTree } from '@codemirror/language';
 import { Diagnostic, linter } from '@codemirror/lint';
-import { Extension } from '@codemirror/state';
-import { EditorView } from '@codemirror/view';
+import {
+  EditorSelection,
+  Extension,
+  Prec,
+  StateCommand,
+} from '@codemirror/state';
+import { EditorView, keymap } from '@codemirror/view';
 import { languageServer } from '@marimo-team/codemirror-languageserver';
 import CodeMirror from '@uiw/react-codemirror';
 import classNames from 'classnames';
@@ -60,6 +65,45 @@ export interface CodeMirrorWrapperProps {
     lineWrapping?: boolean;
   };
 }
+
+export const insertNewlineByBrace: StateCommand = ({ state, dispatch }) => {
+  const transaction = state.changeByRange((range) => {
+    const line = state.doc.lineAt(range.from);
+    const currentIndent = line.text.match(/^\s*/)?.[0] ?? '';
+    const beforeCursor = state.doc.sliceString(line.from, range.from);
+    const afterCursor = state.doc.sliceString(range.to, line.to);
+    const afterOpeningBrace = beforeCursor.trimEnd().endsWith('{');
+    const beforeClosingBrace =
+      afterOpeningBrace && afterCursor.trimStart().startsWith('}');
+    const nextIndent = afterOpeningBrace
+      ? currentIndent + state.facet(indentUnit)
+      : currentIndent;
+    const insert = beforeClosingBrace
+      ? `\n${nextIndent}\n${currentIndent}`
+      : `\n${nextIndent}`;
+
+    return {
+      changes: {
+        from: range.from,
+        insert,
+        to: range.to,
+      },
+      range: EditorSelection.cursor(range.from + nextIndent.length + 1),
+    };
+  });
+
+  dispatch(
+    state.update(transaction, {
+      scrollIntoView: true,
+      userEvent: 'input',
+    }),
+  );
+  return true;
+};
+
+const braceNewlineKeymap = Prec.high(
+  keymap.of([{ key: 'Enter', run: insertNewlineByBrace }]),
+);
 
 const CodeMirrorWrapper = ({
   className,
@@ -136,6 +180,9 @@ const CodeMirrorWrapper = ({
       case LangId.GCC:
       case LangId.FPC:
         extensions = [cpp()];
+        if (lang !== LangId.FPC) {
+          extensions.push(braceNewlineKeymap);
+        }
         if (lspServerUrl?.cpp) {
           const serverUrl = lspConfig?.token
             ? `${lspServerUrl.cpp}${
@@ -202,6 +249,7 @@ const CodeMirrorWrapper = ({
       case LangId.JAVA:
         return [
           java(),
+          braceNewlineKeymap,
           autocompletion({
             override: [(context) => langCompletions(context, Language.JAVA)],
           }),
